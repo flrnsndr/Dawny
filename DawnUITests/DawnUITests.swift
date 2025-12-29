@@ -2,38 +2,73 @@
 //  DawnUITests.swift
 //  DawnUITests
 //
-//  Created by Flo on 28.12.25.
+//  UI Tests für Dawn App
 //
 
 import XCTest
 
 final class DawnUITests: XCTestCase {
-
+    
+    var app: XCUIApplication!
+    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    @MainActor
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
+        app = XCUIApplication()
+        app.launchArguments = ["--uitesting"]
         app.launch()
-
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
-
-    @MainActor
+    
+    override func tearDownWithError() throws {
+        app = nil
+    }
+    
+    // MARK: - Navigation Tests
+    
+    func testTabNavigation() throws {
+        // Prüfe dass beide Tabs existieren
+        let heuteTab = app.tabBars.buttons["Heute"]
+        let backlogTab = app.tabBars.buttons["Backlog"]
+        
+        XCTAssertTrue(heuteTab.waitForExistence(timeout: 5))
+        XCTAssertTrue(backlogTab.exists)
+        
+        // Wechsle zu Backlog
+        backlogTab.tap()
+        
+        // Wechsle zurück zu Heute
+        heuteTab.tap()
+    }
+    
+    // MARK: - Task Creation Tests
+    
+    func testCreateTaskInBacklog() throws {
+        // Wechsle zu Backlog
+        let backlogTab = app.tabBars.buttons["Backlog"]
+        XCTAssertTrue(backlogTab.waitForExistence(timeout: 5))
+        backlogTab.tap()
+        
+        // Tippe auf + Button
+        let addButton = app.navigationBars.buttons.element(boundBy: 0)
+        XCTAssertTrue(addButton.waitForExistence(timeout: 3))
+        addButton.tap()
+        
+        // Warte auf Sheet - TextField hat Placeholder "Task"
+        let titleField = app.textFields["Task"]
+        if titleField.waitForExistence(timeout: 3) {
+            titleField.tap()
+            titleField.typeText("UI Test Task")
+            
+            // Tippe auf Hinzufügen
+            let addTaskButton = app.buttons["Hinzufügen"]
+            if addTaskButton.exists && addTaskButton.isEnabled {
+                addTaskButton.tap()
+            }
+        }
+    }
+    
+    // MARK: - Performance Tests
+    
     func testLaunchPerformance() throws {
-        // This measures how long it takes to launch your application.
         measure(metrics: [XCTApplicationLaunchMetric()]) {
             XCUIApplication().launch()
         }
