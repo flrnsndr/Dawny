@@ -133,8 +133,8 @@ Die App sollte jetzt starten! 🎉
 
 ## 📖 Weitere Dokumentation
 
-- [ARCHITECTURE_AND_MODEL.md](docs/ARCHITECTURE_AND_MODEL.md) - Technische Details
-- [PRD.md](docs/PRD.md) - Product Requirements
+- [EINFACHE_ANLEITUNG.md](docs/EINFACHE_ANLEITUNG.md) - Schritt-für-Schritt Anleitung für Anfänger
+- [PRD.md](docs/PRD.md) - Product Requirements und Architektur-Details
 
 ## 🎉 Fertig!
 
