@@ -65,7 +65,8 @@ struct DailyFocusView: View {
                                     await viewModel.completeTask(task)
                                 }
                             },
-                            onDelete: nil
+                            onDelete: nil,
+                            showDragHandle: true
                         )
                         .swipeActions(edge: .trailing) {
                             Button {
@@ -79,6 +80,7 @@ struct DailyFocusView: View {
                             .tint(.gray)
                         }
                     }
+                    .onMove(perform: viewModel.moveTasks)
                 }
             }
             

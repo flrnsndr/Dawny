@@ -64,7 +64,8 @@ struct BacklogView: View {
                         _Concurrency.Task {
                             await viewModel.deleteTask(task)
                         }
-                    }
+                    },
+                    showBacklogBadge: false
                 )
                 .swipeActions(edge: .leading) {
                     Button {
