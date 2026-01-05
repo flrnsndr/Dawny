@@ -1,8 +1,8 @@
-# Dawn – iOS Task Management App
+# Dawny – iOS Task Management App
 
 ## Projektübersicht
 
-Dawn ist eine minimalistische iOS-App für bewusstes tägliches Task-Management. Die App verfolgt eine einzigartige "Zero-Overdue-Philosophie": Es gibt keine überfälligen Tasks. Um 3 Uhr morgens werden alle nicht erledigten Tasks automatisch zurück ins Backlog verschoben.
+Dawny ist eine minimalistische iOS-App für bewusstes tägliches Task-Management. Die App verfolgt eine einzigartige "Zero-Overdue-Philosophie": Es gibt keine überfälligen Tasks. Um 3 Uhr morgens werden alle nicht erledigten Tasks automatisch zurück ins Backlog verschoben.
 
 Plattform: iOS 18.0+
 
@@ -22,7 +22,7 @@ Siri-Integration: App Intents Framework
 
 ### Zero-Overdue-Policy
 
-Dawn basiert auf der Überzeugung, dass überfällige Tasks psychologischen Stress verursachen. Anstatt Tasks als "überfällig" zu markieren, werden sie automatisch um 3:00 Uhr morgens zurück ins Backlog verschoben. Jeden Tag beginnt der Nutzer mit einer sauberen Liste.
+Dawny basiert auf der Überzeugung, dass überfällige Tasks psychologischen Stress verursachen. Anstatt Tasks als "überfällig" zu markieren, werden sie automatisch um 3:00 Uhr morgens zurück ins Backlog verschoben. Jeden Tag beginnt der Nutzer mit einer sauberen Liste.
 
 ### Bewusste Tagesplanung
 
@@ -52,17 +52,15 @@ Der Nutzer entscheidet jeden Tag aktiv, welche Tasks er in den "Daily Focus" ver
 
 - Daily Focus Tasks erscheinen in der Erinnerungen-App
 
-- Änderungen in der Erinnerungen-App werden zurück zu Dawn synchronisiert
+- Änderungen in der Erinnerungen-App werden zurück zu Dawny synchronisiert
 
 - Konfliktauflösung nach "Last-Write-Wins" Prinzip
 
 ### 4. Siri-Integration
 
-- "Hey Siri, füge X zu Dawn hinzu" → Task ins Backlog
+- "Hey Siri, füge X zu Dawny hinzu" → Task ins Backlog
 
-- "Hey Siri, füge X heute zu Dawn hinzu" → Task in Daily Focus
-
-- Funktioniert auch mit "Dawny" als App-Name
+- "Hey Siri, füge X heute zu Dawny hinzu" → Task in Daily Focus
 
 ------
 
@@ -108,7 +106,7 @@ Intents (Siri):
 
 - AddTaskTodayIntent: Task zu Daily Focus hinzufügen
 
-- DawnShortcuts: Siri-Phrasen Provider
+- DawnyShortcuts: Siri-Phrasen Provider
 
 ------
 
@@ -140,7 +138,7 @@ Intents (Siri):
 
 ### Siri-Workflow
 
-1. "Hey Siri, füge Milch kaufen heute zu Dawn hinzu"
+1. "Hey Siri, füge Milch kaufen heute zu Dawny hinzu"
 
 1. Siri: "Erledigt! 'Milch kaufen' wurde für heute hinzugefügt."
 
@@ -170,7 +168,7 @@ Intents (Siri):
 
 ## Unterschiede zu Microsoft To-Do
 
-| Feature              | Dawn                        | Microsoft To-Do         |
+| Feature              | Dawny                       | Microsoft To-Do         |
 | :------------------- | :-------------------------- | :---------------------- |
 | Überfällige Tasks    | Existieren nicht            | Bleiben überfällig      |
 | Fälligkeitsdaten     | Nur "Heute" oder nicht      | Beliebige Termine       |
@@ -221,11 +219,11 @@ Intents (Siri):
 
 ## Dateistruktur
 
-Dawn/
+Dawny/
 
 ├── Sources/
 
-│  ├── DawnApp.swift
+│  ├── DawnyApp.swift
 
 │  ├── Models/
 
@@ -267,7 +265,7 @@ Dawn/
 
 │  │  ├── AddTaskTodayIntent.swift
 
-│  │  └── DawnShortcuts.swift
+│  │  └── DawnyShortcuts.swift
 
 │  ├── Protocols/
 
@@ -279,7 +277,7 @@ Dawn/
 
 │    └── HapticFeedback.swift
 
-├── DawnTests/
+├── DawnyTests/
 
 │  ├── Models/
 
@@ -289,7 +287,7 @@ Dawn/
 
 │  └── Mocks/
 
-└── DawnUITests/
+└── DawnyUITests/
 
 ------
 

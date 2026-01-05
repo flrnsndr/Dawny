@@ -1,0 +1,602 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		5C9C9ECD2F0180DB0092AD03 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5C9C9EB72F0180D90092AD03 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5C9C9EBE2F0180D90092AD03;
+			remoteInfo = Dawny;
+		};
+		5C9C9ED72F0180DB0092AD03 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5C9C9EB72F0180D90092AD03 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5C9C9EBE2F0180D90092AD03;
+			remoteInfo = Dawny;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		5C9C9EBF2F0180D90092AD03 /* Dawny.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dawny.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C9C9ECC2F0180DB0092AD03 /* DawnyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DawnyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C9C9ED62F0180DB0092AD03 /* DawnyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DawnyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		5CC5B3ED2F0C0D6C0061BABB /* Exceptions for "Dawny" folder in "Dawny" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 5C9C9EBE2F0180D90092AD03 /* Dawny */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		5C9C9EC12F0180D90092AD03 /* Dawny */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				5CC5B3ED2F0C0D6C0061BABB /* Exceptions for "Dawny" folder in "Dawny" target */,
+			);
+			path = Dawny;
+			sourceTree = "<group>";
+		};
+		5C9C9ECF2F0180DB0092AD03 /* DawnyTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = DawnyTests;
+			sourceTree = "<group>";
+		};
+		5C9C9ED92F0180DB0092AD03 /* DawnyUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = DawnyUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5C9C9EBC2F0180D90092AD03 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C9C9EC92F0180DB0092AD03 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C9C9ED32F0180DB0092AD03 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5C9C9EB62F0180D90092AD03 = {
+			isa = PBXGroup;
+			children = (
+				5C9C9EC12F0180D90092AD03 /* Dawny */,
+				5C9C9ECF2F0180DB0092AD03 /* DawnyTests */,
+				5C9C9ED92F0180DB0092AD03 /* DawnyUITests */,
+				5C9C9EC02F0180D90092AD03 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5C9C9EC02F0180D90092AD03 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5C9C9EBF2F0180D90092AD03 /* Dawny.app */,
+				5C9C9ECC2F0180DB0092AD03 /* DawnyTests.xctest */,
+				5C9C9ED62F0180DB0092AD03 /* DawnyUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5C9C9EBE2F0180D90092AD03 /* Dawny */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5C9C9EE02F0180DB0092AD03 /* Build configuration list for PBXNativeTarget "Dawny" */;
+			buildPhases = (
+				5C9C9EBB2F0180D90092AD03 /* Sources */,
+				5C9C9EBC2F0180D90092AD03 /* Frameworks */,
+				5C9C9EBD2F0180D90092AD03 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				5C9C9EC12F0180D90092AD03 /* Dawny */,
+			);
+			name = Dawny;
+			packageProductDependencies = (
+			);
+			productName = Dawny;
+			productReference = 5C9C9EBF2F0180D90092AD03 /* Dawny.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5C9C9ECB2F0180DB0092AD03 /* DawnyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5C9C9EE32F0180DB0092AD03 /* Build configuration list for PBXNativeTarget "DawnyTests" */;
+			buildPhases = (
+				5C9C9EC82F0180DB0092AD03 /* Sources */,
+				5C9C9EC92F0180DB0092AD03 /* Frameworks */,
+				5C9C9ECA2F0180DB0092AD03 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5C9C9ECE2F0180DB0092AD03 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				5C9C9ECF2F0180DB0092AD03 /* DawnyTests */,
+			);
+			name = DawnyTests;
+			packageProductDependencies = (
+			);
+			productName = DawnyTests;
+			productReference = 5C9C9ECC2F0180DB0092AD03 /* DawnyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		5C9C9ED52F0180DB0092AD03 /* DawnyUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5C9C9EE62F0180DB0092AD03 /* Build configuration list for PBXNativeTarget "DawnyUITests" */;
+			buildPhases = (
+				5C9C9ED22F0180DB0092AD03 /* Sources */,
+				5C9C9ED32F0180DB0092AD03 /* Frameworks */,
+				5C9C9ED42F0180DB0092AD03 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5C9C9ED82F0180DB0092AD03 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				5C9C9ED92F0180DB0092AD03 /* DawnyUITests */,
+			);
+			name = DawnyUITests;
+			packageProductDependencies = (
+			);
+			productName = DawnyUITests;
+			productReference = 5C9C9ED62F0180DB0092AD03 /* DawnyUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5C9C9EB72F0180D90092AD03 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2620;
+				LastUpgradeCheck = 2620;
+				TargetAttributes = {
+					5C9C9EBE2F0180D90092AD03 = {
+						CreatedOnToolsVersion = 26.2;
+					};
+					5C9C9ECB2F0180DB0092AD03 = {
+						CreatedOnToolsVersion = 26.2;
+						TestTargetID = 5C9C9EBE2F0180D90092AD03;
+					};
+					5C9C9ED52F0180DB0092AD03 = {
+						CreatedOnToolsVersion = 26.2;
+						TestTargetID = 5C9C9EBE2F0180D90092AD03;
+					};
+				};
+			};
+			buildConfigurationList = 5C9C9EBA2F0180D90092AD03 /* Build configuration list for PBXProject "Dawny" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5C9C9EB62F0180D90092AD03;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 5C9C9EC02F0180D90092AD03 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5C9C9EBE2F0180D90092AD03 /* Dawny */,
+				5C9C9ECB2F0180DB0092AD03 /* DawnyTests */,
+				5C9C9ED52F0180DB0092AD03 /* DawnyUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5C9C9EBD2F0180D90092AD03 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C9C9ECA2F0180DB0092AD03 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C9C9ED42F0180DB0092AD03 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5C9C9EBB2F0180D90092AD03 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C9C9EC82F0180DB0092AD03 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C9C9ED22F0180DB0092AD03 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5C9C9ECE2F0180DB0092AD03 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5C9C9EBE2F0180D90092AD03 /* Dawny */;
+			targetProxy = 5C9C9ECD2F0180DB0092AD03 /* PBXContainerItemProxy */;
+		};
+		5C9C9ED82F0180DB0092AD03 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5C9C9EBE2F0180D90092AD03 /* Dawny */;
+			targetProxy = 5C9C9ED72F0180DB0092AD03 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		5C9C9EDE2F0180DB0092AD03 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		5C9C9EDF2F0180DB0092AD03 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5C9C9EE12F0180DB0092AD03 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Dawny/Info.plist;
+				INFOPLIST_KEY_BGTaskSchedulerPermittedIdentifiers = Flo.Dawny.reset;
+				INFOPLIST_KEY_CFBundleDisplayName = Dawny;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSRemindersUsageDescription = "Dawny synchronisiert deine täglichen Tasks mit der iOS Erinnerungen-App.";
+				INFOPLIST_KEY_NSSiriUsageDescription = "Dawny verwendet Siri um Tasks per Sprachbefehl hinzuzufügen.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UIBackgroundModes = "fetch processing";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Flo.Dawny;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5C9C9EE22F0180DB0092AD03 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Dawny/Info.plist;
+				INFOPLIST_KEY_BGTaskSchedulerPermittedIdentifiers = Flo.Dawny.reset;
+				INFOPLIST_KEY_CFBundleDisplayName = Dawny;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSRemindersUsageDescription = "Dawny synchronisiert deine täglichen Tasks mit der iOS Erinnerungen-App.";
+				INFOPLIST_KEY_NSSiriUsageDescription = "Dawny verwendet Siri um Tasks per Sprachbefehl hinzuzufügen.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UIBackgroundModes = "fetch processing";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Flo.Dawny;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		5C9C9EE42F0180DB0092AD03 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Flo.DawnyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Dawny.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Dawny";
+			};
+			name = Debug;
+		};
+		5C9C9EE52F0180DB0092AD03 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Flo.DawnyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Dawny.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Dawny";
+			};
+			name = Release;
+		};
+		5C9C9EE72F0180DB0092AD03 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Flo.DawnyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Dawny;
+			};
+			name = Debug;
+		};
+		5C9C9EE82F0180DB0092AD03 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Flo.DawnyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Dawny;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5C9C9EBA2F0180D90092AD03 /* Build configuration list for PBXProject "Dawny" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5C9C9EDE2F0180DB0092AD03 /* Debug */,
+				5C9C9EDF2F0180DB0092AD03 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5C9C9EE02F0180DB0092AD03 /* Build configuration list for PBXNativeTarget "Dawny" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5C9C9EE12F0180DB0092AD03 /* Debug */,
+				5C9C9EE22F0180DB0092AD03 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5C9C9EE32F0180DB0092AD03 /* Build configuration list for PBXNativeTarget "DawnyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5C9C9EE42F0180DB0092AD03 /* Debug */,
+				5C9C9EE52F0180DB0092AD03 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5C9C9EE62F0180DB0092AD03 /* Build configuration list for PBXNativeTarget "DawnyUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5C9C9EE72F0180DB0092AD03 /* Debug */,
+				5C9C9EE82F0180DB0092AD03 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5C9C9EB72F0180D90092AD03 /* Project object */;
+}

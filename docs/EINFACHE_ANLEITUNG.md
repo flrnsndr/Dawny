@@ -1,10 +1,10 @@
-# 🌅 Dawn - Einfache Start-Anleitung für Anfänger
+# 🌅 Dawny - Einfache Start-Anleitung für Anfänger
 
 ## Was ist passiert?
 
-Ich habe **21 Swift-Dateien** mit dem kompletten Code für die Dawn-App erstellt! Alle Dateien liegen in:
+Ich habe **21 Swift-Dateien** mit dem kompletten Code für die Dawny-App erstellt! Alle Dateien liegen in:
 ```
-/Users/florianschneider/Git/Dawn/Dawn/Sources/
+/Users/florianschneider/Git/Dawny/Dawny/Sources/
 ```
 
 ## Was musst du jetzt tun?
@@ -28,7 +28,7 @@ Fülle das Formular aus:
 
 | Feld | Was eingeben |
 |------|--------------|
-| **Product Name** | `Dawn` |
+| **Product Name** | `Dawny` |
 | **Team** | Dein Apple Team (oder "None") |
 | **Organization Identifier** | `com.deinname` (egal was) |
 | **Interface** | **SwiftUI** ⚠️ WICHTIG! |
@@ -37,7 +37,7 @@ Fülle das Formular aus:
 
 Klicke **"Next"** und wähle als Speicherort:
 ```
-/Users/florianschneider/Git/Dawn
+/Users/florianschneider/Git/Dawny
 ```
 
 Klicke **"Create"**
@@ -47,7 +47,7 @@ Klicke **"Create"**
 Xcode hat automatisch 2 Dateien erstellt die wir nicht brauchen:
 
 1. Im **Project Navigator** (linke Spalte) siehst du:
-   - `DawnApp.swift` 
+   - `DawnyApp.swift` 
    - `ContentView.swift`
 2. **Rechtsklick auf beide** → "Delete" → **"Move to Trash"**
 
@@ -55,9 +55,9 @@ Xcode hat automatisch 2 Dateien erstellt die wir nicht brauchen:
 
 **Jetzt der wichtige Teil!**
 
-1. **Rechtsklick** auf "Dawn" (das blaue Icon ganz oben im Navigator)
-2. Wähle **"Add Files to Dawn..."**
-3. **Navigiere zu:** `/Users/florianschneider/Git/Dawn/Dawn/Sources`
+1. **Rechtsklick** auf "Dawny" (das blaue Icon ganz oben im Navigator)
+2. Wähle **"Add Files to Dawny..."**
+3. **Navigiere zu:** `/Users/florianschneider/Git/Dawny/Dawny/Sources`
 4. **Wähle den ganzen `Sources` Ordner** aus
 5. ⚠️ **WICHTIG - Stelle sicher dass angehakt ist:**
    - ✅ **"Create groups"** (NICHT "Create folder references")
@@ -65,8 +65,8 @@ Xcode hat automatisch 2 Dateien erstellt die wir nicht brauchen:
 6. Klicke **"Add"**
 
 **Du solltest jetzt sehen:**
-- Dawn (Projekt)
-  - Dawn (Ordner)
+- Dawny (Projekt)
+  - Dawny (Ordner)
     - Sources
       - Models
       - Services
@@ -77,14 +77,14 @@ Xcode hat automatisch 2 Dateien erstellt die wir nicht brauchen:
 
 ### 🎯 Schritt 6: Info.plist hinzufügen
 
-1. **Ziehe die Datei** `/Users/florianschneider/Git/Dawn/Info.plist`
+1. **Ziehe die Datei** `/Users/florianschneider/Git/Dawny/Info.plist`
 2. **Direkt** in dein Xcode-Projekt (neben Sources)
 3. Wenn gefragt: ✅ "Copy items if needed" anhaken
 
 ### 🎯 Schritt 7: Background Modes aktivieren
 
-1. Klicke auf **"Dawn"** (Projekt, blaues Icon ganz oben)
-2. Wähle das **Target "Dawn"** (unter TARGETS)
+1. Klicke auf **"Dawny"** (Projekt, blaues Icon ganz oben)
+2. Wähle das **Target "Dawny"** (unter TARGETS)
 3. Klicke auf Tab **"Signing & Capabilities"**
 4. Klicke auf **"+ Capability"** (oben links)
 5. Suche und füge hinzu: **"Background Modes"**
@@ -94,14 +94,14 @@ Xcode hat automatisch 2 Dateien erstellt die wir nicht brauchen:
 
 ### 🎯 Schritt 8: iOS 18 einstellen
 
-1. Bleibe im **Target "Dawn"**
+1. Bleibe im **Target "Dawny"**
 2. Klicke auf Tab **"General"**
 3. Scrolle runter zu **"Minimum Deployments"**
 4. Ändere auf: **iOS 18.0**
 
 ### 🎯 Schritt 9: FERTIG! App starten
 
-1. **Wähle** oben links neben "Dawn" einen Simulator aus
+1. **Wähle** oben links neben "Dawny" einen Simulator aus
    - z.B. "iPhone 15 Pro" (iOS 18.0+)
 2. **Drücke den Play-Button** ▶️ (oder ⌘ + R)
 
@@ -174,5 +174,5 @@ Du hast deine erste iOS-App mit:
 - ✅ Background Tasks
 - ✅ Haptic Feedback
 
-Viel Spaß mit Dawn! 🌅
+Viel Spaß mit Dawny! 🌅
 
