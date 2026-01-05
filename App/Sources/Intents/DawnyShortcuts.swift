@@ -22,7 +22,7 @@ struct DawnyShortcuts: AppShortcutsProvider {
                 "Etwas zu \(.applicationName) hinzufügen",
                 "Merken in \(.applicationName)"
             ],
-            shortTitle: String(localized: "intent.addtask.shorttitle", defaultValue: "Task hinzufügen"),
+            shortTitle: LocalizedStringResource("intent.addtask.shorttitle", defaultValue: "Task hinzufügen"),
             systemImageName: "plus.circle"
         )
         
@@ -34,7 +34,7 @@ struct DawnyShortcuts: AppShortcutsProvider {
                 "Task für heute in \(.applicationName)",
                 "Heute hinzufügen in \(.applicationName)"
             ],
-            shortTitle: String(localized: "intent.addtasktoday.shorttitle", defaultValue: "Task für heute"),
+            shortTitle: LocalizedStringResource("intent.addtasktoday.shorttitle", defaultValue: "Task für heute"),
             systemImageName: "sun.max"
         )
     }

@@ -26,11 +26,6 @@ struct DailyFocusView: View {
                 }
             }
             .navigationTitle(String(localized: "today.title", defaultValue: "Heute"))
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    progressView
-                }
-            }
             .refreshable {
                 await viewModel.refresh()
             }
@@ -109,19 +104,6 @@ struct DailyFocusView: View {
             title: String(localized: "today.empty.title", defaultValue: "Noch keine Tasks für heute"),
             message: String(localized: "today.empty.message", defaultValue: "Füge Tasks aus deinem Backlog hinzu, um den Tag zu planen")
         )
-    }
-    
-    private var progressView: some View {
-        HStack(spacing: 8) {
-            Text("\(viewModel.completedTaskCount)/\(viewModel.dailyTasks.count)")
-                .font(.caption)
-                .fontWeight(.medium)
-            
-            SyncStatusIndicator(
-                status: viewModel.isSyncing ? .syncing : .idle,
-                lastSyncDate: viewModel.lastSyncDate
-            )
-        }
     }
     
     private var syncIndicatorView: some View {

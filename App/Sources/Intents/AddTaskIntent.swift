@@ -20,9 +20,7 @@ struct AddTaskIntent: AppIntent {
     var taskTitle: String
     
     static var parameterSummary: some ParameterSummary {
-        Summary("intent.addtask.summary") {
-            \(\.$taskTitle)
-        }
+        Summary("Füge \(\.$taskTitle) hinzu")
     }
     
     @MainActor
@@ -47,8 +45,9 @@ struct AddTaskIntent: AppIntent {
         
         try context.save()
         
-        let dialog = String(localized: "intent.addtask.dialog", defaultValue: "Erledigt! '%@' wurde zum Backlog hinzugefügt.").replacingOccurrences(of: "%@", with: taskTitle)
-        return .result(dialog: dialog)
+        let dialogFormat = String(localized: "intent.addtask.dialog", defaultValue: "Erledigt! '%@' wurde zum Backlog hinzugefügt.")
+        let dialogText = dialogFormat.replacingOccurrences(of: "%@", with: taskTitle)
+        return .result(dialog: IntentDialog(stringLiteral: dialogText))
     }
     
     /// Findet den Default-Backlog oder erstellt einen neuen
