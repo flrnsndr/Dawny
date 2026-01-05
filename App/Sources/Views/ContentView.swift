@@ -33,7 +33,7 @@ struct ContentView: View {
                 }
             }
             .tabItem {
-                Label("Backlog", systemImage: "tray.fill")
+                Label(String(localized: "tabs.backlog", defaultValue: "Backlog"), systemImage: "tray.fill")
             }
             .tag(Tab.backlog)
             
@@ -45,7 +45,7 @@ struct ContentView: View {
                 }
             }
             .tabItem {
-                Label("Heute", systemImage: "sun.max.fill")
+                Label(String(localized: "tabs.today", defaultValue: "Heute"), systemImage: "sun.max.fill")
             }
             .tag(Tab.today)
         }

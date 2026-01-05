@@ -61,7 +61,7 @@ struct SyncStatusIndicator: View {
                     .font(.caption2)
                     .foregroundStyle(.secondary)
             } else if status == .syncing {
-                Text("Synchronisiere...")
+                Text(String(localized: "sync.status.progress", defaultValue: "Synchronisiere..."))
                     .font(.caption2)
                     .foregroundStyle(.secondary)
             }
@@ -80,16 +80,20 @@ struct SyncStatusIndicator: View {
         let interval = Date().timeIntervalSince(date)
         
         if interval < 60 {
-            return "Gerade eben"
+            return String(localized: "sync.status.just.now", defaultValue: "Gerade eben")
         } else if interval < 3600 {
             let minutes = Int(interval / 60)
-            return "vor \(minutes) Min"
+            return String(localized: "sync.status.minutes.ago", defaultValue: "vor %d Min").replacingOccurrences(of: "%d", with: "\(minutes)")
         } else if interval < 86400 {
             let hours = Int(interval / 3600)
-            return "vor \(hours) Std"
+            return String(localized: "sync.status.hours.ago", defaultValue: "vor %d Std").replacingOccurrences(of: "%d", with: "\(hours)")
         } else {
             let days = Int(interval / 86400)
-            return "vor \(days) Tag\(days == 1 ? "" : "en")"
+            if days == 1 {
+                return String(localized: "sync.status.days.ago", defaultValue: "vor %d Tag").replacingOccurrences(of: "%d", with: "\(days)")
+            } else {
+                return String(localized: "sync.status.days.ago.plural", defaultValue: "vor %d Tagen").replacingOccurrences(of: "%d", with: "\(days)")
+            }
         }
     }
 }

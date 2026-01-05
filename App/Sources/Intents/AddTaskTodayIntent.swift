@@ -10,17 +10,19 @@ import SwiftData
 
 /// Intent zum Hinzufügen eines Tasks direkt zur Daily Focus Liste via Siri
 struct AddTaskTodayIntent: AppIntent {
-    static var title: LocalizedStringResource = "Task heute zu Dawny hinzufügen"
-    static var description = IntentDescription("Fügt einen neuen Task direkt zur heutigen Liste hinzu")
+    static var title: LocalizedStringResource = "intent.addtasktoday.title"
+    static var description = IntentDescription("intent.addtasktoday.description")
     
     // Öffnet die App nicht
     static var openAppWhenRun: Bool = false
     
-    @Parameter(title: "Task-Titel", description: "Der Name des Tasks")
+    @Parameter(title: "intent.addtasktoday.param.title", description: "intent.addtasktoday.param.description")
     var taskTitle: String
     
     static var parameterSummary: some ParameterSummary {
-        Summary("Füge \(\.$taskTitle) heute hinzu")
+        Summary("intent.addtasktoday.summary") {
+            \(\.$taskTitle)
+        }
     }
     
     @MainActor
@@ -46,7 +48,8 @@ struct AddTaskTodayIntent: AppIntent {
         
         try context.save()
         
-        return .result(dialog: "Erledigt! '\(taskTitle)' wurde für heute hinzugefügt.")
+        let dialog = String(localized: "intent.addtasktoday.dialog", defaultValue: "Erledigt! '%@' wurde für heute hinzugefügt.").replacingOccurrences(of: "%@", with: taskTitle)
+        return .result(dialog: dialog)
     }
     
     /// Findet den Default-Backlog oder erstellt einen neuen
@@ -63,7 +66,8 @@ struct AddTaskTodayIntent: AppIntent {
         }
         
         // Erstelle neuen Default-Backlog
-        let newBacklog = Backlog(title: "Backlog", orderIndex: 0)
+        let backlogTitle = String(localized: "backlog.default.title", defaultValue: "Backlog")
+        let newBacklog = Backlog(title: backlogTitle, orderIndex: 0)
         context.insert(newBacklog)
         try context.save()
         

@@ -43,10 +43,18 @@ final class DailyFocusViewModel {
         
         do {
             let allTasks = try modelContext.fetch(descriptor)
-            // Filter: Aktive Daily Focus Tasks ODER heute erledigte Tasks
-            dailyTasks = allTasks.filter { task in
-                task.status == .dailyFocus || task.isCompletedToday
+            let settings = AppSettings.shared
+            
+            // Filter: Aktive Daily Focus Tasks
+            var tasks = allTasks.filter { $0.status == .dailyFocus }
+            
+            // Füge erledigte Tasks hinzu, wenn Einstellung aktiviert ist
+            if settings.showCompletedTasksInToday {
+                let completedToday = allTasks.filter { $0.isCompletedToday }
+                tasks.append(contentsOf: completedToday)
             }
+            
+            dailyTasks = tasks
         } catch {
             errorMessage = "Fehler beim Laden der Tasks: \(error.localizedDescription)"
         }

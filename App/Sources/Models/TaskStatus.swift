@@ -24,13 +24,13 @@ enum TaskStatus: String, Codable, CaseIterable {
     var displayName: String {
         switch self {
         case .inBacklog:
-            return "Backlog"
+            return String(localized: "task.status.backlog", defaultValue: "Backlog")
         case .scheduled:
-            return "Geplant"
+            return String(localized: "task.status.scheduled", defaultValue: "Geplant")
         case .dailyFocus:
-            return "Heute"
+            return String(localized: "task.status.today", defaultValue: "Heute")
         case .completed:
-            return "Erledigt"
+            return String(localized: "task.status.completed", defaultValue: "Erledigt")
         }
     }
     

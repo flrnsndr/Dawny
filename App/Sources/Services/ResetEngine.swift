@@ -17,9 +17,13 @@ final class ResetEngine {
     
     private let timeProvider: TimeProvider
     private let modelContext: ModelContext
-    private let resetHour: Int
     private let userDefaultsKey = "DawnyLastResetDate"
     private let backgroundTaskIdentifier = "Flo.Dawny.reset"
+    
+    /// Aktuelle Reset-Stunde aus Settings
+    private var resetHour: Int {
+        AppSettings.shared.resetHour
+    }
     
     /// Optional: Referenz zum SyncEngine für Kalender-Cleanup
     weak var syncEngine: SyncEngine?
@@ -28,12 +32,10 @@ final class ResetEngine {
     
     init(
         timeProvider: TimeProvider,
-        modelContext: ModelContext,
-        resetHour: Int = 3
+        modelContext: ModelContext
     ) {
         self.timeProvider = timeProvider
         self.modelContext = modelContext
-        self.resetHour = resetHour
     }
     
     // MARK: - Public Methods

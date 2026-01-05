@@ -10,17 +10,19 @@ import SwiftData
 
 /// Intent zum Hinzufügen eines Tasks zum Backlog via Siri
 struct AddTaskIntent: AppIntent {
-    static var title: LocalizedStringResource = "Task zu Dawny hinzufügen"
-    static var description = IntentDescription("Fügt einen neuen Task zum Backlog hinzu")
+    static var title: LocalizedStringResource = "intent.addtask.title"
+    static var description = IntentDescription("intent.addtask.description")
     
     // Öffnet die App nicht
     static var openAppWhenRun: Bool = false
     
-    @Parameter(title: "Task-Titel", description: "Der Name des Tasks")
+    @Parameter(title: "intent.addtask.param.title", description: "intent.addtask.param.description")
     var taskTitle: String
     
     static var parameterSummary: some ParameterSummary {
-        Summary("Füge \(\.$taskTitle) hinzu")
+        Summary("intent.addtask.summary") {
+            \(\.$taskTitle)
+        }
     }
     
     @MainActor
@@ -45,7 +47,8 @@ struct AddTaskIntent: AppIntent {
         
         try context.save()
         
-        return .result(dialog: "Erledigt! '\(taskTitle)' wurde zum Backlog hinzugefügt.")
+        let dialog = String(localized: "intent.addtask.dialog", defaultValue: "Erledigt! '%@' wurde zum Backlog hinzugefügt.").replacingOccurrences(of: "%@", with: taskTitle)
+        return .result(dialog: dialog)
     }
     
     /// Findet den Default-Backlog oder erstellt einen neuen
@@ -62,7 +65,8 @@ struct AddTaskIntent: AppIntent {
         }
         
         // Erstelle neuen Default-Backlog
-        let newBacklog = Backlog(title: "Backlog", orderIndex: 0)
+        let backlogTitle = String(localized: "backlog.default.title", defaultValue: "Backlog")
+        let newBacklog = Backlog(title: backlogTitle, orderIndex: 0)
         context.insert(newBacklog)
         try context.save()
         

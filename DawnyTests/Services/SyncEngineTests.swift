@@ -22,6 +22,14 @@ final class SyncEngineTests: XCTestCase {
         context = container.mainContext
         calendarService = MockCalendarService()
         syncEngine = SyncEngine(calendarService: calendarService, modelContext: context)
+        
+        // Setze Kalender-Sync auf aktiviert für Tests
+        AppSettings.shared.calendarSyncEnabled = true
+    }
+    
+    override func tearDown() async throws {
+        // Bereinige Settings nach jedem Test
+        AppSettings.shared.calendarSyncEnabled = true
     }
     
     // MARK: - Create Reminder Tests
@@ -133,5 +141,43 @@ final class SyncEngineTests: XCTestCase {
         await syncEngine.removeTaskFromCalendar(task)
         
         XCTAssertEqual(calendarService.deleteCallCount, 0)
+    }
+    
+    // MARK: - Settings Tests
+    
+    func testSyncRespectsCalendarSyncEnabled() async throws {
+        // Deaktiviere Kalender-Sync
+        AppSettings.shared.calendarSyncEnabled = false
+        
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let task = TestModelContainer.createTask(in: context, title: "Test Task", status: .dailyFocus, backlog: backlog)
+        task.scheduledDate = Date()
+        
+        // Versuche zu synchronisieren
+        await syncEngine.syncTaskToCalendar(task)
+        
+        // Sollte nicht synchronisiert werden
+        XCTAssertEqual(calendarService.createCallCount, 0)
+        XCTAssertNil(task.externalReminderID)
+    }
+    
+    func testSyncAllRespectsCalendarSyncEnabled() async throws {
+        // Deaktiviere Kalender-Sync
+        AppSettings.shared.calendarSyncEnabled = false
+        
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let task1 = TestModelContainer.createTask(in: context, title: "Task 1", status: .dailyFocus, backlog: backlog)
+        let task2 = TestModelContainer.createTask(in: context, title: "Task 2", status: .dailyFocus, backlog: backlog)
+        
+        task1.scheduledDate = Date()
+        task2.scheduledDate = Date()
+        
+        // Versuche alle zu synchronisieren
+        await syncEngine.syncAllDailyFocusTasks()
+        
+        // Sollte nicht synchronisiert werden
+        XCTAssertEqual(calendarService.createCallCount, 0)
+        XCTAssertNil(task1.externalReminderID)
+        XCTAssertNil(task2.externalReminderID)
     }
 }

@@ -28,6 +28,14 @@ final class ResetEngineTests: XCTestCase {
         resetEngine = ResetEngine(timeProvider: timeProvider, modelContext: context)
         resetEngine.syncEngine = syncEngine
         resetEngine.clearLastResetDate()
+        
+        // Setze Standard-Reset-Zeit für Tests (3 Uhr)
+        AppSettings.shared.resetHour = 3
+    }
+    
+    override func tearDown() async throws {
+        // Bereinige Settings nach jedem Test
+        AppSettings.shared.resetHour = 3
     }
     
     // MARK: - Helper
@@ -143,5 +151,53 @@ final class ResetEngineTests: XCTestCase {
         // Task sollte completed bleiben
         XCTAssertEqual(task.status, .completed)
         XCTAssertTrue(task.isCompleted)
+    }
+    
+    // MARK: - Custom Reset Hour Tests
+    
+    func testResetWithCustomHour() async throws {
+        // Setze Reset-Zeit auf 5 Uhr
+        AppSettings.shared.resetHour = 5
+        
+        // Setup: Aktuell 6:00 Uhr
+        let currentDate = createDate(year: 2025, month: 1, day: 15, hour: 6)
+        timeProvider.setCurrentDate(currentDate)
+        
+        // Simuliere dass heute um 5:00 schon resettet wurde
+        let alreadyResetAt = createDate(year: 2025, month: 1, day: 15, hour: 5)
+        resetEngine.setLastResetDate(alreadyResetAt)
+        
+        // Erstelle einen Task im dailyFocus
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let task = TestModelContainer.createTask(in: context, title: "Test", status: .dailyFocus, backlog: backlog)
+        
+        // Action
+        await resetEngine.checkAndPerformResetIfNeeded()
+        
+        // Assert: Task sollte immer noch in dailyFocus sein (Reset war heute um 5:00)
+        XCTAssertEqual(task.status, .dailyFocus)
+    }
+    
+    func testResetWithCustomHourBeforeReset() async throws {
+        // Setze Reset-Zeit auf 5 Uhr
+        AppSettings.shared.resetHour = 5
+        
+        // Setup: Aktuell 4:00 Uhr (vor Reset-Zeit)
+        let currentDate = createDate(year: 2025, month: 1, day: 15, hour: 4)
+        timeProvider.setCurrentDate(currentDate)
+        
+        // Simuliere dass gestern um 5:00 zuletzt resettet wurde
+        let lastResetYesterday = createDate(year: 2025, month: 1, day: 14, hour: 5)
+        resetEngine.setLastResetDate(lastResetYesterday)
+        
+        // Erstelle einen Task im dailyFocus
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let task = TestModelContainer.createTask(in: context, title: "Test", status: .dailyFocus, backlog: backlog)
+        
+        // Action
+        await resetEngine.checkAndPerformResetIfNeeded()
+        
+        // Assert: Task sollte jetzt im Backlog sein (Reset war gestern)
+        XCTAssertEqual(task.status, .inBacklog)
     }
 }

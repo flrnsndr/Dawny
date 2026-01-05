@@ -25,7 +25,7 @@ struct DailyFocusView: View {
                     syncIndicatorView
                 }
             }
-            .navigationTitle("Heute")
+            .navigationTitle(String(localized: "today.title", defaultValue: "Heute"))
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     progressView
@@ -56,7 +56,7 @@ struct DailyFocusView: View {
     private var taskListView: some View {
         List {
             if !viewModel.openTasks.isEmpty {
-                Section("Offen") {
+                Section(String(localized: "today.section.open", defaultValue: "Offen")) {
                     ForEach(viewModel.openTasks) { task in
                         TaskRowView(
                             task: task,
@@ -75,7 +75,7 @@ struct DailyFocusView: View {
                                     await viewModel.removeFromDailyFocus(task)
                                 }
                             } label: {
-                                Label("Backlog", systemImage: "tray.fill")
+                                Label(String(localized: "today.swipe.backlog", defaultValue: "Backlog"), systemImage: "tray.fill")
                             }
                             .tint(.gray)
                         }
@@ -85,7 +85,7 @@ struct DailyFocusView: View {
             }
             
             if !viewModel.completedTasks.isEmpty {
-                Section("Erledigt") {
+                Section(String(localized: "today.section.completed", defaultValue: "Erledigt")) {
                     ForEach(viewModel.completedTasks) { task in
                         TaskRowView(
                             task: task,
@@ -106,8 +106,8 @@ struct DailyFocusView: View {
     private var emptyStateView: some View {
         EmptyStateView(
             icon: "sun.horizon",
-            title: "Noch keine Tasks für heute",
-            message: "Füge Tasks aus deinem Backlog hinzu, um den Tag zu planen"
+            title: String(localized: "today.empty.title", defaultValue: "Noch keine Tasks für heute"),
+            message: String(localized: "today.empty.message", defaultValue: "Füge Tasks aus deinem Backlog hinzu, um den Tag zu planen")
         )
     }
     
@@ -129,7 +129,7 @@ struct DailyFocusView: View {
             Spacer()
             HStack {
                 ProgressView()
-                Text("Synchronisiere...")
+                Text(String(localized: "today.sync.progress", defaultValue: "Synchronisiere..."))
                     .font(.caption)
             }
             .padding()

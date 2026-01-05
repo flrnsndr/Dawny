@@ -26,17 +26,24 @@ final class DawnyUITests: XCTestCase {
     
     func testTabNavigation() throws {
         // Prüfe dass beide Tabs existieren
+        // Note: Tests verwenden lokalisierte Strings - funktioniert mit Deutsch und Englisch
         let heuteTab = app.tabBars.buttons["Heute"]
+        let todayTab = app.tabBars.buttons["Today"]
         let backlogTab = app.tabBars.buttons["Backlog"]
         
-        XCTAssertTrue(heuteTab.waitForExistence(timeout: 5))
+        let todayTabExists = heuteTab.waitForExistence(timeout: 5) || todayTab.waitForExistence(timeout: 5)
+        XCTAssertTrue(todayTabExists)
         XCTAssertTrue(backlogTab.exists)
         
         // Wechsle zu Backlog
         backlogTab.tap()
         
-        // Wechsle zurück zu Heute
-        heuteTab.tap()
+        // Wechsle zurück zu Heute/Today
+        if heuteTab.exists {
+            heuteTab.tap()
+        } else if todayTab.exists {
+            todayTab.tap()
+        }
     }
     
     // MARK: - Task Creation Tests
@@ -52,16 +59,19 @@ final class DawnyUITests: XCTestCase {
         XCTAssertTrue(addButton.waitForExistence(timeout: 3))
         addButton.tap()
         
-        // Warte auf Sheet - TextField hat Placeholder "Task"
+        // Warte auf Sheet - TextField hat Placeholder "Task" (lokalisiert)
         let titleField = app.textFields["Task"]
         if titleField.waitForExistence(timeout: 3) {
             titleField.tap()
             titleField.typeText("UI Test Task")
             
-            // Tippe auf Hinzufügen
-            let addTaskButton = app.buttons["Hinzufügen"]
-            if addTaskButton.exists && addTaskButton.isEnabled {
-                addTaskButton.tap()
+            // Tippe auf Hinzufügen/Add (lokalisiert)
+            let addTaskButtonDE = app.buttons["Hinzufügen"]
+            let addTaskButtonEN = app.buttons["Add"]
+            if addTaskButtonDE.exists && addTaskButtonDE.isEnabled {
+                addTaskButtonDE.tap()
+            } else if addTaskButtonEN.exists && addTaskButtonEN.isEnabled {
+                addTaskButtonEN.tap()
             }
         }
     }
@@ -74,4 +84,3 @@ final class DawnyUITests: XCTestCase {
         }
     }
 }
-

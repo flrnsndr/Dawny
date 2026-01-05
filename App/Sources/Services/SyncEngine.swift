@@ -56,6 +56,11 @@ final class SyncEngine {
     
     /// Synchronisiert einen Task zum Kalender (App → Calendar)
     func syncTaskToCalendar(_ task: Task) async {
+        // Prüfe ob Kalender-Sync aktiviert ist
+        guard AppSettings.shared.calendarSyncEnabled else {
+            return
+        }
+        
         guard task.shouldSyncToCalendar else {
             // Task soll nicht mehr synchronisiert werden
             if task.isSyncedToCalendar {
@@ -120,6 +125,11 @@ final class SyncEngine {
     
     /// Handler für Kalender-Änderungen (Calendar → App)
     private func handleCalendarChanged() async {
+        // Prüfe ob Kalender-Sync aktiviert ist
+        guard AppSettings.shared.calendarSyncEnabled else {
+            return
+        }
+        
         // Debouncing: Nicht zu oft synchronisieren
         let timeSinceLastSync = Date().timeIntervalSince(lastSyncDate)
         if timeSinceLastSync < debounceInterval {
@@ -131,6 +141,11 @@ final class SyncEngine {
     
     /// Synchronisiert Änderungen vom Kalender zur App
     private func syncFromCalendar() async {
+        // Prüfe ob Kalender-Sync aktiviert ist
+        guard AppSettings.shared.calendarSyncEnabled else {
+            return
+        }
+        
         guard !syncInProgress else { return }
         syncInProgress = true
         defer { syncInProgress = false }

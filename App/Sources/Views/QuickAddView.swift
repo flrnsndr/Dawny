@@ -20,27 +20,27 @@ struct QuickAddView: View {
         NavigationStack {
             Form {
                 Section {
-                    TextField("Task", text: $title, axis: .vertical)
+                    TextField(String(localized: "quickadd.task.placeholder", defaultValue: "Task"), text: $title, axis: .vertical)
                         .focused($isTitleFocused)
                         .lineLimit(1...3)
                 }
                 
-                Section("Notizen (optional)") {
+                Section(String(localized: "quickadd.notes.section", defaultValue: "Notizen (optional)")) {
                     TextEditor(text: $notes)
                         .frame(minHeight: 100)
                 }
             }
-            .navigationTitle("Neuer Task")
+            .navigationTitle(String(localized: "quickadd.title", defaultValue: "Neuer Task"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Abbrechen") {
+                    Button(String(localized: "quickadd.cancel", defaultValue: "Abbrechen")) {
                         dismiss()
                     }
                 }
                 
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Hinzufügen") {
+                    Button(String(localized: "quickadd.add", defaultValue: "Hinzufügen")) {
                         saveTask()
                     }
                     .disabled(title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)

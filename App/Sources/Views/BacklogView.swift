@@ -10,6 +10,7 @@ import SwiftUI
 struct BacklogView: View {
     @Bindable var viewModel: BacklogViewModel
     @State private var showingAddTask = false
+    @State private var showingSettings = false
     
     var body: some View {
         NavigationStack {
@@ -20,8 +21,16 @@ struct BacklogView: View {
                     taskListView
                 }
             }
-            .navigationTitle(viewModel.currentBacklog?.title ?? "Backlog")
+            .navigationTitle(viewModel.currentBacklog?.title ?? String(localized: "backlog.title", defaultValue: "Backlog"))
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        showingSettings = true
+                    } label: {
+                        Image(systemName: "gearshape.fill")
+                    }
+                }
+                
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         showingAddTask = true
@@ -34,6 +43,9 @@ struct BacklogView: View {
                 QuickAddView { title, notes in
                     viewModel.addTask(title: title, notes: notes)
                 }
+            }
+            .sheet(isPresented: $showingSettings) {
+                SettingsView()
             }
             .onAppear {
                 viewModel.loadBacklogs()
@@ -74,7 +86,7 @@ struct BacklogView: View {
                             await viewModel.moveTaskToDailyFocus(task)
                         }
                     } label: {
-                        Label("Heute", systemImage: "sun.max.fill")
+                        Label(String(localized: "backlog.swipe.today", defaultValue: "Heute"), systemImage: "sun.max.fill")
                     }
                     .tint(.orange)
                 }
@@ -86,9 +98,9 @@ struct BacklogView: View {
     private var emptyStateView: some View {
         EmptyStateView(
             icon: "tray",
-            title: "Backlog ist leer",
-            message: "Füge neue Tasks hinzu, um mit der Planung zu beginnen",
-            actionTitle: "Task hinzufügen",
+            title: String(localized: "backlog.empty.title", defaultValue: "Backlog ist leer"),
+            message: String(localized: "backlog.empty.message", defaultValue: "Füge neue Tasks hinzu, um mit der Planung zu beginnen"),
+            actionTitle: String(localized: "backlog.empty.action", defaultValue: "Task hinzufügen"),
             action: {
                 showingAddTask = true
             }
