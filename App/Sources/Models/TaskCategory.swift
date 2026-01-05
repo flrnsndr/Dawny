@@ -7,78 +7,91 @@
 
 import Foundation
 
-/// Kategorien für Backlog-Tasks
-enum TaskCategory: String, Codable, CaseIterable {
-    /// Schnell erledigen
-    case quick
+/// Kategorien für Tasks im Backlog
+enum TaskCategory: String, Codable, CaseIterable, Identifiable {
+    case uncategorized = "uncategorized"
+    case quickWin = "quickWin"
+    case thisWeek = "thisWeek"
+    case thisMonth = "thisMonth"
+    case thisYear = "thisYear"
+    case someday = "someday"
     
-    /// Diese Woche
-    case thisWeek
+    var id: String { rawValue }
     
-    /// Diesen Monat
-    case thisMonth
+    // MARK: - Display Properties
     
-    /// Dieses Jahr
-    case thisYear
-    
-    /// Irgendwann
-    case someday
-    
-    /// Unkategorisiert (speziell)
-    case uncategorized
-    
-    /// Lokalisierter Display-Name
+    /// Lokalisierter Anzeigename der Kategorie
     var displayName: String {
         switch self {
-        case .quick:
-            return String(localized: "category.quick.name", defaultValue: "Schnell erledigen")
-        case .thisWeek:
-            return String(localized: "category.thisWeek.name", defaultValue: "Diese Woche")
-        case .thisMonth:
-            return String(localized: "category.thisMonth.name", defaultValue: "Diesen Monat")
-        case .thisYear:
-            return String(localized: "category.thisYear.name", defaultValue: "Dieses Jahr")
-        case .someday:
-            return String(localized: "category.someday.name", defaultValue: "Irgendwann")
         case .uncategorized:
-            return String(localized: "category.uncategorized.name", defaultValue: "Unkategorisiert")
+            return String(localized: "category.uncategorized", defaultValue: "Unkategorisiert")
+        case .quickWin:
+            return String(localized: "category.quickWin", defaultValue: "Schnell erledigen")
+        case .thisWeek:
+            return String(localized: "category.thisWeek", defaultValue: "Diese Woche")
+        case .thisMonth:
+            return String(localized: "category.thisMonth", defaultValue: "Diesen Monat")
+        case .thisYear:
+            return String(localized: "category.thisYear", defaultValue: "Dieses Jahr")
+        case .someday:
+            return String(localized: "category.someday", defaultValue: "Irgendwann")
         }
     }
     
-    /// SF Symbol Icon-Name
-    var iconName: String {
+    /// SF Symbol Icon für die Kategorie
+    var icon: String {
         switch self {
-        case .quick:
+        case .uncategorized:
+            return "questionmark.folder"
+        case .quickWin:
             return "bolt.fill"
         case .thisWeek:
-            return "calendar"
-        case .thisMonth:
             return "calendar.badge.clock"
+        case .thisMonth:
+            return "calendar"
         case .thisYear:
-            return "calendar.badge.exclamationmark"
+            return "calendar.badge.plus"
         case .someday:
-            return "infinity"
-        case .uncategorized:
-            return "tag"
+            return "cloud"
         }
     }
     
-    /// Standard-Reihenfolge-Index (für initiale Sortierung)
-    var defaultOrderIndex: Int {
+    /// Alias für icon (Kompatibilität mit Category Model)
+    var iconName: String { icon }
+    
+    /// Sortierreihenfolge der Kategorien (niedrigere Werte = weiter oben)
+    var sortOrder: Int {
         switch self {
-        case .quick:
-            return 0
-        case .thisWeek:
-            return 1
-        case .thisMonth:
-            return 2
-        case .thisYear:
-            return 3
-        case .someday:
-            return 4
-        case .uncategorized:
-            return 5
+        case .uncategorized: return 0
+        case .quickWin: return 1
+        case .thisWeek: return 2
+        case .thisMonth: return 3
+        case .thisYear: return 4
+        case .someday: return 5
         }
+    }
+    
+    /// Alias für sortOrder (Kompatibilität mit Category Model)
+    var defaultOrderIndex: Int { sortOrder }
+    
+    // MARK: - Helper Methods
+    
+    /// Alle Kategorien außer "Unkategorisiert" (für Picker in Settings)
+    static var selectableCategories: [TaskCategory] {
+        allCases.filter { $0 != .uncategorized }
+    }
+    
+    /// Alle Kategorien sortiert nach Reihenfolge
+    static var sorted: [TaskCategory] {
+        allCases.sorted { $0.sortOrder < $1.sortOrder }
+    }
+}
+
+// MARK: - Comparable
+
+extension TaskCategory: Comparable {
+    static func < (lhs: TaskCategory, rhs: TaskCategory) -> Bool {
+        lhs.sortOrder < rhs.sortOrder
     }
 }
 

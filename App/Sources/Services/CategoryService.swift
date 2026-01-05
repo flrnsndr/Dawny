@@ -8,23 +8,6 @@
 import Foundation
 import SwiftData
 
-// #region agent log helper
-extension CategoryService {
-    private func writeLog(_ data: [String: Any]) {
-        let logPath = "/Users/florianschneider/Git/Dawny/.cursor/debug.log"
-        guard let logData = try? JSONSerialization.data(withJSONObject: data),
-              let logString = String(data: logData, encoding: .utf8) else { return }
-        if !FileManager.default.fileExists(atPath: logPath) {
-            FileManager.default.createFile(atPath: logPath, contents: nil, attributes: nil)
-        }
-        guard let fileHandle = FileHandle(forWritingAtPath: logPath) else { return }
-        fileHandle.seekToEndOfFile()
-        fileHandle.write((logString + "\n").data(using: .utf8) ?? Data())
-        fileHandle.closeFile()
-    }
-}
-// #endregion
-
 /// Service für Kategorien-Management
 final class CategoryService {
     private let modelContext: ModelContext
@@ -35,18 +18,10 @@ final class CategoryService {
     
     /// Initialisiert die Standard-Kategorien beim ersten App-Start
     func initializeDefaultCategories() {
-        // #region agent log
-        writeLog(["location": "CategoryService.swift:20", "message": "initializeDefaultCategories called", "data": [:], "timestamp": Int(Date().timeIntervalSince1970 * 1000), "sessionId": "debug-session", "runId": "run1", "hypothesisId": "A"])
-        // #endregion
-        
         // Prüfe ob bereits Kategorien existieren
         let descriptor = FetchDescriptor<Category>()
         do {
             let existingCategories = try modelContext.fetch(descriptor)
-            
-            // #region agent log
-            writeLog(["location": "CategoryService.swift:27", "message": "Existing categories count", "data": ["count": existingCategories.count, "categories": existingCategories.map { ["id": $0.id.uuidString, "type": $0.categoryType.rawValue, "name": $0.name] }], "timestamp": Int(Date().timeIntervalSince1970 * 1000), "sessionId": "debug-session", "runId": "run1", "hypothesisId": "A"])
-            // #endregion
             
             if !existingCategories.isEmpty {
                 // Kategorien existieren bereits
@@ -58,11 +33,7 @@ final class CategoryService {
         }
         
         // Erstelle alle Standard-Kategorien
-        let categories: [TaskCategory] = [.quick, .thisWeek, .thisMonth, .thisYear, .someday, .uncategorized]
-        
-        // #region agent log
-        writeLog(["location": "CategoryService.swift:37", "message": "Creating categories", "data": ["count": categories.count, "types": categories.map { $0.rawValue }], "timestamp": Int(Date().timeIntervalSince1970 * 1000), "sessionId": "debug-session", "runId": "run1", "hypothesisId": "A"])
-        // #endregion
+        let categories: [TaskCategory] = [.quickWin, .thisWeek, .thisMonth, .thisYear, .someday, .uncategorized]
         
         for categoryType in categories {
             let category = Category(
@@ -76,16 +47,8 @@ final class CategoryService {
         // Speichere die Kategorien
         do {
             try modelContext.save()
-            
-            // #region agent log
-            writeLog(["location": "CategoryService.swift:51", "message": "Categories saved successfully", "data": [:], "timestamp": Int(Date().timeIntervalSince1970 * 1000), "sessionId": "debug-session", "runId": "run1", "hypothesisId": "A"])
-            // #endregion
         } catch {
             print("Fehler beim Speichern der Standard-Kategorien: \(error)")
-            
-            // #region agent log
-            writeLog(["location": "CategoryService.swift:54", "message": "Failed to save categories", "data": ["error": error.localizedDescription], "timestamp": Int(Date().timeIntervalSince1970 * 1000), "sessionId": "debug-session", "runId": "run1", "hypothesisId": "A"])
-            // #endregion
         }
     }
     
@@ -111,13 +74,7 @@ final class CategoryService {
         )
         
         do {
-            let categories = try modelContext.fetch(descriptor)
-            
-            // #region agent log
-            writeLog(["location": "CategoryService.swift:76", "message": "getCategoriesSorted result", "data": ["count": categories.count, "categories": categories.map { ["id": $0.id.uuidString, "type": $0.categoryType.rawValue, "name": $0.name, "orderIndex": $0.orderIndex] }], "timestamp": Int(Date().timeIntervalSince1970 * 1000), "sessionId": "debug-session", "runId": "run1", "hypothesisId": "B"])
-            // #endregion
-            
-            return categories
+            return try modelContext.fetch(descriptor)
         } catch {
             print("Fehler beim Laden der Kategorien: \(error)")
             return []
@@ -141,15 +98,6 @@ final class CategoryService {
     
     /// Migriert alle Tasks ohne Kategorie zur "Unkategorisiert"-Kategorie
     func migrateUncategorizedTasks() {
-        // #region agent log
-        writeLog(["location": "CategoryService.swift:143", "message": "migrateUncategorizedTasks called", "data": [:], "timestamp": Int(Date().timeIntervalSince1970 * 1000), "sessionId": "debug-session", "runId": "post-fix", "hypothesisId": "E"])
-        // #endregion
-        
-        guard let uncategorizedCategory = getUncategorizedCategory() else {
-            print("Unkategorisiert-Kategorie nicht gefunden")
-            return
-        }
-        
         // SwiftData Predicates unterstützen weder == nil für Relationships
         // noch Enum-Vergleiche (wie .status == .inBacklog),
         // daher laden wir alle Tasks und filtern in Swift
@@ -161,24 +109,15 @@ final class CategoryService {
                 $0.status == .inBacklog && $0.category == nil 
             }
             
-            // #region agent log
-            writeLog(["location": "CategoryService.swift:160", "message": "Migration found tasks", "data": ["allTasksCount": allTasks.count, "tasksWithoutCategoryCount": tasksWithoutCategory.count, "tasksWithoutCategory": tasksWithoutCategory.map { ["id": $0.id.uuidString, "title": $0.title, "status": $0.status.rawValue] }], "timestamp": Int(Date().timeIntervalSince1970 * 1000), "sessionId": "debug-session", "runId": "post-fix", "hypothesisId": "E"])
-            // #endregion
-            
             for task in tasksWithoutCategory {
-                task.category = uncategorizedCategory
+                task.category = .uncategorized
             }
             
             if !tasksWithoutCategory.isEmpty {
                 try modelContext.save()
-                
-                // #region agent log
-                writeLog(["location": "CategoryService.swift:168", "message": "Migration completed", "data": ["migratedCount": tasksWithoutCategory.count], "timestamp": Int(Date().timeIntervalSince1970 * 1000), "sessionId": "debug-session", "runId": "post-fix", "hypothesisId": "E"])
-                // #endregion
             }
         } catch {
             print("Fehler beim Migrieren der Tasks: \(error)")
         }
     }
 }
-

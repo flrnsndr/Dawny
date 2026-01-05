@@ -37,6 +37,12 @@ final class Task {
     /// Bei Reset wird dies auf Date() gesetzt, um Tasks nach oben zu bringen
     var sortPriority: Date
     
+    /// Kategorie des Tasks im Backlog
+    var category: TaskCategory?
+    
+    /// Sortier-Index innerhalb der Kategorie (für manuelle Reihenfolge per Drag&Drop)
+    var categoryOrderIndex: Int
+    
     /// Erstellungsdatum (unveränderlich)
     var createdAt: Date
     
@@ -50,9 +56,6 @@ final class Task {
     
     /// Referenz zum Parent-Backlog
     var backlog: Backlog?
-    
-    /// Optional: Kategorie für Backlog-Organisation
-    var category: Category?
     
     // MARK: - Initializer
     
@@ -68,7 +71,8 @@ final class Task {
         createdAt: Date = Date(),
         modifiedAt: Date = Date(),
         isCompleted: Bool = false,
-        category: Category? = nil
+        category: TaskCategory? = nil,
+        categoryOrderIndex: Int = 0
     ) {
         self.id = id
         self.title = title
@@ -82,6 +86,7 @@ final class Task {
         self.modifiedAt = modifiedAt
         self.isCompleted = isCompleted
         self.category = category
+        self.categoryOrderIndex = categoryOrderIndex
     }
     
     // MARK: - Computed Properties

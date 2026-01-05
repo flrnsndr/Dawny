@@ -33,12 +33,6 @@ final class Category {
     /// Erstellungsdatum
     var createdAt: Date
     
-    // MARK: - Relationships
-    
-    /// Alle Tasks in dieser Kategorie
-    @Relationship(deleteRule: .nullify, inverse: \Task.category)
-    var tasks: [Task]
-    
     // MARK: - Initializer
     
     init(
@@ -48,8 +42,7 @@ final class Category {
         iconName: String? = nil,
         orderIndex: Int? = nil,
         isUncategorized: Bool = false,
-        createdAt: Date = Date(),
-        tasks: [Task] = []
+        createdAt: Date = Date()
     ) {
         self.id = id
         self.categoryType = categoryType
@@ -58,21 +51,6 @@ final class Category {
         self.orderIndex = orderIndex ?? categoryType.defaultOrderIndex
         self.isUncategorized = isUncategorized || (categoryType == .uncategorized)
         self.createdAt = createdAt
-        self.tasks = tasks
-    }
-    
-    // MARK: - Computed Properties
-    
-    /// Anzahl der Tasks in dieser Kategorie (nur Backlog-Tasks)
-    var taskCount: Int {
-        tasks.filter { $0.status == .inBacklog }.count
-    }
-    
-    /// Tasks die im Backlog sind (nicht completed/scheduled)
-    var backlogTasks: [Task] {
-        tasks
-            .filter { $0.status == .inBacklog }
-            .sorted()
     }
 }
 

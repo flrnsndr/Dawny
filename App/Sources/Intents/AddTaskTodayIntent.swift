@@ -34,12 +34,17 @@ struct AddTaskTodayIntent: AppIntent {
         // Finde oder erstelle Default-Backlog
         let backlog = try findOrCreateBacklog(in: context)
         
+        // Bestimme Kategorie basierend auf Einstellungen (für späteren Reset)
+        let settings = AppSettings.shared
+        let taskCategory: TaskCategory? = settings.showCategories ? settings.defaultCategory : nil
+        
         // Erstelle Task
         let task = Task(
             title: taskTitle,
             status: .dailyFocus,
             parentBacklogID: backlog.id,
-            scheduledDate: Calendar.current.startOfDay(for: Date())
+            scheduledDate: Calendar.current.startOfDay(for: Date()),
+            category: taskCategory
         )
         task.backlog = backlog
         context.insert(task)

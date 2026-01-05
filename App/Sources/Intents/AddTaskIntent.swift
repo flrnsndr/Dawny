@@ -38,22 +38,18 @@ struct AddTaskIntent: AppIntent {
         // Finde oder erstelle Default-Backlog
         let backlog = try findOrCreateBacklog(in: context)
         
+        // Bestimme Kategorie basierend auf Einstellungen
+        let settings = AppSettings.shared
+        let taskCategory: TaskCategory? = settings.showCategories ? settings.defaultCategory : nil
+        
         // Erstelle Task
         let task = Task(
             title: taskTitle,
             status: .inBacklog,
-            parentBacklogID: backlog.id
+            parentBacklogID: backlog.id,
+            category: taskCategory
         )
         task.backlog = backlog
-        
-        // Wenn Kategorien aktiviert sind, weise Standard-Kategorie zu
-        let settings = AppSettings.shared
-        if settings.showCategories {
-            if let defaultCategory = categoryService.getCategory(type: settings.defaultCategoryType) {
-                task.category = defaultCategory
-            }
-        }
-        
         context.insert(task)
         
         try context.save()

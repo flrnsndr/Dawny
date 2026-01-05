@@ -18,7 +18,8 @@ final class AppSettings {
         static let calendarSyncEnabled = "DawnyCalendarSyncEnabled"
         static let showCompletedTasksInToday = "DawnyShowCompletedTasksInToday"
         static let showCategories = "DawnyShowCategories"
-        static let defaultCategoryType = "DawnyDefaultCategoryType"
+        static let defaultCategory = "DawnyDefaultCategory"
+        static let collapsedCategories = "DawnyCollapsedCategories"
     }
     
     // MARK: - Properties
@@ -51,12 +52,18 @@ final class AppSettings {
         }
     }
     
-    /// Standard-Kategorie für neue Tasks (wenn Kategorien aktiviert)
-    var defaultCategoryType: TaskCategory {
+    /// Standard-Kategorie für neue Tasks (wenn Kategorien aktiviert sind)
+    var defaultCategory: TaskCategory {
         didSet {
-            if let encoded = try? JSONEncoder().encode(defaultCategoryType.rawValue) {
-                UserDefaults.standard.set(encoded, forKey: Keys.defaultCategoryType)
-            }
+            UserDefaults.standard.set(defaultCategory.rawValue, forKey: Keys.defaultCategory)
+        }
+    }
+    
+    /// Set der eingeklappten Kategorien
+    var collapsedCategories: Set<TaskCategory> {
+        didSet {
+            let rawValues = collapsedCategories.map { $0.rawValue }
+            UserDefaults.standard.set(rawValues, forKey: Keys.collapsedCategories)
         }
     }
     
@@ -69,13 +76,19 @@ final class AppSettings {
         self.showCompletedTasksInToday = UserDefaults.standard.object(forKey: Keys.showCompletedTasksInToday) as? Bool ?? true
         self.showCategories = UserDefaults.standard.object(forKey: Keys.showCategories) as? Bool ?? true
         
-        // Lade defaultCategoryType
-        if let data = UserDefaults.standard.data(forKey: Keys.defaultCategoryType),
-           let rawValue = try? JSONDecoder().decode(String.self, from: data),
-           let categoryType = TaskCategory(rawValue: rawValue) {
-            self.defaultCategoryType = categoryType
+        // Lade Default-Kategorie
+        if let rawValue = UserDefaults.standard.string(forKey: Keys.defaultCategory),
+           let category = TaskCategory(rawValue: rawValue) {
+            self.defaultCategory = category
         } else {
-            self.defaultCategoryType = .quick
+            self.defaultCategory = .someday
+        }
+        
+        // Lade eingeklappte Kategorien
+        if let rawValues = UserDefaults.standard.array(forKey: Keys.collapsedCategories) as? [String] {
+            self.collapsedCategories = Set(rawValues.compactMap { TaskCategory(rawValue: $0) })
+        } else {
+            self.collapsedCategories = []
         }
     }
     
@@ -83,5 +96,21 @@ final class AppSettings {
     
     /// Shared Instance für App-weite Nutzung
     static let shared = AppSettings()
+    
+    // MARK: - Category Helpers
+    
+    /// Prüft ob eine Kategorie eingeklappt ist
+    func isCategoryCollapsed(_ category: TaskCategory) -> Bool {
+        collapsedCategories.contains(category)
+    }
+    
+    /// Toggled den Einklapp-Zustand einer Kategorie
+    func toggleCategoryCollapsed(_ category: TaskCategory) {
+        if collapsedCategories.contains(category) {
+            collapsedCategories.remove(category)
+        } else {
+            collapsedCategories.insert(category)
+        }
+    }
 }
 
