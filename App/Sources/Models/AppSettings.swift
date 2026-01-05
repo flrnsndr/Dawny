@@ -17,6 +17,8 @@ final class AppSettings {
         static let resetHour = "DawnyResetHour"
         static let calendarSyncEnabled = "DawnyCalendarSyncEnabled"
         static let showCompletedTasksInToday = "DawnyShowCompletedTasksInToday"
+        static let showCategories = "DawnyShowCategories"
+        static let defaultCategoryType = "DawnyDefaultCategoryType"
     }
     
     // MARK: - Properties
@@ -42,6 +44,22 @@ final class AppSettings {
         }
     }
     
+    /// Kategorien im Backlog anzeigen
+    var showCategories: Bool {
+        didSet {
+            UserDefaults.standard.set(showCategories, forKey: Keys.showCategories)
+        }
+    }
+    
+    /// Standard-Kategorie für neue Tasks (wenn Kategorien aktiviert)
+    var defaultCategoryType: TaskCategory {
+        didSet {
+            if let encoded = try? JSONEncoder().encode(defaultCategoryType.rawValue) {
+                UserDefaults.standard.set(encoded, forKey: Keys.defaultCategoryType)
+            }
+        }
+    }
+    
     // MARK: - Initializer
     
     init() {
@@ -49,6 +67,16 @@ final class AppSettings {
         self.resetHour = UserDefaults.standard.object(forKey: Keys.resetHour) as? Int ?? 3
         self.calendarSyncEnabled = UserDefaults.standard.object(forKey: Keys.calendarSyncEnabled) as? Bool ?? true
         self.showCompletedTasksInToday = UserDefaults.standard.object(forKey: Keys.showCompletedTasksInToday) as? Bool ?? true
+        self.showCategories = UserDefaults.standard.object(forKey: Keys.showCategories) as? Bool ?? true
+        
+        // Lade defaultCategoryType
+        if let data = UserDefaults.standard.data(forKey: Keys.defaultCategoryType),
+           let rawValue = try? JSONDecoder().decode(String.self, from: data),
+           let categoryType = TaskCategory(rawValue: rawValue) {
+            self.defaultCategoryType = categoryType
+        } else {
+            self.defaultCategoryType = .quick
+        }
     }
     
     // MARK: - Singleton

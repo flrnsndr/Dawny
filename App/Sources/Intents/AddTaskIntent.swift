@@ -26,10 +26,14 @@ struct AddTaskIntent: AppIntent {
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
         // ModelContainer erstellen (gleiche Konfiguration wie in der App)
-        let schema = Schema([Task.self, Backlog.self])
+        let schema = Schema([Task.self, Backlog.self, Category.self])
         let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         let container = try ModelContainer(for: schema, configurations: [config])
         let context = container.mainContext
+        
+        // Initialisiere Kategorien falls nötig
+        let categoryService = CategoryService(modelContext: context)
+        categoryService.initializeDefaultCategories()
         
         // Finde oder erstelle Default-Backlog
         let backlog = try findOrCreateBacklog(in: context)
@@ -41,6 +45,15 @@ struct AddTaskIntent: AppIntent {
             parentBacklogID: backlog.id
         )
         task.backlog = backlog
+        
+        // Wenn Kategorien aktiviert sind, weise Standard-Kategorie zu
+        let settings = AppSettings.shared
+        if settings.showCategories {
+            if let defaultCategory = categoryService.getCategory(type: settings.defaultCategoryType) {
+                task.category = defaultCategory
+            }
+        }
+        
         context.insert(task)
         
         try context.save()
