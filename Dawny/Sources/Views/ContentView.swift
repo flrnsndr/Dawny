@@ -19,17 +19,6 @@ struct ContentView: View {
     var body: some View {
         TabView {
             Group {
-                if let dailyViewModel = dailyFocusViewModel {
-                    DailyFocusView(viewModel: dailyViewModel)
-                } else {
-                    ProgressView()
-                }
-            }
-            .tabItem {
-                Label("Heute", systemImage: "sun.max.fill")
-            }
-            
-            Group {
                 if let backlogVM = backlogViewModel {
                     BacklogView(viewModel: backlogVM)
                 } else {
@@ -38,6 +27,17 @@ struct ContentView: View {
             }
             .tabItem {
                 Label("Backlog", systemImage: "tray.fill")
+            }
+            
+            Group {
+                if let dailyViewModel = dailyFocusViewModel {
+                    DailyFocusView(viewModel: dailyViewModel)
+                } else {
+                    ProgressView()
+                }
+            }
+            .tabItem {
+                Label("Heute", systemImage: "sun.max.fill")
             }
         }
         .onAppear {
