@@ -96,6 +96,12 @@ final class Task {
         externalReminderID != nil
     }
     
+    /// Prüft ob der Task heute erledigt wurde (für Anzeige im Heute-Tab)
+    var isCompletedToday: Bool {
+        guard isCompleted, let scheduledDate = scheduledDate else { return false }
+        return Calendar.current.isDateInToday(scheduledDate)
+    }
+    
     // MARK: - Methods
     
     /// Markiert den Task als abgeschlossen

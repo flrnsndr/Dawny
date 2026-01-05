@@ -89,7 +89,11 @@ struct DailyFocusView: View {
                     ForEach(viewModel.completedTasks) { task in
                         TaskRowView(
                             task: task,
-                            onToggle: nil,
+                            onToggle: {
+                                _Concurrency.Task {
+                                    await viewModel.uncompleteTask(task)
+                                }
+                            },
                             onDelete: nil
                         )
                     }

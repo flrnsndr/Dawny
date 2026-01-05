@@ -43,8 +43,10 @@ final class DailyFocusViewModel {
         
         do {
             let allTasks = try modelContext.fetch(descriptor)
-            // Filter manuell nach Status
-            dailyTasks = allTasks.filter { $0.status == .dailyFocus }
+            // Filter: Aktive Daily Focus Tasks ODER heute erledigte Tasks
+            dailyTasks = allTasks.filter { task in
+                task.status == .dailyFocus || task.isCompletedToday
+            }
         } catch {
             errorMessage = "Fehler beim Laden der Tasks: \(error.localizedDescription)"
         }
@@ -81,6 +83,26 @@ final class DailyFocusViewModel {
             loadDailyTasks()
         } catch {
             errorMessage = "Fehler beim Abschließen des Tasks: \(error.localizedDescription)"
+        }
+    }
+    
+    /// Markiert einen erledigten Task wieder als offen
+    func uncompleteTask(_ task: Task) async {
+        task.isCompleted = false
+        task.status = .dailyFocus
+        task.modifiedAt = Date()
+        
+        // Sync zu Kalender falls vorher synchronisiert
+        if task.isSyncedToCalendar {
+            await syncEngine.syncTaskToCalendar(task)
+        }
+        
+        do {
+            try modelContext.save()
+            loadDailyTasks()
+            HapticFeedback.success()
+        } catch {
+            errorMessage = "Fehler beim Wiedereröffnen des Tasks: \(error.localizedDescription)"
         }
     }
     

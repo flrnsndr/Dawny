@@ -15,9 +15,16 @@ struct ContentView: View {
     
     @State private var backlogViewModel: BacklogViewModel?
     @State private var dailyFocusViewModel: DailyFocusViewModel?
+    @State private var selectedTab: Tab = .backlog
+    @State private var hasSetInitialTab = false
+    
+    enum Tab: Int {
+        case backlog = 0
+        case today = 1
+    }
     
     var body: some View {
-        TabView {
+        TabView(selection: $selectedTab) {
             Group {
                 if let backlogVM = backlogViewModel {
                     BacklogView(viewModel: backlogVM)
@@ -28,6 +35,7 @@ struct ContentView: View {
             .tabItem {
                 Label("Backlog", systemImage: "tray.fill")
             }
+            .tag(Tab.backlog)
             
             Group {
                 if let dailyViewModel = dailyFocusViewModel {
@@ -39,9 +47,18 @@ struct ContentView: View {
             .tabItem {
                 Label("Heute", systemImage: "sun.max.fill")
             }
+            .tag(Tab.today)
         }
         .onAppear {
             initializeViewModels()
+            
+            // Initiale Tab-Selektion nur einmal beim App-Start
+            if !hasSetInitialTab {
+                hasSetInitialTab = true
+                if shouldShowTodayTab() {
+                    selectedTab = .today
+                }
+            }
         }
     }
     
@@ -61,5 +78,29 @@ struct ContentView: View {
             syncEngine: syncEngine,
             resetEngine: resetEngine
         )
+    }
+    
+    // MARK: - Tab Selection Logic
+    
+    /// Prüft ob der Heute-Tab angezeigt werden soll
+    /// - Returns: true wenn DailyFocus Tasks existieren
+    private func shouldShowTodayTab() -> Bool {
+        // Fetch alle Tasks und filtere im Speicher
+        // (SwiftData unterstützt keine computed properties in Predicates)
+        let descriptor = FetchDescriptor<Task>()
+        
+        do {
+            let allTasks = try modelContext.fetch(descriptor)
+            
+            // Prüfe auf dailyFocus Tasks (offene Tasks für heute)
+            let hasDailyFocusTasks = allTasks.contains { $0.status == .dailyFocus }
+            
+            // TODO: Wenn Feature "erledigte Tasks im Heute-Tab" implementiert ist,
+            // hier auch completedToday Tasks prüfen
+            
+            return hasDailyFocusTasks
+        } catch {
+            return false
+        }
     }
 }

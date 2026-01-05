@@ -31,7 +31,7 @@ struct TaskRowView: View {
     }
     
     var body: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: horizontalSpacing) {
             // Drag Handle
             if showDragHandle {
                 Image(systemName: "line.3.horizontal")
@@ -47,42 +47,44 @@ struct TaskRowView: View {
                     toggle()
                 } label: {
                     Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
-                        .font(.title3)
+                        .font(checkboxFont)
                         .foregroundStyle(task.isCompleted ? .green : .gray)
                 }
                 .buttonStyle(.plain)
             }
             
             // Task Content
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: contentSpacing) {
                 Text(task.title)
-                    .font(.body)
+                    .font(titleFont)
                     .strikethrough(task.isCompleted)
                     .foregroundStyle(task.isCompleted ? .secondary : .primary)
                 
-                if let notes = task.notes, !notes.isEmpty {
+                if shouldShowNotes, let notes = task.notes, !notes.isEmpty {
                     Text(notes)
-                        .font(.caption)
+                        .font(.caption2)
                         .foregroundStyle(.secondary)
-                        .lineLimit(2)
+                        .lineLimit(notesLineLimit)
                 }
                 
                 // Status Badges
-                HStack(spacing: 8) {
-                    if task.isSyncedToCalendar {
-                        Label("Kalender", systemImage: "calendar")
-                            .font(.caption2)
-                            .foregroundStyle(.blue)
-                    }
-                    
-                    if shouldShowStatusBadge {
-                        Text(task.status.displayName)
-                            .font(.caption2)
-                            .padding(.horizontal, 6)
-                            .padding(.vertical, 2)
-                            .background(statusColor.opacity(0.2))
-                            .foregroundStyle(statusColor)
-                            .cornerRadius(4)
+                if shouldShowBadges {
+                    HStack(spacing: 6) {
+                        if task.isSyncedToCalendar {
+                            Label("Kalender", systemImage: "calendar")
+                                .font(.caption2)
+                                .foregroundStyle(.blue)
+                        }
+                        
+                        if shouldShowStatusBadge {
+                            Text(task.status.displayName)
+                                .font(.caption2)
+                                .padding(.horizontal, 4)
+                                .padding(.vertical, 1)
+                                .background(statusColor.opacity(0.2))
+                                .foregroundStyle(statusColor)
+                                .cornerRadius(4)
+                        }
                     }
                 }
             }
@@ -91,10 +93,10 @@ struct TaskRowView: View {
             
             // Chevron for detail
             Image(systemName: "chevron.right")
-                .font(.caption)
+                .font(.caption2)
                 .foregroundStyle(.tertiary)
         }
-        .padding(.vertical, 4)
+        .padding(.vertical, verticalPadding)
         .contentShape(Rectangle())
         .onTapGesture {
             showingDetail = true
@@ -129,6 +131,48 @@ struct TaskRowView: View {
     
     private var shouldShowStatusBadge: Bool {
         task.status != .inBacklog || showBacklogBadge
+    }
+    
+    // MARK: - Compact Styling Properties
+    
+    /// Horizontal spacing zwischen Elementen
+    private var horizontalSpacing: CGFloat {
+        task.isCompleted ? 8 : 12
+    }
+    
+    /// Vertical padding der gesamten Zeile
+    private var verticalPadding: CGFloat {
+        task.isCompleted ? 2 : 4
+    }
+    
+    /// Schriftgröße für den Titel
+    private var titleFont: Font {
+        task.isCompleted ? .subheadline : .body
+    }
+    
+    /// Schriftgröße für die Checkbox
+    private var checkboxFont: Font {
+        task.isCompleted ? .callout : .title3
+    }
+    
+    /// Spacing innerhalb des Content-VStacks
+    private var contentSpacing: CGFloat {
+        task.isCompleted ? 2 : 4
+    }
+    
+    /// Sollten Notizen angezeigt werden?
+    private var shouldShowNotes: Bool {
+        !task.isCompleted || task.notes?.isEmpty == false
+    }
+    
+    /// Line limit für Notizen bei erledigten Tasks
+    private var notesLineLimit: Int {
+        task.isCompleted ? 1 : 2
+    }
+    
+    /// Sollten Badges angezeigt werden?
+    private var shouldShowBadges: Bool {
+        !task.isCompleted || task.isSyncedToCalendar
     }
 }
 
