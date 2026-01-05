@@ -11,11 +11,35 @@ struct TaskRowView: View {
     let task: Task
     let onToggle: (() -> Void)?
     let onDelete: (() -> Void)?
+    let showDragHandle: Bool
+    let showBacklogBadge: Bool
     
     @State private var showingDetail = false
     
+    init(
+        task: Task,
+        onToggle: (() -> Void)? = nil,
+        onDelete: (() -> Void)? = nil,
+        showDragHandle: Bool = false,
+        showBacklogBadge: Bool = true
+    ) {
+        self.task = task
+        self.onToggle = onToggle
+        self.onDelete = onDelete
+        self.showDragHandle = showDragHandle
+        self.showBacklogBadge = showBacklogBadge
+    }
+    
     var body: some View {
         HStack(spacing: 12) {
+            // Drag Handle
+            if showDragHandle {
+                Image(systemName: "line.3.horizontal")
+                    .font(.caption)
+                    .foregroundStyle(.tertiary)
+                    .padding(.trailing, 4)
+            }
+            
             // Checkbox
             if let toggle = onToggle {
                 Button {
@@ -51,13 +75,15 @@ struct TaskRowView: View {
                             .foregroundStyle(.blue)
                     }
                     
-                    Text(task.status.displayName)
-                        .font(.caption2)
-                        .padding(.horizontal, 6)
-                        .padding(.vertical, 2)
-                        .background(statusColor.opacity(0.2))
-                        .foregroundStyle(statusColor)
-                        .cornerRadius(4)
+                    if shouldShowStatusBadge {
+                        Text(task.status.displayName)
+                            .font(.caption2)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(statusColor.opacity(0.2))
+                            .foregroundStyle(statusColor)
+                            .cornerRadius(4)
+                    }
                 }
             }
             
@@ -99,6 +125,10 @@ struct TaskRowView: View {
         case .completed:
             return .green
         }
+    }
+    
+    private var shouldShowStatusBadge: Bool {
+        task.status != .inBacklog || showBacklogBadge
     }
 }
 
@@ -154,10 +184,11 @@ struct TaskDetailView: View {
         parentBacklogID: UUID()
     )
     
-    return TaskRowView(
+    TaskRowView(
         task: task,
         onToggle: {},
-        onDelete: {}
+        onDelete: {},
+        showDragHandle: true
     )
     .padding()
 }
