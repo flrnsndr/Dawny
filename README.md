@@ -1,6 +1,6 @@
-# Dawn - Intentional Daily Planning
+# Dawny - Intentional Daily Planning
 
-Dawn ist eine minimalistische iOS-App für bewusstes tägliches Task-Management mit der einzigartigen **Zero-Overdue-Philosophie**: Tasks die bis 3 Uhr morgens nicht abgeschlossen wurden, wandern automatisch zurück ins Backlog.
+Dawny ist eine minimalistische iOS-App für bewusstes tägliches Task-Management mit der einzigartigen **Zero-Overdue-Philosophie**: Tasks die bis 3 Uhr morgens nicht abgeschlossen wurden, wandern automatisch zurück ins Backlog.
 
 ## ✨ Features
 
@@ -19,47 +19,47 @@ Dawn ist eine minimalistische iOS-App für bewusstes tägliches Task-Management 
 2. **Erstelle neues Projekt:**
    - File → New → Project
    - iOS → App
-   - Product Name: `Dawn`
+   - Product Name: `Dawny`
    - Interface: `SwiftUI`
    - Language: `Swift`
    - Minimum Deployment: `iOS 18.0`
-3. **Speichere** in `/Users/florianschneider/Git/Dawn`
+3. **Speichere** in `/Users/florianschneider/Git/Dawny`
 
 ### 2. Dateien zum Projekt hinzufügen
 
 **Im Finder:**
-1. Öffne `/Users/florianschneider/Git/Dawn/Dawn/Sources`
+1. Öffne `/Users/florianschneider/Git/Dawny/Dawny/Sources`
 2. Siehst du alle Swift-Dateien? Gut!
 
 **In Xcode:**
 1. **Lösche** die automatisch erstellten Dateien:
-   - `DawnApp.swift` (alt)
+   - `DawnyApp.swift` (alt)
    - `ContentView.swift` (alt)
    
 2. **Füge Ordner hinzu:**
-   - Rechtsklick auf "Dawn" (blau) im Project Navigator
-   - "Add Files to Dawn..."
-   - Wähle den `Dawn/Sources` Ordner
+   - Rechtsklick auf "Dawny" (blau) im Project Navigator
+   - "Add Files to Dawny..."
+   - Wähle den `Dawny/Sources` Ordner
    - ✅ **"Create groups"** auswählen
    - ✅ **"Copy items if needed"** NICHT auswählen
    - Klicke "Add"
 
-3. **Wiederhole** für `Dawn/Tests` und `Dawn/UITests`
+3. **Wiederhole** für `Dawny/Tests` und `Dawny/UITests`
 
 ### 3. Info.plist konfigurieren
 
 **In Xcode:**
-1. Klicke auf "Dawn" (Projekt, blau ganz oben)
-2. Wähle Target "Dawn"
+1. Klicke auf "Dawny" (Projekt, blau ganz oben)
+2. Wähle Target "Dawny"
 3. Tab "Info"
 4. Rechtsklick → "Open As" → "Source Code"
-5. **Ersetze** den Inhalt mit der `/Users/florianschneider/Git/Dawn/Info.plist`
+5. **Ersetze** den Inhalt mit der `/Users/florianschneider/Git/Dawny/Info.plist`
 
 **Oder:** Ziehe die `Info.plist` einfach ins Projekt
 
 ### 4. Capabilities aktivieren
 
-1. Projekt → Target "Dawn" → Tab "Signing & Capabilities"
+1. Projekt → Target "Dawny" → Tab "Signing & Capabilities"
 2. Klicke "+ Capability"
 3. Füge hinzu: **Background Modes**
    - ✅ Background fetch
@@ -67,7 +67,7 @@ Dawn ist eine minimalistische iOS-App für bewusstes tägliches Task-Management 
 
 ### 5. Build Settings prüfen
 
-1. Target "Dawn" → Tab "Build Settings"
+1. Target "Dawny" → Tab "Build Settings"
 2. Suche nach "Swift Language Version"
 3. Stelle sicher: **Swift 6**
 4. Suche nach "iOS Deployment Target"
@@ -118,7 +118,7 @@ Die App sollte jetzt starten! 🎉
 
 ### EventKit-Sync testen:
 1. Öffne **iOS Erinnerungen-App** (auf Simulator)
-2. Gehe zurück zu Dawn
+2. Gehe zurück zu Dawny
 3. Verschiebe Task zu "Heute"
 4. Öffne wieder **Erinnerungen**
 5. Task sollte dort erscheinen! 🎊
@@ -138,6 +138,6 @@ Die App sollte jetzt starten! 🎉
 
 ## 🎉 Fertig!
 
-Du hast jetzt eine funktionsfähige Dawn-App! 
+Du hast jetzt eine funktionsfähige Dawny-App! 
 
 Bei Fragen: Siehe die Dokumentation oder frag nach Hilfe! 🚀
