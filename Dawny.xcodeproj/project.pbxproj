@@ -29,23 +29,10 @@
 		5C9C9ED62F0180DB0092AD03 /* DawnyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DawnyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		5CC5B3ED2F0C0D6C0061BABB /* Exceptions for "Dawny" folder in "Dawny" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 5C9C9EBE2F0180D90092AD03 /* Dawny */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		5C9C9EC12F0180D90092AD03 /* Dawny */ = {
+		5C9C9EC12F0180D90092AD03 /* App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				5CC5B3ED2F0C0D6C0061BABB /* Exceptions for "Dawny" folder in "Dawny" target */,
-			);
-			path = Dawny;
+			path = App;
 			sourceTree = "<group>";
 		};
 		5C9C9ECF2F0180DB0092AD03 /* DawnyTests */ = {
@@ -88,7 +75,7 @@
 		5C9C9EB62F0180D90092AD03 = {
 			isa = PBXGroup;
 			children = (
-				5C9C9EC12F0180D90092AD03 /* Dawny */,
+				5C9C9EC12F0180D90092AD03 /* App */,
 				5C9C9ECF2F0180DB0092AD03 /* DawnyTests */,
 				5C9C9ED92F0180DB0092AD03 /* DawnyUITests */,
 				5C9C9EC02F0180D90092AD03 /* Products */,
@@ -121,7 +108,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				5C9C9EC12F0180D90092AD03 /* Dawny */,
+				5C9C9EC12F0180D90092AD03 /* App */,
 			);
 			name = Dawny;
 			packageProductDependencies = (
@@ -408,9 +395,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2569FXL8Q9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Dawny/Info.plist;
 				INFOPLIST_KEY_BGTaskSchedulerPermittedIdentifiers = Flo.Dawny.reset;
 				INFOPLIST_KEY_CFBundleDisplayName = Dawny;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
@@ -446,9 +433,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2569FXL8Q9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Dawny/Info.plist;
 				INFOPLIST_KEY_BGTaskSchedulerPermittedIdentifiers = Flo.Dawny.reset;
 				INFOPLIST_KEY_CFBundleDisplayName = Dawny;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
