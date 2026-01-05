@@ -51,6 +51,9 @@ final class Task {
     /// Referenz zum Parent-Backlog
     var backlog: Backlog?
     
+    /// Optional: Kategorie für Backlog-Organisation
+    var category: Category?
+    
     // MARK: - Initializer
     
     init(
@@ -64,7 +67,8 @@ final class Task {
         sortPriority: Date = Date(),
         createdAt: Date = Date(),
         modifiedAt: Date = Date(),
-        isCompleted: Bool = false
+        isCompleted: Bool = false,
+        category: Category? = nil
     ) {
         self.id = id
         self.title = title
@@ -77,6 +81,7 @@ final class Task {
         self.createdAt = createdAt
         self.modifiedAt = modifiedAt
         self.isCompleted = isCompleted
+        self.category = category
     }
     
     // MARK: - Computed Properties

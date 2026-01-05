@@ -29,7 +29,8 @@ struct DawnyApp: App {
         do {
             let schema = Schema([
                 Task.self,
-                Backlog.self
+                Backlog.self,
+                Category.self
             ])
             
             let modelConfiguration = ModelConfiguration(
@@ -106,6 +107,10 @@ struct DawnyApp: App {
         
         // 4. Register Background Task
         resetEngine.registerBackgroundTask()
+        
+        // 5. Initialize Categories
+        let categoryService = CategoryService(modelContext: modelContainer.mainContext)
+        categoryService.initializeDefaultCategories()
         
         print("✅ App launch tasks completed")
     }
