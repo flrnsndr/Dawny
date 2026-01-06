@@ -7,7 +7,6 @@
 
 import Foundation
 import SwiftData
-import SwiftUI
 import Observation
 
 @Observable
@@ -16,7 +15,6 @@ final class BacklogViewModel {
     
     private let modelContext: ModelContext
     private let syncEngine: SyncEngine
-    let settings: AppSettings
     
     var backlogs: [Backlog] = []
     var currentBacklog: Backlog?
@@ -25,10 +23,9 @@ final class BacklogViewModel {
     
     // MARK: - Initializer
     
-    init(modelContext: ModelContext, syncEngine: SyncEngine, settings: AppSettings = .shared) {
+    init(modelContext: ModelContext, syncEngine: SyncEngine) {
         self.modelContext = modelContext
         self.syncEngine = syncEngine
-        self.settings = settings
         loadBacklogs()
     }
     
@@ -98,29 +95,13 @@ final class BacklogViewModel {
     // MARK: - Task Management
     
     /// Fügt einen neuen Task zum aktuellen Backlog hinzu
-    func addTask(title: String, notes: String? = nil, category: TaskCategory? = nil) {
+    func addTask(title: String, notes: String? = nil) {
         guard let backlog = currentBacklog else {
             errorMessage = "Kein Backlog ausgewählt"
             return
         }
         
-        // Bestimme die Kategorie basierend auf Einstellungen
-        let taskCategory: TaskCategory?
-        if let explicitCategory = category {
-            taskCategory = explicitCategory
-        } else if settings.showCategories {
-            taskCategory = settings.defaultCategory
-        } else {
-            taskCategory = nil
-        }
-        
-        // Ermittle den nächsten categoryOrderIndex
-        let tasksInCategory = tasksByCategory[taskCategory ?? .uncategorized] ?? []
-        let maxOrderIndex = tasksInCategory.map { $0.categoryOrderIndex }.max() ?? -1
-        
-        let task = backlog.addTask(title: title, notes: notes)
-        task.category = taskCategory
-        task.categoryOrderIndex = maxOrderIndex + 1
+        _ = backlog.addTask(title: title, notes: notes)
         
         do {
             try modelContext.save()
@@ -222,95 +203,5 @@ final class BacklogViewModel {
     /// Anzahl der Tasks im Backlog
     var taskCount: Int {
         currentBacklog?.taskCount ?? 0
-    }
-    
-    // MARK: - Category Management
-    
-    /// Tasks gruppiert nach Kategorie (sortiert)
-    var tasksByCategory: [TaskCategory: [Task]] {
-        var result: [TaskCategory: [Task]] = [:]
-        
-        for task in backlogTasks {
-            let category = task.category ?? .uncategorized
-            if result[category] == nil {
-                result[category] = []
-            }
-            result[category]?.append(task)
-        }
-        
-        // Sortiere Tasks innerhalb jeder Kategorie nach categoryOrderIndex
-        for category in result.keys {
-            result[category]?.sort { $0.categoryOrderIndex < $1.categoryOrderIndex }
-        }
-        
-        return result
-    }
-    
-    /// Alle Kategorien die angezeigt werden sollen (sortiert)
-    var visibleCategories: [TaskCategory] {
-        let allCategories = TaskCategory.sorted
-        
-        return allCategories.filter { category in
-            // Unkategorisiert nur zeigen wenn Tasks vorhanden
-            if category == .uncategorized {
-                return (tasksByCategory[category]?.isEmpty == false)
-            }
-            // Andere Kategorien immer zeigen
-            return true
-        }
-    }
-    
-    /// Verschiebt einen Task in eine andere Kategorie
-    func moveTask(_ task: Task, toCategory category: TaskCategory) {
-        let targetCategory = category == .uncategorized ? nil : category
-        task.category = targetCategory
-        task.modifiedAt = Date()
-        
-        // Setze categoryOrderIndex ans Ende der Zielkategorie
-        let tasksInCategory = tasksByCategory[category] ?? []
-        let maxOrderIndex = tasksInCategory.map { $0.categoryOrderIndex }.max() ?? -1
-        task.categoryOrderIndex = maxOrderIndex + 1
-        
-        do {
-            try modelContext.save()
-        } catch {
-            errorMessage = "Fehler beim Verschieben des Tasks: \(error.localizedDescription)"
-        }
-    }
-    
-    /// Ordnet Tasks innerhalb einer Kategorie neu an
-    func reorderTasks(in category: TaskCategory, fromOffsets source: IndexSet, toOffset destination: Int) {
-        guard var tasks = tasksByCategory[category] else { return }
-        
-        tasks.move(fromOffsets: source, toOffset: destination)
-        
-        // Aktualisiere categoryOrderIndex für alle Tasks in dieser Kategorie
-        for (index, task) in tasks.enumerated() {
-            task.categoryOrderIndex = index
-            task.modifiedAt = Date()
-        }
-        
-        do {
-            try modelContext.save()
-        } catch {
-            errorMessage = "Fehler beim Neuordnen der Tasks: \(error.localizedDescription)"
-        }
-    }
-    
-    /// Migriert bestehende Tasks ohne Kategorie zu "Unkategorisiert"
-    /// Wird aufgerufen wenn Kategorien zum ersten Mal aktiviert werden
-    func migrateUncategorizedTasks() {
-        let tasksWithoutCategory = backlogTasks.filter { $0.category == nil }
-        
-        // Diese bleiben auf nil (= uncategorized), werden aber in der UI als "Unkategorisiert" angezeigt
-        // Nichts zu tun - die Logik behandelt nil als .uncategorized
-        
-        if !tasksWithoutCategory.isEmpty {
-            do {
-                try modelContext.save()
-            } catch {
-                errorMessage = "Fehler bei der Migration: \(error.localizedDescription)"
-            }
-        }
     }
 }

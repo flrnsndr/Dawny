@@ -30,7 +30,6 @@ struct SettingsView: View {
             Form {
                 resetSection
                 synchronisationSection
-                categorySection
                 displaySection
                 infoSection
             }
@@ -71,25 +70,6 @@ struct SettingsView: View {
             Toggle(String(localized: "settings.sync.toggle", defaultValue: "Kalender-Synchronisation"), isOn: $settings.calendarSyncEnabled)
             
             Text(String(localized: "settings.sync.description", defaultValue: "Synchronisiert Daily Focus Tasks mit iOS Erinnerungen."))
-                .font(.caption)
-                .foregroundColor(.secondary)
-        }
-    }
-    
-    private var categorySection: some View {
-        Section(String(localized: "settings.category.section", defaultValue: "Kategorien")) {
-            Toggle(String(localized: "settings.category.toggle", defaultValue: "Kategorien anzeigen"), isOn: $settings.showCategories)
-            
-            if settings.showCategories {
-                Picker(String(localized: "settings.category.default", defaultValue: "Standard-Kategorie"), selection: $settings.defaultCategory) {
-                    ForEach(TaskCategory.selectableCategories) { category in
-                        Label(category.displayName, systemImage: category.icon)
-                            .tag(category)
-                    }
-                }
-            }
-            
-            Text(String(localized: "settings.category.description", defaultValue: "Gruppiert Tasks im Backlog nach Kategorien. Neue Tasks werden automatisch der Standard-Kategorie zugewiesen."))
                 .font(.caption)
                 .foregroundColor(.secondary)
         }

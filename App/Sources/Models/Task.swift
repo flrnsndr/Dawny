@@ -37,12 +37,6 @@ final class Task {
     /// Bei Reset wird dies auf Date() gesetzt, um Tasks nach oben zu bringen
     var sortPriority: Date
     
-    /// Kategorie des Tasks im Backlog
-    var category: TaskCategory?
-    
-    /// Sortier-Index innerhalb der Kategorie (für manuelle Reihenfolge per Drag&Drop)
-    var categoryOrderIndex: Int
-    
     /// Erstellungsdatum (unveränderlich)
     var createdAt: Date
     
@@ -70,9 +64,7 @@ final class Task {
         sortPriority: Date = Date(),
         createdAt: Date = Date(),
         modifiedAt: Date = Date(),
-        isCompleted: Bool = false,
-        category: TaskCategory? = nil,
-        categoryOrderIndex: Int = 0
+        isCompleted: Bool = false
     ) {
         self.id = id
         self.title = title
@@ -85,8 +77,6 @@ final class Task {
         self.createdAt = createdAt
         self.modifiedAt = modifiedAt
         self.isCompleted = isCompleted
-        self.category = category
-        self.categoryOrderIndex = categoryOrderIndex
     }
     
     // MARK: - Computed Properties
