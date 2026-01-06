@@ -31,6 +31,7 @@ struct SettingsView: View {
                 resetSection
                 synchronisationSection
                 displaySection
+                categorySection
                 infoSection
             }
             .navigationTitle(String(localized: "settings.title", defaultValue: "Einstellungen"))
@@ -80,6 +81,28 @@ struct SettingsView: View {
             Toggle(String(localized: "settings.display.toggle", defaultValue: "Erledigte Tasks anzeigen"), isOn: $settings.showCompletedTasksInToday)
             
             Text(String(localized: "settings.display.description", defaultValue: "Zeigt erledigte Tasks im Heute-Tab an."))
+                .font(.caption)
+                .foregroundColor(.secondary)
+        }
+    }
+    
+    private var categorySection: some View {
+        Section(String(localized: "settings.category.section", defaultValue: "Backlog-Kategorien")) {
+            Toggle(String(localized: "settings.category.toggle", defaultValue: "Kategorien anzeigen"), isOn: $settings.showCategories)
+            
+            if settings.showCategories {
+                Picker(String(localized: "settings.category.default", defaultValue: "Standard-Kategorie für neue Tasks"), selection: $settings.defaultCategoryType) {
+                    ForEach(TaskCategory.allCases.filter { $0 != .uncategorized }, id: \.self) { category in
+                        HStack {
+                            Image(systemName: category.iconName)
+                            Text(category.displayName)
+                        }
+                        .tag(category)
+                    }
+                }
+            }
+            
+            Text(String(localized: "settings.category.description", defaultValue: "Organisiere deine Backlog-Tasks in Kategorien."))
                 .font(.caption)
                 .foregroundColor(.secondary)
         }
