@@ -2,7 +2,7 @@
 //  BacklogView.swift
 //  Dawny
 //
-//  View für Backlog-Management
+//  View für Backlog-Management mit optionaler Kategorieansicht
 //
 
 import SwiftUI
@@ -17,8 +17,10 @@ struct BacklogView: View {
             ZStack {
                 if viewModel.backlogTasks.isEmpty {
                     emptyStateView
+                } else if viewModel.settings.showCategories {
+                    categorizedListView
                 } else {
-                    taskListView
+                    flatTaskListView
                 }
             }
             .navigationTitle(viewModel.currentBacklog?.title ?? String(localized: "backlog.title", defaultValue: "Backlog"))
@@ -64,9 +66,83 @@ struct BacklogView: View {
         }
     }
     
-    // MARK: - Subviews
+    // MARK: - Categorized View with Drag & Drop
     
-    private var taskListView: some View {
+    private var categorizedListView: some View {
+        ScrollView {
+            LazyVStack(spacing: 0) {
+                ForEach(viewModel.visibleCategories) { category in
+                    VStack(spacing: 0) {
+                        // Category Header als Drop Target
+                        CategoryHeaderDropTarget(
+                            category: category,
+                            taskCount: viewModel.tasksByCategory[category]?.count ?? 0,
+                            isCollapsed: viewModel.settings.isCategoryCollapsed(category),
+                            onToggleCollapse: {
+                                withAnimation(.easeInOut(duration: 0.2)) {
+                                    viewModel.settings.toggleCategoryCollapsed(category)
+                                }
+                            },
+                            onDropTask: { task in
+                                viewModel.moveTask(task, toCategory: category)
+                            }
+                        )
+                        .padding(.horizontal)
+                        .padding(.top, 12)
+                        
+                        // Tasks in dieser Kategorie
+                        if !viewModel.settings.isCategoryCollapsed(category) {
+                            let tasks = viewModel.tasksByCategory[category] ?? []
+                            
+                            if tasks.isEmpty {
+                                // Empty State
+                                HStack {
+                                    Spacer()
+                                    Text(String(localized: "category.empty", defaultValue: "Keine Tasks"))
+                                        .font(.subheadline)
+                                        .foregroundStyle(.secondary)
+                                        .italic()
+                                    Spacer()
+                                }
+                                .padding(.vertical, 12)
+                                .padding(.horizontal)
+                            } else {
+                                // Task Rows
+                                ForEach(tasks) { task in
+                                    DraggableTaskRow(
+                                        task: task,
+                                        onDelete: {
+                                            _Concurrency.Task {
+                                                await viewModel.deleteTask(task)
+                                            }
+                                        },
+                                        onMoveToToday: {
+                                            _Concurrency.Task {
+                                                await viewModel.moveTaskToDailyFocus(task)
+                                            }
+                                        },
+                                        onChangeCategory: { targetCategory in
+                                            viewModel.moveTask(task, toCategory: targetCategory)
+                                        },
+                                        currentCategory: category
+                                    )
+                                    .padding(.horizontal)
+                                    .padding(.vertical, 4)
+                                    .background(Color(.systemBackground))
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .padding(.bottom, 20)
+        }
+        .background(Color(.systemGroupedBackground))
+    }
+    
+    // MARK: - Flat List View (ohne Kategorien)
+    
+    private var flatTaskListView: some View {
         List {
             ForEach(viewModel.backlogTasks) { task in
                 TaskRowView(
@@ -94,6 +170,8 @@ struct BacklogView: View {
         }
         .listStyle(.insetGrouped)
     }
+    
+    // MARK: - Empty State
     
     private var emptyStateView: some View {
         EmptyStateView(
