@@ -159,3 +159,6 @@ extension EnvironmentValues {
     }
 }
 
+#Preview("App UI") {
+    DawnyPreview.contentView()
+}

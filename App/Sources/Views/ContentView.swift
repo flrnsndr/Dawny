@@ -104,3 +104,7 @@ struct ContentView: View {
         }
     }
 }
+
+#Preview {
+    DawnyPreview.contentView()
+}
