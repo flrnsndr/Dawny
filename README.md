@@ -31,10 +31,7 @@ Dawny ist eine minimalistische iOS-App für bewusstes tägliches Task-Management
 1. Öffne `/Users/florianschneider/Git/Dawny/Dawny/Sources`
 2. Siehst du alle Swift-Dateien? Gut!
 
-**In Xcode:**
-1. **Lösche** die automatisch erstellten Dateien:
-   - `DawnyApp.swift` (alt)
-   - `ContentView.swift` (alt)
+
    
 2. **Füge Ordner hinzu:**
    - Rechtsklick auf "Dawny" (blau) im Project Navigator

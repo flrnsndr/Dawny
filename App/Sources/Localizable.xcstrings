@@ -504,6 +504,23 @@
         }
       }
     },
+    "quickadd.category.section" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategorie"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Category"
+          }
+        }
+      }
+    },
     "quickadd.notes.section" : {
       "extractionState" : "manual",
       "localizations" : {

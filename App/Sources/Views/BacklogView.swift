@@ -29,6 +29,11 @@ struct BacklogView: View {
     @State private var showingSettings = false
     @State private var expandedCategories: Set<UUID> = []
     
+    private var quickAddDefaultCategoryID: UUID? {
+        let sorted = viewModel.categories.sorted()
+        return sorted.first { $0.categoryType == settings.defaultCategoryType }?.id ?? sorted.first?.id
+    }
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -61,8 +66,17 @@ struct BacklogView: View {
                 }
             }
             .sheet(isPresented: $showingAddTask) {
-                QuickAddView { title, notes in
-                    viewModel.addTask(title: title, notes: notes)
+                QuickAddView(
+                    categories: settings.showCategories ? viewModel.categories.sorted() : [],
+                    defaultCategoryID: quickAddDefaultCategoryID,
+                    onSave: { title, notes, category in
+                        viewModel.addTask(title: title, notes: notes, category: category)
+                    }
+                )
+                .onAppear {
+                    if settings.showCategories {
+                        viewModel.loadCategories()
+                    }
                 }
             }
             .sheet(isPresented: $showingSettings) {
