@@ -1,178 +1,79 @@
-# 🌅 Dawny - Einfache Start-Anleitung für Anfänger
+# Dawny – Einfache Start-Anleitung
 
-## Was ist passiert?
+## Wo liegt der Code?
 
-Ich habe **21 Swift-Dateien** mit dem kompletten Code für die Dawny-App erstellt! Alle Dateien liegen in:
-```
-/Users/florianschneider/Git/Dawny/Dawny/Sources/
-```
+Alle Swift-Quellen und Ressourcen der App liegen im Repository unter:
 
-## Was musst du jetzt tun?
-
-### 🎯 Schritt 1: Xcode öffnen
-
-1. Öffne **Xcode** auf deinem Mac
-2. Du siehst ein Willkommens-Fenster
-
-### 🎯 Schritt 2: Neues Projekt erstellen
-
-1. Klicke auf **"Create New Project"**
-2. **Wichtig - Wähle aus:**
-   - Oben in Tabs: **iOS** (nicht macOS!)
-   - Unten: Das **"App"** Template (blaues Icon mit Telefon)
-3. Klicke **"Next"**
-
-### 🎯 Schritt 3: Projekt-Einstellungen
-
-Fülle das Formular aus:
-
-| Feld | Was eingeben |
-|------|--------------|
-| **Product Name** | `Dawny` |
-| **Team** | Dein Apple Team (oder "None") |
-| **Organization Identifier** | `com.deinname` (egal was) |
-| **Interface** | **SwiftUI** ⚠️ WICHTIG! |
-| **Language** | **Swift** |
-| **Storage** | **NICHT** SwiftData anhaken! |
-
-Klicke **"Next"** und wähle als Speicherort:
-```
-/Users/florianschneider/Git/Dawny
+```text
+App/
+├── Assets.xcassets/
+└── Sources/          ← Models, Views, ViewModels, Services, …
 ```
 
-Klicke **"Create"**
+Das Xcode-Projekt **`Dawny.xcodeproj`** (in der **Wurzel** des Repositories) bindet den Ordner **`App/`** automatisch ein. Es gibt keinen zweiten Quellordner mehr wie früher `Dawny/Sources` neben `App/`.
 
-### 🎯 Schritt 4: Die alten Dateien löschen
+## Schnellstart mit Xcode
 
-Xcode hat automatisch 2 Dateien erstellt die wir nicht brauchen:
+1. Repository **klonen** und den Projektordner öffnen.
+2. **`Dawny.xcodeproj`** per Doppelklick öffnen (oder in Xcode: *File → Open*).
+3. Oben das **Scheme „Dawny“** und einen **Simulator** (iOS 18+) wählen.
+4. **⌘ + R** drücken – die App sollte starten.
 
-1. Im **Project Navigator** (linke Spalte) siehst du:
-   - `DawnyApp.swift` 
-   - `ContentView.swift`
-2. **Rechtsklick auf beide** → "Delete" → **"Move to Trash"**
+## Was du im Navigator siehst
 
-### 🎯 Schritt 5: Unsere Dateien hinzufügen
+- **App** – enthält `Sources` (Swift-Code) und `Assets.xcassets`.
+- **DawnyTests** / **DawnyUITests** – Unit- und UI-Tests.
 
-**Jetzt der wichtige Teil!**
+## Capabilities (Kalender / Hintergrund)
 
-1. **Rechtsklick** auf "Dawny" (das blaue Icon ganz oben im Navigator)
-2. Wähle **"Add Files to Dawny..."**
-3. **Navigiere zu:** `/Users/florianschneider/Git/Dawny/Dawny/Sources`
-4. **Wähle den ganzen `Sources` Ordner** aus
-5. ⚠️ **WICHTIG - Stelle sicher dass angehakt ist:**
-   - ✅ **"Create groups"** (NICHT "Create folder references")
-   - ❌ **"Copy items if needed"** NICHT anhaken!
-6. Klicke **"Add"**
+Falls nötig: Projekt **Dawny** auswählen → Target **Dawny** → Tab **Signing & Capabilities** → **+ Capability** → **Background Modes** → *Background fetch* und *Background processing* aktivieren.
 
-**Du solltest jetzt sehen:**
-- Dawny (Projekt)
-  - Dawny (Ordner)
-    - Sources
-      - Models
-      - Services
-      - Views
-      - ViewModels
-      - Protocols
-      - Extensions
-
-### 🎯 Schritt 6: Info.plist hinzufügen
-
-1. **Ziehe die Datei** `/Users/florianschneider/Git/Dawny/Info.plist`
-2. **Direkt** in dein Xcode-Projekt (neben Sources)
-3. Wenn gefragt: ✅ "Copy items if needed" anhaken
-
-### 🎯 Schritt 7: Background Modes aktivieren
-
-1. Klicke auf **"Dawny"** (Projekt, blaues Icon ganz oben)
-2. Wähle das **Target "Dawny"** (unter TARGETS)
-3. Klicke auf Tab **"Signing & Capabilities"**
-4. Klicke auf **"+ Capability"** (oben links)
-5. Suche und füge hinzu: **"Background Modes"**
-6. In der neuen Box, hake an:
-   - ✅ Background fetch
-   - ✅ Background processing
-
-### 🎯 Schritt 8: iOS 18 einstellen
-
-1. Bleibe im **Target "Dawny"**
-2. Klicke auf Tab **"General"**
-3. Scrolle runter zu **"Minimum Deployments"**
-4. Ändere auf: **iOS 18.0**
-
-### 🎯 Schritt 9: FERTIG! App starten
-
-1. **Wähle** oben links neben "Dawny" einen Simulator aus
-   - z.B. "iPhone 15 Pro" (iOS 18.0+)
-2. **Drücke den Play-Button** ▶️ (oder ⌘ + R)
-
-**Die App sollte starten!** 🎉
-
-## 📱 Was kannst du jetzt testen?
+## Was kannst du testen?
 
 ### Test 1: Task hinzufügen
-1. Tippe auf **Backlog-Tab** (unten rechts)
-2. Tippe auf **+** (oben rechts)
-3. Schreibe "Mein erster Task"
-4. Tippe **"Hinzufügen"**
-5. ✅ Task erscheint in der Liste!
 
-### Test 2: Task zu "Heute" verschieben
-1. **Swipe** den Task nach links
-2. Tippe auf **"Heute"** (orange)
-3. Wechsle zum **Heute-Tab** (unten links)
-4. ✅ Task ist dort!
+1. **Backlog-Tab** (unten rechts)
+2. **+** (oben rechts)
+3. Text eingeben → **Hinzufügen** (oder Return/Fertig)
+4. Der Task erscheint in der Liste.
+
+### Test 2: Task zu „Heute“ verschieben
+
+1. Task nach links wischen
+2. **Heute** antippen
+3. **Heute-Tab** (unten links) – der Task sollte dort sein.
 
 ### Test 3: Task abschließen
-1. Tippe auf die **Checkbox** neben dem Task
-2. ✅ Task wird grün und abgehakt!
 
-### Test 4: Kalender-Sync (nur auf echtem iPhone!)
-1. Verschiebe einen Task zu "Heute"
-2. Öffne die **Erinnerungen-App**
-3. ✅ Task sollte dort auch erscheinen!
+Checkbox antippen – Task wird als erledigt markiert.
 
-## ❓ Häufige Probleme
+### Test 4: Kalender-Sync (echtes Gerät)
 
-### "Build failed" oder rote Fehler?
-**Lösung:**
-1. Product → Clean Build Folder (⇧ + ⌘ + K)
-2. Dann nochmal Build (⌘ + B)
-3. Warte bis "Build Succeeded" erscheint
+Nach Zugriff auf Erinnerungen: Task zu „Heute“ verschieben und in der **Erinnerungen-App** prüfen.
 
-### "Cannot find 'Task' in scope"
-**Lösung:**
-- Du hast die `Sources` Dateien nicht richtig hinzugefügt
-- Wiederhole Schritt 5, aber wähle den ganzen Ordner!
+## Häufige Probleme
 
-### App startet nicht?
-**Prüfe:**
-- ✅ iOS 18.0 Simulator ausgewählt?
-- ✅ Minimum Deployment auf iOS 18.0?
-- ✅ Info.plist im Projekt?
+### Build schlägt fehl
 
-### "Keine Berechtigung für Erinnerungen"
-Das ist normal beim ersten Start im Simulator!
-- Klicke "OK" und teste die App trotzdem
-- Die lokalen Features funktionieren auch ohne Kalender
+1. **Product → Clean Build Folder** (⇧⌘K)
+2. Erneut **⌘B**
 
-## 🆘 Brauchst du Hilfe?
+### „Cannot find … in scope“
 
-Wenn etwas nicht funktioniert:
-1. Schaue in die ausführliche **README.md**
-2. Prüfe ob alle Dateien im Projekt sind
-3. Mache einen Screenshot vom Fehler
+Prüfen, ob **`App/Sources`** im Projekt sichtbar ist und das Scheme **Dawny** gewählt ist.
 
-## 🎊 Geschafft!
+### App startet nicht
 
-Wenn du die App siehst: **Herzlichen Glückwunsch!**
+- Simulator mit **iOS 18+** wählen
+- **Deployment Target** des Targets auf iOS 18.0 prüfen
 
-Du hast deine erste iOS-App mit:
-- ✅ 21 Swift-Dateien
-- ✅ SwiftUI Interface
-- ✅ SwiftData Datenbank
-- ✅ EventKit-Integration
-- ✅ Background Tasks
-- ✅ Haptic Feedback
+### Keine Berechtigung für Erinnerungen
 
-Viel Spaß mit Dawny! 🌅
+Beim ersten Start normal; lokale Funktionen gehen oft trotzdem. Auf dem Simulator ggf. Dialog bestätigen.
 
+## Weitere Infos
+
+- Ausführlichere Übersicht: [README.md](../README.md)
+- Anforderungen und Architektur: [PRD.md](PRD.md)
+
+Viel Erfolg mit Dawny.

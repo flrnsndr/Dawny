@@ -11,78 +11,23 @@ Dawny ist eine minimalistische iOS-App für bewusstes tägliches Task-Management
 - 🎨 **Moderne UI**: SwiftUI mit Haptic Feedback
 - 🧪 **Testbar**: Umfassende Tests
 
-## 🚀 Xcode-Setup (Schritt für Schritt)
+## 🚀 Xcode-Setup
 
-### 1. Xcode-Projekt erstellen
+Das Repository enthält bereits das fertige Projekt. Der Anwendungscode liegt unter **`App/`** (Swift-Quellen in `App/Sources/`) und wird von Xcode über `Dawny.xcodeproj` eingebunden.
 
-1. **Öffne Xcode**
-2. **Erstelle neues Projekt:**
-   - File → New → Project
-   - iOS → App
-   - Product Name: `Dawny`
-   - Interface: `SwiftUI`
-   - Language: `Swift`
-   - Minimum Deployment: `iOS 18.0`
-3. **Speichere** in `/Users/florianschneider/Git/Dawny`
+1. Repository klonen und im Finder oder Terminal in den Projektordner wechseln.
+2. **`Dawny.xcodeproj`** doppelklicken (oder in Xcode: File → Open und die Datei auswählen).
+3. Oben das Scheme **Dawny** und einen **Simulator** mit iOS 18+ wählen.
+4. **⌘ + B** zum Bauen, **⌘ + R** zum Starten.
 
-### 2. Dateien zum Projekt hinzufügen
+### Capabilities (für EventKit / Hintergrund)
 
-**Im Finder:**
-1. Öffne `/Users/florianschneider/Git/Dawny/Dawny/Sources`
-2. Siehst du alle Swift-Dateien? Gut!
+Falls du das Projekt neu anlegst oder Capabilities fehlen: Target **Dawny** → **Signing & Capabilities** → **+ Capability** → **Background Modes** mit *Background fetch* und *Background processing*.
 
+### Build Settings
 
-   
-2. **Füge Ordner hinzu:**
-   - Rechtsklick auf "Dawny" (blau) im Project Navigator
-   - "Add Files to Dawny..."
-   - Wähle den `Dawny/Sources` Ordner
-   - ✅ **"Create groups"** auswählen
-   - ✅ **"Copy items if needed"** NICHT auswählen
-   - Klicke "Add"
-
-3. **Wiederhole** für `Dawny/Tests` und `Dawny/UITests`
-
-### 3. Info.plist konfigurieren
-
-**In Xcode:**
-1. Klicke auf "Dawny" (Projekt, blau ganz oben)
-2. Wähle Target "Dawny"
-3. Tab "Info"
-4. Rechtsklick → "Open As" → "Source Code"
-5. **Ersetze** den Inhalt mit der `/Users/florianschneider/Git/Dawny/Info.plist`
-
-**Oder:** Ziehe die `Info.plist` einfach ins Projekt
-
-### 4. Capabilities aktivieren
-
-1. Projekt → Target "Dawny" → Tab "Signing & Capabilities"
-2. Klicke "+ Capability"
-3. Füge hinzu: **Background Modes**
-   - ✅ Background fetch
-   - ✅ Background processing
-
-### 5. Build Settings prüfen
-
-1. Target "Dawny" → Tab "Build Settings"
-2. Suche nach "Swift Language Version"
-3. Stelle sicher: **Swift 6**
-4. Suche nach "iOS Deployment Target"
-5. Stelle sicher: **iOS 18.0**
-
-### 6. Erste Build
-
-1. **Wähle** Simulator (z.B. iPhone 15 Pro)
-2. **Drücke** ⌘ + B (Build)
-3. **Siehst du Fehler?**
-   - Imports fehlen? Normal bei erstem Build
-   - Einfach nochmal ⌘ + B drücken
-
-### 7. App starten!
-
-**Drücke** ⌘ + R (Run)
-
-Die App sollte jetzt starten! 🎉
+- **Swift:** 6  
+- **iOS Deployment Target:** 18.0
 
 ## ⚠️ Häufige Probleme
 
