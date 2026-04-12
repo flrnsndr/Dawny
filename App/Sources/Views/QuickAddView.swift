@@ -27,9 +27,10 @@ struct QuickAddView: View {
         NavigationStack {
             Form {
                 Section {
-                    TextField(String(localized: "quickadd.task.placeholder", defaultValue: "Task"), text: $title, axis: .vertical)
+                    TextField(String(localized: "quickadd.task.placeholder", defaultValue: "Task"), text: $title)
                         .focused($isTitleFocused)
-                        .lineLimit(1...3)
+                        .submitLabel(.done)
+                        .onSubmit { saveTask() }
                 }
                 
                 if !sortedCategories.isEmpty {
@@ -66,13 +67,15 @@ struct QuickAddView: View {
                 }
             }
             .onAppear {
-                isTitleFocused = true
                 if selectedCategoryID == nil, !sortedCategories.isEmpty {
                     if let def = defaultCategoryID, sortedCategories.contains(where: { $0.id == def }) {
                         selectedCategoryID = def
                     } else {
                         selectedCategoryID = sortedCategories.first?.id
                     }
+                }
+                DispatchQueue.main.async {
+                    isTitleFocused = true
                 }
             }
         }
