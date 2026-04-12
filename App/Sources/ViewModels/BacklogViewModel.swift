@@ -116,7 +116,8 @@ final class BacklogViewModel {
     // MARK: - Task Management
     
     /// Fügt einen neuen Task zum aktuellen Backlog hinzu
-    func addTask(title: String, notes: String? = nil) {
+    /// - Parameter category: Wenn gesetzt und Kategorien aktiv sind, wird diese Kategorie verwendet; sonst die Standard-Kategorie aus den Einstellungen.
+    func addTask(title: String, notes: String? = nil, category: Category? = nil) {
         guard let backlog = currentBacklog else {
             errorMessage = "Kein Backlog ausgewählt"
             return
@@ -139,8 +140,13 @@ final class BacklogViewModel {
             // Stelle sicher, dass Kategorien initialisiert sind
             categoryService.initializeDefaultCategories()
             
-            // Weise Standard-Kategorie zu
-            if let defaultCategory = categoryService.getCategory(type: settings.defaultCategoryType) {
+            if let chosen = category {
+                task.category = chosen
+                
+                // #region agent log
+                writeLog(["location": "BacklogViewModel.swift:137", "message": "Category assigned", "data": ["categoryId": chosen.id.uuidString, "categoryType": chosen.categoryType.rawValue, "categoryName": chosen.name], "timestamp": Int(Date().timeIntervalSince1970 * 1000), "sessionId": "debug-session", "runId": "post-fix", "hypothesisId": "C"])
+                // #endregion
+            } else if let defaultCategory = categoryService.getCategory(type: settings.defaultCategoryType) {
                 task.category = defaultCategory
                 
                 // #region agent log

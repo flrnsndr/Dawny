@@ -10,11 +10,18 @@ import SwiftUI
 struct QuickAddView: View {
     @Environment(\.dismiss) private var dismiss
     
-    let onSave: (String, String?) -> Void
+    let categories: [Category]
+    let defaultCategoryID: UUID?
+    let onSave: (String, String?, Category?) -> Void
     
     @State private var title = ""
     @State private var notes = ""
+    @State private var selectedCategoryID: UUID?
     @FocusState private var isTitleFocused: Bool
+    
+    private var sortedCategories: [Category] {
+        categories.sorted()
+    }
     
     var body: some View {
         NavigationStack {
@@ -23,6 +30,17 @@ struct QuickAddView: View {
                     TextField(String(localized: "quickadd.task.placeholder", defaultValue: "Task"), text: $title, axis: .vertical)
                         .focused($isTitleFocused)
                         .lineLimit(1...3)
+                }
+                
+                if !sortedCategories.isEmpty {
+                    Section(String(localized: "quickadd.category.section", defaultValue: "Kategorie")) {
+                        Picker(String(localized: "quickadd.category.section", defaultValue: "Kategorie"), selection: $selectedCategoryID) {
+                            ForEach(sortedCategories, id: \.id) { category in
+                                Label(category.name, systemImage: category.iconName)
+                                    .tag(Optional(category.id))
+                            }
+                        }
+                    }
                 }
                 
                 Section(String(localized: "quickadd.notes.section", defaultValue: "Notizen (optional)")) {
@@ -49,6 +67,13 @@ struct QuickAddView: View {
             }
             .onAppear {
                 isTitleFocused = true
+                if selectedCategoryID == nil, !sortedCategories.isEmpty {
+                    if let def = defaultCategoryID, sortedCategories.contains(where: { $0.id == def }) {
+                        selectedCategoryID = def
+                    } else {
+                        selectedCategoryID = sortedCategories.first?.id
+                    }
+                }
             }
         }
     }
@@ -59,13 +84,19 @@ struct QuickAddView: View {
         
         guard !trimmedTitle.isEmpty else { return }
         
-        onSave(trimmedTitle, trimmedNotes.isEmpty ? nil : trimmedNotes)
+        let chosenCategory: Category? = {
+            guard !sortedCategories.isEmpty else { return nil }
+            let id = selectedCategoryID ?? sortedCategories.first?.id
+            return sortedCategories.first { $0.id == id }
+        }()
+        
+        onSave(trimmedTitle, trimmedNotes.isEmpty ? nil : trimmedNotes, chosenCategory)
         dismiss()
     }
 }
 
 #Preview {
-    QuickAddView { title, notes in
-        print("Saved: \(title), \(notes ?? "no notes")")
+    QuickAddView(categories: [], defaultCategoryID: nil) { title, notes, category in
+        print("Saved: \(title), \(notes ?? "no notes"), category: \(String(describing: category))")
     }
 }
