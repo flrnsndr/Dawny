@@ -96,6 +96,15 @@ final class SyncEngine {
         }
     }
     
+    /// Entfernt nur den EventKit-Reminder (ohne SwiftData-Task). Für Debug-Massenlöschen nach DB-Delete.
+    func deleteReminderFromCalendarOnly(id: String) async {
+        do {
+            try await calendarService.deleteReminder(id: id)
+        } catch {
+            print("⚠️ deleteReminderFromCalendarOnly(\(id)): \(error)")
+        }
+    }
+    
     /// Entfernt einen Task aus dem Kalender
     func removeTaskFromCalendar(_ task: Task) async {
         guard let reminderID = task.externalReminderID else {

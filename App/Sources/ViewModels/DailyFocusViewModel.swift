@@ -35,6 +35,11 @@ final class DailyFocusViewModel {
     
     // MARK: - Task Loading
     
+    /// Leert die angezeigte Liste sofort (z. B. vor Debug-Massenlöschen), damit kein `TaskRowView` noch auf Task-Objekte zeigt.
+    func clearTasksFromDisplayOnly() {
+        dailyTasks = []
+    }
+    
     /// Lädt alle Daily Focus Tasks für heute
     func loadDailyTasks() {
         let descriptor = FetchDescriptor<Task>(

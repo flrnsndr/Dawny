@@ -27,7 +27,10 @@ struct ContentView: View {
         TabView(selection: $selectedTab) {
             Group {
                 if let backlogVM = backlogViewModel {
-                    BacklogView(viewModel: backlogVM)
+                    BacklogView(
+                        viewModel: backlogVM,
+                        dailyFocusViewModel: dailyFocusViewModel
+                    )
                 } else {
                     ProgressView()
                 }
@@ -48,6 +51,9 @@ struct ContentView: View {
                 Label(String(localized: "tabs.today", defaultValue: "Heute"), systemImage: "sun.max.fill")
             }
             .tag(Tab.today)
+        }
+        .environment(\.selectTodayTab) {
+            selectedTab = .today
         }
         .onAppear {
             initializeViewModels()
