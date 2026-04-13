@@ -9,23 +9,6 @@ import Foundation
 import SwiftData
 import Observation
 
-// #region agent log helper
-extension BacklogViewModel {
-    private func writeLog(_ data: [String: Any]) {
-        let logPath = "/Users/florianschneider/Git/Dawny/.cursor/debug.log"
-        guard let logData = try? JSONSerialization.data(withJSONObject: data),
-              let logString = String(data: logData, encoding: .utf8) else { return }
-        if !FileManager.default.fileExists(atPath: logPath) {
-            FileManager.default.createFile(atPath: logPath, contents: nil, attributes: nil)
-        }
-        guard let fileHandle = FileHandle(forWritingAtPath: logPath) else { return }
-        fileHandle.seekToEndOfFile()
-        fileHandle.write((logString + "\n").data(using: .utf8) ?? Data())
-        fileHandle.closeFile()
-    }
-}
-// #endregion
-
 @Observable
 final class BacklogViewModel {
     // MARK: - Properties
@@ -125,16 +108,8 @@ final class BacklogViewModel {
         
         let task = backlog.addTask(title: title, notes: notes)
         
-        // #region agent log
-        writeLog(["location": "BacklogViewModel.swift:125", "message": "addTask called", "data": ["title": title, "taskId": task.id.uuidString], "timestamp": Int(Date().timeIntervalSince1970 * 1000), "sessionId": "debug-session", "runId": "post-fix", "hypothesisId": "A"])
-        // #endregion
-        
         // Wenn Kategorien aktiviert sind, weise Standard-Kategorie zu
         let settings = AppSettings.shared
-        
-        // #region agent log
-        writeLog(["location": "BacklogViewModel.swift:130", "message": "Settings check", "data": ["showCategories": settings.showCategories, "defaultCategoryType": settings.defaultCategoryType.rawValue], "timestamp": Int(Date().timeIntervalSince1970 * 1000), "sessionId": "debug-session", "runId": "post-fix", "hypothesisId": "B"])
-        // #endregion
         
         if settings.showCategories {
             // Stelle sicher, dass Kategorien initialisiert sind
@@ -142,29 +117,13 @@ final class BacklogViewModel {
             
             if let chosen = category {
                 task.category = chosen
-                
-                // #region agent log
-                writeLog(["location": "BacklogViewModel.swift:137", "message": "Category assigned", "data": ["categoryId": chosen.id.uuidString, "categoryType": chosen.categoryType.rawValue, "categoryName": chosen.name], "timestamp": Int(Date().timeIntervalSince1970 * 1000), "sessionId": "debug-session", "runId": "post-fix", "hypothesisId": "C"])
-                // #endregion
             } else if let defaultCategory = categoryService.getCategory(type: settings.defaultCategoryType) {
                 task.category = defaultCategory
-                
-                // #region agent log
-                writeLog(["location": "BacklogViewModel.swift:137", "message": "Category assigned", "data": ["categoryId": defaultCategory.id.uuidString, "categoryType": defaultCategory.categoryType.rawValue, "categoryName": defaultCategory.name], "timestamp": Int(Date().timeIntervalSince1970 * 1000), "sessionId": "debug-session", "runId": "post-fix", "hypothesisId": "C"])
-                // #endregion
-            } else {
-                // #region agent log
-                writeLog(["location": "BacklogViewModel.swift:140", "message": "Default category not found", "data": ["requestedType": settings.defaultCategoryType.rawValue], "timestamp": Int(Date().timeIntervalSince1970 * 1000), "sessionId": "debug-session", "runId": "post-fix", "hypothesisId": "C"])
-                // #endregion
             }
         }
         
         do {
             try modelContext.save()
-            
-            // #region agent log
-            writeLog(["location": "BacklogViewModel.swift:148", "message": "Task saved", "data": ["taskId": task.id.uuidString, "categoryId": task.category?.id.uuidString ?? "nil", "categoryType": task.category?.categoryType.rawValue ?? "nil"], "timestamp": Int(Date().timeIntervalSince1970 * 1000), "sessionId": "debug-session", "runId": "post-fix", "hypothesisId": "D"])
-            // #endregion
         } catch {
             errorMessage = "Fehler beim Erstellen des Tasks: \(error.localizedDescription)"
         }
@@ -276,10 +235,6 @@ final class BacklogViewModel {
     /// Lädt alle Kategorien
     func loadCategories() {
         categories = categoryService.getCategoriesSorted()
-        
-        // #region agent log
-        writeLog(["location": "BacklogViewModel.swift:231", "message": "loadCategories result", "data": ["count": categories.count, "categories": categories.map { ["id": $0.id.uuidString, "type": $0.categoryType.rawValue, "name": $0.name] }], "timestamp": Int(Date().timeIntervalSince1970 * 1000), "sessionId": "debug-session", "runId": "run1", "hypothesisId": "B"])
-        // #endregion
     }
     
     /// Tasks nach Kategorie gruppiert (Key: Category ID)
@@ -317,8 +272,12 @@ final class BacklogViewModel {
     }
     
     /// Verschiebt einen Task in eine andere Kategorie
-    func moveTaskToCategory(_ task: Task, category: Category?) {
+    /// - Parameter placeAtTopOfCategory: Wenn `true`, wird `sortPriority` gesetzt, damit der Task oben in der Zielkategorie erscheint (z. B. Drag & Drop auf den Header).
+    func moveTaskToCategory(_ task: Task, category: Category?, placeAtTopOfCategory: Bool = false) {
         task.category = category
+        if placeAtTopOfCategory {
+            task.sortPriority = Date()
+        }
         task.modifiedAt = Date()
         
         do {
@@ -326,6 +285,13 @@ final class BacklogViewModel {
         } catch {
             errorMessage = "Fehler beim Verschieben des Tasks: \(error.localizedDescription)"
         }
+    }
+
+    /// Lädt einen Task anhand seiner ID (z. B. nach Drag & Drop).
+    func task(withID id: UUID) -> Task? {
+        var descriptor = FetchDescriptor<Task>(predicate: #Predicate { $0.id == id })
+        descriptor.fetchLimit = 1
+        return try? modelContext.fetch(descriptor).first
     }
     
     /// Gibt Tasks einer bestimmten Kategorie zurück
@@ -349,11 +315,9 @@ final class BacklogViewModel {
     func moveTasksWithinCategory(category: Category, from source: IndexSet, to destination: Int) {
         guard let backlog = currentBacklog else { return }
         
-        // Hole alle Tasks dieser Kategorie
         var tasks = backlog.backlogTasks.filter { $0.category?.id == category.id }
         tasks.sort()
         
-        // Verschiebe Tasks (manuelle Implementierung ohne SwiftUI)
         guard !source.isEmpty else { return }
         
         var itemsToMove: [Task] = []
@@ -362,8 +326,6 @@ final class BacklogViewModel {
             itemsToMove.insert(tasks.remove(at: index), at: 0)
         }
         
-        // Berechne Insert-Index: Wenn destination nach den entfernten Indizes liegt, 
-        // muss destination um die Anzahl der entfernten Elemente reduziert werden
         let maxSourceIndex = sortedIndices.last!
         let insertIndex = destination > maxSourceIndex ? destination - itemsToMove.count : destination
         
@@ -371,7 +333,6 @@ final class BacklogViewModel {
             tasks.insert(item, at: insertIndex + index)
         }
         
-        // Aktualisiere sortPriority basierend auf neuer Reihenfolge
         let now = Date()
         for (index, task) in tasks.enumerated() {
             task.sortPriority = now.addingTimeInterval(Double(-index))
@@ -393,7 +354,6 @@ final class BacklogViewModel {
         var tasks = backlog.backlogTasks
         tasks.sort()
         
-        // Verschiebe Tasks (manuelle Implementierung ohne SwiftUI)
         guard !source.isEmpty else { return }
         
         var itemsToMove: [Task] = []
@@ -402,8 +362,6 @@ final class BacklogViewModel {
             itemsToMove.insert(tasks.remove(at: index), at: 0)
         }
         
-        // Berechne Insert-Index: Wenn destination nach den entfernten Indizes liegt, 
-        // muss destination um die Anzahl der entfernten Elemente reduziert werden
         let maxSourceIndex = sortedIndices.last!
         let insertIndex = destination > maxSourceIndex ? destination - itemsToMove.count : destination
         
@@ -411,7 +369,6 @@ final class BacklogViewModel {
             tasks.insert(item, at: insertIndex + index)
         }
         
-        // Aktualisiere sortPriority basierend auf neuer Reihenfolge
         let now = Date()
         for (index, task) in tasks.enumerated() {
             task.sortPriority = now.addingTimeInterval(Double(-index))
