@@ -154,22 +154,30 @@ final class DailyFocusViewModel {
     
     /// Verschiebt Tasks innerhalb der offenen Tasks (Drag & Drop)
     func moveTasks(from source: IndexSet, to destination: Int) {
-        // Arbeite mit einer Kopie der offenen Tasks
         var tasks = openTasks
-        tasks.move(fromOffsets: source, toOffset: destination)
+        guard !source.isEmpty else { return }
         
-        // Aktualisiere sortPriority basierend auf neuer Reihenfolge
-        // Neuere Dates = höhere Priorität, also setzen wir sie absteigend
-        let now = Date()
+        var itemsToMove: [Task] = []
+        let sortedIndices = source.sorted(by: >)
+        for index in sortedIndices {
+            itemsToMove.insert(tasks.remove(at: index), at: 0)
+        }
+        let maxSourceIndex = sortedIndices.last!
+        let insertIndex = destination > maxSourceIndex ? destination - itemsToMove.count : destination
+        for (index, item) in itemsToMove.enumerated() {
+            tasks.insert(item, at: insertIndex + index)
+        }
+        
+        let base = Date()
         for (index, task) in tasks.enumerated() {
-            // Nutze negative Zeitintervalle für absteigende Sortierung
-            task.sortPriority = now.addingTimeInterval(Double(-index))
+            task.sortPriority = base.addingTimeInterval(-Double(index) * 0.001)
             task.modifiedAt = Date()
         }
         
         do {
             try modelContext.save()
-            loadDailyTasks()
+            let completed = dailyTasks.filter(\.isCompleted)
+            dailyTasks = tasks + completed
             HapticFeedback.light()
         } catch {
             errorMessage = "Fehler beim Sortieren der Tasks: \(error.localizedDescription)"

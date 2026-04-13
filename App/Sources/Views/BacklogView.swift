@@ -9,21 +9,6 @@ import SwiftUI
 import SwiftData
 import UIKit
 
-// #region agent log helper
-func writeLog(_ data: [String: Any]) {
-    let logPath = "/Users/florianschneider/Git/Dawny/.cursor/debug.log"
-    guard let logData = try? JSONSerialization.data(withJSONObject: data),
-          let logString = String(data: logData, encoding: .utf8) else { return }
-    if !FileManager.default.fileExists(atPath: logPath) {
-        FileManager.default.createFile(atPath: logPath, contents: nil, attributes: nil)
-    }
-    guard let fileHandle = FileHandle(forWritingAtPath: logPath) else { return }
-    fileHandle.seekToEndOfFile()
-    fileHandle.write((logString + "\n").data(using: .utf8) ?? Data())
-    fileHandle.closeFile()
-}
-// #endregion
-
 struct BacklogView: View {
     @Bindable var viewModel: BacklogViewModel
     var dailyFocusViewModel: DailyFocusViewModel? = nil
@@ -39,6 +24,8 @@ struct BacklogView: View {
     @State private var showingClearAllConfirm = false
     /// Während Massen-Löschung: Liste ausblenden, damit keine TaskRowView auf detached SwiftData-Tasks zugreift.
     @State private var isBulkDeletingTasks = false
+    /// Bearbeiten: Reorder-Griffe (`onMove`); außerhalb Bearbeiten: Drag & Drop zwischen Kategorien auf Sektions-Header.
+    @State private var editMode = EditMode.inactive
     
     private var quickAddDefaultCategoryID: UUID? {
         let sorted = viewModel.categories.sorted()
@@ -62,12 +49,22 @@ struct BacklogView: View {
                 }
             }
             .navigationTitle(viewModel.currentBacklog?.title ?? String(localized: "backlog.title", defaultValue: "Backlog"))
+            .environment(\.editMode, $editMode)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     debugToolbarLeadingContent
                 }
                 
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    if !viewModel.backlogTasks.isEmpty {
+                        Button {
+                            toggleEditMode()
+                        } label: {
+                            Text(editMode == .active
+                                 ? String(localized: "common.done", defaultValue: "Fertig")
+                                 : String(localized: "common.edit", defaultValue: "Bearbeiten"))
+                        }
+                    }
                     Button {
                         showingAddTask = true
                     } label: {
@@ -220,10 +217,6 @@ struct BacklogView: View {
         let grouped = viewModel.groupedTasks
         let sortedCategories = viewModel.categories.sorted()
         
-        // #region agent log
-        writeLog(["location": "BacklogView.swift:95", "message": "categorizedTaskListView rendering", "data": ["categoriesCount": sortedCategories.count, "groupedCount": grouped.count, "categories": sortedCategories.map { ["id": $0.id.uuidString, "type": $0.categoryType.rawValue, "name": $0.name, "tasksCount": grouped[$0.id]?.count ?? 0, "isUncategorized": $0.isUncategorized] }], "timestamp": Int(Date().timeIntervalSince1970 * 1000), "sessionId": "debug-session", "runId": "post-fix", "hypothesisId": "C"])
-        // #endregion
-        
         return List {
             ForEach(sortedCategories, id: \.id) { category in
                 let tasks = grouped[category.id] ?? []
@@ -233,30 +226,7 @@ struct BacklogView: View {
                 Section {
                     if isExpanded {
                         ForEach(tasks, id: \.id) { task in
-                                TaskRowView(
-                                    task: task,
-                                    onToggle: nil,
-                                    onDelete: {
-                                        _Concurrency.Task {
-                                            await viewModel.deleteTask(task)
-                                        }
-                                    },
-                                    showBacklogBadge: false
-                                )
-                                .swipeActions(edge: .leading) {
-                                    Button {
-                                        HapticFeedback.medium()
-                                        _Concurrency.Task {
-                                            await viewModel.moveTaskToDailyFocus(task)
-                                        }
-                                    } label: {
-                                        Label(String(localized: "backlog.swipe.today", defaultValue: "Heute"), systemImage: "sun.max.fill")
-                                    }
-                                    .tint(.orange)
-                                }
-                                .contextMenu {
-                                    categoryContextMenu(for: task)
-                                }
+                            backlogCategorizedTaskRow(task: task)
                         }
                         .onMove { source, destination in
                             viewModel.moveTasksWithinCategory(category: category, from: source, to: destination)
@@ -270,27 +240,79 @@ struct BacklogView: View {
                         ) {
                             toggleCategory(category.id)
                         }
+                        .dropDestination(for: BacklogTaskTransfer.self) { items, _ in
+                            return handleCategoryHeaderDrop(items, targetCategory: category)
+                        }
                     }
             }
         }
+        .environment(\.editMode, $editMode)
         .listStyle(.insetGrouped)
     }
     
     /// Unkategorisierte Ansicht (flache Liste)
     private var uncategorizedTaskListView: some View {
         List {
-            ForEach(viewModel.backlogTasks) { task in
-                TaskRowView(
-                    task: task,
-                    onToggle: nil,
-                    onDelete: {
-                        _Concurrency.Task {
-                            await viewModel.deleteTask(task)
-                        }
-                    },
-                    showBacklogBadge: false
-                )
-                .swipeActions(edge: .leading) {
+            ForEach(viewModel.backlogTasks, id: \.id) { task in
+                backlogUncategorizedRow(task: task)
+            }
+            .onMove { source, destination in
+                viewModel.moveTasks(from: source, to: destination)
+            }
+        }
+        .environment(\.editMode, $editMode)
+        .listStyle(.insetGrouped)
+    }
+    
+    @ViewBuilder
+    private func backlogUncategorizedRow(task: Task) -> some View {
+        let base = TaskRowView(
+            task: task,
+            onToggle: nil,
+            onDelete: {
+                _Concurrency.Task {
+                    await viewModel.deleteTask(task)
+                }
+            },
+            showBacklogBadge: false,
+            listEditingExplicit: editMode == .active
+        )
+        if editMode == .inactive {
+            base.swipeActions(edge: .leading) {
+                Button {
+                    HapticFeedback.medium()
+                    _Concurrency.Task {
+                        await viewModel.moveTaskToDailyFocus(task)
+                    }
+                } label: {
+                    Label(String(localized: "backlog.swipe.today", defaultValue: "Heute"), systemImage: "sun.max.fill")
+                }
+                .tint(.orange)
+            }
+        } else {
+            base
+        }
+    }
+    
+    @ViewBuilder
+    private func backlogCategorizedTaskRow(task: Task) -> some View {
+        let base = TaskRowView(
+            task: task,
+            onToggle: nil,
+            onDelete: {
+                _Concurrency.Task {
+                    await viewModel.deleteTask(task)
+                }
+            },
+            showBacklogBadge: false,
+            listEditingExplicit: editMode == .active
+        )
+        let withContext = base.contextMenu {
+            categoryContextMenu(for: task)
+        }
+        let withLeadingSwipe: some View = Group {
+            if editMode == .inactive {
+                withContext.swipeActions(edge: .leading) {
                     Button {
                         HapticFeedback.medium()
                         _Concurrency.Task {
@@ -301,12 +323,30 @@ struct BacklogView: View {
                     }
                     .tint(.orange)
                 }
-            }
-            .onMove { source, destination in
-                viewModel.moveTasks(from: source, to: destination)
+            } else {
+                withContext
             }
         }
-        .listStyle(.insetGrouped)
+        
+        if editMode == .inactive {
+            withLeadingSwipe.draggable(BacklogTaskTransfer(taskID: task.id))
+        } else {
+            withLeadingSwipe
+        }
+    }
+    
+    private func toggleEditMode() {
+        editMode = editMode == .active ? .inactive : .active
+    }
+    
+    private func handleCategoryHeaderDrop(_ items: [BacklogTaskTransfer], targetCategory: Category) -> Bool {
+        guard let payload = items.first,
+              let task = viewModel.task(withID: payload.taskID) else { return false }
+        if task.category?.id == targetCategory.id { return false }
+        viewModel.moveTaskToCategory(task, category: targetCategory, placeAtTopOfCategory: true)
+        expandedCategories.insert(targetCategory.id)
+        HapticFeedback.light()
+        return true
     }
     
     // MARK: - Helper Methods

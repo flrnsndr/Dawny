@@ -13,25 +13,38 @@ struct TaskRowView: View {
     let onDelete: (() -> Void)?
     let showDragHandle: Bool
     let showBacklogBadge: Bool
+    /// Wenn gesetzt, überschreibt das Environment — in `List`-Zellen fehlt `editMode` oft, dann blockiert sonst das Zeilen-Tap die Reorder-Geste.
+    let listEditingExplicit: Bool?
     
     @State private var showingDetail = false
+    @Environment(\.editMode) private var editMode
+    
+    /// `true`, wenn die umgebende Liste im Bearbeiten-Modus ist (Reorder). Dann keine vollflächigen Tap-/Swipe-Gesten, die mit den System-Griffen kollidieren.
+    private var isListEditing: Bool {
+        if let listEditingExplicit {
+            return listEditingExplicit
+        }
+        return editMode?.wrappedValue == .active
+    }
     
     init(
         task: Task,
         onToggle: (() -> Void)? = nil,
         onDelete: (() -> Void)? = nil,
         showDragHandle: Bool = false,
-        showBacklogBadge: Bool = true
+        showBacklogBadge: Bool = true,
+        listEditingExplicit: Bool? = nil
     ) {
         self.task = task
         self.onToggle = onToggle
         self.onDelete = onDelete
         self.showDragHandle = showDragHandle
         self.showBacklogBadge = showBacklogBadge
+        self.listEditingExplicit = listEditingExplicit
     }
     
     var body: some View {
-        HStack(spacing: horizontalSpacing) {
+        let rowStack = HStack(spacing: horizontalSpacing) {
             // Drag Handle
             if showDragHandle {
                 Image(systemName: "line.3.horizontal")
@@ -40,79 +53,108 @@ struct TaskRowView: View {
                     .padding(.trailing, 4)
             }
             
-            // Checkbox
+            // Checkbox — im Listen-Bearbeiten-Modus kein `Button`: sonst gewinnt die Taste die Hit-Tests
+            // und `List`+`onMove` feuert oft nicht (Daily Focus mit Toggle vs. Backlog mit onToggle: nil).
             if let toggle = onToggle {
-                Button {
-                    HapticFeedback.success()
-                    toggle()
-                } label: {
+                if isListEditing {
                     Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
                         .font(checkboxFont)
                         .foregroundStyle(task.isCompleted ? .green : .gray)
+                } else {
+                    Button {
+                        HapticFeedback.success()
+                        toggle()
+                    } label: {
+                        Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
+                            .font(checkboxFont)
+                            .foregroundStyle(task.isCompleted ? .green : .gray)
+                    }
+                    .buttonStyle(.plain)
                 }
-                .buttonStyle(.plain)
             }
             
-            // Task Content
-            VStack(alignment: .leading, spacing: contentSpacing) {
-                Text(task.title)
-                    .font(titleFont)
-                    .strikethrough(task.isCompleted)
-                    .foregroundStyle(task.isCompleted ? .secondary : .primary)
-                
-                if shouldShowNotes, let notes = task.notes, !notes.isEmpty {
-                    Text(notes)
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
-                        .lineLimit(notesLineLimit)
-                }
-                
-                // Status Badges
-                if shouldShowBadges {
-                    HStack(spacing: 6) {
-                        if task.isSyncedToCalendar {
-                            Label(String(localized: "task.calendar.badge", defaultValue: "Kalender"), systemImage: "calendar")
-                                .font(.caption2)
-                                .foregroundStyle(.blue)
-                        }
-                        
-                        if shouldShowStatusBadge {
-                            Text(task.status.displayName)
-                                .font(.caption2)
-                                .padding(.horizontal, 4)
-                                .padding(.vertical, 1)
-                                .background(statusColor.opacity(0.2))
-                                .foregroundStyle(statusColor)
-                                .cornerRadius(4)
-                        }
-                    }
-                }
-            }
+            // Task Content — im Bearbeiten-Modus tippbar, damit Details ohne vollflächige Zeilengeste erreichbar bleiben
+            titleAndMetaColumn
             
             Spacer()
             
-            // Chevron for detail
-            Image(systemName: "chevron.right")
-                .font(.caption2)
-                .foregroundStyle(.tertiary)
+            detailChevron
         }
         .padding(.vertical, verticalPadding)
-        .contentShape(Rectangle())
-        .onTapGesture {
-            showingDetail = true
+        
+        Group {
+            if isListEditing {
+                rowStack
+            } else {
+                rowStack
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        showingDetail = true
+                    }
+            }
         }
-        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-            if let delete = onDelete {
-                Button(role: .destructive) {
-                    HapticFeedback.heavy()
-                    delete()
-                } label: {
-                    Label(String(localized: "task.delete", defaultValue: "Löschen"), systemImage: "trash")
+        .modifier(TrailingSwipeDeleteModifier(isEnabled: !isListEditing, onDelete: onDelete))
+        .sheet(isPresented: $showingDetail) {
+            TaskDetailView(task: task)
+        }
+    }
+    
+    @ViewBuilder
+    private var titleAndMetaColumn: some View {
+        let column = VStack(alignment: .leading, spacing: contentSpacing) {
+            Text(task.title)
+                .font(titleFont)
+                .strikethrough(task.isCompleted)
+                .foregroundStyle(task.isCompleted ? .secondary : .primary)
+            
+            if shouldShowNotes, let notes = task.notes, !notes.isEmpty {
+                Text(notes)
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(notesLineLimit)
+            }
+            
+            if shouldShowBadges {
+                HStack(spacing: 6) {
+                    if task.isSyncedToCalendar {
+                        Label(String(localized: "task.calendar.badge", defaultValue: "Kalender"), systemImage: "calendar")
+                            .font(.caption2)
+                            .foregroundStyle(.blue)
+                    }
+                    
+                    if shouldShowStatusBadge {
+                        Text(task.status.displayName)
+                            .font(.caption2)
+                            .padding(.horizontal, 4)
+                            .padding(.vertical, 1)
+                            .background(statusColor.opacity(0.2))
+                            .foregroundStyle(statusColor)
+                            .cornerRadius(4)
+                    }
                 }
             }
         }
-        .sheet(isPresented: $showingDetail) {
-            TaskDetailView(task: task)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        
+        // Im Listen-Bearbeiten-Modus kein Tap auf der Titelspalte: sonst füllt `maxWidth: .infinity` fast die Zeile und blockiert `List`+`onMove`.
+        column
+    }
+    
+    @ViewBuilder
+    private var detailChevron: some View {
+        if isListEditing {
+            Image(systemName: "chevron.right")
+                .font(.caption2)
+                .foregroundStyle(.tertiary)
+                .frame(minWidth: 44, minHeight: 44)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    showingDetail = true
+                }
+        } else {
+            Image(systemName: "chevron.right")
+                .font(.caption2)
+                .foregroundStyle(.tertiary)
         }
     }
     
@@ -173,6 +215,29 @@ struct TaskRowView: View {
     /// Sollten Badges angezeigt werden?
     private var shouldShowBadges: Bool {
         !task.isCompleted || task.isSyncedToCalendar
+    }
+}
+
+// MARK: - Swipe (nur außerhalb Listen-Bearbeiten, damit `List`+`onMove` die System-Reorder-Griffe zeigen kann)
+
+private struct TrailingSwipeDeleteModifier: ViewModifier {
+    let isEnabled: Bool
+    let onDelete: (() -> Void)?
+    
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        if isEnabled, let onDelete {
+            content.swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                Button(role: .destructive) {
+                    HapticFeedback.heavy()
+                    onDelete()
+                } label: {
+                    Label(String(localized: "task.delete", defaultValue: "Löschen"), systemImage: "trash")
+                }
+            }
+        } else {
+            content
+        }
     }
 }
 

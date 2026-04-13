@@ -10,6 +10,8 @@ import SwiftUI
 struct DailyFocusView: View {
     @Bindable var viewModel: DailyFocusViewModel
     @State private var showingSyncIndicator = false
+    /// Erforderlich, damit `List`+`onMove` die System-Reorder-Griffe anzeigt (wie Backlog).
+    @State private var editMode = EditMode.inactive
     
     var body: some View {
         NavigationStack {
@@ -26,6 +28,20 @@ struct DailyFocusView: View {
                 }
             }
             .navigationTitle(String(localized: "today.title", defaultValue: "Heute"))
+            .environment(\.editMode, $editMode)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    if !viewModel.openTasks.isEmpty {
+                        Button {
+                            toggleEditMode()
+                        } label: {
+                            Text(editMode == .active
+                                 ? String(localized: "common.done", defaultValue: "Fertig")
+                                 : String(localized: "common.edit", defaultValue: "Bearbeiten"))
+                        }
+                    }
+                }
+            }
             .refreshable {
                 await viewModel.refresh()
             }
@@ -52,28 +68,8 @@ struct DailyFocusView: View {
         List {
             if !viewModel.openTasks.isEmpty {
                 Section(String(localized: "today.section.open", defaultValue: "Offen")) {
-                    ForEach(viewModel.openTasks) { task in
-                        TaskRowView(
-                            task: task,
-                            onToggle: {
-                                _Concurrency.Task {
-                                    await viewModel.completeTask(task)
-                                }
-                            },
-                            onDelete: nil,
-                            showDragHandle: true
-                        )
-                        .swipeActions(edge: .trailing) {
-                            Button {
-                                HapticFeedback.medium()
-                                _Concurrency.Task {
-                                    await viewModel.removeFromDailyFocus(task)
-                                }
-                            } label: {
-                                Label(String(localized: "today.swipe.backlog", defaultValue: "Backlog"), systemImage: "tray.fill")
-                            }
-                            .tint(.gray)
-                        }
+                    ForEach(viewModel.openTasks, id: \.id) { task in
+                        openTaskRow(task: task)
                     }
                     .onMove(perform: viewModel.moveTasks)
                 }
@@ -81,7 +77,7 @@ struct DailyFocusView: View {
             
             if !viewModel.completedTasks.isEmpty {
                 Section(String(localized: "today.section.completed", defaultValue: "Erledigt")) {
-                    ForEach(viewModel.completedTasks) { task in
+                    ForEach(viewModel.completedTasks, id: \.id) { task in
                         TaskRowView(
                             task: task,
                             onToggle: {
@@ -89,13 +85,50 @@ struct DailyFocusView: View {
                                     await viewModel.uncompleteTask(task)
                                 }
                             },
-                            onDelete: nil
+                            onDelete: nil,
+                            listEditingExplicit: editMode == .active
                         )
                     }
                 }
             }
         }
+        .environment(\.editMode, $editMode)
         .listStyle(.insetGrouped)
+        
+    }
+    
+    private func toggleEditMode() {
+        editMode = editMode == .active ? .inactive : .active
+    }
+    
+    @ViewBuilder
+    private func openTaskRow(task: Task) -> some View {
+        let row = TaskRowView(
+            task: task,
+            onToggle: {
+                _Concurrency.Task {
+                    await viewModel.completeTask(task)
+                }
+            },
+            onDelete: nil,
+            showDragHandle: false,
+            listEditingExplicit: editMode == .active
+        )
+        if editMode == .inactive {
+            row.swipeActions(edge: .trailing) {
+                Button {
+                    HapticFeedback.medium()
+                    _Concurrency.Task {
+                        await viewModel.removeFromDailyFocus(task)
+                    }
+                } label: {
+                    Label(String(localized: "today.swipe.backlog", defaultValue: "Backlog"), systemImage: "tray.fill")
+                }
+                .tint(.gray)
+            }
+        } else {
+            row
+        }
     }
     
     private var emptyStateView: some View {

@@ -237,6 +237,28 @@
         }
       }
     },
+    "common.done" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Fertig"
+          }
+        }
+      }
+    },
+    "common.edit" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Bearbeiten"
+          }
+        }
+      }
+    },
     "Füge ${taskTitle} heute hinzu" : {
 
     },
