@@ -7,7 +7,6 @@
 
 import SwiftUI
 import SwiftData
-import UIKit
 
 struct BacklogView: View {
     @Bindable var viewModel: BacklogViewModel
@@ -20,10 +19,6 @@ struct BacklogView: View {
     @State private var showingAddTask = false
     @State private var showingSettings = false
     @State private var expandedCategories: Set<UUID> = []
-    /// Nur für DEBUG-Clear-Alert; in Release ungenutzt, vermeidet aber #if um @State.
-    @State private var showingClearAllConfirm = false
-    /// Während Massen-Löschung: Liste ausblenden, damit keine TaskRowView auf detached SwiftData-Tasks zugreift.
-    @State private var isBulkDeletingTasks = false
     /// Bearbeiten: Reorder-Griffe (`onMove`); außerhalb Bearbeiten: Drag & Drop zwischen Kategorien auf Sektions-Header.
     @State private var editMode = EditMode.inactive
     
@@ -35,10 +30,7 @@ struct BacklogView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                if isBulkDeletingTasks {
-                    ProgressView(String(localized: "backlog.debug.clear.progress", defaultValue: "Löschen…"))
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                } else if viewModel.backlogTasks.isEmpty {
+                if viewModel.backlogTasks.isEmpty {
                     emptyStateView
                 } else {
                     if settings.showCategories {
@@ -52,7 +44,11 @@ struct BacklogView: View {
             .environment(\.editMode, $editMode)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    debugToolbarLeadingContent
+                    Button {
+                        showingSettings = true
+                    } label: {
+                        Image(systemName: "gearshape.fill")
+                    }
                 }
                 
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -89,21 +85,6 @@ struct BacklogView: View {
             .sheet(isPresented: $showingSettings) {
                 SettingsView()
             }
-            #if DEBUG
-            .alert(
-                String(localized: "backlog.debug.clear.title", defaultValue: "Alles löschen?"),
-                isPresented: $showingClearAllConfirm
-            ) {
-                Button(String(localized: "backlog.debug.clear.cancel", defaultValue: "Abbrechen"), role: .cancel) {}
-                Button(String(localized: "backlog.debug.clear.confirm", defaultValue: "Löschen"), role: .destructive) {
-                    _Concurrency.Task { @MainActor in
-                        await runClearAll()
-                    }
-                }
-            } message: {
-                Text(String(localized: "backlog.debug.clear.message", defaultValue: "Alle Tasks in Dawny werden gelöscht; zu Dawny gehörige Einträge in „Erinnerungen“ werden wie beim normalen Task-Löschen entfernt (kein leeres Löschen der gesamten Erinnerungen-App)."))
-            }
-            #endif
             .onAppear {
                 viewModel.loadBacklogs()
                 viewModel.loadCategories()
@@ -135,80 +116,6 @@ struct BacklogView: View {
             }
         }
     }
-    
-    // MARK: - Toolbar (DEBUG: Workflow + Clear neben Einstellungen)
-    
-    /// Ein einziger Member – `#if` nur im ViewBuilder-Body, damit der Compiler das Symbol immer findet.
-    @ViewBuilder
-    private var debugToolbarLeadingContent: some View {
-        #if DEBUG
-        HStack(spacing: 8) {
-            debugCircleToolbarButton(systemName: "gearshape.fill") {
-                showingSettings = true
-            }
-            debugCircleToolbarButton(systemName: "wand.and.stars") {
-                _Concurrency.Task {
-                    await UITestWorkflowRunner.run(
-                        backlogViewModel: viewModel,
-                        dailyFocusViewModel: dailyFocusViewModel,
-                        settings: settings,
-                        selectTodayTab: selectTodayTab
-                    )
-                }
-            }
-            .disabled(!settings.showCategories)
-            .opacity(settings.showCategories ? 1 : 0.45)
-            
-            debugCircleToolbarButton(systemName: "trash") {
-                showingClearAllConfirm = true
-            }
-            .disabled(syncEngine == nil)
-            .opacity(syncEngine == nil ? 0.45 : 1)
-        }
-        #else
-        Button {
-            showingSettings = true
-        } label: {
-            Image(systemName: "gearshape.fill")
-        }
-        #endif
-    }
-    
-    #if DEBUG
-    private func debugCircleToolbarButton(systemName: String, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            Image(systemName: systemName)
-                .font(.body.weight(.medium))
-                .foregroundStyle(.primary)
-                .frame(width: 36, height: 36)
-                .background(Color(UIColor.secondarySystemGroupedBackground))
-                .clipShape(Circle())
-        }
-        .buttonStyle(.plain)
-    }
-    
-    private func runClearAll() async {
-        guard let syncEngine else { return }
-        // Backlog-Liste ausblenden + „Heute“-Tab leeren — sonst zeigen andere Tabs noch TaskRowViews auf dieselben SwiftData-Objekte.
-        isBulkDeletingTasks = true
-        dailyFocusViewModel?.clearTasksFromDisplayOnly()
-        await _Concurrency.Task.yield()
-        try? await _Concurrency.Task.sleep(nanoseconds: 100_000_000)
-        defer { isBulkDeletingTasks = false }
-        do {
-            try await DebugAppDataCleaner.clearAll(syncEngine: syncEngine, modelContext: modelContext)
-            viewModel.loadBacklogs()
-            viewModel.loadCategories()
-            dailyFocusViewModel?.loadDailyTasks()
-            expandedCategories.removeAll()
-        } catch {
-            viewModel.errorMessage = String(
-                format: String(localized: "backlog.debug.clear.error", defaultValue: "Löschen fehlgeschlagen: %@"),
-                error.localizedDescription
-            )
-        }
-    }
-    #endif
     
     // MARK: - Subviews
     
