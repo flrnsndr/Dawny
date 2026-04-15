@@ -19,6 +19,7 @@ final class AppSettings {
         static let showCompletedTasksInToday = "DawnyShowCompletedTasksInToday"
         static let showCategories = "DawnyShowCategories"
         static let defaultCategoryType = "DawnyDefaultCategoryType"
+        static let hasSeenWelcome = "DawnyHasSeenWelcome"
     }
     
     // MARK: - Properties
@@ -51,6 +52,13 @@ final class AppSettings {
         }
     }
     
+    /// Welcome Screen wurde bereits angezeigt
+    var hasSeenWelcome: Bool {
+        didSet {
+            UserDefaults.standard.set(hasSeenWelcome, forKey: Keys.hasSeenWelcome)
+        }
+    }
+    
     /// Standard-Kategorie für neue Tasks (wenn Kategorien aktiviert)
     var defaultCategoryType: TaskCategory {
         didSet {
@@ -68,6 +76,7 @@ final class AppSettings {
         self.calendarSyncEnabled = UserDefaults.standard.object(forKey: Keys.calendarSyncEnabled) as? Bool ?? true
         self.showCompletedTasksInToday = UserDefaults.standard.object(forKey: Keys.showCompletedTasksInToday) as? Bool ?? true
         self.showCategories = UserDefaults.standard.object(forKey: Keys.showCategories) as? Bool ?? true
+        self.hasSeenWelcome = UserDefaults.standard.bool(forKey: Keys.hasSeenWelcome)
         
         // Lade defaultCategoryType
         if let data = UserDefaults.standard.data(forKey: Keys.defaultCategoryType),
