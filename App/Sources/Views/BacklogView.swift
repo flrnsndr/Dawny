@@ -19,6 +19,7 @@ struct BacklogView: View {
     @State private var showingAddTask = false
     @State private var showingSettings = false
     @State private var expandedCategories: Set<UUID> = []
+    @State private var showingClearAllConfirm = false
     /// Bearbeiten: Reorder-Griffe (`onMove`); außerhalb Bearbeiten: Drag & Drop zwischen Kategorien auf Sektions-Header.
     @State private var editMode = EditMode.inactive
     
@@ -110,6 +111,21 @@ struct BacklogView: View {
             .sheet(isPresented: $showingSettings) {
                 SettingsView()
             }
+            #if DEBUG
+            .alert(
+                String(localized: "quickadd.deleteall", defaultValue: "Alle Tasks löschen"),
+                isPresented: $showingClearAllConfirm
+            ) {
+                Button(String(localized: "quickadd.cancel", defaultValue: "Abbrechen"), role: .cancel) {}
+                Button(String(localized: "common.delete", defaultValue: "Löschen"), role: .destructive) {
+                    _Concurrency.Task {
+                        await clearAllBacklogTasks()
+                    }
+                }
+            } message: {
+                Text(String(localized: "backlog.debug.clear.message", defaultValue: "Alle Backlog-Tasks werden gelöscht."))
+            }
+            #endif
             .onAppear {
                 viewModel.loadBacklogs()
                 viewModel.loadCategories()
@@ -282,6 +298,27 @@ struct BacklogView: View {
         expandedCategories.insert(targetCategory.id)
         HapticFeedback.light()
         return true
+    }
+
+    private func triggerTestWorkflow() {
+        #if DEBUG
+        viewModel.addDebugTestItems(settings: settings)
+        viewModel.loadBacklogs()
+        viewModel.loadCategories()
+        initializeExpandedCategories()
+        #endif
+    }
+
+    private func clearAllBacklogTasks() async {
+        #if DEBUG
+        let tasks = viewModel.backlogTasks
+        for task in tasks {
+            await viewModel.deleteTask(task)
+        }
+        viewModel.loadBacklogs()
+        viewModel.loadCategories()
+        initializeExpandedCategories()
+        #endif
     }
     
     // MARK: - Helper Methods
