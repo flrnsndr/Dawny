@@ -17,7 +17,7 @@ struct ContentView: View {
     @State private var dailyFocusViewModel: DailyFocusViewModel?
     @State private var selectedTab: Tab = .backlog
     @State private var hasSetInitialTab = false
-    @State private var showWelcome = !AppSettings.shared.hasSeenWelcome
+    @State private var showWelcome = false
     @State private var isDraggingHorizontally = false
     
     enum Tab: Int {
@@ -68,6 +68,9 @@ struct ContentView: View {
                 hasSetInitialTab = true
                 if shouldShowTodayTab() {
                     selectedTab = .today
+                }
+                if !AppSettings.shared.hasSeenWelcome {
+                    showWelcome = true
                 }
             }
         }
