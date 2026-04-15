@@ -31,6 +31,18 @@ struct BacklogView: View {
         let sorted = viewModel.categories.sorted()
         return sorted.first { $0.categoryType == settings.defaultCategoryType }?.id ?? sorted.first?.id
     }
+
+    private var quickCategory: Category? {
+        viewModel.categories.first { $0.categoryType == .quick }
+    }
+
+    private var clearAllAction: (() -> Void)? {
+        #if DEBUG
+        return { showingClearAllConfirm = true }
+        #else
+        return nil
+        #endif
+    }
     
     var body: some View {
         NavigationStack {
@@ -51,11 +63,11 @@ struct BacklogView: View {
             .navigationTitle(viewModel.currentBacklog?.title ?? String(localized: "backlog.title", defaultValue: "Backlog"))
             .environment(\.editMode, $editMode)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .topBarLeading) {
                     debugToolbarLeadingContent
                 }
                 
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                ToolbarItemGroup(placement: .topBarTrailing) {
                     if !viewModel.backlogTasks.isEmpty {
                         Button {
                             toggleEditMode()
@@ -65,19 +77,32 @@ struct BacklogView: View {
                                  : String(localized: "common.edit", defaultValue: "Bearbeiten"))
                         }
                     }
-                    Button {
-                        showingAddTask = true
-                    } label: {
-                        Image(systemName: "plus")
-                    }
                 }
             }
             .sheet(isPresented: $showingAddTask) {
                 QuickAddView(
                     categories: settings.showCategories ? viewModel.categories.sorted() : [],
                     defaultCategoryID: quickAddDefaultCategoryID,
-                    onSave: { title, notes, category in
-                        viewModel.addTask(title: title, notes: notes, category: category)
+                    initialDestination: .backlog,
+                    onRequestAddTestItems: {
+                        triggerTestWorkflow()
+                    },
+                    onRequestDeleteAll: clearAllAction,
+                    onSave: { title, notes, category, destination in
+                        switch destination {
+                        case .backlog:
+                            viewModel.addTask(title: title, notes: notes, category: category)
+                        case .today:
+                            let forcedCategory = quickCategory ?? category
+                            if let newTask = viewModel.addTask(title: title, notes: notes, category: forcedCategory) {
+                                _Concurrency.Task {
+                                    await viewModel.moveTaskToDailyFocus(newTask)
+                                    await MainActor.run {
+                                        selectTodayTab()
+                                    }
+                                }
+                            }
+                        }
                     }
                 )
                 .onAppear {
@@ -133,6 +158,9 @@ struct BacklogView: View {
                     }
                 }
             }
+            .safeAreaInset(edge: .bottom) {
+                bottomBarAddControls
+            }
         }
     }
     
@@ -141,40 +169,16 @@ struct BacklogView: View {
     /// Ein einziger Member – `#if` nur im ViewBuilder-Body, damit der Compiler das Symbol immer findet.
     @ViewBuilder
     private var debugToolbarLeadingContent: some View {
-        #if DEBUG
         HStack(spacing: 8) {
             debugCircleToolbarButton(systemName: "gearshape.fill") {
                 showingSettings = true
             }
             debugCircleToolbarButton(systemName: "wand.and.stars") {
-                _Concurrency.Task {
-                    await UITestWorkflowRunner.run(
-                        backlogViewModel: viewModel,
-                        dailyFocusViewModel: dailyFocusViewModel,
-                        settings: settings,
-                        selectTodayTab: selectTodayTab
-                    )
-                }
+                triggerTestWorkflow()
             }
-            .disabled(!settings.showCategories)
-            .opacity(settings.showCategories ? 1 : 0.45)
-            
-            debugCircleToolbarButton(systemName: "trash") {
-                showingClearAllConfirm = true
-            }
-            .disabled(syncEngine == nil)
-            .opacity(syncEngine == nil ? 0.45 : 1)
         }
-        #else
-        Button {
-            showingSettings = true
-        } label: {
-            Image(systemName: "gearshape.fill")
-        }
-        #endif
     }
     
-    #if DEBUG
     private func debugCircleToolbarButton(systemName: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Image(systemName: systemName)
@@ -208,7 +212,19 @@ struct BacklogView: View {
             )
         }
     }
-    #endif
+
+    private func triggerTestWorkflow() {
+        #if DEBUG
+        _Concurrency.Task {
+            await UITestWorkflowRunner.run(
+                backlogViewModel: viewModel,
+                dailyFocusViewModel: dailyFocusViewModel,
+                settings: settings,
+                selectTodayTab: selectTodayTab
+            )
+        }
+        #endif
+    }
     
     // MARK: - Subviews
     
@@ -409,11 +425,26 @@ struct BacklogView: View {
         EmptyStateView(
             icon: "tray",
             title: String(localized: "backlog.empty.title", defaultValue: "Backlog ist leer"),
-            message: String(localized: "backlog.empty.message", defaultValue: "Füge neue Tasks hinzu, um mit der Planung zu beginnen"),
-            actionTitle: String(localized: "backlog.empty.action", defaultValue: "Task hinzufügen"),
-            action: {
-                showingAddTask = true
-            }
+            message: String(localized: "backlog.empty.message", defaultValue: "Füge neue Tasks hinzu, um mit der Planung zu beginnen")
         )
+    }
+
+    private var bottomBarAddControls: some View {
+        HStack {
+            Button {
+                showingAddTask = true
+            } label: {
+                Image(systemName: "plus")
+                    .font(.system(size: 20, weight: .bold))
+                    .frame(width: 52, height: 52)
+                    .background(Color.accentColor)
+                    .foregroundStyle(.white)
+                    .clipShape(Circle())
+            }
+            .accessibilityLabel(String(localized: "backlog.add.task", defaultValue: "Task hinzufügen"))
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal, 20)
+        .padding(.bottom, 8)
     }
 }

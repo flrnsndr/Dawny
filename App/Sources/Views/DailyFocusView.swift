@@ -30,7 +30,7 @@ struct DailyFocusView: View {
             .navigationTitle(String(localized: "today.title", defaultValue: "Heute"))
             .environment(\.editMode, $editMode)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     if !viewModel.openTasks.isEmpty {
                         Button {
                             toggleEditMode()

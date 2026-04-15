@@ -100,10 +100,11 @@ final class BacklogViewModel {
     
     /// Fügt einen neuen Task zum aktuellen Backlog hinzu
     /// - Parameter category: Wenn gesetzt und Kategorien aktiv sind, wird diese Kategorie verwendet; sonst die Standard-Kategorie aus den Einstellungen.
-    func addTask(title: String, notes: String? = nil, category: Category? = nil) {
+    @discardableResult
+    func addTask(title: String, notes: String? = nil, category: Category? = nil) -> Task? {
         guard let backlog = currentBacklog else {
             errorMessage = "Kein Backlog ausgewählt"
-            return
+            return nil
         }
         
         let task = backlog.addTask(title: title, notes: notes)
@@ -124,8 +125,10 @@ final class BacklogViewModel {
         
         do {
             try modelContext.save()
+            return task
         } catch {
             errorMessage = "Fehler beim Erstellen des Tasks: \(error.localizedDescription)"
+            return nil
         }
     }
     
@@ -380,6 +383,28 @@ final class BacklogViewModel {
             HapticFeedback.light()
         } catch {
             errorMessage = "Fehler beim Sortieren der Tasks: \(error.localizedDescription)"
+        }
+    }
+
+    /// Legt Testelemente im Backlog an (für manuelles UI-Testing).
+    func addDebugTestItems(settings: AppSettings) {
+        if settings.showCategories {
+            loadCategories()
+            let sorted = categories.sorted().filter { $0.categoryType != .uncategorized }
+            guard !sorted.isEmpty else { return }
+
+            var counter = 1
+            for category in sorted {
+                addTask(title: "Testtask \(counter) \(category.name)", category: category)
+                counter += 1
+                if category.categoryType == .quick || category.categoryType == settings.defaultCategoryType {
+                    addTask(title: "Testtask \(counter) \(category.name)", category: category)
+                    counter += 1
+                }
+            }
+        } else {
+            addTask(title: "Testtask 1")
+            addTask(title: "Testtask 2")
         }
     }
 }

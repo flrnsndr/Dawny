@@ -18,6 +18,7 @@ struct ContentView: View {
     @State private var selectedTab: Tab = .backlog
     @State private var hasSetInitialTab = false
     @State private var showWelcome = !AppSettings.shared.hasSeenWelcome
+    @State private var isDraggingHorizontally = false
     
     enum Tab: Int {
         case backlog = 0
@@ -25,34 +26,29 @@ struct ContentView: View {
     }
     
     var body: some View {
-        TabView(selection: $selectedTab) {
+        VStack(spacing: 0) {
+            tabSwitcher
             Group {
-                if let backlogVM = backlogViewModel {
-                    BacklogView(
-                        viewModel: backlogVM,
-                        dailyFocusViewModel: dailyFocusViewModel
-                    )
-                } else {
-                    ProgressView()
+                switch selectedTab {
+                case .backlog:
+                    if let backlogVM = backlogViewModel {
+                        BacklogView(
+                            viewModel: backlogVM,
+                            dailyFocusViewModel: dailyFocusViewModel
+                        )
+                    } else {
+                        ProgressView()
+                    }
+                case .today:
+                    if let dailyViewModel = dailyFocusViewModel {
+                        DailyFocusView(viewModel: dailyViewModel)
+                    } else {
+                        ProgressView()
+                    }
                 }
             }
-            .tabItem {
-                Label(String(localized: "tabs.backlog", defaultValue: "Backlog"), systemImage: "tray.fill")
-            }
-            .tag(Tab.backlog)
-            
-            Group {
-                if let dailyViewModel = dailyFocusViewModel {
-                    DailyFocusView(viewModel: dailyViewModel)
-                } else {
-                    ProgressView()
-                }
-            }
-            .tabItem {
-                Label(String(localized: "tabs.today", defaultValue: "Heute"), systemImage: "sun.max.fill")
-            }
-            .tag(Tab.today)
         }
+        .simultaneousGesture(tabSwipeGesture)
         .environment(\.selectTodayTab) {
             selectedTab = .today
         }
@@ -72,6 +68,70 @@ struct ContentView: View {
                 }
             }
         }
+    }
+
+    private var tabSwitcher: some View {
+        HStack(spacing: 6) {
+            tabSwitchButton(
+                title: String(localized: "tabs.backlog", defaultValue: "Backlog"),
+                tab: .backlog
+            )
+            tabSwitchButton(
+                title: String(localized: "tabs.today", defaultValue: "Heute"),
+                tab: .today
+            )
+        }
+        .padding(4)
+        .background(Color(UIColor.secondarySystemFill), in: Capsule())
+        .padding(.horizontal, 16)
+        .padding(.top, 8)
+        .padding(.bottom, 4)
+        .background(.thinMaterial)
+    }
+
+    private func tabSwitchButton(title: String, tab: Tab) -> some View {
+        Button {
+            selectedTab = tab
+        } label: {
+            Text(title)
+                .font(.footnote.weight(.semibold))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 6)
+                .background(
+                    selectedTab == tab
+                    ? Color(UIColor.systemBackground)
+                    : Color.clear,
+                    in: Capsule()
+                )
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(title)
+        .accessibilityAddTraits(selectedTab == tab ? .isSelected : [])
+    }
+
+    private var tabSwipeGesture: some Gesture {
+        DragGesture(minimumDistance: 16, coordinateSpace: .local)
+            .onChanged { value in
+                if !isDraggingHorizontally {
+                    let isHorizontal = abs(value.translation.width) > abs(value.translation.height)
+                    if isHorizontal {
+                        isDraggingHorizontally = true
+                    }
+                }
+            }
+            .onEnded { value in
+                defer { isDraggingHorizontally = false }
+
+                let horizontal = value.translation.width
+                let vertical = value.translation.height
+                guard abs(horizontal) > abs(vertical), abs(horizontal) >= 50 else { return }
+
+                if horizontal < 0, selectedTab == .backlog {
+                    selectedTab = .today
+                } else if horizontal > 0, selectedTab == .today {
+                    selectedTab = .backlog
+                }
+            }
     }
     
     private func initializeViewModels() {
