@@ -503,6 +503,9 @@
         }
       }
     },
+    "Los geht's" : {
+
+    },
     "quickadd.add" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1471,6 +1474,9 @@
           }
         }
       }
+    },
+    "Weiter" : {
+
     }
   },
   "version" : "1.1"
