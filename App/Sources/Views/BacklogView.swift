@@ -21,8 +21,6 @@ struct BacklogView: View {
     @State private var showingSettings = false
     @State private var expandedCategories: Set<UUID> = []
     @State private var showingClearAllConfirm = false
-    /// Bearbeiten: Reorder-Griffe (`onMove`); außerhalb Bearbeiten: Drag & Drop zwischen Kategorien auf Sektions-Header.
-    @State private var editMode = EditMode.inactive
     
     private var quickAddDefaultCategoryID: UUID? {
         let sorted = viewModel.categories.sorted()
@@ -55,7 +53,6 @@ struct BacklogView: View {
                 }
             }
             .navigationTitle(viewModel.currentBacklog?.title ?? String(localized: "backlog.title", defaultValue: "Backlog"))
-            .environment(\.editMode, $editMode)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
@@ -64,18 +61,6 @@ struct BacklogView: View {
                         Image(systemName: "gearshape.fill")
                     }
                     .accessibilityLabel(String(localized: "settings.title", defaultValue: "Einstellungen"))
-                }
-                
-                ToolbarItemGroup(placement: .topBarTrailing) {
-                    if !viewModel.backlogTasks.isEmpty {
-                        Button {
-                            toggleEditMode()
-                        } label: {
-                            Text(editMode == .active
-                                 ? String(localized: "common.done", defaultValue: "Fertig")
-                                 : String(localized: "common.edit", defaultValue: "Bearbeiten"))
-                        }
-                    }
                 }
             }
             .sheet(isPresented: $showingAddTask) {
@@ -186,9 +171,6 @@ struct BacklogView: View {
                         ForEach(tasks, id: \.id) { task in
                             backlogCategorizedTaskRow(task: task)
                         }
-                        .onMove { source, destination in
-                            viewModel.moveTasksWithinCategory(category: category, from: source, to: destination)
-                        }
                     }
                     } header: {
                         CategoryHeaderView(
@@ -204,7 +186,6 @@ struct BacklogView: View {
                     }
             }
         }
-        .environment(\.editMode, $editMode)
         .listStyle(.insetGrouped)
     }
     
@@ -214,17 +195,13 @@ struct BacklogView: View {
             ForEach(viewModel.backlogTasks, id: \.id) { task in
                 backlogUncategorizedRow(task: task)
             }
-            .onMove { source, destination in
-                viewModel.moveTasks(from: source, to: destination)
-            }
         }
-        .environment(\.editMode, $editMode)
         .listStyle(.insetGrouped)
     }
     
     @ViewBuilder
     private func backlogUncategorizedRow(task: Task) -> some View {
-        let base = TaskRowView(
+        TaskRowView(
             task: task,
             onToggle: nil,
             onDelete: {
@@ -232,29 +209,24 @@ struct BacklogView: View {
                     await viewModel.deleteTask(task)
                 }
             },
-            showBacklogBadge: false,
-            listEditingExplicit: editMode == .active
+            showBacklogBadge: false
         )
-        if editMode == .inactive {
-            base.swipeActions(edge: .leading) {
-                Button {
-                    HapticFeedback.medium()
-                    _Concurrency.Task {
-                        await viewModel.moveTaskToDailyFocus(task)
-                    }
-                } label: {
-                    Label(String(localized: "backlog.swipe.today", defaultValue: "Heute"), systemImage: "sun.max.fill")
+        .swipeActions(edge: .leading) {
+            Button {
+                HapticFeedback.medium()
+                _Concurrency.Task {
+                    await viewModel.moveTaskToDailyFocus(task)
                 }
-                .tint(.orange)
+            } label: {
+                Label(String(localized: "backlog.swipe.today", defaultValue: "Heute"), systemImage: "sun.max.fill")
             }
-        } else {
-            base
+            .tint(.orange)
         }
     }
     
     @ViewBuilder
     private func backlogCategorizedTaskRow(task: Task) -> some View {
-        let base = TaskRowView(
+        TaskRowView(
             task: task,
             onToggle: nil,
             onDelete: {
@@ -262,39 +234,23 @@ struct BacklogView: View {
                     await viewModel.deleteTask(task)
                 }
             },
-            showBacklogBadge: false,
-            listEditingExplicit: editMode == .active
+            showBacklogBadge: false
         )
-        let withContext = base.contextMenu {
+        .contextMenu {
             categoryContextMenu(for: task)
         }
-        let withLeadingSwipe: some View = Group {
-            if editMode == .inactive {
-                withContext.swipeActions(edge: .leading) {
-                    Button {
-                        HapticFeedback.medium()
-                        _Concurrency.Task {
-                            await viewModel.moveTaskToDailyFocus(task)
-                        }
-                    } label: {
-                        Label(String(localized: "backlog.swipe.today", defaultValue: "Heute"), systemImage: "sun.max.fill")
-                    }
-                    .tint(.orange)
+        .swipeActions(edge: .leading) {
+            Button {
+                HapticFeedback.medium()
+                _Concurrency.Task {
+                    await viewModel.moveTaskToDailyFocus(task)
                 }
-            } else {
-                withContext
+            } label: {
+                Label(String(localized: "backlog.swipe.today", defaultValue: "Heute"), systemImage: "sun.max.fill")
             }
+            .tint(.orange)
         }
-        
-        if editMode == .inactive {
-            withLeadingSwipe.draggable(BacklogTaskTransfer(taskID: task.id))
-        } else {
-            withLeadingSwipe
-        }
-    }
-    
-    private func toggleEditMode() {
-        editMode = editMode == .active ? .inactive : .active
+        .draggable(BacklogTaskTransfer(taskID: task.id))
     }
     
     private func handleCategoryHeaderDrop(_ items: [BacklogTaskTransfer], targetCategory: Category) -> Bool {
