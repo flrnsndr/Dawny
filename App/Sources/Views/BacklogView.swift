@@ -130,7 +130,7 @@ struct BacklogView: View {
                     }
                 }
             } message: {
-                Text(String(localized: "backlog.debug.clear.message", defaultValue: "Alle Backlog-Tasks werden gelöscht."))
+                Text(String(localized: "backlog.debug.clear.message", defaultValue: "Alle Tasks (Backlog und Heute) werden gelöscht."))
             }
             #endif
             .onAppear {
@@ -318,10 +318,21 @@ struct BacklogView: View {
 
     private func clearAllBacklogTasks() async {
         #if DEBUG
-        let tasks = viewModel.backlogTasks
-        for task in tasks {
+        let backlogTasks = viewModel.backlogTasks
+        let todayTasks = dailyFocusViewModel?.dailyTasks ?? []
+
+        dailyFocusViewModel?.clearTasksFromDisplayOnly()
+
+        for task in backlogTasks {
             await viewModel.deleteTask(task)
         }
+
+        if let dfvm = dailyFocusViewModel {
+            for task in todayTasks {
+                await dfvm.deleteTask(task)
+            }
+        }
+
         viewModel.loadBacklogs()
         viewModel.loadCategories()
         initializeExpandedCategories()
