@@ -15,6 +15,7 @@ struct BacklogView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.syncEngine) private var syncEngine
     @Environment(\.selectTodayTab) private var selectTodayTab
+    @Environment(\.triggerWelcomeFlow) private var triggerWelcomeFlow
     
     @State private var showingAddTask = false
     @State private var showingSettings = false
@@ -62,6 +63,7 @@ struct BacklogView: View {
                     } label: {
                         Image(systemName: "gearshape.fill")
                     }
+                    .accessibilityLabel(String(localized: "settings.title", defaultValue: "Einstellungen"))
                 }
                 
                 ToolbarItemGroup(placement: .topBarTrailing) {
@@ -109,7 +111,11 @@ struct BacklogView: View {
                     onRequestAddTestItems: {
                         triggerTestWorkflow()
                     },
-                    onRequestDeleteAll: clearAllAction
+                    onRequestDeleteAll: clearAllAction,
+                    onRequestShowWelcome: {
+                        showingSettings = false
+                        triggerWelcomeFlow()
+                    }
                 )
             }
             #if DEBUG

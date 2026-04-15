@@ -52,6 +52,9 @@ struct ContentView: View {
         .environment(\.selectTodayTab) {
             selectedTab = .today
         }
+        .environment(\.triggerWelcomeFlow) {
+            showWelcome = true
+        }
         .fullScreenCover(isPresented: $showWelcome) {
             WelcomeView {
                 AppSettings.shared.hasSeenWelcome = true

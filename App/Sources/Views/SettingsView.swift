@@ -13,17 +13,20 @@ struct SettingsView: View {
     
     let onRequestAddTestItems: (() -> Void)?
     let onRequestDeleteAll: (() -> Void)?
+    let onRequestShowWelcome: (() -> Void)?
 
     @State private var resetTime: Date
     
     init(
         settings: AppSettings = .shared,
         onRequestAddTestItems: (() -> Void)? = nil,
-        onRequestDeleteAll: (() -> Void)? = nil
+        onRequestDeleteAll: (() -> Void)? = nil,
+        onRequestShowWelcome: (() -> Void)? = nil
     ) {
         self.settings = settings
         self.onRequestAddTestItems = onRequestAddTestItems
         self.onRequestDeleteAll = onRequestDeleteAll
+        self.onRequestShowWelcome = onRequestShowWelcome
         
         // Initialisiere resetTime basierend auf resetHour
         let calendar = Calendar.current
@@ -47,6 +50,17 @@ struct SettingsView: View {
             .navigationTitle(String(localized: "settings.title", defaultValue: "Einstellungen"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                if let onRequestShowWelcome {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            dismiss()
+                            onRequestShowWelcome()
+                        } label: {
+                            Image(systemName: "questionmark.circle")
+                        }
+                        .accessibilityLabel(String(localized: "settings.welcome.help", defaultValue: "Willkommensbildschirm anzeigen"))
+                    }
+                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(String(localized: "settings.done", defaultValue: "Fertig")) {
                         dismiss()

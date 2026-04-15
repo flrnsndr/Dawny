@@ -23,8 +23,28 @@ final class DawnyUITests: XCTestCase {
     }
     
     // MARK: - Navigation Tests
+
+    private func dismissWelcomeIfShown() {
+        let continueButton = app.buttons["Los geht's"]
+        if continueButton.waitForExistence(timeout: 2) {
+            continueButton.tap()
+            return
+        }
+
+        let nextButton = app.buttons["Weiter"]
+        if nextButton.waitForExistence(timeout: 1) {
+            for _ in 0..<4 where nextButton.exists {
+                nextButton.tap()
+            }
+            if continueButton.waitForExistence(timeout: 1) {
+                continueButton.tap()
+            }
+        }
+    }
     
     func testTabNavigation() throws {
+        dismissWelcomeIfShown()
+
         // Prüfe dass beide Tabs existieren
         // Note: Tests verwenden lokalisierte Strings - funktioniert mit Deutsch und Englisch
         let heuteTab = app.tabBars.buttons["Heute"]
@@ -49,6 +69,8 @@ final class DawnyUITests: XCTestCase {
     // MARK: - Task Creation Tests
     
     func testCreateTaskInBacklog() throws {
+        dismissWelcomeIfShown()
+
         // Wechsle zu Backlog
         let backlogTab = app.tabBars.buttons["Backlog"]
         XCTAssertTrue(backlogTab.waitForExistence(timeout: 5))
@@ -74,6 +96,21 @@ final class DawnyUITests: XCTestCase {
                 addTaskButtonEN.tap()
             }
         }
+    }
+    
+    func testShowWelcomeFromSettingsHelpButton() throws {
+        dismissWelcomeIfShown()
+        
+        let settingsButton = app.navigationBars.buttons["Einstellungen"]
+        XCTAssertTrue(settingsButton.waitForExistence(timeout: 5))
+        settingsButton.tap()
+        
+        let welcomeHelpButton = app.navigationBars.buttons["Willkommensbildschirm anzeigen"]
+        XCTAssertTrue(welcomeHelpButton.waitForExistence(timeout: 3))
+        welcomeHelpButton.tap()
+        
+        let welcomeTitle = app.staticTexts["Willkommen bei Dawny"]
+        XCTAssertTrue(welcomeTitle.waitForExistence(timeout: 5))
     }
     
     // MARK: - Performance Tests
