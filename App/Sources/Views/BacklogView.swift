@@ -26,6 +26,18 @@ struct BacklogView: View {
         let sorted = viewModel.categories.sorted()
         return sorted.first { $0.categoryType == settings.defaultCategoryType }?.id ?? sorted.first?.id
     }
+
+    private var quickCategory: Category? {
+        viewModel.categories.first { $0.categoryType == .quick }
+    }
+
+    private var clearAllAction: (() -> Void)? {
+        #if DEBUG
+        return { showingClearAllConfirm = true }
+        #else
+        return nil
+        #endif
+    }
     
     var body: some View {
         NavigationStack {
@@ -51,7 +63,7 @@ struct BacklogView: View {
                     }
                 }
                 
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                ToolbarItemGroup(placement: .topBarTrailing) {
                     if !viewModel.backlogTasks.isEmpty {
                         Button {
                             toggleEditMode()
@@ -61,19 +73,32 @@ struct BacklogView: View {
                                  : String(localized: "common.edit", defaultValue: "Bearbeiten"))
                         }
                     }
-                    Button {
-                        showingAddTask = true
-                    } label: {
-                        Image(systemName: "plus")
-                    }
                 }
             }
             .sheet(isPresented: $showingAddTask) {
                 QuickAddView(
                     categories: settings.showCategories ? viewModel.categories.sorted() : [],
                     defaultCategoryID: quickAddDefaultCategoryID,
-                    onSave: { title, notes, category in
-                        viewModel.addTask(title: title, notes: notes, category: category)
+                    initialDestination: .backlog,
+                    onRequestAddTestItems: {
+                        triggerTestWorkflow()
+                    },
+                    onRequestDeleteAll: clearAllAction,
+                    onSave: { title, notes, category, destination in
+                        switch destination {
+                        case .backlog:
+                            viewModel.addTask(title: title, notes: notes, category: category)
+                        case .today:
+                            let forcedCategory = quickCategory ?? category
+                            if let newTask = viewModel.addTask(title: title, notes: notes, category: forcedCategory) {
+                                _Concurrency.Task {
+                                    await viewModel.moveTaskToDailyFocus(newTask)
+                                    await MainActor.run {
+                                        selectTodayTab()
+                                    }
+                                }
+                            }
+                        }
                     }
                 )
                 .onAppear {
@@ -113,6 +138,9 @@ struct BacklogView: View {
                         HapticFeedback.error()
                     }
                 }
+            }
+            .safeAreaInset(edge: .bottom) {
+                bottomBarAddControls
             }
         }
     }
@@ -316,11 +344,26 @@ struct BacklogView: View {
         EmptyStateView(
             icon: "tray",
             title: String(localized: "backlog.empty.title", defaultValue: "Backlog ist leer"),
-            message: String(localized: "backlog.empty.message", defaultValue: "Füge neue Tasks hinzu, um mit der Planung zu beginnen"),
-            actionTitle: String(localized: "backlog.empty.action", defaultValue: "Task hinzufügen"),
-            action: {
-                showingAddTask = true
-            }
+            message: String(localized: "backlog.empty.message", defaultValue: "Füge neue Tasks hinzu, um mit der Planung zu beginnen")
         )
+    }
+
+    private var bottomBarAddControls: some View {
+        HStack {
+            Button {
+                showingAddTask = true
+            } label: {
+                Image(systemName: "plus")
+                    .font(.system(size: 20, weight: .bold))
+                    .frame(width: 52, height: 52)
+                    .background(Color.accentColor)
+                    .foregroundStyle(.white)
+                    .clipShape(Circle())
+            }
+            .accessibilityLabel(String(localized: "backlog.add.task", defaultValue: "Task hinzufügen"))
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal, 20)
+        .padding(.bottom, 8)
     }
 }
