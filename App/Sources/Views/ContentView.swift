@@ -17,6 +17,7 @@ struct ContentView: View {
     @State private var dailyFocusViewModel: DailyFocusViewModel?
     @State private var selectedTab: Tab = .backlog
     @State private var hasSetInitialTab = false
+    @State private var showWelcome = !AppSettings.shared.hasSeenWelcome
     @State private var isDraggingHorizontally = false
     
     enum Tab: Int {
@@ -51,10 +52,15 @@ struct ContentView: View {
         .environment(\.selectTodayTab) {
             selectedTab = .today
         }
+        .fullScreenCover(isPresented: $showWelcome) {
+            WelcomeView {
+                AppSettings.shared.hasSeenWelcome = true
+                showWelcome = false
+            }
+        }
         .onAppear {
             initializeViewModels()
             
-            // Initiale Tab-Selektion nur einmal beim App-Start
             if !hasSetInitialTab {
                 hasSetInitialTab = true
                 if shouldShowTodayTab() {
