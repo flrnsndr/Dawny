@@ -388,23 +388,44 @@ final class BacklogViewModel {
 
     /// Legt Testelemente im Backlog an (für manuelles UI-Testing).
     func addDebugTestItems(settings: AppSettings) {
-        if settings.showCategories {
-            loadCategories()
-            let sorted = categories.sorted().filter { $0.categoryType != .uncategorized }
-            guard !sorted.isEmpty else { return }
+        loadCategories()
+        let assignableCategories = categories
+            .sorted()
+            .filter { $0.categoryType != .uncategorized }
 
-            var counter = 1
-            for category in sorted {
-                addTask(title: "Testtask \(counter) \(category.name)", category: category)
+        var counter = 1
+
+        // In jeder Kategorie 3-4 Backlog-Tasks erzeugen.
+        for category in assignableCategories {
+            let countPerCategory = Int.random(in: 3...4)
+            for index in 1...countPerCategory {
+                addTask(
+                    title: "Testtask \(counter) \(category.name) #\(index)",
+                    category: category
+                )
                 counter += 1
-                if category.categoryType == .quick || category.categoryType == settings.defaultCategoryType {
-                    addTask(title: "Testtask \(counter) \(category.name)", category: category)
-                    counter += 1
+            }
+        }
+
+        // Zusätzlich 2-3 Tasks direkt in den Heute-Tab legen.
+        let todayCount = Int.random(in: 2...3)
+        let todayDate = Calendar.current.startOfDay(for: Date())
+        let todayCategory = assignableCategories.first(where: { $0.categoryType == .quick }) ?? assignableCategories.first
+
+        for index in 1...todayCount {
+            if let task = addTask(
+                title: "Testtask Heute \(counter) #\(index)",
+                category: todayCategory
+            ) {
+                task.moveToDailyFocus(date: todayDate)
+                do {
+                    try modelContext.save()
+                } catch {
+                    errorMessage = "Fehler beim Erstellen der Heute-Testtasks: \(error.localizedDescription)"
+                    return
                 }
             }
-        } else {
-            addTask(title: "Testtask 1")
-            addTask(title: "Testtask 2")
+            counter += 1
         }
     }
 }

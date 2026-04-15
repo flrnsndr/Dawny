@@ -11,10 +11,19 @@ struct SettingsView: View {
     @Bindable var settings: AppSettings
     @Environment(\.dismiss) private var dismiss
     
+    let onRequestAddTestItems: (() -> Void)?
+    let onRequestDeleteAll: (() -> Void)?
+
     @State private var resetTime: Date
     
-    init(settings: AppSettings = .shared) {
+    init(
+        settings: AppSettings = .shared,
+        onRequestAddTestItems: (() -> Void)? = nil,
+        onRequestDeleteAll: (() -> Void)? = nil
+    ) {
         self.settings = settings
+        self.onRequestAddTestItems = onRequestAddTestItems
+        self.onRequestDeleteAll = onRequestDeleteAll
         
         // Initialisiere resetTime basierend auf resetHour
         let calendar = Calendar.current
@@ -28,6 +37,7 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             Form {
+                debugSection
                 resetSection
                 synchronisationSection
                 displaySection
@@ -47,6 +57,37 @@ struct SettingsView: View {
     }
     
     // MARK: - Sections
+
+    @ViewBuilder
+    private var debugSection: some View {
+        if onRequestAddTestItems != nil || onRequestDeleteAll != nil {
+            Section(String(localized: "settings.debug.section", defaultValue: "Debug")) {
+                if let onRequestAddTestItems {
+                    Button {
+                        onRequestAddTestItems()
+                        dismiss()
+                    } label: {
+                        Label(
+                            String(localized: "quickadd.addtestitems", defaultValue: "Testelemente hinzufügen"),
+                            systemImage: "wand.and.stars"
+                        )
+                    }
+                }
+
+                if let onRequestDeleteAll {
+                    Button(role: .destructive) {
+                        onRequestDeleteAll()
+                        dismiss()
+                    } label: {
+                        Label(
+                            String(localized: "quickadd.deleteall", defaultValue: "Alle Tasks löschen"),
+                            systemImage: "trash"
+                        )
+                    }
+                }
+            }
+        }
+    }
     
     private var resetSection: some View {
         Section(String(localized: "settings.reset.section", defaultValue: "Reset")) {

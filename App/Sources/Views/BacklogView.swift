@@ -81,10 +81,6 @@ struct BacklogView: View {
                     categories: settings.showCategories ? viewModel.categories.sorted() : [],
                     defaultCategoryID: quickAddDefaultCategoryID,
                     initialDestination: .backlog,
-                    onRequestAddTestItems: {
-                        triggerTestWorkflow()
-                    },
-                    onRequestDeleteAll: clearAllAction,
                     onSave: { title, notes, category, destination in
                         switch destination {
                         case .backlog:
@@ -109,7 +105,12 @@ struct BacklogView: View {
                 }
             }
             .sheet(isPresented: $showingSettings) {
-                SettingsView()
+                SettingsView(
+                    onRequestAddTestItems: {
+                        triggerTestWorkflow()
+                    },
+                    onRequestDeleteAll: clearAllAction
+                )
             }
             #if DEBUG
             .alert(
