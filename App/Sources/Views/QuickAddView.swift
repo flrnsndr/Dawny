@@ -20,8 +20,6 @@ struct QuickAddView: View {
     let categories: [Category]
     let defaultCategoryID: UUID?
     let initialDestination: AddDestination
-    let onRequestAddTestItems: (() -> Void)?
-    let onRequestDeleteAll: (() -> Void)?
     let onSave: (String, String?, Category?, AddDestination) -> Void
     
     @State private var title = ""
@@ -34,15 +32,11 @@ struct QuickAddView: View {
         categories: [Category],
         defaultCategoryID: UUID?,
         initialDestination: AddDestination,
-        onRequestAddTestItems: (() -> Void)? = nil,
-        onRequestDeleteAll: (() -> Void)? = nil,
         onSave: @escaping (String, String?, Category?, AddDestination) -> Void
     ) {
         self.categories = categories
         self.defaultCategoryID = defaultCategoryID
         self.initialDestination = initialDestination
-        self.onRequestAddTestItems = onRequestAddTestItems
-        self.onRequestDeleteAll = onRequestDeleteAll
         self.onSave = onSave
         _destination = State(initialValue: initialDestination)
     }
@@ -108,28 +102,6 @@ struct QuickAddView: View {
             .navigationTitle(String(localized: "quickadd.title", defaultValue: "Neuer Task"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                if let onRequestAddTestItems {
-                    ToolbarItem(placement: .topBarLeading) {
-                        Button {
-                            onRequestAddTestItems()
-                        } label: {
-                            Image(systemName: "wand.and.stars")
-                        }
-                        .accessibilityLabel(String(localized: "quickadd.addtestitems", defaultValue: "Testelemente hinzufügen"))
-                    }
-                }
-
-                if let onRequestDeleteAll {
-                    ToolbarItem(placement: .topBarLeading) {
-                        Button(role: .destructive) {
-                            onRequestDeleteAll()
-                        } label: {
-                            Image(systemName: "trash")
-                        }
-                        .accessibilityLabel(String(localized: "quickadd.deleteall", defaultValue: "Alle Tasks löschen"))
-                    }
-                }
-
                 ToolbarItem(placement: .cancellationAction) {
                     Button(String(localized: "quickadd.cancel", defaultValue: "Abbrechen")) {
                         dismiss()
