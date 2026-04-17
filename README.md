@@ -14,8 +14,8 @@
 </p>
 
 <p align="center">
-  <!-- Drop a hero screenshot or a short GIF here: docs/screenshots/hero.png -->
-  <img alt="Dawny hero" src="docs/screenshots/hero.png" width="640">
+  <!-- Uses the current app logo as the hero image -->
+  <img alt="Dawny logo hero" src="App/Assets.xcassets/AppIcon.appiconset/Dawny%20Icon%20Gemini%201024x1024%20300dpi.png" width="300">
 </p>
 
 Dawny is a minimalist iOS task manager built around a single, opinionated idea: **nothing is ever overdue.** Every night at 3 AM, anything you didn't finish in today's focus list is quietly moved back to your backlog. You wake up to a clean slate and choose — consciously — what today is for.
