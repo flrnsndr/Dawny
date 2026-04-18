@@ -222,6 +222,14 @@ struct BacklogView: View {
                         )
                     }
             }
+
+            Section {
+                AddCategoryRow { name in
+                    if let created = viewModel.createCategory(name: name) {
+                        expandedCategories.insert(created.id)
+                    }
+                }
+            }
         }
         .listStyle(.insetGrouped)
     }

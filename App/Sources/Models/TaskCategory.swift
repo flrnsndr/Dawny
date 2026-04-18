@@ -26,6 +26,9 @@ enum TaskCategory: String, Codable, CaseIterable {
     
     /// Unkategorisiert (speziell)
     case uncategorized
+
+    /// Benutzerdefinierte Kategorie (mehrfach anlegbar; Anzeige aus `Category.name` / `iconName`)
+    case custom
     
     /// Lokalisierter Display-Name
     var displayName: String {
@@ -42,6 +45,8 @@ enum TaskCategory: String, Codable, CaseIterable {
             return String(localized: "category.someday.name", defaultValue: "Irgendwann")
         case .uncategorized:
             return String(localized: "category.uncategorized.name", defaultValue: "Unkategorisiert")
+        case .custom:
+            return String(localized: "category.custom.name", defaultValue: "Neue Kategorie")
         }
     }
     
@@ -59,6 +64,8 @@ enum TaskCategory: String, Codable, CaseIterable {
         case .someday:
             return "infinity"
         case .uncategorized:
+            return "tag"
+        case .custom:
             return "tag"
         }
     }
@@ -78,6 +85,8 @@ enum TaskCategory: String, Codable, CaseIterable {
             return 4
         case .uncategorized:
             return 5
+        case .custom:
+            return 6
         }
     }
 }

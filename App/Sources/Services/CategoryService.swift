@@ -132,6 +132,34 @@ final class CategoryService {
         }
     }
     
+    /// Legt eine neue benutzerdefinierte Kategorie an (erscheint nach bestehenden Einträgen, typisch unter „Unkategorisiert“).
+    func createCustom(name: String) throws -> Category {
+        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else {
+            throw CategoryEditError.nameEmpty
+        }
+        guard trimmed.count <= Self.maxNameLength else {
+            throw CategoryEditError.nameTooLong(maxLength: Self.maxNameLength)
+        }
+
+        let descriptor = FetchDescriptor<Category>()
+        let existing = try modelContext.fetch(descriptor)
+        let nextOrderIndex = (existing.map(\.orderIndex).max() ?? -1) + 1
+
+        let category = Category(
+            categoryType: .custom,
+            name: trimmed,
+            iconName: TaskCategory.custom.iconName,
+            orderIndex: nextOrderIndex,
+            isUncategorized: false,
+            isNameCustomized: true,
+            isIconCustomized: true
+        )
+        modelContext.insert(category)
+        try save()
+        return category
+    }
+
     /// Gibt eine Kategorie nach Typ zurück
     func getCategory(type: TaskCategory) -> Category? {
         // SwiftData Predicates unterstützen keine Enum-Vergleiche,

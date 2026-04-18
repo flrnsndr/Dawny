@@ -366,6 +366,23 @@ final class BacklogViewModel {
             return false
         }
     }
+
+    /// Legt eine neue benutzerdefinierte Kategorie an.
+    @discardableResult
+    func createCategory(name: String) -> Category? {
+        do {
+            let category = try categoryService.createCustom(name: name)
+            loadCategories()
+            HapticFeedback.success()
+            return category
+        } catch let error as CategoryEditError {
+            errorMessage = error.errorDescription
+            return nil
+        } catch {
+            errorMessage = error.localizedDescription
+            return nil
+        }
+    }
     
     /// Verschiebt Tasks innerhalb einer Kategorie (Drag & Drop)
     func moveTasksWithinCategory(category: Category, from source: IndexSet, to destination: Int) {
