@@ -28,6 +28,8 @@ struct ContentView: View {
     var body: some View {
         VStack(spacing: 0) {
             tabSwitcher
+                .contentShape(Rectangle())
+                .gesture(tabSwipeGesture)
             Group {
                 switch selectedTab {
                 case .backlog:
@@ -48,7 +50,6 @@ struct ContentView: View {
                 }
             }
         }
-        .simultaneousGesture(tabSwipeGesture)
         .environment(\.selectTodayTab) {
             selectedTab = .today
         }
@@ -115,6 +116,8 @@ struct ContentView: View {
         .accessibilityAddTraits(selectedTab == tab ? .isSelected : [])
     }
 
+    /// Tab-Wechsel per horizontalem Wisch — bewusst nur am `tabSwitcher` angehängt,
+    /// damit die Geste nicht mit `swipeActions` in den darunterliegenden Listen kollidiert.
     private var tabSwipeGesture: some Gesture {
         DragGesture(minimumDistance: 16, coordinateSpace: .local)
             .onChanged { value in
