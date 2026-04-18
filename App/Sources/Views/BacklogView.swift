@@ -71,10 +71,16 @@ struct BacklogView: View {
                     onSave: { title, notes, category, destination in
                         switch destination {
                         case .backlog:
-                            viewModel.addTask(title: title, notes: notes, category: category)
+                            if let newTask = viewModel.addTask(title: title, notes: notes, category: category),
+                               let categoryId = newTask.category?.id {
+                                expandedCategories.insert(categoryId)
+                            }
                         case .today:
                             let forcedCategory = quickCategory ?? category
                             if let newTask = viewModel.addTask(title: title, notes: notes, category: forcedCategory) {
+                                if let categoryId = newTask.category?.id {
+                                    expandedCategories.insert(categoryId)
+                                }
                                 _Concurrency.Task {
                                     await viewModel.moveTaskToDailyFocus(newTask)
                                     await MainActor.run {
@@ -163,7 +169,7 @@ struct BacklogView: View {
         return List {
             ForEach(sortedCategories, id: \.id) { category in
                 let tasks = grouped[category.id] ?? []
-                let isExpanded = expandedCategories.contains(category.id) || (!tasks.isEmpty && !category.isUncategorized)
+                let isExpanded = expandedCategories.contains(category.id)
                 
                 // Zeige alle Kategorien an (leere werden eingeklappt angezeigt)
                 Section {
@@ -309,10 +315,12 @@ struct BacklogView: View {
     
     /// Toggelt die Erweiterung einer Kategorie
     private func toggleCategory(_ categoryId: UUID) {
-        if expandedCategories.contains(categoryId) {
-            expandedCategories.remove(categoryId)
-        } else {
-            expandedCategories.insert(categoryId)
+        withAnimation(.easeInOut(duration: 0.2)) {
+            if expandedCategories.contains(categoryId) {
+                expandedCategories.remove(categoryId)
+            } else {
+                expandedCategories.insert(categoryId)
+            }
         }
     }
     

@@ -39,6 +39,7 @@ struct CategoryHeaderView: View {
             Image(systemName: isExpanded ? "chevron.down" : "chevron.right")
                 .font(.caption)
                 .foregroundColor(.secondary)
+                .animation(.easeInOut(duration: 0.2), value: isExpanded)
         }
         .contentShape(Rectangle())
         .onTapGesture(perform: onToggle)
