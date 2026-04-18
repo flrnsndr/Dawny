@@ -14,10 +14,9 @@ struct BacklogView: View {
     @Bindable var settings: AppSettings = .shared
     @Environment(\.modelContext) private var modelContext
     @Environment(\.syncEngine) private var syncEngine
-    @Environment(\.selectTodayTab) private var selectTodayTab
     @Environment(\.triggerWelcomeFlow) private var triggerWelcomeFlow
+    @Environment(\.editMode) private var editMode
     
-    @State private var showingAddTask = false
     @State private var showingSettings = false
     @State private var expandedCategories: Set<UUID> = []
     @State private var showingClearAllConfirm = false
@@ -33,13 +32,8 @@ struct BacklogView: View {
     /// Kategorie, die gerade gelöscht werden soll (Confirmation Dialog).
     @State private var pendingDeleteCategory: Category?
     
-    private var quickAddDefaultCategoryID: UUID? {
-        let sorted = viewModel.categories.sorted()
-        return sorted.first { $0.categoryType == settings.defaultCategoryType }?.id ?? sorted.first?.id
-    }
-
-    private var quickCategory: Category? {
-        viewModel.categories.first { $0.categoryType == .quick }
+    private var isListEditing: Bool {
+        editMode?.wrappedValue == .active
     }
 
     private var clearAllAction: (() -> Void)? {
@@ -53,13 +47,13 @@ struct BacklogView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                if viewModel.backlogTasks.isEmpty {
-                    emptyStateView
+                if settings.showCategories {
+                    ScrollViewReader { proxy in
+                        categorizedTaskListView(scrollProxy: proxy)
+                    }
                 } else {
-                    if settings.showCategories {
-                        categorizedTaskListView
-                    } else {
-                        uncategorizedTaskListView
+                    ScrollViewReader { proxy in
+                        uncategorizedTaskListView(scrollProxy: proxy)
                     }
                 }
             }
@@ -72,40 +66,6 @@ struct BacklogView: View {
                         Image(systemName: "gearshape.fill")
                     }
                     .accessibilityLabel(String(localized: "settings.title", defaultValue: "Einstellungen"))
-                }
-            }
-            .sheet(isPresented: $showingAddTask) {
-                QuickAddView(
-                    categories: settings.showCategories ? viewModel.categories.sorted() : [],
-                    defaultCategoryID: quickAddDefaultCategoryID,
-                    initialDestination: .backlog,
-                    onSave: { title, notes, category, destination in
-                        switch destination {
-                        case .backlog:
-                            if let newTask = viewModel.addTask(title: title, notes: notes, category: category),
-                               let categoryId = newTask.category?.id {
-                                expandedCategories.insert(categoryId)
-                            }
-                        case .today:
-                            let forcedCategory = quickCategory ?? category
-                            if let newTask = viewModel.addTask(title: title, notes: notes, category: forcedCategory) {
-                                if let categoryId = newTask.category?.id {
-                                    expandedCategories.insert(categoryId)
-                                }
-                                _Concurrency.Task {
-                                    await viewModel.moveTaskToDailyFocus(newTask)
-                                    await MainActor.run {
-                                        selectTodayTab()
-                                    }
-                                }
-                            }
-                        }
-                    }
-                )
-                .onAppear {
-                    if settings.showCategories {
-                        viewModel.loadCategories()
-                    }
                 }
             }
             .sheet(isPresented: $showingSettings) {
@@ -161,18 +121,22 @@ struct BacklogView: View {
             .onAppear {
                 viewModel.loadBacklogs()
                 viewModel.loadCategories()
-                initializeExpandedCategories()
-                
-                // Migration: Wenn Kategorien aktiviert sind, migriere Tasks ohne Kategorie
                 if settings.showCategories {
                     viewModel.migrateUncategorizedTasksIfNeeded()
+                    viewModel.loadCategories()
                 }
+                initializeExpandedCategories()
             }
             .onChange(of: settings.showCategories) { oldValue, newValue in
                 if newValue {
                     // Wenn Kategorien aktiviert werden, migriere Tasks ohne Kategorie
                     viewModel.migrateUncategorizedTasksIfNeeded()
                     viewModel.loadCategories()
+                    initializeExpandedCategories()
+                }
+            }
+            .onChange(of: viewModel.taskCount) { _, newCount in
+                if newCount == 0 && settings.showCategories {
                     initializeExpandedCategories()
                 }
             }
@@ -187,40 +151,44 @@ struct BacklogView: View {
                     }
                 }
             }
-            .safeAreaInset(edge: .bottom) {
-                bottomBarAddControls
-            }
         }
     }
     
     // MARK: - Subviews
     
     /// Kategorisierte Ansicht mit Sections pro Kategorie
-    private var categorizedTaskListView: some View {
+    private func categorizedTaskListView(scrollProxy: ScrollViewProxy) -> some View {
         let grouped = viewModel.groupedTasks
         let sortedCategories = viewModel.categories.sorted()
-        
+        let placeholder = String(localized: "quickentry.placeholder", defaultValue: "Neue Aufgabe…")
+
         return List {
             ForEach(sortedCategories, id: \.id) { category in
                 let tasks = grouped[category.id] ?? []
                 let isExpanded = expandedCategories.contains(category.id)
                 let isEditingThis = editingCategoryID == category.id
 
-                // Zeige alle Kategorien an (leere werden eingeklappt angezeigt)
+                // Alle Kategorien; leere sind standardmäßig aufgeklappt, sobald der Backlog leer ist
                 Section {
                     if isExpanded {
                         ForEach(tasks, id: \.id) { task in
                             backlogCategorizedTaskRow(task: task)
                         }
-                    }
-                    } header: {
-                        categoryHeader(
-                            for: category,
-                            taskCount: tasks.count,
-                            isExpanded: isExpanded,
-                            isEditingName: isEditingThis
+                        backlogQuickEntryRow(
+                            scrollProxy: scrollProxy,
+                            scrollID: AnyHashable("qe-backlog-cat-\(category.id.uuidString)"),
+                            placeholder: placeholder,
+                            category: category
                         )
                     }
+                } header: {
+                    categoryHeader(
+                        for: category,
+                        taskCount: tasks.count,
+                        isExpanded: isExpanded,
+                        isEditingName: isEditingThis
+                    )
+                }
             }
 
             Section {
@@ -232,6 +200,34 @@ struct BacklogView: View {
             }
         }
         .listStyle(.insetGrouped)
+    }
+
+    @ViewBuilder
+    private func backlogQuickEntryRow(
+        scrollProxy: ScrollViewProxy,
+        scrollID: AnyHashable,
+        placeholder: String,
+        category: Category
+    ) -> some View {
+        QuickEntryRow(
+            placeholder: placeholder,
+            categoryAccessibilityName: category.displayName,
+            scrollID: scrollID,
+            isHidden: isListEditing,
+            onSubmit: { title in
+                if viewModel.addTask(title: title, category: category, placement: .bottomOfCategory) != nil {
+                    expandedCategories.insert(category.id)
+                }
+            },
+            onFocusChange: { focused in
+                guard focused else { return }
+                DispatchQueue.main.async {
+                    withAnimation {
+                        scrollProxy.scrollTo(scrollID, anchor: .bottom)
+                    }
+                }
+            }
+        )
     }
 
     @ViewBuilder
@@ -266,12 +262,32 @@ struct BacklogView: View {
         }
     }
     
-    /// Unkategorisierte Ansicht (flache Liste)
-    private var uncategorizedTaskListView: some View {
-        List {
+    /// Unkategorisierte Ansicht (flache Liste + Quick Entry)
+    private func uncategorizedTaskListView(scrollProxy: ScrollViewProxy) -> some View {
+        let placeholder = String(localized: "quickentry.placeholder", defaultValue: "Neue Aufgabe…")
+        let scrollID = AnyHashable("qe-backlog-uncategorized")
+
+        return List {
             ForEach(viewModel.backlogTasks, id: \.id) { task in
                 backlogUncategorizedRow(task: task)
             }
+            QuickEntryRow(
+                placeholder: placeholder,
+                categoryAccessibilityName: String(localized: "backlog.title", defaultValue: "Backlog"),
+                scrollID: scrollID,
+                isHidden: isListEditing,
+                onSubmit: { title in
+                    _ = viewModel.addTask(title: title, category: nil, placement: .bottomOfCategory)
+                },
+                onFocusChange: { focused in
+                    guard focused else { return }
+                    DispatchQueue.main.async {
+                        withAnimation {
+                            scrollProxy.scrollTo(scrollID, anchor: .bottom)
+                        }
+                    }
+                }
+            )
         }
         .listStyle(.insetGrouped)
     }
@@ -374,13 +390,20 @@ struct BacklogView: View {
     
     // MARK: - Helper Methods
     
-    /// Initialisiert erweiterte Kategorien (alle mit Tasks werden erweitert)
+    /// Initialisiert aufgeklappte Kategorien: Ohne Backlog-Tasks sind alle Standardkategorien
+    /// aufgeklappt (Quick-Entry sichtbar). Sobald Tasks existieren, werden nur Kategorien
+    /// mit mindestens einer Task automatisch geöffnet.
     private func initializeExpandedCategories() {
+        guard settings.showCategories else { return }
+
+        if viewModel.backlogTasks.isEmpty {
+            expandedCategories = Set(viewModel.categories.sorted().map(\.id))
+            return
+        }
+
         let grouped = viewModel.groupedTasks
-        for (categoryId, tasks) in grouped {
-            if !tasks.isEmpty {
-                expandedCategories.insert(categoryId)
-            }
+        for (categoryId, tasks) in grouped where !tasks.isEmpty {
+            expandedCategories.insert(categoryId)
         }
     }
     
@@ -430,14 +453,6 @@ struct BacklogView: View {
         }
     }
     
-    private var emptyStateView: some View {
-        EmptyStateView(
-            icon: "tray",
-            title: String(localized: "backlog.empty.title", defaultValue: "Backlog ist leer"),
-            message: String(localized: "backlog.empty.message", defaultValue: "Füge neue Tasks hinzu, um mit der Planung zu beginnen")
-        )
-    }
-
     // MARK: - Category Editing Actions
 
     private func beginRenaming(_ category: Category) {
@@ -480,25 +495,6 @@ struct BacklogView: View {
             HapticFeedback.success()
         }
         pendingDeleteCategory = nil
-    }
-
-    private var bottomBarAddControls: some View {
-        HStack {
-            Button {
-                showingAddTask = true
-            } label: {
-                Image(systemName: "plus")
-                    .font(.system(size: 20, weight: .bold))
-                    .frame(width: 52, height: 52)
-                    .background(Color.accentColor)
-                    .foregroundStyle(.white)
-                    .clipShape(Circle())
-            }
-            .accessibilityLabel(String(localized: "backlog.add.task", defaultValue: "Task hinzufügen"))
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.horizontal, 20)
-        .padding(.bottom, 8)
     }
 }
 

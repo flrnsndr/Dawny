@@ -9,6 +9,14 @@ import Foundation
 import SwiftData
 import Observation
 
+/// Steuert die Sortier-Position neu angelegter Tasks innerhalb der Kategorie bzw. der flachen Liste.
+enum TaskPlacement: Sendable {
+    /// Bestehendes Verhalten: `sortPriority` bleibt beim Default → erscheint oben in der Liste.
+    case topOfCategory
+    /// Unter bestehende Einträge (Quick-Entry).
+    case bottomOfCategory
+}
+
 @Observable
 final class BacklogViewModel {
     // MARK: - Properties
@@ -101,13 +109,21 @@ final class BacklogViewModel {
     /// Fügt einen neuen Task zum aktuellen Backlog hinzu
     /// - Parameter category: Wenn gesetzt und Kategorien aktiv sind, wird diese Kategorie verwendet; sonst die Standard-Kategorie aus den Einstellungen.
     @discardableResult
-    func addTask(title: String, notes: String? = nil, category: Category? = nil) -> Task? {
+    func addTask(
+        title: String,
+        notes: String? = nil,
+        category: Category? = nil,
+        placement: TaskPlacement = .topOfCategory
+    ) -> Task? {
         guard let backlog = currentBacklog else {
             errorMessage = "Kein Backlog ausgewählt"
             return nil
         }
-        
-        let task = backlog.addTask(title: title, notes: notes)
+
+        let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedTitle.isEmpty else { return nil }
+
+        let task = backlog.addTask(title: trimmedTitle, notes: notes)
         
         // Wenn Kategorien aktiviert sind, weise Standard-Kategorie zu
         let settings = AppSettings.shared
@@ -122,6 +138,10 @@ final class BacklogViewModel {
                 task.category = defaultCategory
             }
         }
+
+        if placement == .bottomOfCategory {
+            applyBottomPlacement(for: task, in: backlog)
+        }
         
         do {
             try modelContext.save()
@@ -129,6 +149,53 @@ final class BacklogViewModel {
         } catch {
             errorMessage = "Fehler beim Erstellen des Tasks: \(error.localizedDescription)"
             return nil
+        }
+    }
+
+    /// Legt einen Task in der Quick-Kategorie an und verschiebt ihn nach Heute (Kalender-Sync inkl.).
+    @discardableResult
+    func addTaskToTodayQuickEntry(title: String) async -> Task? {
+        let trimmed = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return nil }
+
+        categoryService.initializeDefaultCategories()
+        let quickCategory = categoryService.getCategory(type: .quick)
+
+        guard let task = addTask(
+            title: trimmed,
+            notes: nil,
+            category: quickCategory,
+            placement: .bottomOfCategory
+        ) else { return nil }
+
+        await moveTaskToDailyFocus(task)
+        placeTaskAtBottomOfTodayOpenList(task)
+        return task
+    }
+
+    private func applyBottomPlacement(for task: Task, in backlog: Backlog) {
+        let settings = AppSettings.shared
+        let others: [Task]
+        if settings.showCategories {
+            let categoryId = task.category?.id
+            others = backlog.backlogTasks.filter { $0.id != task.id && $0.category?.id == categoryId }
+        } else {
+            others = backlog.backlogTasks.filter { $0.id != task.id }
+        }
+        let minPriority = others.map(\.sortPriority).min() ?? Date()
+        task.sortPriority = minPriority.addingTimeInterval(-0.001)
+    }
+
+    private func placeTaskAtBottomOfTodayOpenList(_ task: Task) {
+        do {
+            let descriptor = FetchDescriptor<Task>()
+            let allTasks = try modelContext.fetch(descriptor)
+            let others = allTasks.filter { $0.status == .dailyFocus && !$0.isCompleted && $0.id != task.id }
+            let minPriority = others.map(\.sortPriority).min() ?? Date()
+            task.sortPriority = minPriority.addingTimeInterval(-0.001)
+            try modelContext.save()
+        } catch {
+            errorMessage = "Fehler beim Sortieren der Heute-Tasks: \(error.localizedDescription)"
         }
     }
     
