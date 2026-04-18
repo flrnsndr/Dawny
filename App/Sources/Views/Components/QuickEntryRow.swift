@@ -34,10 +34,10 @@ struct QuickEntryRow: View {
     }
 
     private var rowContent: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: 10) {
             TextField(placeholder, text: $draft, axis: .vertical)
-                .lineLimit(1...4)
-                .font(.body)
+                .lineLimit(1...3)
+                .font(.callout)
                 .foregroundStyle(textFieldForeground)
                 .textInputAutocapitalization(.sentences)
                 .autocorrectionDisabled(false)
@@ -50,10 +50,10 @@ struct QuickEntryRow: View {
                     commitFromUser()
                 } label: {
                     Image(systemName: "arrow.turn.down.left")
-                        .font(.body.weight(.semibold))
+                        .font(.subheadline.weight(.semibold))
                         .symbolRenderingMode(.monochrome)
                         .foregroundStyle(canCommit ? Color.accentColor : Color.secondary)
-                        .frame(minWidth: 36, minHeight: 36)
+                        .frame(minWidth: 28, minHeight: 28)
                         .contentShape(Rectangle())
                 }
                 .buttonStyle(.borderless)
@@ -63,7 +63,7 @@ struct QuickEntryRow: View {
                 )
             }
         }
-        .padding(.vertical, 4)
+        .padding(.vertical, 2)
         .contentShape(Rectangle())
         .onTapGesture {
             fieldFocused = true

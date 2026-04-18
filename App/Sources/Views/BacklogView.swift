@@ -14,11 +14,8 @@ struct BacklogView: View {
     @Bindable var settings: AppSettings = .shared
     @Environment(\.modelContext) private var modelContext
     @Environment(\.syncEngine) private var syncEngine
-    @Environment(\.triggerWelcomeFlow) private var triggerWelcomeFlow
-    
-    @State private var showingSettings = false
+
     @State private var expandedCategories: Set<UUID> = []
-    @State private var showingClearAllConfirm = false
 
     // MARK: - Category Editing State
 
@@ -31,14 +28,6 @@ struct BacklogView: View {
     /// Kategorie, die gerade gelöscht werden soll (Confirmation Dialog).
     @State private var pendingDeleteCategory: Category?
 
-    private var clearAllAction: (() -> Void)? {
-        #if DEBUG
-        return { showingClearAllConfirm = true }
-        #else
-        return nil
-        #endif
-    }
-    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -52,29 +41,7 @@ struct BacklogView: View {
                     }
                 }
             }
-            .navigationTitle(viewModel.currentBacklog?.title ?? String(localized: "backlog.title", defaultValue: "Backlog"))
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        showingSettings = true
-                    } label: {
-                        Image(systemName: "gearshape.fill")
-                    }
-                    .accessibilityLabel(String(localized: "settings.title", defaultValue: "Einstellungen"))
-                }
-            }
-            .sheet(isPresented: $showingSettings) {
-                SettingsView(
-                    onRequestAddTestItems: {
-                        triggerTestWorkflow()
-                    },
-                    onRequestDeleteAll: clearAllAction,
-                    onRequestShowWelcome: {
-                        showingSettings = false
-                        triggerWelcomeFlow()
-                    }
-                )
-            }
+            .toolbar(.hidden, for: .navigationBar)
             .sheet(item: $iconPickerCategory) { category in
                 CategorySymbolPicker(currentSymbol: category.displayIconName) { newSymbol in
                     if viewModel.updateCategoryIcon(category, to: newSymbol) {
@@ -98,21 +65,6 @@ struct BacklogView: View {
                     }
                 )
             )
-            #if DEBUG
-            .alert(
-                String(localized: "quickadd.deleteall", defaultValue: "Alle Tasks löschen"),
-                isPresented: $showingClearAllConfirm
-            ) {
-                Button(String(localized: "quickadd.cancel", defaultValue: "Abbrechen"), role: .cancel) {}
-                Button(String(localized: "common.delete", defaultValue: "Löschen"), role: .destructive) {
-                    _Concurrency.Task {
-                        await clearAllBacklogTasks()
-                    }
-                }
-            } message: {
-                Text(String(localized: "backlog.debug.clear.message", defaultValue: "Alle Tasks (Backlog und Heute) werden gelöscht."))
-            }
-            #endif
             .onAppear {
                 viewModel.loadBacklogs()
                 viewModel.loadCategories()
@@ -130,8 +82,11 @@ struct BacklogView: View {
                     initializeExpandedCategories()
                 }
             }
-            .onChange(of: viewModel.taskCount) { _, newCount in
-                if newCount == 0 && settings.showCategories {
+            .onChange(of: viewModel.taskCount) { oldCount, newCount in
+                guard settings.showCategories else { return }
+                // Re-init bei "leer" und ebenso wenn Tasks neu reinkommen
+                // (z.B. nach Debug-Reset oder Hinzufügen von Test-Items aus den Settings).
+                if newCount == 0 || (oldCount == 0 && newCount > 0) {
                     initializeExpandedCategories()
                 }
             }
@@ -194,7 +149,9 @@ struct BacklogView: View {
                 }
             }
         }
-        .listStyle(.insetGrouped)
+        .listStyle(.plain)
+        .listSectionSpacing(.compact)
+        .environment(\.defaultMinListRowHeight, 36)
     }
 
     @ViewBuilder
@@ -222,6 +179,7 @@ struct BacklogView: View {
                 }
             }
         )
+        .listRowInsets(EdgeInsets(top: 2, leading: 16, bottom: 2, trailing: 16))
     }
 
     @ViewBuilder
@@ -247,10 +205,14 @@ struct BacklogView: View {
         // Drop-Target nur deaktivieren, wenn diese Zeile gerade editiert wird –
         // damit das TextField den Tap exklusiv bekommt und keine Tasks
         // versehentlich auf den Header gezogen werden.
+        let configured = header
+            .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
+            .listRowSeparator(.hidden)
+
         if isEditingName {
-            header
+            configured
         } else {
-            header.dropDestination(for: BacklogTaskTransfer.self) { items, _ in
+            configured.dropDestination(for: BacklogTaskTransfer.self) { items, _ in
                 return handleCategoryHeaderDrop(items, targetCategory: category)
             }
         }
@@ -281,8 +243,11 @@ struct BacklogView: View {
                     }
                 }
             )
+            .listRowInsets(EdgeInsets(top: 2, leading: 16, bottom: 2, trailing: 16))
         }
-        .listStyle(.insetGrouped)
+        .listStyle(.plain)
+        .listSectionSpacing(.compact)
+        .environment(\.defaultMinListRowHeight, 36)
     }
     
     @ViewBuilder
@@ -349,38 +314,6 @@ struct BacklogView: View {
         return true
     }
 
-    private func triggerTestWorkflow() {
-        #if DEBUG
-        viewModel.addDebugTestItems(settings: settings)
-        viewModel.loadBacklogs()
-        viewModel.loadCategories()
-        initializeExpandedCategories()
-        #endif
-    }
-
-    private func clearAllBacklogTasks() async {
-        #if DEBUG
-        let backlogTasks = viewModel.backlogTasks
-        let todayTasks = dailyFocusViewModel?.dailyTasks ?? []
-
-        dailyFocusViewModel?.clearTasksFromDisplayOnly()
-
-        for task in backlogTasks {
-            await viewModel.deleteTask(task)
-        }
-
-        if let dfvm = dailyFocusViewModel {
-            for task in todayTasks {
-                await dfvm.deleteTask(task)
-            }
-        }
-
-        viewModel.loadBacklogs()
-        viewModel.loadCategories()
-        initializeExpandedCategories()
-        #endif
-    }
-    
     // MARK: - Helper Methods
     
     /// Initialisiert aufgeklappte Kategorien: Ohne Backlog-Tasks sind alle Standardkategorien

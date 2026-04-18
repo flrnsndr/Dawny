@@ -23,7 +23,7 @@ struct DailyFocusView: View {
                     syncIndicatorView
                 }
             }
-            .navigationTitle(String(localized: "today.title", defaultValue: "Heute"))
+            .toolbar(.hidden, for: .navigationBar)
             .refreshable {
                 await viewModel.refresh()
             }
@@ -75,6 +75,7 @@ struct DailyFocusView: View {
                         }
                     }
                 )
+                .listRowInsets(EdgeInsets(top: 2, leading: 16, bottom: 2, trailing: 16))
             }
 
             if !viewModel.completedTasks.isEmpty {
@@ -93,7 +94,9 @@ struct DailyFocusView: View {
                 }
             }
         }
-        .listStyle(.insetGrouped)
+        .listStyle(.plain)
+        .listSectionSpacing(.compact)
+        .environment(\.defaultMinListRowHeight, 36)
     }
     
     @ViewBuilder

@@ -19,6 +19,19 @@ struct ContentView: View {
     @State private var hasSetInitialTab = false
     @State private var showWelcome = false
     @State private var isDraggingHorizontally = false
+    @State private var showingSettings = false
+    @Bindable private var settings: AppSettings = .shared
+    #if DEBUG
+    @State private var showingClearAllConfirm = false
+    #endif
+
+    private var clearAllAction: (() -> Void)? {
+        #if DEBUG
+        return { showingClearAllConfirm = true }
+        #else
+        return nil
+        #endif
+    }
     
     enum Tab: Int {
         case backlog = 0
@@ -59,6 +72,33 @@ struct ContentView: View {
                 showWelcome = false
             }
         }
+        .sheet(isPresented: $showingSettings) {
+            SettingsView(
+                onRequestAddTestItems: {
+                    triggerTestWorkflow()
+                },
+                onRequestDeleteAll: clearAllAction,
+                onRequestShowWelcome: {
+                    showingSettings = false
+                    showWelcome = true
+                }
+            )
+        }
+        #if DEBUG
+        .alert(
+            String(localized: "quickadd.deleteall", defaultValue: "Alle Tasks löschen"),
+            isPresented: $showingClearAllConfirm
+        ) {
+            Button(String(localized: "quickadd.cancel", defaultValue: "Abbrechen"), role: .cancel) {}
+            Button(String(localized: "common.delete", defaultValue: "Löschen"), role: .destructive) {
+                _Concurrency.Task {
+                    await clearAllBacklogTasks()
+                }
+            }
+        } message: {
+            Text(String(localized: "backlog.debug.clear.message", defaultValue: "Alle Tasks (Backlog und Heute) werden gelöscht."))
+        }
+        #endif
         .onAppear {
             initializeViewModels()
             
@@ -75,21 +115,35 @@ struct ContentView: View {
     }
 
     private var tabSwitcher: some View {
-        HStack(spacing: 6) {
-            tabSwitchButton(
-                title: String(localized: "tabs.backlog", defaultValue: "Backlog"),
-                tab: .backlog
-            )
-            tabSwitchButton(
-                title: String(localized: "tabs.today", defaultValue: "Heute"),
-                tab: .today
-            )
+        HStack(spacing: 8) {
+            Button {
+                showingSettings = true
+            } label: {
+                Image(systemName: "gearshape.fill")
+                    .font(.body)
+                    .foregroundStyle(.secondary)
+                    .frame(width: 32, height: 32)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(String(localized: "settings.title", defaultValue: "Einstellungen"))
+
+            HStack(spacing: 4) {
+                tabSwitchButton(
+                    title: String(localized: "tabs.backlog", defaultValue: "Backlog"),
+                    tab: .backlog
+                )
+                tabSwitchButton(
+                    title: String(localized: "tabs.today", defaultValue: "Heute"),
+                    tab: .today
+                )
+            }
+            .padding(2)
+            .background(Color(UIColor.secondarySystemFill), in: Capsule())
         }
-        .padding(4)
-        .background(Color(UIColor.secondarySystemFill), in: Capsule())
-        .padding(.horizontal, 16)
-        .padding(.top, 8)
-        .padding(.bottom, 4)
+        .padding(.horizontal, 12)
+        .padding(.top, 4)
+        .padding(.bottom, 2)
         .background(.thinMaterial)
     }
 
@@ -100,7 +154,7 @@ struct ContentView: View {
             Text(title)
                 .font(.footnote.weight(.semibold))
                 .frame(maxWidth: .infinity)
-                .padding(.vertical, 6)
+                .padding(.vertical, 4)
                 .background(
                     selectedTab == tab
                     ? Color(UIColor.systemBackground)
@@ -140,6 +194,40 @@ struct ContentView: View {
             }
     }
     
+    // MARK: - Debug Actions
+
+    private func triggerTestWorkflow() {
+        #if DEBUG
+        guard let backlogVM = backlogViewModel else { return }
+        backlogVM.addDebugTestItems(settings: settings)
+        backlogVM.loadBacklogs()
+        backlogVM.loadCategories()
+        #endif
+    }
+
+    private func clearAllBacklogTasks() async {
+        #if DEBUG
+        guard let backlogVM = backlogViewModel else { return }
+        let backlogTasks = backlogVM.backlogTasks
+        let todayTasks = dailyFocusViewModel?.dailyTasks ?? []
+
+        dailyFocusViewModel?.clearTasksFromDisplayOnly()
+
+        for task in backlogTasks {
+            await backlogVM.deleteTask(task)
+        }
+
+        if let dfvm = dailyFocusViewModel {
+            for task in todayTasks {
+                await dfvm.deleteTask(task)
+            }
+        }
+
+        backlogVM.loadBacklogs()
+        backlogVM.loadCategories()
+        #endif
+    }
+
     private func initializeViewModels() {
         guard let syncEngine = syncEngine,
               let resetEngine = resetEngine else {

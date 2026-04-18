@@ -69,7 +69,7 @@ struct AddCategoryRow: View {
             Image(systemName: "tag")
                 .font(.subheadline)
                 .foregroundStyle(Color.accentColor)
-                .frame(width: 32, height: 32)
+                .frame(width: 28, height: 28)
                 .background(
                     RoundedRectangle(cornerRadius: 8, style: .continuous)
                         .fill(Color.accentColor.opacity(0.15))
