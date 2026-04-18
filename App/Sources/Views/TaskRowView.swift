@@ -48,6 +48,7 @@ struct TaskRowView: View {
                     Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
                         .font(checkboxFont)
                         .foregroundStyle(task.isCompleted ? .green : .gray)
+                        .frame(minWidth: 32, minHeight: 32)
                 }
                 .buttonStyle(.plain)
             }
@@ -55,8 +56,6 @@ struct TaskRowView: View {
             titleAndMetaColumn
             
             Spacer()
-            
-            detailChevron
         }
         .padding(.vertical, verticalPadding)
         
@@ -65,6 +64,7 @@ struct TaskRowView: View {
             .onTapGesture {
                 showingDetail = true
             }
+            .listRowInsets(EdgeInsets(top: 2, leading: 16, bottom: 2, trailing: 16))
             .modifier(TrailingSwipeDeleteModifier(onDelete: onDelete))
         .sheet(isPresented: $showingDetail) {
             TaskDetailView(task: task)
@@ -111,13 +111,6 @@ struct TaskRowView: View {
         column
     }
     
-    @ViewBuilder
-    private var detailChevron: some View {
-        Image(systemName: "chevron.right")
-            .font(.caption2)
-            .foregroundStyle(.tertiary)
-    }
-    
     private var statusColor: Color {
         switch task.status {
         case .inBacklog:
@@ -139,12 +132,12 @@ struct TaskRowView: View {
     
     /// Horizontal spacing zwischen Elementen
     private var horizontalSpacing: CGFloat {
-        task.isCompleted ? 8 : 12
+        task.isCompleted ? 6 : 10
     }
     
     /// Vertical padding der gesamten Zeile
     private var verticalPadding: CGFloat {
-        task.isCompleted ? 2 : 4
+        task.isCompleted ? 1 : 2
     }
     
     /// Schriftgröße für den Titel
@@ -162,9 +155,9 @@ struct TaskRowView: View {
         task.isCompleted ? 2 : 4
     }
     
-    /// Sollten Notizen angezeigt werden?
+    /// Notizen werden in der Zeile bewusst nicht mehr angezeigt – nur im Detail.
     private var shouldShowNotes: Bool {
-        !task.isCompleted || task.notes?.isEmpty == false
+        false
     }
     
     /// Line limit für Notizen bei erledigten Tasks

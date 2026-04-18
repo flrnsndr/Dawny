@@ -29,7 +29,7 @@ struct CategoryHeaderView: View {
 
     var body: some View {
         // Kein `Button`: sonst blockiert die Interaktion oft SwiftUI-`dropDestination` auf dem Header (Cross-Category-Drag).
-        HStack {
+        HStack(spacing: 8) {
             iconView
 
             if isEditingName {
@@ -50,10 +50,10 @@ struct CategoryHeaderView: View {
 
             if taskCount > 0 {
                 Text("\(taskCount)")
-                    .font(.caption)
+                    .font(.caption2)
                     .foregroundColor(.secondary)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 4)
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 2)
                     .background(Color.secondary.opacity(0.2))
                     .clipShape(Capsule())
                     .opacity(isEditingName ? 0.5 : 1.0)
@@ -109,7 +109,7 @@ struct CategoryHeaderView: View {
         } else {
             Image(systemName: category.displayIconName)
                 .foregroundColor(.secondary)
-                .frame(width: 20)
+                .frame(width: 18)
                 .opacity(isEditingName ? 0.5 : 1.0)
         }
     }
