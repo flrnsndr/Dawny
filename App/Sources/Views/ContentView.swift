@@ -42,16 +42,13 @@ struct ContentView: View {
                         ProgressView()
                     }
                 case .today:
-                    if let dailyViewModel = dailyFocusViewModel {
-                        DailyFocusView(viewModel: dailyViewModel)
+                    if let dailyViewModel = dailyFocusViewModel, let backlogVM = backlogViewModel {
+                        DailyFocusView(viewModel: dailyViewModel, backlogViewModel: backlogVM)
                     } else {
                         ProgressView()
                     }
                 }
             }
-        }
-        .environment(\.selectTodayTab) {
-            selectedTab = .today
         }
         .environment(\.triggerWelcomeFlow) {
             showWelcome = true

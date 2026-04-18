@@ -9,15 +9,18 @@ import SwiftUI
 
 struct DailyFocusView: View {
     @Bindable var viewModel: DailyFocusViewModel
-    @State private var showingSyncIndicator = false
-    
+    var backlogViewModel: BacklogViewModel
+    @Environment(\.editMode) private var editMode
+
+    private var isListEditing: Bool {
+        editMode?.wrappedValue == .active
+    }
+
     var body: some View {
         NavigationStack {
             ZStack {
-                if viewModel.dailyTasks.isEmpty {
-                    emptyStateView
-                } else {
-                    taskListView
+                ScrollViewReader { proxy in
+                    taskListView(scrollProxy: proxy)
                 }
                 
                 // Sync Indicator
@@ -48,16 +51,38 @@ struct DailyFocusView: View {
     
     // MARK: - Subviews
     
-    private var taskListView: some View {
-        List {
-            if !viewModel.openTasks.isEmpty {
-                Section(String(localized: "today.section.open", defaultValue: "Offen")) {
-                    ForEach(viewModel.openTasks, id: \.id) { task in
-                        openTaskRow(task: task)
-                    }
+    private func taskListView(scrollProxy: ScrollViewProxy) -> some View {
+        let openScrollID = AnyHashable("qe-today-open")
+
+        return List {
+            Section(String(localized: "today.section.open", defaultValue: "Offen")) {
+                ForEach(viewModel.openTasks, id: \.id) { task in
+                    openTaskRow(task: task)
                 }
+                QuickEntryRow(
+                    placeholder: String(localized: "quickentry.placeholder.today", defaultValue: "Neue Aufgabe für heute…"),
+                    categoryAccessibilityName: nil,
+                    scrollID: openScrollID,
+                    isHidden: isListEditing,
+                    onSubmit: { title in
+                        _Concurrency.Task {
+                            _ = await backlogViewModel.addTaskToTodayQuickEntry(title: title)
+                            await MainActor.run {
+                                viewModel.loadDailyTasks()
+                            }
+                        }
+                    },
+                    onFocusChange: { focused in
+                        guard focused else { return }
+                        DispatchQueue.main.async {
+                            withAnimation {
+                                scrollProxy.scrollTo(openScrollID, anchor: .bottom)
+                            }
+                        }
+                    }
+                )
             }
-            
+
             if !viewModel.completedTasks.isEmpty {
                 Section(String(localized: "today.section.completed", defaultValue: "Erledigt")) {
                     ForEach(viewModel.completedTasks, id: \.id) { task in
@@ -75,7 +100,6 @@ struct DailyFocusView: View {
             }
         }
         .listStyle(.insetGrouped)
-        
     }
     
     @ViewBuilder
@@ -100,14 +124,6 @@ struct DailyFocusView: View {
             }
             .tint(.gray)
         }
-    }
-    
-    private var emptyStateView: some View {
-        EmptyStateView(
-            icon: "sun.horizon",
-            title: String(localized: "today.empty.title", defaultValue: "Noch keine Tasks für heute"),
-            message: String(localized: "today.empty.message", defaultValue: "Füge Tasks aus deinem Backlog hinzu, um den Tag zu planen")
-        )
     }
     
     private var syncIndicatorView: some View {
