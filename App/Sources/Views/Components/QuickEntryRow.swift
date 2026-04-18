@@ -13,8 +13,6 @@ struct QuickEntryRow: View {
     let categoryAccessibilityName: String?
     /// Für `ScrollViewReader.scrollTo(_:anchor:)`.
     let scrollID: AnyHashable
-    /// Wenn `true`, wird die Zeile nicht gerendert (z. B. Listen-Reorder).
-    let isHidden: Bool
 
     let onSubmit: (String) -> Void
     /// Wird aufgerufen, wenn sich die Tastatur-Fokussierung ändert (für Auto-Scroll).
@@ -32,11 +30,7 @@ struct QuickEntryRow: View {
     }
 
     var body: some View {
-        Group {
-            if !isHidden {
-                rowContent
-            }
-        }
+        rowContent
     }
 
     private var rowContent: some View {

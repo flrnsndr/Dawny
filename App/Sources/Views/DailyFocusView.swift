@@ -10,11 +10,6 @@ import SwiftUI
 struct DailyFocusView: View {
     @Bindable var viewModel: DailyFocusViewModel
     var backlogViewModel: BacklogViewModel
-    @Environment(\.editMode) private var editMode
-
-    private var isListEditing: Bool {
-        editMode?.wrappedValue == .active
-    }
 
     var body: some View {
         NavigationStack {
@@ -63,7 +58,6 @@ struct DailyFocusView: View {
                     placeholder: String(localized: "quickentry.placeholder.today", defaultValue: "Neue Aufgabe für heute…"),
                     categoryAccessibilityName: nil,
                     scrollID: openScrollID,
-                    isHidden: isListEditing,
                     onSubmit: { title in
                         _Concurrency.Task {
                             _ = await backlogViewModel.addTaskToTodayQuickEntry(title: title)
