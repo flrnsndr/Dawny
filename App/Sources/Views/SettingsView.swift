@@ -147,7 +147,7 @@ struct SettingsView: View {
             
             if settings.showCategories {
                 Picker(String(localized: "settings.category.default", defaultValue: "Standard-Kategorie für neue Tasks"), selection: $settings.defaultCategoryType) {
-                    ForEach(TaskCategory.allCases.filter { $0 != .uncategorized }, id: \.self) { category in
+                    ForEach(TaskCategory.allCases.filter { $0 != .uncategorized && $0 != .custom }, id: \.self) { category in
                         HStack {
                             Image(systemName: category.iconName)
                             Text(category.displayName)
