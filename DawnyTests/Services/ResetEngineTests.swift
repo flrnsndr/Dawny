@@ -197,7 +197,8 @@ final class ResetEngineTests: XCTestCase {
         // Action
         await resetEngine.checkAndPerformResetIfNeeded()
         
-        // Assert: Task sollte jetzt im Backlog sein (Reset war gestern)
-        XCTAssertEqual(task.status, .inBacklog)
+        // Der Schwellwert vor 5:00 ist noch der Reset vom 14. um 5:00 — gleich lastReset,
+        // daher kein erneuter Reset bis die heutige Reset-Stunde erreicht ist.
+        XCTAssertEqual(task.status, .dailyFocus)
     }
 }

@@ -30,6 +30,14 @@ final class Category {
     /// Flag ob dies die "Unkategorisiert"-Kategorie ist
     var isUncategorized: Bool
     
+    /// Markiert, dass der Nutzer den Namen manuell überschrieben hat.
+    /// Solange `false`, wird `categoryType.displayName` (lokalisiert) angezeigt.
+    var isNameCustomized: Bool = false
+
+    /// Markiert, dass der Nutzer das Symbol manuell überschrieben hat.
+    /// Solange `false`, wird `categoryType.iconName` als Default verwendet.
+    var isIconCustomized: Bool = false
+
     /// Erstellungsdatum
     var createdAt: Date
     
@@ -48,6 +56,8 @@ final class Category {
         iconName: String? = nil,
         orderIndex: Int? = nil,
         isUncategorized: Bool = false,
+        isNameCustomized: Bool = false,
+        isIconCustomized: Bool = false,
         createdAt: Date = Date(),
         tasks: [Task] = []
     ) {
@@ -57,6 +67,8 @@ final class Category {
         self.iconName = iconName ?? categoryType.iconName
         self.orderIndex = orderIndex ?? categoryType.defaultOrderIndex
         self.isUncategorized = isUncategorized || (categoryType == .uncategorized)
+        self.isNameCustomized = isNameCustomized
+        self.isIconCustomized = isIconCustomized
         self.createdAt = createdAt
         self.tasks = tasks
     }
@@ -73,6 +85,45 @@ final class Category {
         tasks
             .filter { $0.status == .inBacklog }
             .sorted()
+    }
+
+    // MARK: - Display
+
+    /// Name für die UI. Solange der User nichts geändert hat, kommt die
+    /// (re-)lokalisierte Variante aus `TaskCategory.displayName` zurück.
+    /// Dadurch funktioniert ein Sprachwechsel weiterhin korrekt.
+    var displayName: String {
+        isNameCustomized ? name : categoryType.displayName
+    }
+
+    /// SF-Symbol für die UI. Folgt der gleichen Logik wie `displayName`.
+    var displayIconName: String {
+        isIconCustomized ? iconName : categoryType.iconName
+    }
+
+    // MARK: - Editing Capabilities
+
+    /// Darf der Nutzer diese Kategorie umbenennen?
+    /// "Unkategorisiert" ist komplett gesperrt.
+    var canRename: Bool {
+        !isUncategorized
+    }
+
+    /// Darf der Nutzer das Symbol dieser Kategorie ändern?
+    /// "Unkategorisiert" ist komplett gesperrt.
+    var canChangeIcon: Bool {
+        !isUncategorized
+    }
+
+    /// Darf der Nutzer diese Kategorie löschen?
+    /// "Unkategorisiert" und "Heute" (`.quick`) sind nicht löschbar.
+    var canDelete: Bool {
+        !isUncategorized && categoryType != .quick
+    }
+
+    /// True, wenn überhaupt irgendeine Edit-Aktion verfügbar ist.
+    var hasAnyEditCapability: Bool {
+        canRename || canChangeIcon || canDelete
     }
 }
 

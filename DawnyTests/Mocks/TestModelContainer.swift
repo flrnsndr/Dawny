@@ -16,7 +16,8 @@ enum TestModelContainer {
     static func create() throws -> ModelContainer {
         let schema = Schema([
             Task.self,
-            Backlog.self
+            Backlog.self,
+            Category.self
         ])
         
         let configuration = ModelConfiguration(

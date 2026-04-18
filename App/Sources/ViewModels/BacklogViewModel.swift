@@ -313,6 +313,59 @@ final class BacklogViewModel {
     func migrateUncategorizedTasksIfNeeded() {
         categoryService.migrateUncategorizedTasks()
     }
+
+    // MARK: - Category Editing
+
+    /// Benennt eine Kategorie um. Setzt `errorMessage`, wenn die Validierung fehlschlägt.
+    /// - Returns: `true` bei Erfolg, sonst `false`.
+    @discardableResult
+    func renameCategory(_ category: Category, to newName: String) -> Bool {
+        do {
+            try categoryService.rename(category, to: newName)
+            loadCategories()
+            return true
+        } catch let error as CategoryEditError {
+            errorMessage = error.errorDescription
+            return false
+        } catch {
+            errorMessage = error.localizedDescription
+            return false
+        }
+    }
+
+    /// Aktualisiert das Symbol einer Kategorie.
+    /// - Returns: `true` bei Erfolg, sonst `false`.
+    @discardableResult
+    func updateCategoryIcon(_ category: Category, to symbolName: String) -> Bool {
+        do {
+            try categoryService.updateIcon(category, to: symbolName)
+            loadCategories()
+            return true
+        } catch let error as CategoryEditError {
+            errorMessage = error.errorDescription
+            return false
+        } catch {
+            errorMessage = error.localizedDescription
+            return false
+        }
+    }
+
+    /// Löscht eine Kategorie nach gewählter Strategie.
+    /// - Returns: `true` bei Erfolg, sonst `false`.
+    @discardableResult
+    func deleteCategory(_ category: Category, strategy: CategoryDeleteStrategy) -> Bool {
+        do {
+            try categoryService.delete(category, strategy: strategy)
+            loadCategories()
+            return true
+        } catch let error as CategoryEditError {
+            errorMessage = error.errorDescription
+            return false
+        } catch {
+            errorMessage = error.localizedDescription
+            return false
+        }
+    }
     
     /// Verschiebt Tasks innerhalb einer Kategorie (Drag & Drop)
     func moveTasksWithinCategory(category: Category, from source: IndexSet, to destination: Int) {
@@ -400,7 +453,7 @@ final class BacklogViewModel {
             let countPerCategory = Int.random(in: 3...4)
             for index in 1...countPerCategory {
                 addTask(
-                    title: "Testtask \(counter) \(category.name) #\(index)",
+                    title: "Testtask \(counter) \(category.displayName) #\(index)",
                     category: category
                 )
                 counter += 1
