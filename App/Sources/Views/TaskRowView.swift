@@ -13,34 +13,21 @@ struct TaskRowView: View {
     let onDelete: (() -> Void)?
     let showDragHandle: Bool
     let showBacklogBadge: Bool
-    /// Wenn gesetzt, überschreibt das Environment — in `List`-Zellen fehlt `editMode` oft, dann blockiert sonst das Zeilen-Tap die Reorder-Geste.
-    let listEditingExplicit: Bool?
     
     @State private var showingDetail = false
-    @Environment(\.editMode) private var editMode
-    
-    /// `true`, wenn die umgebende Liste im Bearbeiten-Modus ist (Reorder). Dann keine vollflächigen Tap-/Swipe-Gesten, die mit den System-Griffen kollidieren.
-    private var isListEditing: Bool {
-        if let listEditingExplicit {
-            return listEditingExplicit
-        }
-        return editMode?.wrappedValue == .active
-    }
     
     init(
         task: Task,
         onToggle: (() -> Void)? = nil,
         onDelete: (() -> Void)? = nil,
         showDragHandle: Bool = false,
-        showBacklogBadge: Bool = true,
-        listEditingExplicit: Bool? = nil
+        showBacklogBadge: Bool = true
     ) {
         self.task = task
         self.onToggle = onToggle
         self.onDelete = onDelete
         self.showDragHandle = showDragHandle
         self.showBacklogBadge = showBacklogBadge
-        self.listEditingExplicit = listEditingExplicit
     }
     
     var body: some View {
@@ -53,27 +40,18 @@ struct TaskRowView: View {
                     .padding(.trailing, 4)
             }
             
-            // Checkbox — im Listen-Bearbeiten-Modus kein `Button`: sonst gewinnt die Taste die Hit-Tests
-            // und `List`+`onMove` feuert oft nicht (Daily Focus mit Toggle vs. Backlog mit onToggle: nil).
             if let toggle = onToggle {
-                if isListEditing {
+                Button {
+                    HapticFeedback.success()
+                    toggle()
+                } label: {
                     Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
                         .font(checkboxFont)
                         .foregroundStyle(task.isCompleted ? .green : .gray)
-                } else {
-                    Button {
-                        HapticFeedback.success()
-                        toggle()
-                    } label: {
-                        Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
-                            .font(checkboxFont)
-                            .foregroundStyle(task.isCompleted ? .green : .gray)
-                    }
-                    .buttonStyle(.plain)
                 }
+                .buttonStyle(.plain)
             }
             
-            // Task Content — im Bearbeiten-Modus tippbar, damit Details ohne vollflächige Zeilengeste erreichbar bleiben
             titleAndMetaColumn
             
             Spacer()
@@ -82,18 +60,12 @@ struct TaskRowView: View {
         }
         .padding(.vertical, verticalPadding)
         
-        Group {
-            if isListEditing {
-                rowStack
-            } else {
-                rowStack
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        showingDetail = true
-                    }
+        rowStack
+            .contentShape(Rectangle())
+            .onTapGesture {
+                showingDetail = true
             }
-        }
-        .modifier(TrailingSwipeDeleteModifier(isEnabled: !isListEditing, onDelete: onDelete))
+            .modifier(TrailingSwipeDeleteModifier(onDelete: onDelete))
         .sheet(isPresented: $showingDetail) {
             TaskDetailView(task: task)
         }
@@ -136,26 +108,14 @@ struct TaskRowView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         
-        // Im Listen-Bearbeiten-Modus kein Tap auf der Titelspalte: sonst füllt `maxWidth: .infinity` fast die Zeile und blockiert `List`+`onMove`.
         column
     }
     
     @ViewBuilder
     private var detailChevron: some View {
-        if isListEditing {
-            Image(systemName: "chevron.right")
-                .font(.caption2)
-                .foregroundStyle(.tertiary)
-                .frame(minWidth: 44, minHeight: 44)
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    showingDetail = true
-                }
-        } else {
-            Image(systemName: "chevron.right")
-                .font(.caption2)
-                .foregroundStyle(.tertiary)
-        }
+        Image(systemName: "chevron.right")
+            .font(.caption2)
+            .foregroundStyle(.tertiary)
     }
     
     private var statusColor: Color {
@@ -218,15 +178,14 @@ struct TaskRowView: View {
     }
 }
 
-// MARK: - Swipe (nur außerhalb Listen-Bearbeiten, damit `List`+`onMove` die System-Reorder-Griffe zeigen kann)
+// MARK: - Swipe
 
 private struct TrailingSwipeDeleteModifier: ViewModifier {
-    let isEnabled: Bool
     let onDelete: (() -> Void)?
     
     @ViewBuilder
     func body(content: Content) -> some View {
-        if isEnabled, let onDelete {
+        if let onDelete {
             content.swipeActions(edge: .trailing, allowsFullSwipe: true) {
                 Button(role: .destructive) {
                     HapticFeedback.heavy()

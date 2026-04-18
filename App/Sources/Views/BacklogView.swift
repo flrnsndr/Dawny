@@ -15,7 +15,6 @@ struct BacklogView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.syncEngine) private var syncEngine
     @Environment(\.triggerWelcomeFlow) private var triggerWelcomeFlow
-    @Environment(\.editMode) private var editMode
     
     @State private var showingSettings = false
     @State private var expandedCategories: Set<UUID> = []
@@ -31,10 +30,6 @@ struct BacklogView: View {
     @State private var iconPickerCategory: Category?
     /// Kategorie, die gerade gelöscht werden soll (Confirmation Dialog).
     @State private var pendingDeleteCategory: Category?
-    
-    private var isListEditing: Bool {
-        editMode?.wrappedValue == .active
-    }
 
     private var clearAllAction: (() -> Void)? {
         #if DEBUG
@@ -213,7 +208,6 @@ struct BacklogView: View {
             placeholder: placeholder,
             categoryAccessibilityName: category.displayName,
             scrollID: scrollID,
-            isHidden: isListEditing,
             onSubmit: { title in
                 if viewModel.addTask(title: title, category: category, placement: .bottomOfCategory) != nil {
                     expandedCategories.insert(category.id)
@@ -275,7 +269,6 @@ struct BacklogView: View {
                 placeholder: placeholder,
                 categoryAccessibilityName: String(localized: "backlog.title", defaultValue: "Backlog"),
                 scrollID: scrollID,
-                isHidden: isListEditing,
                 onSubmit: { title in
                     _ = viewModel.addTask(title: title, category: nil, placement: .bottomOfCategory)
                 },
