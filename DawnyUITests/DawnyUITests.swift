@@ -45,11 +45,11 @@ final class DawnyUITests: XCTestCase {
     func testTabNavigation() throws {
         dismissWelcomeIfShown()
 
-        // Prüfe dass beide Tabs existieren
-        // Note: Tests verwenden lokalisierte Strings - funktioniert mit Deutsch und Englisch
-        let heuteTab = app.tabBars.buttons["Heute"]
-        let todayTab = app.tabBars.buttons["Today"]
-        let backlogTab = app.tabBars.buttons["Backlog"]
+        // Prüfe dass beide Tabs existieren (segmentierter Tab-Schalter in ContentView, kein UITabBar)
+        // Note: Tests verwenden lokalisierte Accessibility-Labels - funktioniert mit Deutsch und Englisch
+        let heuteTab = app.buttons["Heute"]
+        let todayTab = app.buttons["Today"]
+        let backlogTab = app.buttons["Backlog"]
         
         let todayTabExists = heuteTab.waitForExistence(timeout: 5) || todayTab.waitForExistence(timeout: 5)
         XCTAssertTrue(todayTabExists)
@@ -72,7 +72,7 @@ final class DawnyUITests: XCTestCase {
         dismissWelcomeIfShown()
 
         // Wechsle zu Backlog
-        let backlogTab = app.tabBars.buttons["Backlog"]
+        let backlogTab = app.buttons["Backlog"]
         XCTAssertTrue(backlogTab.waitForExistence(timeout: 5))
         backlogTab.tap()
         

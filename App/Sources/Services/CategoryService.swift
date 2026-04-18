@@ -8,8 +8,57 @@
 import Foundation
 import SwiftData
 
+/// Strategie, wie Tasks behandelt werden, wenn der Nutzer eine Kategorie löscht.
+enum CategoryDeleteStrategy {
+    /// Alle Tasks der Kategorie werden mitgelöscht.
+    case deleteTasks
+    /// Alle Tasks werden in die "Unkategorisiert"-Kategorie verschoben.
+    case moveToUncategorized
+}
+
+/// Fehler bei Edit-Operationen auf einer Kategorie.
+enum CategoryEditError: LocalizedError {
+    case nameEmpty
+    case nameTooLong(maxLength: Int)
+    case protectedFromRename
+    case protectedFromIconChange
+    case protectedFromDelete
+    case uncategorizedMissing
+    case persistence(underlying: Error)
+
+    var errorDescription: String? {
+        switch self {
+        case .nameEmpty:
+            return String(
+                localized: "category.rename.errorEmpty",
+                defaultValue: "Der Name darf nicht leer sein."
+            )
+        case .nameTooLong(let maxLength):
+            return String(
+                localized: "category.rename.errorTooLong",
+                defaultValue: "Der Name darf höchstens \(maxLength) Zeichen lang sein."
+            )
+        case .protectedFromRename, .protectedFromIconChange, .protectedFromDelete:
+            return String(
+                localized: "category.edit.errorProtected",
+                defaultValue: "Diese Kategorie kann nicht verändert werden."
+            )
+        case .uncategorizedMissing:
+            return String(
+                localized: "category.edit.errorUncategorizedMissing",
+                defaultValue: "Die Unkategorisiert-Kategorie wurde nicht gefunden."
+            )
+        case .persistence(let underlying):
+            return underlying.localizedDescription
+        }
+    }
+}
+
 /// Service für Kategorien-Management
 final class CategoryService {
+    /// Maximale Länge eines benutzerdefinierten Kategorienamens.
+    static let maxNameLength = 40
+
     private let modelContext: ModelContext
     
     init(modelContext: ModelContext) {
@@ -98,6 +147,109 @@ final class CategoryService {
         }
     }
     
+    // MARK: - Edit Operations
+
+    /// Benennt eine Kategorie um. Trimmt Whitespace, validiert Länge und
+    /// markiert den Namen als benutzerdefiniert (für Lokalisierungs-Logik).
+    @discardableResult
+    func rename(_ category: Category, to newName: String) throws -> String {
+        guard category.canRename else {
+            throw CategoryEditError.protectedFromRename
+        }
+
+        let trimmed = newName.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else {
+            throw CategoryEditError.nameEmpty
+        }
+        guard trimmed.count <= Self.maxNameLength else {
+            throw CategoryEditError.nameTooLong(maxLength: Self.maxNameLength)
+        }
+
+        // Wenn sich nichts geändert hat: nichts tun (vermeidet unnötige Saves
+        // und unnötiges Setzen von isNameCustomized).
+        if category.isNameCustomized && category.name == trimmed {
+            return trimmed
+        }
+
+        category.name = trimmed
+        category.isNameCustomized = true
+
+        try save()
+        return trimmed
+    }
+
+    /// Setzt das Symbol einer Kategorie und markiert es als benutzerdefiniert.
+    func updateIcon(_ category: Category, to symbolName: String) throws {
+        guard category.canChangeIcon else {
+            throw CategoryEditError.protectedFromIconChange
+        }
+
+        let trimmed = symbolName.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else {
+            // Leeres Symbol fällt zurück auf Default → wir entfernen die Custom-Markierung.
+            category.isIconCustomized = false
+            try save()
+            return
+        }
+
+        category.iconName = trimmed
+        category.isIconCustomized = true
+
+        try save()
+    }
+
+    /// Löscht eine Kategorie nach gewählter Strategie.
+    /// - `.deleteTasks`: alle zugehörigen Tasks (auch bereits abgeschlossene/gescheduelte)
+    ///   werden vor dem Entfernen der Kategorie explizit gelöscht.
+    /// - `.moveToUncategorized`: alle Tasks werden in die "Unkategorisiert"-Kategorie umgehängt.
+    /// Setzt zusätzlich `AppSettings.defaultCategoryType` auf einen sinnvollen Fallback,
+    /// falls die gelöschte Kategorie als Standard markiert war.
+    func delete(_ category: Category, strategy: CategoryDeleteStrategy) throws {
+        guard category.canDelete else {
+            throw CategoryEditError.protectedFromDelete
+        }
+
+        switch strategy {
+        case .deleteTasks:
+            // Snapshot, weil wir während der Iteration aus der Relationship löschen.
+            let tasksToDelete = category.tasks
+            for task in tasksToDelete {
+                modelContext.delete(task)
+            }
+
+        case .moveToUncategorized:
+            guard let uncategorized = getUncategorizedCategory() else {
+                throw CategoryEditError.uncategorizedMissing
+            }
+            // Snapshot wegen Inverse-Relationship-Mutation während der Iteration.
+            let tasksToMove = category.tasks
+            for task in tasksToMove {
+                task.category = uncategorized
+                task.modifiedAt = Date()
+            }
+        }
+
+        // Default-Fallback: zeigt AppSettings noch auf den gerade gelöschten Typ?
+        // Dann auf .quick (die einzige garantiert nicht löschbare User-Kategorie) zurücksetzen.
+        let settings = AppSettings.shared
+        if settings.defaultCategoryType == category.categoryType {
+            settings.defaultCategoryType = .quick
+        }
+
+        modelContext.delete(category)
+        try save()
+    }
+
+    // MARK: - Private Helpers
+
+    private func save() throws {
+        do {
+            try modelContext.save()
+        } catch {
+            throw CategoryEditError.persistence(underlying: error)
+        }
+    }
+
     /// Migriert alle Tasks ohne Kategorie zur "Unkategorisiert"-Kategorie
     func migrateUncategorizedTasks() {
         guard let uncategorizedCategory = getUncategorizedCategory() else {

@@ -70,17 +70,17 @@ struct QuickAddView: View {
                         if destination == .backlog {
                             Picker(String(localized: "quickadd.category.section", defaultValue: "Kategorie"), selection: $selectedCategoryID) {
                                 ForEach(sortedCategories, id: \.id) { category in
-                                    Label(category.name, systemImage: category.iconName)
+                                    Label(category.displayName, systemImage: category.displayIconName)
                                         .tag(Optional(category.id))
                                 }
                             }
                         } else {
                             HStack(spacing: 8) {
                                 if let quickCategory = quickCategory {
-                                    Label(quickCategory.name, systemImage: quickCategory.iconName)
+                                    Label(quickCategory.displayName, systemImage: quickCategory.displayIconName)
                                         .labelStyle(.titleAndIcon)
                                 } else if let selectedCategory = sortedCategories.first(where: { $0.id == selectedCategoryID }) {
-                                    Label(selectedCategory.name, systemImage: selectedCategory.iconName)
+                                    Label(selectedCategory.displayName, systemImage: selectedCategory.displayIconName)
                                         .labelStyle(.titleAndIcon)
                                 }
                                 Image(systemName: "arrow.right")

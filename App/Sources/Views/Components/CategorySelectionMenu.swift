@@ -34,8 +34,8 @@ struct CategorySelectionMenu: View {
                     onSelect(category)
                 } label: {
                     HStack {
-                        Image(systemName: category.iconName)
-                        Text(category.name)
+                        Image(systemName: category.displayIconName)
+                        Text(category.displayName)
                         if currentCategory?.id == category.id {
                             Spacer()
                             Image(systemName: "checkmark")
