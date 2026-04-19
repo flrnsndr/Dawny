@@ -22,7 +22,6 @@ struct ContentView: View {
     @State private var selectedTab: Tab = .backlog
     @State private var hasSetInitialTab = false
     @State private var showWelcome = false
-    @State private var isDraggingHorizontally = false
     @State private var showingSettings = false
     @Bindable private var settings: AppSettings = .shared
     #if DEBUG
@@ -45,11 +44,8 @@ struct ContentView: View {
     var body: some View {
         VStack(spacing: 0) {
             tabSwitcher
-                .contentShape(Rectangle())
-                .gesture(tabSwipeGesture)
-            Group {
-                switch selectedTab {
-                case .backlog:
+            TabView(selection: $selectedTab) {
+                Group {
                     if let backlogVM = backlogViewModel {
                         BacklogView(
                             viewModel: backlogVM,
@@ -58,14 +54,20 @@ struct ContentView: View {
                     } else {
                         ProgressView()
                     }
-                case .today:
+                }
+                .tag(Tab.backlog)
+
+                Group {
                     if let dailyViewModel = dailyFocusViewModel, let backlogVM = backlogViewModel {
                         DailyFocusView(viewModel: dailyViewModel, backlogViewModel: backlogVM)
                     } else {
                         ProgressView()
                     }
                 }
+                .tag(Tab.today)
             }
+            .tabViewStyle(.page(indexDisplayMode: .never))
+            .ignoresSafeArea(.keyboard, edges: .bottom)
         }
         .environment(\.triggerWelcomeFlow) {
             showWelcome = true
@@ -153,7 +155,11 @@ struct ContentView: View {
 
     private func tabSwitchButton(title: String, tab: Tab) -> some View {
         Button {
-            selectedTab = tab
+            var transaction = Transaction()
+            transaction.disablesAnimations = true
+            withTransaction(transaction) {
+                selectedTab = tab
+            }
         } label: {
             Text(title)
                 .font(.footnote.weight(.semibold))
@@ -171,33 +177,6 @@ struct ContentView: View {
         .accessibilityAddTraits(selectedTab == tab ? .isSelected : [])
     }
 
-    /// Tab-Wechsel per horizontalem Wisch — bewusst nur am `tabSwitcher` angehängt,
-    /// damit die Geste nicht mit `swipeActions` in den darunterliegenden Listen kollidiert.
-    private var tabSwipeGesture: some Gesture {
-        DragGesture(minimumDistance: 16, coordinateSpace: .local)
-            .onChanged { value in
-                if !isDraggingHorizontally {
-                    let isHorizontal = abs(value.translation.width) > abs(value.translation.height)
-                    if isHorizontal {
-                        isDraggingHorizontally = true
-                    }
-                }
-            }
-            .onEnded { value in
-                defer { isDraggingHorizontally = false }
-
-                let horizontal = value.translation.width
-                let vertical = value.translation.height
-                guard abs(horizontal) > abs(vertical), abs(horizontal) >= 50 else { return }
-
-                if horizontal < 0, selectedTab == .backlog {
-                    selectedTab = .today
-                } else if horizontal > 0, selectedTab == .today {
-                    selectedTab = .backlog
-                }
-            }
-    }
-    
     // MARK: - Debug Actions
 
     private func triggerTestWorkflow() {
