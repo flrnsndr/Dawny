@@ -17,6 +17,7 @@ struct TaskRowView: View {
     let onDelete: (() -> Void)?
     let showDragHandle: Bool
     let showBacklogBadge: Bool
+    let showsDisabledToggle: Bool
     
     @State private var showingDetail = false
     
@@ -25,13 +26,15 @@ struct TaskRowView: View {
         onToggle: (() -> Void)? = nil,
         onDelete: (() -> Void)? = nil,
         showDragHandle: Bool = false,
-        showBacklogBadge: Bool = true
+        showBacklogBadge: Bool = true,
+        showsDisabledToggle: Bool = false
     ) {
         self.task = task
         self.onToggle = onToggle
         self.onDelete = onDelete
         self.showDragHandle = showDragHandle
         self.showBacklogBadge = showBacklogBadge
+        self.showsDisabledToggle = showsDisabledToggle
     }
     
     var body: some View {
@@ -55,6 +58,14 @@ struct TaskRowView: View {
                         .frame(minWidth: 32, minHeight: 32)
                 }
                 .buttonStyle(.plain)
+            } else if showsDisabledToggle {
+                Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle.dashed")
+                    .font(checkboxFont)
+                    .foregroundStyle(.gray)
+                    .frame(minWidth: 32, minHeight: 32)
+                    .opacity(0.5)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
             }
             
             titleAndMetaColumn

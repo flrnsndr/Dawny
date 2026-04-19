@@ -274,7 +274,8 @@ struct BacklogView: View {
                     await viewModel.deleteTask(task)
                 }
             },
-            showBacklogBadge: false
+            showBacklogBadge: false,
+            showsDisabledToggle: true
         )
         .swipeActions(edge: .leading) {
             Button {
@@ -299,7 +300,8 @@ struct BacklogView: View {
                     await viewModel.deleteTask(task)
                 }
             },
-            showBacklogBadge: false
+            showBacklogBadge: false,
+            showsDisabledToggle: true
         )
         .contextMenu {
             categoryContextMenu(for: task)
