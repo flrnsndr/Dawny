@@ -1,6 +1,30 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "CFBundleDisplayName" : {
+      "comment" : "Bundle display name",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Dawny"
+          }
+        }
+      }
+    },
+    "CFBundleName" : {
+      "comment" : "Bundle name",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Dawny"
+          }
+        }
+      }
+    },
     "NSRemindersUsageDescription" : {
       "comment" : "Info.plist · Reminders permission prompt · Calm, plainspoken, single sentence. Explains why we need Reminders access. Shown the first time we sync a task.",
       "extractionState" : "manual",
