@@ -20,7 +20,7 @@ struct CategorySelectionMenu: View {
                     onSelect(nil)
                 } label: {
                     Label(
-                        String(localized: "category.menu.uncategorized", defaultValue: "Unkategorisiert"),
+                        String(localized: "category.menu.uncategorized", defaultValue: "Uncategorized"),
                         systemImage: "tag"
                     )
                 }

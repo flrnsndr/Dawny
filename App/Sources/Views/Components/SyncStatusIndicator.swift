@@ -61,7 +61,7 @@ struct SyncStatusIndicator: View {
                     .font(.caption2)
                     .foregroundStyle(.secondary)
             } else if status == .syncing {
-                Text(String(localized: "sync.status.progress", defaultValue: "Synchronisiere..."))
+                Text(String(localized: "sync.status.progress", defaultValue: "Syncing…"))
                     .font(.caption2)
                     .foregroundStyle(.secondary)
             }
@@ -78,22 +78,30 @@ struct SyncStatusIndicator: View {
     
     private func timeAgo(from date: Date) -> String {
         let interval = Date().timeIntervalSince(date)
-        
+
         if interval < 60 {
-            return String(localized: "sync.status.just.now", defaultValue: "Gerade eben")
+            return String(localized: "sync.status.just_now", defaultValue: "Just now")
         } else if interval < 3600 {
             let minutes = Int(interval / 60)
-            return String(localized: "sync.status.minutes.ago", defaultValue: "vor %d Min").replacingOccurrences(of: "%d", with: "\(minutes)")
+            let format = String(
+                localized: "sync.status.minutes_ago",
+                defaultValue: "%lld min ago"
+            )
+            return String(format: format, locale: .current, minutes)
         } else if interval < 86400 {
             let hours = Int(interval / 3600)
-            return String(localized: "sync.status.hours.ago", defaultValue: "vor %d Std").replacingOccurrences(of: "%d", with: "\(hours)")
+            let format = String(
+                localized: "sync.status.hours_ago",
+                defaultValue: "%lld hr ago"
+            )
+            return String(format: format, locale: .current, hours)
         } else {
             let days = Int(interval / 86400)
-            if days == 1 {
-                return String(localized: "sync.status.days.ago", defaultValue: "vor %d Tag").replacingOccurrences(of: "%d", with: "\(days)")
-            } else {
-                return String(localized: "sync.status.days.ago.plural", defaultValue: "vor %d Tagen").replacingOccurrences(of: "%d", with: "\(days)")
-            }
+            let format = String(
+                localized: "sync.status.days_ago",
+                defaultValue: "%lld days ago"
+            )
+            return String(format: format, locale: .current, days)
         }
     }
 }

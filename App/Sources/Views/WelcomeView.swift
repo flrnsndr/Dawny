@@ -10,34 +10,58 @@ import SwiftUI
 struct WelcomeView: View {
     @State private var currentPage = 0
     var onDismiss: () -> Void
-    
+
     private let pages: [WelcomePage] = [
         WelcomePage(
             icon: "sun.horizon.fill",
             iconColor: .orange,
-            title: "Willkommen bei Dawny",
-            body: "Deine To-do-Liste, die jeden Morgen mit dir aufwacht – frisch und ohne Altlasten."
+            title: LocalizedStringResource(
+                "welcome.page1.title",
+                defaultValue: "Welcome to Dawny"
+            ),
+            body: LocalizedStringResource(
+                "welcome.page1.body",
+                defaultValue: "Your to-do list that wakes up fresh every morning, free from yesterday's clutter."
+            )
         ),
         WelcomePage(
             icon: "tray.fill",
             iconColor: .blue,
-            title: "Sammle alles im Backlog",
-            body: "Wirf Aufgaben einfach rein – grob kategorisiert, ohne Deadline-Stress. Dein Backlog vergisst nichts."
+            title: LocalizedStringResource(
+                "welcome.page2.title",
+                defaultValue: "Capture everything in your Backlog"
+            ),
+            body: LocalizedStringResource(
+                "welcome.page2.body",
+                defaultValue: "Drop tasks in without deadline pressure. Your backlog never forgets."
+            )
         ),
         WelcomePage(
             icon: "sun.max.fill",
             iconColor: .orange,
-            title: "Plane deinen Tag bewusst",
-            body: "Jeden Morgen entscheidest du neu: Was ist heute wirklich wichtig? Schiebe genau diese Tasks nach \u{201E}Heute\u{201C}."
+            title: LocalizedStringResource(
+                "welcome.page3.title",
+                defaultValue: "Plan today on purpose"
+            ),
+            body: LocalizedStringResource(
+                "welcome.page3.body",
+                defaultValue: "Each morning, decide what truly matters and pull it into Today."
+            )
         ),
         WelcomePage(
             icon: "sparkles",
             iconColor: .purple,
-            title: "Bei Tagesanbruch: Reset",
-            body: "Was du nicht geschafft hast, wandert automatisch zurück ins Backlog. Kein schlechtes Gewissen – morgen ist ein neuer Tag."
+            title: LocalizedStringResource(
+                "welcome.page4.title",
+                defaultValue: "Reset at dawn"
+            ),
+            body: LocalizedStringResource(
+                "welcome.page4.body",
+                defaultValue: "Anything left undone slides back to the backlog overnight. Tomorrow is a clean slate."
+            )
         )
     ]
-    
+
     var body: some View {
         VStack(spacing: 0) {
             TabView(selection: $currentPage) {
@@ -48,31 +72,31 @@ struct WelcomeView: View {
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
             .animation(.easeInOut(duration: 0.3), value: currentPage)
-            
+
             bottomSection
                 .padding(.horizontal, 32)
                 .padding(.bottom, 48)
         }
         .background(Color(.systemGroupedBackground))
     }
-    
+
     // MARK: - Page Content
-    
+
     private func pageView(_ page: WelcomePage) -> some View {
         VStack(spacing: 28) {
             Spacer()
-            
+
             Image(systemName: page.icon)
                 .font(.system(size: 72, weight: .light))
                 .foregroundStyle(page.iconColor.gradient)
                 .symbolEffect(.pulse, options: .repeating.speed(0.5))
-            
+
             VStack(spacing: 12) {
                 Text(page.title)
                     .font(.title2)
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
-                
+
                 Text(page.body)
                     .font(.body)
                     .foregroundStyle(.secondary)
@@ -81,21 +105,21 @@ struct WelcomeView: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
             .padding(.horizontal, 36)
-            
+
             Spacer()
             Spacer()
         }
     }
-    
+
     // MARK: - Bottom Controls
-    
+
     private var bottomSection: some View {
         VStack(spacing: 20) {
             pageIndicator
-            
+
             if currentPage == pages.count - 1 {
                 Button(action: onDismiss) {
-                    Text("Los geht's")
+                    Text(String(localized: "welcome.cta.start", defaultValue: "Get started"))
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 14)
@@ -108,7 +132,7 @@ struct WelcomeView: View {
                         currentPage += 1
                     }
                 } label: {
-                    Text("Weiter")
+                    Text(String(localized: "welcome.cta.next", defaultValue: "Continue"))
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 14)
@@ -118,7 +142,7 @@ struct WelcomeView: View {
             }
         }
     }
-    
+
     private var pageIndicator: some View {
         HStack(spacing: 8) {
             ForEach(0..<pages.count, id: \.self) { index in
@@ -136,8 +160,8 @@ struct WelcomeView: View {
 private struct WelcomePage {
     let icon: String
     let iconColor: Color
-    let title: String
-    let body: String
+    let title: LocalizedStringResource
+    let body: LocalizedStringResource
 }
 
 #Preview {

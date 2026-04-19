@@ -48,11 +48,11 @@ struct QuickAddView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section(String(localized: "quickadd.target.section", defaultValue: "Ziel")) {
-                    Picker(String(localized: "quickadd.target.section", defaultValue: "Ziel"), selection: $destination) {
+                Section(String(localized: "quickadd.target.section", defaultValue: "Destination")) {
+                    Picker(String(localized: "quickadd.target.section", defaultValue: "Destination"), selection: $destination) {
                         Text(String(localized: "quickadd.target.backlog", defaultValue: "Backlog"))
                             .tag(AddDestination.backlog)
-                        Label(String(localized: "task.status.today", defaultValue: "Heute"), systemImage: "sun.max.fill")
+                        Label(String(localized: "task.status.today", defaultValue: "Today"), systemImage: "sun.max.fill")
                             .tag(AddDestination.today)
                     }
                     .pickerStyle(.segmented)
@@ -66,9 +66,9 @@ struct QuickAddView: View {
                 }
                 
                 if !sortedCategories.isEmpty {
-                    Section(String(localized: "quickadd.category.section", defaultValue: "Kategorie")) {
+                    Section(String(localized: "quickadd.category.section", defaultValue: "Category")) {
                         if destination == .backlog {
-                            Picker(String(localized: "quickadd.category.section", defaultValue: "Kategorie"), selection: $selectedCategoryID) {
+                            Picker(String(localized: "quickadd.category.section", defaultValue: "Category"), selection: $selectedCategoryID) {
                                 ForEach(sortedCategories, id: \.id) { category in
                                     Label(category.displayName, systemImage: category.displayIconName)
                                         .tag(Optional(category.id))
@@ -85,31 +85,31 @@ struct QuickAddView: View {
                                 }
                                 Image(systemName: "arrow.right")
                                     .foregroundStyle(.secondary)
-                                Label(String(localized: "task.status.today", defaultValue: "Heute"), systemImage: "sun.max.fill")
+                                Label(String(localized: "task.status.today", defaultValue: "Today"), systemImage: "sun.max.fill")
                                     .foregroundStyle(.orange)
                             }
                             .font(.footnote)
-                            .accessibilityLabel(String(localized: "quickadd.target.today", defaultValue: "Dieser Task wird nach Heute verschoben"))
+                            .accessibilityLabel(String(localized: "quickadd.target.today", defaultValue: "This task will be moved to Today"))
                         }
                     }
                 }
                 
-                Section(String(localized: "quickadd.notes.section", defaultValue: "Notizen (optional)")) {
+                Section(String(localized: "quickadd.notes.section", defaultValue: "Notes (optional)")) {
                     TextEditor(text: $notes)
                         .frame(minHeight: 100)
                 }
             }
-            .navigationTitle(String(localized: "quickadd.title", defaultValue: "Neuer Task"))
+            .navigationTitle(String(localized: "quickadd.title", defaultValue: "New Task"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button(String(localized: "quickadd.cancel", defaultValue: "Abbrechen")) {
+                    Button(String(localized: "quickadd.cancel", defaultValue: "Cancel")) {
                         dismiss()
                     }
                 }
                 
                 ToolbarItem(placement: .confirmationAction) {
-                    Button(String(localized: "quickadd.add", defaultValue: "Hinzufügen")) {
+                    Button(String(localized: "quickadd.add", defaultValue: "Add")) {
                         saveTask()
                     }
                     .disabled(title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)

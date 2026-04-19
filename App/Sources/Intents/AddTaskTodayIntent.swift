@@ -20,7 +20,7 @@ struct AddTaskTodayIntent: AppIntent {
     var taskTitle: String
     
     static var parameterSummary: some ParameterSummary {
-        Summary("Füge \(\.$taskTitle) heute hinzu")
+        Summary("Add \(\.$taskTitle) to today")
     }
     
     @MainActor
@@ -46,8 +46,11 @@ struct AddTaskTodayIntent: AppIntent {
         
         try context.save()
         
-        let dialogFormat = String(localized: "intent.addtasktoday.dialog", defaultValue: "Erledigt! '%@' wurde für heute hinzugefügt.")
-        let dialogText = dialogFormat.replacingOccurrences(of: "%@", with: taskTitle)
+        let dialogFormat = String(
+            localized: "intent.addtasktoday.dialog",
+            defaultValue: "Done. '%@' added to today."
+        )
+        let dialogText = String(format: dialogFormat, taskTitle)
         return .result(dialog: IntentDialog(stringLiteral: dialogText))
     }
     

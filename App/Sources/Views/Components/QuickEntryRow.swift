@@ -59,7 +59,7 @@ struct QuickEntryRow: View {
                 .buttonStyle(.borderless)
                 .disabled(!canCommit)
                 .accessibilityLabel(
-                    String(localized: "quickentry.submit.accessibility", defaultValue: "Bestätigen wie Eingabetaste")
+                    String(localized: "quickentry.submit.accessibility", defaultValue: "Submit like the Return key")
                 )
             }
         }
@@ -72,7 +72,7 @@ struct QuickEntryRow: View {
         .accessibilityElement(children: .combine)
         .accessibilityLabel(accessibilityLabelText)
         .accessibilityValue(accessibilityValueText)
-        .accessibilityHint(String(localized: "quickentry.accessibility.hint", defaultValue: "Doppeltippen, um den Entwurf zu bearbeiten oder eine Aufgabe anzulegen."))
+        .accessibilityHint(String(localized: "quickentry.accessibility.hint", defaultValue: "Double-tap to edit the draft or create a task."))
         .accessibilityAddTraits(.isButton)
         .onChange(of: fieldFocused) { _, newValue in
             onFocusChange?(newValue)
@@ -92,13 +92,16 @@ struct QuickEntryRow: View {
 
     private var accessibilityLabelText: String {
         if let categoryAccessibilityName {
-            String(
+            let format = String(
                 localized: "quickentry.accessibility.add",
-                defaultValue: "Neue Aufgabe in %@ hinzufügen"
+                defaultValue: "Add new task in %@"
             )
-            .replacingOccurrences(of: "%@", with: categoryAccessibilityName)
+            return String(format: format, categoryAccessibilityName)
         } else {
-            String(localized: "quickentry.accessibility.addToday", defaultValue: "Neue Aufgabe für heute hinzufügen")
+            return String(
+                localized: "quickentry.accessibility.addToday",
+                defaultValue: "Add new task for today"
+            )
         }
     }
 

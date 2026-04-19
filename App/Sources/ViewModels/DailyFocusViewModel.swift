@@ -61,7 +61,11 @@ final class DailyFocusViewModel {
             
             dailyTasks = tasks
         } catch {
-            errorMessage = "Fehler beim Laden der Tasks: \(error.localizedDescription)"
+            let format = String(
+                localized: "error.daily_focus.load_tasks",
+                defaultValue: "Failed to load tasks: %@"
+            )
+            errorMessage = String(format: format, error.localizedDescription)
         }
     }
     
@@ -95,7 +99,11 @@ final class DailyFocusViewModel {
             try modelContext.save()
             loadDailyTasks()
         } catch {
-            errorMessage = "Fehler beim Abschließen des Tasks: \(error.localizedDescription)"
+            let format = String(
+                localized: "error.daily_focus.complete_task",
+                defaultValue: "Failed to complete task: %@"
+            )
+            errorMessage = String(format: format, error.localizedDescription)
         }
     }
     
@@ -115,7 +123,11 @@ final class DailyFocusViewModel {
             loadDailyTasks()
             HapticFeedback.success()
         } catch {
-            errorMessage = "Fehler beim Wiedereröffnen des Tasks: \(error.localizedDescription)"
+            let format = String(
+                localized: "error.daily_focus.uncomplete_task",
+                defaultValue: "Failed to reopen task: %@"
+            )
+            errorMessage = String(format: format, error.localizedDescription)
         }
     }
     
@@ -132,7 +144,11 @@ final class DailyFocusViewModel {
             try modelContext.save()
             loadDailyTasks()
         } catch {
-            errorMessage = "Fehler beim Entfernen des Tasks: \(error.localizedDescription)"
+            let format = String(
+                localized: "error.daily_focus.remove_from_today",
+                defaultValue: "Failed to remove task from today: %@"
+            )
+            errorMessage = String(format: format, error.localizedDescription)
         }
     }
     
@@ -148,7 +164,11 @@ final class DailyFocusViewModel {
             try modelContext.save()
             loadDailyTasks()
         } catch {
-            errorMessage = "Fehler beim Löschen des Tasks: \(error.localizedDescription)"
+            let format = String(
+                localized: "error.daily_focus.delete_task",
+                defaultValue: "Failed to delete task: %@"
+            )
+            errorMessage = String(format: format, error.localizedDescription)
         }
     }
     
@@ -180,7 +200,11 @@ final class DailyFocusViewModel {
             dailyTasks = tasks + completed
             HapticFeedback.light()
         } catch {
-            errorMessage = "Fehler beim Sortieren der Tasks: \(error.localizedDescription)"
+            let format = String(
+                localized: "error.daily_focus.reorder_tasks",
+                defaultValue: "Failed to reorder tasks: %@"
+            )
+            errorMessage = String(format: format, error.localizedDescription)
         }
     }
     
@@ -197,7 +221,11 @@ final class DailyFocusViewModel {
         do {
             try modelContext.save()
         } catch {
-            errorMessage = "Fehler beim Aktualisieren des Tasks: \(error.localizedDescription)"
+            let format = String(
+                localized: "error.daily_focus.update_task",
+                defaultValue: "Failed to update task: %@"
+            )
+            errorMessage = String(format: format, error.localizedDescription)
         }
     }
     

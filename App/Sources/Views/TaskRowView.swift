@@ -89,7 +89,7 @@ struct TaskRowView: View {
             if shouldShowBadges {
                 HStack(spacing: 6) {
                     if task.isSyncedToCalendar {
-                        Label(String(localized: "task.calendar.badge", defaultValue: "Kalender"), systemImage: "calendar")
+                        Label(String(localized: "task.calendar.badge", defaultValue: "Calendar"), systemImage: "calendar")
                             .font(.caption2)
                             .foregroundStyle(.blue)
                     }
@@ -184,7 +184,7 @@ private struct TrailingSwipeDeleteModifier: ViewModifier {
                     HapticFeedback.heavy()
                     onDelete()
                 } label: {
-                    Label(String(localized: "task.delete", defaultValue: "Löschen"), systemImage: "trash")
+                    Label(String(localized: "task.delete", defaultValue: "Delete"), systemImage: "trash")
                 }
             }
         } else {
@@ -203,10 +203,10 @@ struct TaskDetailView: View {
         NavigationStack {
             List {
                 Section(String(localized: "task.detail.section", defaultValue: "Details")) {
-                    LabeledContent(String(localized: "task.detail.title.label", defaultValue: "Titel"), value: task.title)
+                    LabeledContent(String(localized: "task.detail.title.label", defaultValue: "Title"), value: task.title)
                     
                     if let notes = task.notes {
-                        LabeledContent(String(localized: "task.detail.notes.label", defaultValue: "Notizen")) {
+                        LabeledContent(String(localized: "task.detail.notes.label", defaultValue: "Notes")) {
                             Text(notes)
                                 .foregroundStyle(.secondary)
                         }
@@ -215,20 +215,20 @@ struct TaskDetailView: View {
                     LabeledContent(String(localized: "task.detail.status.label", defaultValue: "Status"), value: task.status.displayName)
                     
                     if task.isSyncedToCalendar {
-                        LabeledContent(String(localized: "task.detail.calendar.label", defaultValue: "Kalender"), value: String(localized: "task.detail.calendar.synced", defaultValue: "Synchronisiert"))
+                        LabeledContent(String(localized: "task.detail.calendar.label", defaultValue: "Calendar"), value: String(localized: "task.detail.calendar.synced", defaultValue: "Synced"))
                     }
                 }
                 
-                Section(String(localized: "task.detail.timestamps.section", defaultValue: "Zeitstempel")) {
-                    LabeledContent(String(localized: "task.detail.created.label", defaultValue: "Erstellt"), value: task.createdAt.formatted(date: .abbreviated, time: .shortened))
-                    LabeledContent(String(localized: "task.detail.modified.label", defaultValue: "Geändert"), value: task.modifiedAt.formatted(date: .abbreviated, time: .shortened))
+                Section(String(localized: "task.detail.timestamps.section", defaultValue: "Timestamps")) {
+                    LabeledContent(String(localized: "task.detail.created.label", defaultValue: "Created"), value: task.createdAt.formatted(date: .abbreviated, time: .shortened))
+                    LabeledContent(String(localized: "task.detail.modified.label", defaultValue: "Modified"), value: task.modifiedAt.formatted(date: .abbreviated, time: .shortened))
                 }
             }
             .navigationTitle(String(localized: "task.detail.title", defaultValue: "Task Details"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button(String(localized: "task.detail.done", defaultValue: "Fertig")) {
+                    Button(String(localized: "task.detail.done", defaultValue: "Done")) {
                         dismiss()
                     }
                 }

@@ -62,7 +62,11 @@ final class BacklogViewModel {
                 createDefaultBacklog()
             }
         } catch {
-            errorMessage = "Fehler beim Laden der Backlogs: \(error.localizedDescription)"
+            let format = String(
+                localized: "error.backlog.load_backlogs",
+                defaultValue: "Failed to load backlogs: %@"
+            )
+            errorMessage = String(format: format, error.localizedDescription)
         }
     }
     
@@ -83,13 +87,17 @@ final class BacklogViewModel {
                 currentBacklog = backlog
             }
         } catch {
-            errorMessage = "Fehler beim Erstellen des Backlogs: \(error.localizedDescription)"
+            let format = String(
+                localized: "error.backlog.create_backlog",
+                defaultValue: "Failed to create backlog: %@"
+            )
+            errorMessage = String(format: format, error.localizedDescription)
         }
     }
     
     /// Erstellt den Default-Backlog beim ersten Start
     private func createDefaultBacklog() {
-        createBacklog(title: "Backlog")
+        createBacklog(title: String(localized: "backlog.default.title", defaultValue: "Backlog"))
     }
     
     /// Löscht einen Backlog
@@ -100,7 +108,11 @@ final class BacklogViewModel {
             try modelContext.save()
             loadBacklogs()
         } catch {
-            errorMessage = "Fehler beim Löschen des Backlogs: \(error.localizedDescription)"
+            let format = String(
+                localized: "error.backlog.delete_backlog",
+                defaultValue: "Failed to delete backlog: %@"
+            )
+            errorMessage = String(format: format, error.localizedDescription)
         }
     }
     
@@ -116,7 +128,10 @@ final class BacklogViewModel {
         placement: TaskPlacement = .topOfCategory
     ) -> Task? {
         guard let backlog = currentBacklog else {
-            errorMessage = "Kein Backlog ausgewählt"
+            errorMessage = String(
+                localized: "error.backlog.none_selected",
+                defaultValue: "No backlog selected"
+            )
             return nil
         }
 
@@ -147,7 +162,11 @@ final class BacklogViewModel {
             try modelContext.save()
             return task
         } catch {
-            errorMessage = "Fehler beim Erstellen des Tasks: \(error.localizedDescription)"
+            let format = String(
+                localized: "error.backlog.create_task",
+                defaultValue: "Failed to create task: %@"
+            )
+            errorMessage = String(format: format, error.localizedDescription)
             return nil
         }
     }
@@ -195,7 +214,11 @@ final class BacklogViewModel {
             task.sortPriority = minPriority.addingTimeInterval(-0.001)
             try modelContext.save()
         } catch {
-            errorMessage = "Fehler beim Sortieren der Heute-Tasks: \(error.localizedDescription)"
+            let format = String(
+                localized: "error.backlog.sort_today_tasks",
+                defaultValue: "Failed to reorder Today: %@"
+            )
+            errorMessage = String(format: format, error.localizedDescription)
         }
     }
     
@@ -211,7 +234,11 @@ final class BacklogViewModel {
         do {
             try modelContext.save()
         } catch {
-            errorMessage = "Fehler beim Löschen des Tasks: \(error.localizedDescription)"
+            let format = String(
+                localized: "error.backlog.delete_task",
+                defaultValue: "Failed to delete task: %@"
+            )
+            errorMessage = String(format: format, error.localizedDescription)
         }
     }
     
@@ -227,7 +254,11 @@ final class BacklogViewModel {
         do {
             try modelContext.save()
         } catch {
-            errorMessage = "Fehler beim Abschließen des Tasks: \(error.localizedDescription)"
+            let format = String(
+                localized: "error.backlog.complete_task",
+                defaultValue: "Failed to complete task: %@"
+            )
+            errorMessage = String(format: format, error.localizedDescription)
         }
     }
     
@@ -244,7 +275,11 @@ final class BacklogViewModel {
             // Aktualisiere Backlog-Liste damit der Task verschwindet
             loadBacklogs()
         } catch {
-            errorMessage = "Fehler beim Verschieben des Tasks: \(error.localizedDescription)"
+            let format = String(
+                localized: "error.backlog.move_task",
+                defaultValue: "Failed to move task: %@"
+            )
+            errorMessage = String(format: format, error.localizedDescription)
         }
     }
     
@@ -262,7 +297,11 @@ final class BacklogViewModel {
         do {
             try modelContext.save()
         } catch {
-            errorMessage = "Fehler beim Aktualisieren des Tasks: \(error.localizedDescription)"
+            let format = String(
+                localized: "error.backlog.update_task",
+                defaultValue: "Failed to update task: %@"
+            )
+            errorMessage = String(format: format, error.localizedDescription)
         }
     }
     
@@ -278,7 +317,11 @@ final class BacklogViewModel {
         do {
             try modelContext.save()
         } catch {
-            errorMessage = "Fehler beim Verschieben des Tasks: \(error.localizedDescription)"
+            let format = String(
+                localized: "error.backlog.move_to_backlog",
+                defaultValue: "Failed to move task to backlog: %@"
+            )
+            errorMessage = String(format: format, error.localizedDescription)
         }
     }
     
@@ -353,7 +396,11 @@ final class BacklogViewModel {
         do {
             try modelContext.save()
         } catch {
-            errorMessage = "Fehler beim Verschieben des Tasks: \(error.localizedDescription)"
+            let format = String(
+                localized: "error.backlog.move_task_category",
+                defaultValue: "Failed to change task category: %@"
+            )
+            errorMessage = String(format: format, error.localizedDescription)
         }
     }
 
@@ -483,7 +530,11 @@ final class BacklogViewModel {
             try modelContext.save()
             HapticFeedback.light()
         } catch {
-            errorMessage = "Fehler beim Sortieren der Tasks: \(error.localizedDescription)"
+            let format = String(
+                localized: "error.backlog.reorder_tasks",
+                defaultValue: "Failed to reorder tasks: %@"
+            )
+            errorMessage = String(format: format, error.localizedDescription)
         }
     }
     
@@ -519,7 +570,11 @@ final class BacklogViewModel {
             try modelContext.save()
             HapticFeedback.light()
         } catch {
-            errorMessage = "Fehler beim Sortieren der Tasks: \(error.localizedDescription)"
+            let format = String(
+                localized: "error.backlog.reorder_tasks",
+                defaultValue: "Failed to reorder tasks: %@"
+            )
+            errorMessage = String(format: format, error.localizedDescription)
         }
     }
 
@@ -558,7 +613,11 @@ final class BacklogViewModel {
                 do {
                     try modelContext.save()
                 } catch {
-                    errorMessage = "Fehler beim Erstellen der Heute-Testtasks: \(error.localizedDescription)"
+                    let format = String(
+                        localized: "error.backlog.debug_today_test_tasks",
+                        defaultValue: "Failed to create test tasks: %@"
+                    )
+                    errorMessage = String(format: format, error.localizedDescription)
                     return
                 }
             }

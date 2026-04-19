@@ -25,7 +25,7 @@ struct AddCategoryRow: View {
     }
 
     private var placeholder: String {
-        String(localized: "category.add.placeholder", defaultValue: "Neue Kategorie")
+        String(localized: "category.add.placeholder", defaultValue: "New category")
     }
 
     var body: some View {
@@ -59,7 +59,7 @@ struct AddCategoryRow: View {
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel(
-            String(localized: "category.add.accessibility", defaultValue: "Neue Kategorie hinzufügen")
+            String(localized: "category.add.accessibility", defaultValue: "Add new category")
         )
         .accessibilityAddTraits(.isButton)
     }
@@ -87,13 +87,13 @@ struct AddCategoryRow: View {
             Button {
                 submit()
             } label: {
-                Text(String(localized: "common.done", defaultValue: "Fertig"))
+                Text(String(localized: "common.done", defaultValue: "Done"))
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(isValid ? Color.accentColor : Color.secondary)
             }
             .buttonStyle(.borderless)
             .disabled(!isValid)
-            .accessibilityLabel(String(localized: "common.done", defaultValue: "Fertig"))
+            .accessibilityLabel(String(localized: "common.done", defaultValue: "Done"))
         }
         .onAppear {
             HapticFeedback.light()
