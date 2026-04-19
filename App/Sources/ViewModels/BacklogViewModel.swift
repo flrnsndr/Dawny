@@ -582,50 +582,168 @@ final class BacklogViewModel {
         }
     }
 
-    /// Legt Testelemente im Backlog an (für manuelles UI-Testing).
+    /// Legt realistische Beispiel-Tasks im Backlog an (für manuelles UI-Testing).
+    ///
+    /// Pro Kategorie werden 5 Beispiel-Tasks angelegt. Vier davon (die ersten beiden
+    /// aus *Quick* und *This Week*) werden zusätzlich direkt in den Heute-Tab gelegt,
+    /// damit der Heute-View ebenfalls vorgefüllt ist.
     func addDebugTestItems(settings: AppSettings) {
         loadCategories()
         let assignableCategories = categories
             .sorted()
             .filter { $0.categoryType != .uncategorized }
 
-        var counter = 1
+        let todayDate = Calendar.current.startOfDay(for: Date())
 
-        // In jeder Kategorie 3-4 Backlog-Tasks erzeugen.
         for category in assignableCategories {
-            let countPerCategory = Int.random(in: 3...4)
-            for index in 1...countPerCategory {
-                addTask(
-                    title: "Testtask \(counter) \(category.displayName) #\(index)",
-                    category: category
-                )
-                counter += 1
+            let items = Self.debugTestItems(for: category.categoryType)
+            for item in items {
+                guard let task = addTask(title: item.title, category: category) else { continue }
+                if item.placeInToday {
+                    task.moveToDailyFocus(date: todayDate)
+                }
             }
         }
 
-        // Zusätzlich 2-3 Tasks direkt in den Heute-Tab legen.
-        let todayCount = Int.random(in: 2...3)
-        let todayDate = Calendar.current.startOfDay(for: Date())
-        let todayCategory = assignableCategories.first(where: { $0.categoryType == .quick }) ?? assignableCategories.first
+        do {
+            try modelContext.save()
+        } catch {
+            let format = String(
+                localized: "error.backlog.debug_today_test_tasks",
+                defaultValue: "Failed to create test tasks: %@"
+            )
+            errorMessage = String(format: format, error.localizedDescription)
+        }
+    }
 
-        for index in 1...todayCount {
-            if let task = addTask(
-                title: "Testtask Heute \(counter) #\(index)",
-                category: todayCategory
-            ) {
-                task.moveToDailyFocus(date: todayDate)
-                do {
-                    try modelContext.save()
-                } catch {
-                    let format = String(
-                        localized: "error.backlog.debug_today_test_tasks",
-                        defaultValue: "Failed to create test tasks: %@"
-                    )
-                    errorMessage = String(format: format, error.localizedDescription)
-                    return
-                }
-            }
-            counter += 1
+    /// Beschreibt einen Debug-Test-Task: lokalisierter Titel + Flag, ob er
+    /// initial zusätzlich im Heute-Tab landen soll.
+    private struct DebugTestItem {
+        let title: String
+        let placeInToday: Bool
+    }
+
+    /// Liefert die fünf Beispiel-Tasks für die gegebene Kategorie. Für unbekannte
+    /// (z. B. `.custom`, `.uncategorized`) werden keine Items zurückgegeben.
+    private static func debugTestItems(for type: TaskCategory) -> [DebugTestItem] {
+        switch type {
+        case .quick:
+            return [
+                DebugTestItem(
+                    title: String(localized: "debug.testtask.quick.1", defaultValue: "Walk the dog 🐕"),
+                    placeInToday: true
+                ),
+                DebugTestItem(
+                    title: String(localized: "debug.testtask.quick.2", defaultValue: "Make doctor’s appointment"),
+                    placeInToday: true
+                ),
+                DebugTestItem(
+                    title: String(localized: "debug.testtask.quick.3", defaultValue: "Get concert tickets 🎟️"),
+                    placeInToday: false
+                ),
+                DebugTestItem(
+                    title: String(localized: "debug.testtask.quick.4", defaultValue: "Pick up package 📦"),
+                    placeInToday: false
+                ),
+                DebugTestItem(
+                    title: String(localized: "debug.testtask.quick.5", defaultValue: "Pay parking ticket"),
+                    placeInToday: false
+                )
+            ]
+        case .thisWeek:
+            return [
+                DebugTestItem(
+                    title: String(localized: "debug.testtask.thisweek.1", defaultValue: "RSVP to Carla’s wedding 💌"),
+                    placeInToday: true
+                ),
+                DebugTestItem(
+                    title: String(localized: "debug.testtask.thisweek.2", defaultValue: "Get groceries 🛒"),
+                    placeInToday: true
+                ),
+                DebugTestItem(
+                    title: String(localized: "debug.testtask.thisweek.3", defaultValue: "Pick up prescription"),
+                    placeInToday: false
+                ),
+                DebugTestItem(
+                    title: String(localized: "debug.testtask.thisweek.4", defaultValue: "Reply to Tom’s message 💬"),
+                    placeInToday: false
+                ),
+                DebugTestItem(
+                    title: String(localized: "debug.testtask.thisweek.5", defaultValue: "Submit expense report"),
+                    placeInToday: false
+                )
+            ]
+        case .thisMonth:
+            return [
+                DebugTestItem(
+                    title: String(localized: "debug.testtask.thismonth.1", defaultValue: "Replace printer cartridge"),
+                    placeInToday: false
+                ),
+                DebugTestItem(
+                    title: String(localized: "debug.testtask.thismonth.2", defaultValue: "Frame and hang new pictures 🖼️"),
+                    placeInToday: false
+                ),
+                DebugTestItem(
+                    title: String(localized: "debug.testtask.thismonth.3", defaultValue: "Clean the windows ✨"),
+                    placeInToday: false
+                ),
+                DebugTestItem(
+                    title: String(localized: "debug.testtask.thismonth.4", defaultValue: "Take car in for inspection 🚗"),
+                    placeInToday: false
+                ),
+                DebugTestItem(
+                    title: String(localized: "debug.testtask.thismonth.5", defaultValue: "Book birthday dinner 🎂"),
+                    placeInToday: false
+                )
+            ]
+        case .thisYear:
+            return [
+                DebugTestItem(
+                    title: String(localized: "debug.testtask.thisyear.1", defaultValue: "Buy a new fridge"),
+                    placeInToday: false
+                ),
+                DebugTestItem(
+                    title: String(localized: "debug.testtask.thisyear.2", defaultValue: "Make list of birthday gifts 🎁"),
+                    placeInToday: false
+                ),
+                DebugTestItem(
+                    title: String(localized: "debug.testtask.thisyear.3", defaultValue: "Renew passport"),
+                    placeInToday: false
+                ),
+                DebugTestItem(
+                    title: String(localized: "debug.testtask.thisyear.4", defaultValue: "Plan summer vacation ☀️"),
+                    placeInToday: false
+                ),
+                DebugTestItem(
+                    title: String(localized: "debug.testtask.thisyear.5", defaultValue: "Start running again"),
+                    placeInToday: false
+                )
+            ]
+        case .someday:
+            return [
+                DebugTestItem(
+                    title: String(localized: "debug.testtask.someday.1", defaultValue: "Dye hair blue"),
+                    placeInToday: false
+                ),
+                DebugTestItem(
+                    title: String(localized: "debug.testtask.someday.2", defaultValue: "Book trip to Tokyo ✈️"),
+                    placeInToday: false
+                ),
+                DebugTestItem(
+                    title: String(localized: "debug.testtask.someday.3", defaultValue: "Learn to play guitar 🎸"),
+                    placeInToday: false
+                ),
+                DebugTestItem(
+                    title: String(localized: "debug.testtask.someday.4", defaultValue: "Run a marathon"),
+                    placeInToday: false
+                ),
+                DebugTestItem(
+                    title: String(localized: "debug.testtask.someday.5", defaultValue: "Write a novel"),
+                    placeInToday: false
+                )
+            ]
+        case .uncategorized, .custom:
+            return []
         }
     }
 }
