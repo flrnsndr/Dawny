@@ -58,6 +58,9 @@ struct DailyFocusView: View {
                 ForEach(viewModel.openTasks, id: \.id) { task in
                     openTaskRow(task: task)
                 }
+                .onMove { source, destination in
+                    viewModel.moveTasks(from: source, to: destination)
+                }
                 QuickEntryRow(
                     placeholder: String(localized: "quickentry.placeholder.today", defaultValue: "New task for today…"),
                     categoryAccessibilityName: nil,

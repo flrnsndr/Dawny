@@ -128,6 +128,13 @@ struct BacklogView: View {
                         ForEach(tasks, id: \.id) { task in
                             backlogCategorizedTaskRow(task: task)
                         }
+                        .onMove { source, destination in
+                            viewModel.moveTasksWithinCategory(
+                                category: category,
+                                from: source,
+                                to: destination
+                            )
+                        }
                         backlogQuickEntryRow(
                             scrollProxy: scrollProxy,
                             scrollID: AnyHashable("qe-backlog-cat-\(category.id.uuidString)"),
@@ -230,6 +237,9 @@ struct BacklogView: View {
         return List {
             ForEach(viewModel.backlogTasks, id: \.id) { task in
                 backlogUncategorizedRow(task: task)
+            }
+            .onMove { source, destination in
+                viewModel.moveTasks(from: source, to: destination)
             }
             QuickEntryRow(
                 placeholder: placeholder,
