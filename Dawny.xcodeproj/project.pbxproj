@@ -191,6 +191,14 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				de,
+				fr,
+				es,
+				it,
+				ja,
+				"zh-Hans",
+				ko,
+				"pt-BR",
 				Base,
 			);
 			mainGroup = 5C9C9EB62F0180D90092AD03;
@@ -399,7 +407,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_TEAM = H29R5S9CNB;
 				ENABLE_CPLUSPLUS_BOUNDS_SAFE_BUFFERS = YES;
 				ENABLE_C_BOUNDS_SAFETY = YES;
@@ -409,8 +417,8 @@
 				INFOPLIST_KEY_BGTaskSchedulerPermittedIdentifiers = Flo.Dawny.reset;
 				INFOPLIST_KEY_CFBundleDisplayName = Dawny;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				INFOPLIST_KEY_NSRemindersUsageDescription = "Dawny synchronisiert deine täglichen Tasks mit der iOS Erinnerungen-App.";
-				INFOPLIST_KEY_NSSiriUsageDescription = "Dawny verwendet Siri um Tasks per Sprachbefehl hinzuzufügen.";
+				INFOPLIST_KEY_NSRemindersUsageDescription = "Dawny syncs your daily focus tasks with Apple Reminders.";
+				INFOPLIST_KEY_NSSiriUsageDescription = "Dawny lets you add tasks hands-free with Siri.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIBackgroundModes = "fetch processing";
@@ -421,7 +429,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.1;
+				MARKETING_VERSION = 0.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Florian.Dawny.MVP;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -441,7 +449,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_TEAM = H29R5S9CNB;
 				ENABLE_CPLUSPLUS_BOUNDS_SAFE_BUFFERS = YES;
 				ENABLE_C_BOUNDS_SAFETY = YES;
@@ -451,8 +459,8 @@
 				INFOPLIST_KEY_BGTaskSchedulerPermittedIdentifiers = Flo.Dawny.reset;
 				INFOPLIST_KEY_CFBundleDisplayName = Dawny;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				INFOPLIST_KEY_NSRemindersUsageDescription = "Dawny synchronisiert deine täglichen Tasks mit der iOS Erinnerungen-App.";
-				INFOPLIST_KEY_NSSiriUsageDescription = "Dawny verwendet Siri um Tasks per Sprachbefehl hinzuzufügen.";
+				INFOPLIST_KEY_NSRemindersUsageDescription = "Dawny syncs your daily focus tasks with Apple Reminders.";
+				INFOPLIST_KEY_NSSiriUsageDescription = "Dawny lets you add tasks hands-free with Siri.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIBackgroundModes = "fetch processing";
@@ -463,7 +471,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.1;
+				MARKETING_VERSION = 0.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Florian.Dawny.MVP;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;

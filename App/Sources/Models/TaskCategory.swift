@@ -34,19 +34,19 @@ enum TaskCategory: String, Codable, CaseIterable {
     var displayName: String {
         switch self {
         case .quick:
-            return String(localized: "category.quick.name", defaultValue: "Schnell erledigen")
+            return String(localized: "category.quick.name", defaultValue: "Quick")
         case .thisWeek:
-            return String(localized: "category.thisWeek.name", defaultValue: "Diese Woche")
+            return String(localized: "category.thisWeek.name", defaultValue: "This Week")
         case .thisMonth:
-            return String(localized: "category.thisMonth.name", defaultValue: "Diesen Monat")
+            return String(localized: "category.thisMonth.name", defaultValue: "This Month")
         case .thisYear:
-            return String(localized: "category.thisYear.name", defaultValue: "Dieses Jahr")
+            return String(localized: "category.thisYear.name", defaultValue: "This Year")
         case .someday:
-            return String(localized: "category.someday.name", defaultValue: "Irgendwann")
+            return String(localized: "category.someday.name", defaultValue: "Someday")
         case .uncategorized:
-            return String(localized: "category.uncategorized.name", defaultValue: "Unkategorisiert")
+            return String(localized: "category.uncategorized.name", defaultValue: "Uncategorized")
         case .custom:
-            return String(localized: "category.custom.name", defaultValue: "Neue Kategorie")
+            return String(localized: "category.custom.name", defaultValue: "New category")
         }
     }
     

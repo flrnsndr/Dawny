@@ -47,7 +47,7 @@ struct SettingsView: View {
                 categorySection
                 infoSection
             }
-            .navigationTitle(String(localized: "settings.title", defaultValue: "Einstellungen"))
+            .navigationTitle(String(localized: "settings.title", defaultValue: "Settings"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 if let onRequestShowWelcome {
@@ -58,11 +58,11 @@ struct SettingsView: View {
                         } label: {
                             Image(systemName: "questionmark.circle")
                         }
-                        .accessibilityLabel(String(localized: "settings.welcome.help", defaultValue: "Willkommensbildschirm anzeigen"))
+                        .accessibilityLabel(String(localized: "settings.welcome.help", defaultValue: "Show welcome screen"))
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(String(localized: "settings.done", defaultValue: "Fertig")) {
+                    Button(String(localized: "settings.done", defaultValue: "Done")) {
                         dismiss()
                     }
                 }
@@ -82,7 +82,7 @@ struct SettingsView: View {
                         dismiss()
                     } label: {
                         Label(
-                            String(localized: "quickadd.addtestitems", defaultValue: "Testelemente hinzufügen"),
+                            String(localized: "quickadd.addtestitems", defaultValue: "Add Test Items"),
                             systemImage: "wand.and.stars"
                         )
                     }
@@ -94,7 +94,7 @@ struct SettingsView: View {
                         dismiss()
                     } label: {
                         Label(
-                            String(localized: "quickadd.deleteall", defaultValue: "Alle Tasks löschen"),
+                            String(localized: "quickadd.deleteall", defaultValue: "Delete All Tasks"),
                             systemImage: "trash"
                         )
                     }
@@ -106,7 +106,7 @@ struct SettingsView: View {
     private var resetSection: some View {
         Section(String(localized: "settings.reset.section", defaultValue: "Reset")) {
             DatePicker(
-                String(localized: "settings.reset.time", defaultValue: "Reset-Zeit"),
+                String(localized: "settings.reset.time", defaultValue: "Reset Time"),
                 selection: $resetTime,
                 displayedComponents: .hourAndMinute
             )
@@ -115,38 +115,38 @@ struct SettingsView: View {
                 settings.resetHour = hour
             }
             
-            Text(String(localized: "settings.reset.description", defaultValue: "Nicht erledigte Tasks werden täglich um diese Uhrzeit zurück ins Backlog verschoben."))
+            Text(String(localized: "settings.reset.description", defaultValue: "Uncompleted tasks will be moved back to the backlog daily at this time."))
                 .font(.caption)
                 .foregroundColor(.secondary)
         }
     }
     
     private var synchronisationSection: some View {
-        Section(String(localized: "settings.sync.section", defaultValue: "Synchronisation")) {
-            Toggle(String(localized: "settings.sync.toggle", defaultValue: "Kalender-Synchronisation"), isOn: $settings.calendarSyncEnabled)
+        Section(String(localized: "settings.sync.section", defaultValue: "Synchronization")) {
+            Toggle(String(localized: "settings.sync.toggle", defaultValue: "Calendar Sync"), isOn: $settings.calendarSyncEnabled)
             
-            Text(String(localized: "settings.sync.description", defaultValue: "Synchronisiert Daily Focus Tasks mit iOS Erinnerungen."))
+            Text(String(localized: "settings.sync.description", defaultValue: "Synchronizes Daily Focus tasks with iOS Reminders."))
                 .font(.caption)
                 .foregroundColor(.secondary)
         }
     }
     
     private var displaySection: some View {
-        Section(String(localized: "settings.display.section", defaultValue: "Anzeige")) {
-            Toggle(String(localized: "settings.display.toggle", defaultValue: "Erledigte Tasks anzeigen"), isOn: $settings.showCompletedTasksInToday)
+        Section(String(localized: "settings.display.section", defaultValue: "Display")) {
+            Toggle(String(localized: "settings.display.toggle", defaultValue: "Show Completed Tasks"), isOn: $settings.showCompletedTasksInToday)
             
-            Text(String(localized: "settings.display.description", defaultValue: "Zeigt erledigte Tasks im Heute-Tab an."))
+            Text(String(localized: "settings.display.description", defaultValue: "Shows completed tasks in the Today tab."))
                 .font(.caption)
                 .foregroundColor(.secondary)
         }
     }
     
     private var categorySection: some View {
-        Section(String(localized: "settings.category.section", defaultValue: "Backlog-Kategorien")) {
-            Toggle(String(localized: "settings.category.toggle", defaultValue: "Kategorien anzeigen"), isOn: $settings.showCategories)
+        Section(String(localized: "settings.category.section", defaultValue: "Backlog Categories")) {
+            Toggle(String(localized: "settings.category.toggle", defaultValue: "Show Categories"), isOn: $settings.showCategories)
             
             if settings.showCategories {
-                Picker(String(localized: "settings.category.default", defaultValue: "Standard-Kategorie für neue Tasks"), selection: $settings.defaultCategoryType) {
+                Picker(String(localized: "settings.category.default", defaultValue: "Default Category for New Tasks"), selection: $settings.defaultCategoryType) {
                     ForEach(TaskCategory.allCases.filter { $0 != .uncategorized && $0 != .custom }, id: \.self) { category in
                         HStack {
                             Image(systemName: category.iconName)
@@ -157,7 +157,7 @@ struct SettingsView: View {
                 }
             }
             
-            Text(String(localized: "settings.category.description", defaultValue: "Organisiere deine Backlog-Tasks in Kategorien."))
+            Text(String(localized: "settings.category.description", defaultValue: "Organize your backlog tasks into categories."))
                 .font(.caption)
                 .foregroundColor(.secondary)
         }
@@ -184,10 +184,10 @@ struct SettingsView: View {
     // MARK: - Computed Properties
     
     private var appVersion: String {
-        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? String(localized: "settings.info.unknown", defaultValue: "Unbekannt")
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? String(localized: "settings.info.unknown", defaultValue: "Unknown")
     }
     
     private var appBuild: String {
-        Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? String(localized: "settings.info.unknown", defaultValue: "Unbekannt")
+        Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? String(localized: "settings.info.unknown", defaultValue: "Unknown")
     }
 }

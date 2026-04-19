@@ -49,7 +49,7 @@ struct CategoryHeaderView: View {
             Spacer()
 
             if taskCount > 0 {
-                Text("\(taskCount)")
+                Text(taskCount, format: .number)
                     .font(.caption2)
                     .foregroundColor(.secondary)
                     .padding(.horizontal, 6)
@@ -103,7 +103,7 @@ struct CategoryHeaderView: View {
             .accessibilityLabel(
                 String(
                     localized: "category.action.changeIcon",
-                    defaultValue: "Symbol ändern"
+                    defaultValue: "Change symbol"
                 )
             )
         } else {
@@ -175,13 +175,13 @@ private struct InlineCategoryNameField: View {
             Button {
                 submit()
             } label: {
-                Text(String(localized: "common.done", defaultValue: "Fertig"))
+                Text(String(localized: "common.done", defaultValue: "Done"))
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(isValid ? Color.accentColor : Color.secondary)
             }
             .buttonStyle(.borderless)
             .disabled(!isValid)
-            .accessibilityLabel(String(localized: "common.done", defaultValue: "Fertig"))
+            .accessibilityLabel(String(localized: "common.done", defaultValue: "Done"))
         }
         .onAppear {
             HapticFeedback.light()

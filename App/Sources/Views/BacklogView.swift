@@ -110,7 +110,7 @@ struct BacklogView: View {
     private func categorizedTaskListView(scrollProxy: ScrollViewProxy) -> some View {
         let grouped = viewModel.groupedTasks
         let sortedCategories = viewModel.categories.sorted()
-        let placeholder = String(localized: "quickentry.placeholder", defaultValue: "Neue Aufgabe…")
+        let placeholder = String(localized: "quickentry.placeholder", defaultValue: "New task…")
 
         return List {
             ForEach(sortedCategories, id: \.id) { category in
@@ -220,7 +220,7 @@ struct BacklogView: View {
     
     /// Unkategorisierte Ansicht (flache Liste + Quick Entry)
     private func uncategorizedTaskListView(scrollProxy: ScrollViewProxy) -> some View {
-        let placeholder = String(localized: "quickentry.placeholder", defaultValue: "Neue Aufgabe…")
+        let placeholder = String(localized: "quickentry.placeholder", defaultValue: "New task…")
         let scrollID = AnyHashable("qe-backlog-uncategorized")
 
         return List {
@@ -269,7 +269,7 @@ struct BacklogView: View {
                     await viewModel.moveTaskToDailyFocus(task)
                 }
             } label: {
-                Label(String(localized: "backlog.swipe.today", defaultValue: "Heute"), systemImage: "sun.max.fill")
+                Label(String(localized: "backlog.swipe.today", defaultValue: "Today"), systemImage: "sun.max.fill")
             }
             .tint(.orange)
         }
@@ -297,7 +297,7 @@ struct BacklogView: View {
                     await viewModel.moveTaskToDailyFocus(task)
                 }
             } label: {
-                Label(String(localized: "backlog.swipe.today", defaultValue: "Heute"), systemImage: "sun.max.fill")
+                Label(String(localized: "backlog.swipe.today", defaultValue: "Today"), systemImage: "sun.max.fill")
             }
             .tint(.orange)
         }
@@ -354,7 +354,7 @@ struct BacklogView: View {
                 viewModel.moveTaskToCategory(task, category: nil)
             } label: {
                 Label(
-                    String(localized: "category.menu.uncategorized", defaultValue: "Unkategorisiert"),
+                    String(localized: "category.menu.uncategorized", defaultValue: "Uncategorized"),
                     systemImage: "tag"
                 )
             }
@@ -454,7 +454,7 @@ private struct CategoryActionMenu: ViewModifier {
                 Button(
                     String(
                         localized: "category.action.edit",
-                        defaultValue: "Bearbeiten"
+                        defaultValue: "Edit"
                     )
                 ) {
                     onEdit(category)
@@ -464,7 +464,7 @@ private struct CategoryActionMenu: ViewModifier {
                 Button(
                     String(
                         localized: "category.action.delete",
-                        defaultValue: "Löschen"
+                        defaultValue: "Delete"
                     ),
                     role: .destructive
                 ) {
@@ -472,7 +472,7 @@ private struct CategoryActionMenu: ViewModifier {
                 }
             }
             Button(
-                String(localized: "quickadd.cancel", defaultValue: "Abbrechen"),
+                String(localized: "quickadd.cancel", defaultValue: "Cancel"),
                 role: .cancel
             ) {
                 actionsCategory = nil
@@ -516,7 +516,7 @@ private struct CategoryDeleteConfirmation: ViewModifier {
                 Button(
                     String(
                         localized: "category.delete.deleteTasks",
-                        defaultValue: "Tasks ebenfalls löschen"
+                        defaultValue: "Delete Tasks Too"
                     ),
                     role: .destructive
                 ) {
@@ -525,7 +525,7 @@ private struct CategoryDeleteConfirmation: ViewModifier {
                 Button(
                     String(
                         localized: "category.delete.moveTasks",
-                        defaultValue: "Tasks nach Unkategorisiert verschieben"
+                        defaultValue: "Move Tasks to Uncategorized"
                     )
                 ) {
                     onDelete(.moveToUncategorized)
@@ -534,7 +534,7 @@ private struct CategoryDeleteConfirmation: ViewModifier {
                 Button(
                     String(
                         localized: "category.delete.confirm",
-                        defaultValue: "Löschen"
+                        defaultValue: "Delete"
                     ),
                     role: .destructive
                 ) {
@@ -544,7 +544,7 @@ private struct CategoryDeleteConfirmation: ViewModifier {
             }
 
             Button(
-                String(localized: "quickadd.cancel", defaultValue: "Abbrechen"),
+                String(localized: "quickadd.cancel", defaultValue: "Cancel"),
                 role: .cancel
             ) {
                 pendingCategory = nil
@@ -552,18 +552,16 @@ private struct CategoryDeleteConfirmation: ViewModifier {
         } message: { category in
             let count = category.tasks.count
             if count > 0 {
-                Text(
-                    String(
-                        localized: "category.delete.message",
-                        defaultValue: "Diese Kategorie enthält %d Aufgabe(n). Was soll mit ihnen passieren?"
-                    )
-                    .replacingOccurrences(of: "%d", with: "\(count)")
+                let format = String(
+                    localized: "category.delete.message",
+                    defaultValue: "This category contains %lld task(s). What should happen to them?"
                 )
+                Text(String(format: format, locale: .current, count))
             } else {
                 Text(
                     String(
                         localized: "category.delete.messageEmpty",
-                        defaultValue: "Diese Kategorie enthält keine Aufgaben."
+                        defaultValue: "This category contains no tasks."
                     )
                 )
             }
@@ -572,15 +570,15 @@ private struct CategoryDeleteConfirmation: ViewModifier {
 
     private var titleText: String {
         if let name = pendingCategory?.displayName {
-            return String(
+            let format = String(
                 localized: "category.delete.title",
-                defaultValue: "Kategorie %@ löschen?"
+                defaultValue: "Delete category \u{201C}%@\u{201D}?"
             )
-            .replacingOccurrences(of: "%@", with: "„\(name)\u{201C}")
+            return String(format: format, name)
         }
         return String(
             localized: "category.delete.titleFallback",
-            defaultValue: "Kategorie löschen?"
+            defaultValue: "Delete category?"
         )
     }
 

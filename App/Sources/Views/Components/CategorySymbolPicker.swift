@@ -48,13 +48,13 @@ struct CategorySymbolPicker: View {
                         ContentUnavailableView(
                             String(
                                 localized: "category.symbolPicker.empty.title",
-                                defaultValue: "Keine Symbole gefunden"
+                                defaultValue: "No symbols found"
                             ),
                             systemImage: "magnifyingglass",
                             description: Text(
                                 String(
                                     localized: "category.symbolPicker.empty.message",
-                                    defaultValue: "Versuche einen anderen Suchbegriff."
+                                    defaultValue: "Try a different search term."
                                 )
                             )
                         )
@@ -83,7 +83,7 @@ struct CategorySymbolPicker: View {
             .navigationTitle(
                 String(
                     localized: "category.symbolPicker.title",
-                    defaultValue: "Symbol wählen"
+                    defaultValue: "Choose symbol"
                 )
             )
             .navigationBarTitleDisplayMode(.inline)
@@ -93,13 +93,13 @@ struct CategorySymbolPicker: View {
                 prompt: Text(
                     String(
                         localized: "category.symbolPicker.search",
-                        defaultValue: "Suchen"
+                        defaultValue: "Search"
                     )
                 )
             )
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button(String(localized: "quickadd.cancel", defaultValue: "Abbrechen")) {
+                    Button(String(localized: "quickadd.cancel", defaultValue: "Cancel")) {
                         dismiss()
                     }
                 }
@@ -151,7 +151,7 @@ private struct SymbolGroup: Identifiable {
         SymbolGroup(
             title: String(
                 localized: "category.symbolPicker.section.suggested",
-                defaultValue: "Empfohlen"
+                defaultValue: "Recommended"
             ),
             symbols: [
                 "bolt.fill", "calendar", "calendar.badge.clock",
@@ -162,7 +162,7 @@ private struct SymbolGroup: Identifiable {
         SymbolGroup(
             title: String(
                 localized: "category.symbolPicker.section.work",
-                defaultValue: "Arbeit"
+                defaultValue: "Work"
             ),
             symbols: [
                 "briefcase.fill", "laptopcomputer", "envelope.fill",
@@ -174,7 +174,7 @@ private struct SymbolGroup: Identifiable {
         SymbolGroup(
             title: String(
                 localized: "category.symbolPicker.section.personal",
-                defaultValue: "Privat"
+                defaultValue: "Personal"
             ),
             symbols: [
                 "house.fill", "heart.fill", "person.fill",
@@ -198,7 +198,7 @@ private struct SymbolGroup: Identifiable {
         SymbolGroup(
             title: String(
                 localized: "category.symbolPicker.section.travel",
-                defaultValue: "Reise & Outdoor"
+                defaultValue: "Travel & Outdoor"
             ),
             symbols: [
                 "airplane", "car.fill", "tram.fill",
@@ -210,7 +210,7 @@ private struct SymbolGroup: Identifiable {
         SymbolGroup(
             title: String(
                 localized: "category.symbolPicker.section.symbols",
-                defaultValue: "Symbole"
+                defaultValue: "Symbols"
             ),
             symbols: [
                 "flag.fill", "bookmark.fill", "pin.fill",

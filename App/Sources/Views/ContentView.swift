@@ -86,17 +86,17 @@ struct ContentView: View {
         }
         #if DEBUG
         .alert(
-            String(localized: "quickadd.deleteall", defaultValue: "Alle Tasks löschen"),
+            String(localized: "quickadd.deleteall", defaultValue: "Delete All Tasks"),
             isPresented: $showingClearAllConfirm
         ) {
-            Button(String(localized: "quickadd.cancel", defaultValue: "Abbrechen"), role: .cancel) {}
-            Button(String(localized: "common.delete", defaultValue: "Löschen"), role: .destructive) {
+            Button(String(localized: "quickadd.cancel", defaultValue: "Cancel"), role: .cancel) {}
+            Button(String(localized: "common.delete", defaultValue: "Delete"), role: .destructive) {
                 _Concurrency.Task {
                     await clearAllBacklogTasks()
                 }
             }
         } message: {
-            Text(String(localized: "backlog.debug.clear.message", defaultValue: "Alle Tasks (Backlog und Heute) werden gelöscht."))
+            Text(String(localized: "backlog.debug.clear.message", defaultValue: "All tasks (Backlog and Today) will be deleted."))
         }
         #endif
         .onAppear {
@@ -126,7 +126,7 @@ struct ContentView: View {
                     .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
-            .accessibilityLabel(String(localized: "settings.title", defaultValue: "Einstellungen"))
+            .accessibilityLabel(String(localized: "settings.title", defaultValue: "Settings"))
 
             HStack(spacing: 4) {
                 tabSwitchButton(
@@ -134,7 +134,7 @@ struct ContentView: View {
                     tab: .backlog
                 )
                 tabSwitchButton(
-                    title: String(localized: "tabs.today", defaultValue: "Heute"),
+                    title: String(localized: "tabs.today", defaultValue: "Today"),
                     tab: .today
                 )
             }

@@ -26,11 +26,11 @@ enum TaskStatus: String, Codable, CaseIterable {
         case .inBacklog:
             return String(localized: "task.status.backlog", defaultValue: "Backlog")
         case .scheduled:
-            return String(localized: "task.status.scheduled", defaultValue: "Geplant")
+            return String(localized: "task.status.scheduled", defaultValue: "Scheduled")
         case .dailyFocus:
-            return String(localized: "task.status.today", defaultValue: "Heute")
+            return String(localized: "task.status.today", defaultValue: "Today")
         case .completed:
-            return String(localized: "task.status.completed", defaultValue: "Erledigt")
+            return String(localized: "task.status.completed", defaultValue: "Completed")
         }
     }
     

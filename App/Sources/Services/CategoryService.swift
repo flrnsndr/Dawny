@@ -31,22 +31,23 @@ enum CategoryEditError: LocalizedError {
         case .nameEmpty:
             return String(
                 localized: "category.rename.errorEmpty",
-                defaultValue: "Der Name darf nicht leer sein."
+                defaultValue: "The name can't be empty."
             )
         case .nameTooLong(let maxLength):
-            return String(
+            let format = String(
                 localized: "category.rename.errorTooLong",
-                defaultValue: "Der Name darf höchstens \(maxLength) Zeichen lang sein."
+                defaultValue: "The name may be at most %lld characters."
             )
+            return String(format: format, locale: .current, maxLength)
         case .protectedFromRename, .protectedFromIconChange, .protectedFromDelete:
             return String(
                 localized: "category.edit.errorProtected",
-                defaultValue: "Diese Kategorie kann nicht verändert werden."
+                defaultValue: "This category can't be modified."
             )
         case .uncategorizedMissing:
             return String(
                 localized: "category.edit.errorUncategorizedMissing",
-                defaultValue: "Die Unkategorisiert-Kategorie wurde nicht gefunden."
+                defaultValue: "The Uncategorized category couldn't be found."
             )
         case .persistence(let underlying):
             return underlying.localizedDescription

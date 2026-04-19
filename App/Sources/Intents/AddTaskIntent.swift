@@ -20,7 +20,7 @@ struct AddTaskIntent: AppIntent {
     var taskTitle: String
     
     static var parameterSummary: some ParameterSummary {
-        Summary("Füge \(\.$taskTitle) hinzu")
+        Summary("Add \(\.$taskTitle) to backlog")
     }
     
     @MainActor
@@ -58,8 +58,11 @@ struct AddTaskIntent: AppIntent {
         
         try context.save()
         
-        let dialogFormat = String(localized: "intent.addtask.dialog", defaultValue: "Erledigt! '%@' wurde zum Backlog hinzugefügt.")
-        let dialogText = dialogFormat.replacingOccurrences(of: "%@", with: taskTitle)
+        let dialogFormat = String(
+            localized: "intent.addtask.dialog",
+            defaultValue: "Done. '%@' added to your backlog."
+        )
+        let dialogText = String(format: dialogFormat, taskTitle)
         return .result(dialog: IntentDialog(stringLiteral: dialogText))
     }
     

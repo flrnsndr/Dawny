@@ -50,12 +50,12 @@ struct DailyFocusView: View {
         let openScrollID = AnyHashable("qe-today-open")
 
         return List {
-            Section(String(localized: "today.section.open", defaultValue: "Offen")) {
+            Section(String(localized: "today.section.open", defaultValue: "Open")) {
                 ForEach(viewModel.openTasks, id: \.id) { task in
                     openTaskRow(task: task)
                 }
                 QuickEntryRow(
-                    placeholder: String(localized: "quickentry.placeholder.today", defaultValue: "Neue Aufgabe für heute…"),
+                    placeholder: String(localized: "quickentry.placeholder.today", defaultValue: "New task for today…"),
                     categoryAccessibilityName: nil,
                     scrollID: openScrollID,
                     onSubmit: { title in
@@ -79,7 +79,7 @@ struct DailyFocusView: View {
             }
 
             if !viewModel.completedTasks.isEmpty {
-                Section(String(localized: "today.section.completed", defaultValue: "Erledigt")) {
+                Section(String(localized: "today.section.completed", defaultValue: "Completed")) {
                     ForEach(viewModel.completedTasks, id: \.id) { task in
                         TaskRowView(
                             task: task,
@@ -128,7 +128,7 @@ struct DailyFocusView: View {
             Spacer()
             HStack {
                 ProgressView()
-                Text(String(localized: "today.sync.progress", defaultValue: "Synchronisiere..."))
+                Text(String(localized: "today.sync.progress", defaultValue: "Syncing…"))
                     .font(.caption)
             }
             .padding()
