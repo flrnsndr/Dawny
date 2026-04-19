@@ -1,3 +1,7 @@
+// Dawny
+// Copyright (c) 2025-2026 Florian Schneider. All rights reserved.
+// Licensed under PolyForm Noncommercial 1.0.0 — see LICENSE in the repository root.
+
 //
 //  BacklogView.swift
 //  Dawny
