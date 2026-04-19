@@ -44,8 +44,14 @@ struct ContentView: View {
     var body: some View {
         VStack(spacing: 0) {
             tabSwitcher
-            TabView(selection: $selectedTab) {
-                Group {
+            TabPager(
+                selectedIndex: Binding(
+                    get: { selectedTab.rawValue },
+                    set: { newValue in
+                        selectedTab = Tab(rawValue: newValue) ?? .backlog
+                    }
+                ),
+                page0: {
                     if let backlogVM = backlogViewModel {
                         BacklogView(
                             viewModel: backlogVM,
@@ -54,19 +60,15 @@ struct ContentView: View {
                     } else {
                         ProgressView()
                     }
-                }
-                .tag(Tab.backlog)
-
-                Group {
+                },
+                page1: {
                     if let dailyViewModel = dailyFocusViewModel, let backlogVM = backlogViewModel {
                         DailyFocusView(viewModel: dailyViewModel, backlogViewModel: backlogVM)
                     } else {
                         ProgressView()
                     }
                 }
-                .tag(Tab.today)
-            }
-            .tabViewStyle(.page(indexDisplayMode: .never))
+            )
             .ignoresSafeArea(.keyboard, edges: .bottom)
         }
         .environment(\.triggerWelcomeFlow) {
@@ -250,6 +252,69 @@ struct ContentView: View {
             return hasDailyFocusTasks
         } catch {
             return false
+        }
+    }
+}
+
+/// Eigener Pager für den Tab-Wechsel. Bewusst nicht über `TabView(.page)` gelöst,
+/// weil `UIPageViewController`s Pan-Gesture die `swipeActions` der List-Zeilen
+/// abfängt. Hier gewinnt die Row-Geste, weil sie früher aktiv wird als unsere
+/// `DragGesture` mit `minimumDistance`. Das gewünschte Page-Verhalten
+/// (1:1 Finger-Tracking, Rubber-band an den Rändern, Velocity-Snap) bleibt erhalten.
+private struct TabPager<Page0: View, Page1: View>: View {
+    @Binding var selectedIndex: Int
+    @ViewBuilder var page0: () -> Page0
+    @ViewBuilder var page1: () -> Page1
+
+    @State private var dragOffset: CGFloat = 0
+    @State private var isDragging: Bool = false
+
+    private static var snapAnimation: Animation {
+        .interactiveSpring(response: 0.32, dampingFraction: 0.86)
+    }
+
+    var body: some View {
+        GeometryReader { geo in
+            let width = geo.size.width
+
+            HStack(spacing: 0) {
+                page0()
+                    .frame(width: width)
+                page1()
+                    .frame(width: width)
+            }
+            .frame(width: width, alignment: .leading)
+            .offset(x: -CGFloat(selectedIndex) * width + dragOffset)
+            .animation(isDragging ? nil : Self.snapAnimation, value: selectedIndex)
+            .animation(isDragging ? nil : Self.snapAnimation, value: dragOffset)
+            .contentShape(Rectangle())
+            .gesture(
+                DragGesture(minimumDistance: 30, coordinateSpace: .local)
+                    .onChanged { value in
+                        guard abs(value.translation.width) > abs(value.translation.height) else { return }
+                        isDragging = true
+                        let dx = value.translation.width
+                        let atLeftEdge = selectedIndex == 0 && dx > 0
+                        let atRightEdge = selectedIndex == 1 && dx < 0
+                        dragOffset = (atLeftEdge || atRightEdge) ? dx / 3 : dx
+                    }
+                    .onEnded { value in
+                        defer { isDragging = false }
+                        let dx = value.translation.width
+                        let predictedDx = value.predictedEndTranslation.width
+                        let distanceThreshold = width / 3
+                        let velocityThreshold: CGFloat = 250
+
+                        withAnimation(Self.snapAnimation) {
+                            if (dx < -distanceThreshold || predictedDx < -velocityThreshold), selectedIndex == 0 {
+                                selectedIndex = 1
+                            } else if (dx > distanceThreshold || predictedDx > velocityThreshold), selectedIndex == 1 {
+                                selectedIndex = 0
+                            }
+                            dragOffset = 0
+                        }
+                    }
+            )
         }
     }
 }
