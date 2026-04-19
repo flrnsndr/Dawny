@@ -1,7 +1,7 @@
 <h1 align="center">Dawny</h1>
 
 <p align="center">
-  <strong>Plan each day on its own terms, without yesterday's unfinished noise.</strong>
+  <strong>A task app that deletes yesterday’s tasks. On purpose.</strong>
 </p>
 
 <p align="center">
@@ -25,121 +25,160 @@
 </p>
 
 <p align="center">
-  If you did not finish a task today, your day likely had other priorities.<br>
-  At 3 AM, Dawny automatically moves unfinished Daily Focus tasks back to Backlog.<br>
-  Your list does not get clogged with old, low value, unfinished tasks.<br>
+  <strong>🌅</strong><br>
+  <strong>NO OVERDUE.</strong><br>
+  <strong>NO CARRYOVER.</strong><br>
+  <strong>NO UNFINISHED TASKS BLOCKING YOUR LIST.</strong><br>
+  <strong>🌅</strong>
 </p>
 
-<p align="center">
-  <strong>🌅 🌅 🌅</strong><br>
-  <strong>CLEAR LIST.</strong><br>
-  <strong>CLEAR MIND.</strong><br>
-  <strong>FOCUS ON WHAT TRULY MATTERS.</strong><br>
-  <strong>🌅 🌅 🌅</strong>
-</p>
+---
 
-<p align="center">
-  <strong>Built for people with too many overdue lists and too little clarity.</strong>
-</p>
+### 🌅 Start fresh. Every single day.
 
-- ✅ Native iOS only task manager
-- ✅ Built completely in Swift with SwiftUI
-- ✅ Deeply integrated into the iOS ecosystem through Apple Reminders, Calendar APIs, and Siri
-- ✅ Built around one opinionated idea: **nothing is ever overdue**
-- ✅ Signature behavior: **3 AM reset** that automatically clears unfinished Daily Focus tasks back into Backlog
+- ✅ Most task apps keep score  
+- ✅ Dawny gives you a clean slate  
+- ✅ No red  
+- ✅ No guilt  
+- ✅ No unfinished tasks blocking your list  
 
-Every day is different. Every day deserves its own plan. If something was not done, that usually means the day had different priorities. Dawny protects your focus by giving you a clean starting point each morning, so your mind stays clear for what truly matters.
+**Just clarity.**
 
 ---
 
-## Why Dawny
+## 🧠 The idea
 
-Most task apps punish you. Tasks you did not finish yesterday turn red and stay red. The list grows, context changes, and yesterday's leftovers compete with today's real priorities.
+> **Overdue tasks are a design flaw.**
 
-Dawny takes the opposite stance: **overdue tasks are a design bug, not a feature.** Unfinished does not automatically mean failed. Often it just means "not the right priority for that day."
+Most task apps assume unfinished = failure.  
+Dawny assumes unfinished = information.
 
-### The 3 AM Reset
-
-Dawny has two lists: **Backlog** (someday) and **Daily Focus** (today). Each day you pull a handful of tasks from the backlog into focus. At 3 AM, while you are asleep, anything still unchecked in Daily Focus is moved back to the backlog. Nothing is deleted, and nothing clutters today by default.
-
-This gives you a true daily reset. Plan each day on its own terms, keep old noise out of sight, and stay focused on what counts now.
+If something didn’t get done, it usually wasn’t the priority.  
+So why should it hijack today?
 
 ---
 
-## Who is this for
+## ⚡ The difference
 
-> **Most important: The overwhelmed planner**  
-> You have tried Todoist, Things, TickTick, or MS To Do, and ended up with a graveyard of ignored red items from days that no longer matter.
+### 🌙 The 3 AM Reset
 
-- **The overwhelmed planner** who needs a clean daily reset instead of another accumulating backlog of overdue tasks.
-- **The deliberate minimalist** who wants fewer choices and a tool that helps choose today's priorities instead of carrying yesterday's leftovers forever.
-- **The iOS native user** who lives in Apple Reminders and Siri and wants a task app that feels truly native.
+Dawny quietly resets your day while you sleep.
 
-### Dawny is probably *not* for you if you need
+- Unfinished tasks leave **Daily Focus**  
+- They return safely to **Backlog**  
+- Your next day starts **clean by default**
 
-- Cross-platform sync (Android, Web, Windows).
-- Recurring tasks, subtasks, or tags.
-- Multiple projects or nested lists.
-- Arbitrary due dates and specific time reminders.
-
-That's fine. Dawny is deliberately small. If it does not fit, other tools are excellent.
+No cleanup. No friction. No residue.
 
 ---
 
-## Features
+## 🧩 How it works
 
-- **Two-list system** with Backlog for someday and Daily Focus for today.
-- **3 AM auto-reset** returns unfinished focus tasks to the backlog overnight, creating space for a fresh morning plan.
-- **Bidirectional iOS Reminders sync** shows Daily Focus tasks in Apple Reminders and syncs changes both ways.
-- **Siri shortcuts** support voice input such as "Hey Siri, add milk to Dawny today."
-- **Categories** provide lightweight grouping when needed.
-- **Native feel** comes from SwiftUI, haptic feedback, Dynamic Type, and full localization scaffolding (`Localizable.xcstrings`).
-- **Built to be testable** through protocol based time and calendar access, so daily reset behavior can be validated deterministically.
+**Two lists. That’s it.**
 
----
+- **Backlog** → everything that *could* matter  
+- **Daily Focus** → what *actually* matters today  
 
-## Get Dawny
-
-### Join the TestFlight beta
-
-Dawny is currently in public beta on TestFlight:
-
-<p align="center">
-  <a href="https://testflight.apple.com/join/h9JSWasd">
-    <img alt="Join the TestFlight Beta" src="https://img.shields.io/badge/TestFlight-Join%20the%20Beta-000000?style=for-the-badge&logo=apple">
-  </a>
-</p>
-
-> Dawny is built by a single developer. Your feedback shapes the app. Use the in app feedback button in TestFlight to tell me what works, what does not, and what is missing from your workflow.
-
-Requirements: iPhone running **iOS 26.2 or later**.
-
-If a task was not done today, that can be useful information, not failure. Dawny is designed around that mindset.
+You choose deliberately.  
+Dawny enforces the boundary.
 
 ---
 
-## Tech stack
+## ✂️ Why it feels different
 
-- **Platform**: iOS 26.2+
-- **Language**: Swift 6
-- **UI**: SwiftUI
-- **Persistence**: SwiftData
-- **Calendar integration**: EventKit
-- **Voice**: App Intents (Siri)
-- **Background execution**: BackgroundTasks framework
-- **Testing**: XCTest (unit, integration, UI)
+Most productivity tools equate structure with control.
 
-## Roadmap
+Dawny doesn’t.
 
-Intentionally small for now. Possible future additions are welcome only if they do not violate the Zero Overdue Philosophy.
+**More structure ≠ more clarity.**  
+**More structure = more friction.**
 
-- Home Screen widget
-- Apple Watch companion app
-- Multiple backlogs (for example work and personal)
-- Stats and insights
-- iCloud sync across iOS devices
+So it removes what gets in the way:
 
-Explicitly **not** on the roadmap: recurring tasks, subtasks, tags, arbitrary due dates, and cross platform clients. The goal is a clear mind and a clean daily planning surface, not a bigger feature set.
+- No nested systems  
+- No complex hierarchies  
+- No artificial planning overhead  
+
+What remains:
+
+- Clear priorities  
+- Intentional days  
+- A system you actually keep using  
+
+---
+
+## 🎯 Who Dawny is for
+
+**This will feel right if:**
+
+- Your task list turned into a graveyard  
+- You reschedule more than you decide  
+- You want clarity, not control systems  
+- You prefer thinking in *days*, not systems  
+
+Dawny tends to work especially well for people who don’t fit rigid productivity systems — including many **neurodivergent** thinkers.
+
+---
+
+## 🚫 Who it’s not for
+
+Dawny is intentionally limited.
+
+It does **not** aim to support:
+
+- Deep task hierarchies  
+- Complex planning systems  
+- Heavy organizational logic  
+
+**Not because it can’t.  
+Because it shouldn’t.**
+
+If you need structure to scale complexity, use another tool.  
+If you want clarity, this is it.
+
+---
+
+## ⚙️ Features
+
+- **Daily Focus system** for intentional planning  
+- **Automatic 3 AM reset** (core behavior)  
+- **Apple Reminders sync** (bidirectional)  
+- **Siri integration** via App Intents  
+- **Categories** for lightweight grouping  
+- Fully **native iOS experience**  
+
+---
+
+## 🧭 Philosophy
+
+Dawny doesn’t help you manage everything.
+
+**It helps you decide what matters today.**
+
+And then it protects that decision.
+
+---
+
+## 🚀 Get it
+
+Dawny is currently in TestFlight.
+
+<a href="https://testflight.apple.com/join/h9JSWasd">
+  <img alt="Join the TestFlight Beta" src="https://img.shields.io/badge/TestFlight-Join%20the%20Beta-000000?style=for-the-badge&logo=apple">
+</a>
+
+Your feedback directly shapes the product.
+
+---
+
+## 🧱 Tech
+
+- Swift 6  
+- SwiftUI  
+- SwiftData  
+- EventKit  
+- App Intents (Siri)  
+- BackgroundTasks  
 
 ---
 
@@ -167,7 +206,6 @@ clause and a relicensing grant to the project owner.
 
 ---
 
-<p align="center">
-  Built with care by <a href="https://github.com/flrnsndr">@flrnsndr</a>.<br>
-  <sub>Every morning is a blank page.</sub>
-</p>
+## 🧠 One line to remember
+
+**Dawny turns unfinished tasks into signal—not failure.**
