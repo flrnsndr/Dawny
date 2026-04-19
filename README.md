@@ -24,12 +24,6 @@
 </p>
 
 <p align="center">
-  If you did not finish a task today, your day likely had other priorities.<br>
-  At 3 AM, Dawny automatically moves unfinished Daily Focus tasks back to Backlog.<br>
-  Your list does not get clogged with old, low value, unfinished tasks.<br>
-</p>
-
-<p align="center">
   <strong>🌅 🌅 🌅</strong><br>
   <strong>CLEAR LIST.</strong><br>
   <strong>CLEAR MIND.</strong><br>
@@ -39,6 +33,12 @@
 
 <p align="center">
   <strong>Built for people with too many overdue lists and too little clarity.</strong>
+</p>
+
+<p align="center">
+  If you did not finish a task today, your day likely had other priorities.<br>
+  At 3 AM, Dawny automatically moves unfinished Daily Focus tasks back to Backlog.<br>
+  Your list does not get clogged with old, low value, unfinished tasks.<br>
 </p>
 
 - ✅ Native iOS only task manager
