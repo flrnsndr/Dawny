@@ -256,11 +256,12 @@ struct ContentView: View {
     }
 }
 
-/// Eigener Pager für den Tab-Wechsel. Bewusst nicht über `TabView(.page)` gelöst,
-/// weil `UIPageViewController`s Pan-Gesture die `swipeActions` der List-Zeilen
-/// abfängt. Hier gewinnt die Row-Geste, weil sie früher aktiv wird als unsere
-/// `DragGesture` mit `minimumDistance`. Das gewünschte Page-Verhalten
-/// (1:1 Finger-Tracking, Rubber-band an den Rändern, Velocity-Snap) bleibt erhalten.
+/// Eigener Pager für den Tab-Wechsel. Statt SwiftUIs `DragGesture` (die nicht über
+/// UIKits Delegate-Mechanismus mit den `swipeActions`-Gesten der List-Zellen
+/// koordinieren kann) verwenden wir einen `UIPanGestureRecognizer` via
+/// `UIGestureRecognizerRepresentable` (iOS 18+). Der Delegate stellt sicher, dass
+/// der Pager *immer* hinter Row-Swipe-Gesten zurücktritt — exakt das Pattern,
+/// das Apple Erinnerungen für die Back-Geste verwendet.
 private struct TabPager<Page0: View, Page1: View>: View {
     @Binding var selectedIndex: Int
     @ViewBuilder var page0: () -> Page0
@@ -270,7 +271,7 @@ private struct TabPager<Page0: View, Page1: View>: View {
     @State private var isDragging: Bool = false
 
     private static var snapAnimation: Animation {
-        .interactiveSpring(response: 0.32, dampingFraction: 0.86)
+        .interactiveSpring(response: 0.28, dampingFraction: 0.86)
     }
 
     var body: some View {
@@ -289,32 +290,108 @@ private struct TabPager<Page0: View, Page1: View>: View {
             .animation(isDragging ? nil : Self.snapAnimation, value: dragOffset)
             .contentShape(Rectangle())
             .gesture(
-                DragGesture(minimumDistance: 30, coordinateSpace: .local)
-                    .onChanged { value in
-                        guard abs(value.translation.width) > abs(value.translation.height) else { return }
+                PagerPanRecognizer(
+                    onChanged: { tx in
                         isDragging = true
-                        let dx = value.translation.width
-                        let atLeftEdge = selectedIndex == 0 && dx > 0
-                        let atRightEdge = selectedIndex == 1 && dx < 0
-                        dragOffset = (atLeftEdge || atRightEdge) ? dx / 3 : dx
-                    }
-                    .onEnded { value in
-                        defer { isDragging = false }
-                        let dx = value.translation.width
-                        let predictedDx = value.predictedEndTranslation.width
-                        let distanceThreshold = width / 3
-                        let velocityThreshold: CGFloat = 250
+                        let atLeftEdge = selectedIndex == 0 && tx > 0
+                        let atRightEdge = selectedIndex == 1 && tx < 0
+                        dragOffset = (atLeftEdge || atRightEdge) ? tx / 3 : tx
+                    },
+                    onEnded: { tx, vx in
+                        let distanceThreshold = width / 4
+                        let velocityThreshold: CGFloat = 400
 
                         withAnimation(Self.snapAnimation) {
-                            if (dx < -distanceThreshold || predictedDx < -velocityThreshold), selectedIndex == 0 {
+                            if (tx < -distanceThreshold || vx < -velocityThreshold), selectedIndex == 0 {
                                 selectedIndex = 1
-                            } else if (dx > distanceThreshold || predictedDx > velocityThreshold), selectedIndex == 1 {
+                            } else if (tx > distanceThreshold || vx > velocityThreshold), selectedIndex == 1 {
                                 selectedIndex = 0
                             }
                             dragOffset = 0
+                            isDragging = false
+                        }
+                    },
+                    onCancelled: {
+                        withAnimation(Self.snapAnimation) {
+                            dragOffset = 0
+                            isDragging = false
                         }
                     }
+                )
             )
+        }
+    }
+}
+
+/// Brückt einen `UIPanGestureRecognizer` mit eigenem Delegate nach SwiftUI.
+/// Der Delegate sorgt dafür, dass die Geste:
+/// 1. nur startet, wenn die initiale Bewegung dominant horizontal ist (vertikales
+///    List-Scrolling bleibt unangetastet),
+/// 2. *vor* jeder konkurrierenden Pan-Geste innerhalb einer `UICollectionViewCell`
+///    bzw. `UITableViewCell` zurücktritt — also vor den `swipeActions` der List.
+private struct PagerPanRecognizer: UIGestureRecognizerRepresentable {
+    let onChanged: (_ translationX: CGFloat) -> Void
+    let onEnded: (_ translationX: CGFloat, _ velocityX: CGFloat) -> Void
+    let onCancelled: () -> Void
+
+    func makeUIGestureRecognizer(context: Context) -> UIPanGestureRecognizer {
+        let pan = UIPanGestureRecognizer()
+        pan.delegate = context.coordinator
+        return pan
+    }
+
+    func updateUIGestureRecognizer(_ recognizer: UIPanGestureRecognizer, context: Context) {}
+
+    func handleUIGestureRecognizerAction(_ recognizer: UIPanGestureRecognizer, context: Context) {
+        let view = recognizer.view
+        let tx = recognizer.translation(in: view).x
+        switch recognizer.state {
+        case .changed:
+            onChanged(tx)
+        case .ended:
+            let vx = recognizer.velocity(in: view).x
+            onEnded(tx, vx)
+        case .cancelled, .failed:
+            onCancelled()
+        default:
+            break
+        }
+    }
+
+    func makeCoordinator(converter: CoordinateSpaceConverter) -> Coordinator { Coordinator() }
+
+    final class Coordinator: NSObject, UIGestureRecognizerDelegate {
+        /// Filtert Touches *vor* der Gesten-Erkennung aus: Berührt der Finger eine
+        /// List-Zelle (UICollectionViewCell/UITableViewCell), bekommt unsere Pan-Geste
+        /// den Touch gar nicht erst zu sehen — die Row-`swipeActions` der Zelle laufen
+        /// dann ungestört ab. Genau der Mechanismus, mit dem Apple Erinnerungen den
+        /// `interactivePopGestureRecognizer` mit Row-Swipes koexistieren lässt.
+        ///
+        /// Wichtig: `touch.view` ist die hit-getestete tiefste View — bei SwiftUI-`List`
+        /// (iOS 16+ intern `UICollectionView`) liegt die `swipeActions`-Geste an der
+        /// Collection View, nicht an der Zelle. Eine Prüfung über `other.view` würde
+        /// die Zelle deshalb nie finden. Über `touch.view` läuft der Walk-Up dagegen
+        /// zuverlässig durch die Cell-Hierarchie.
+        func gestureRecognizer(
+            _ gestureRecognizer: UIGestureRecognizer,
+            shouldReceive touch: UITouch
+        ) -> Bool {
+            var view: UIView? = touch.view
+            while let current = view {
+                if current is UICollectionViewCell || current is UITableViewCell {
+                    return false
+                }
+                view = current.superview
+            }
+            return true
+        }
+
+        /// Startet nur, wenn die Bewegung dominant horizontal ist — vertikales
+        /// List-Scrolling bleibt damit unangetastet.
+        func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+            guard let pan = gestureRecognizer as? UIPanGestureRecognizer else { return true }
+            let velocity = pan.velocity(in: pan.view)
+            return abs(velocity.x) > abs(velocity.y) * 1.2
         }
     }
 }
