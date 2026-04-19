@@ -11,6 +11,7 @@
   <img alt="Persistence" src="https://img.shields.io/badge/Data-SwiftData-34C759">
   <a href="https://testflight.apple.com/join/h9JSWasd"><img alt="TestFlight" src="https://img.shields.io/badge/TestFlight-Join%20Beta-000000?logo=apple"></a>
   <img alt="Status" src="https://img.shields.io/badge/status-beta-yellow">
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-lightgrey"></a>
 </p>
 
 <p align="center">
@@ -181,20 +182,27 @@ Your feedback directly shapes the product.
 
 ---
 
-## 🔭 Roadmap (carefully constrained)
+## License
 
-**Possible:**
+Dawny is **source-available, not open source**.
 
-- Widgets  
-- Apple Watch  
-- iCloud sync  
-- Lightweight insights  
+The source code in this repository is licensed under the
+[PolyForm Noncommercial License 1.0.0](LICENSE). In short: you may read,
+study, modify, and use the code for personal, educational, research, hobby,
+and other noncommercial purposes. You may **not** use the code (in original
+or modified form) as part of any product or service that generates revenue,
+including paid apps, ad-supported apps, or apps with in-app purchases.
 
-**Not happening:**
+The name "Dawny", the Dawny logo, and the app icon are **trademarks** of
+Florian Schneider and are not licensed under PolyForm. Forks must be renamed
+and rebranded. See [NOTICE](NOTICE) for details on trademarks, asset
+licensing, and contact info.
 
-- Feature bloat  
-- Complex task hierarchies  
-- “Everything app” direction  
+For commercial licensing inquiries, write to **dawny@posteo.de**.
+
+Contributions are welcome under the terms described in
+[CONTRIBUTING.md](CONTRIBUTING.md), which include an inbound-equals-outbound
+clause and a relicensing grant to the project owner.
 
 ---
 
