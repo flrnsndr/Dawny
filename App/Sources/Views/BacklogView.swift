@@ -282,6 +282,9 @@ struct BacklogView: View {
                 HapticFeedback.medium()
                 _Concurrency.Task {
                     await viewModel.moveTaskToDailyFocus(task)
+                    await MainActor.run {
+                        dailyFocusViewModel?.loadDailyTasks()
+                    }
                 }
             } label: {
                 Label(String(localized: "backlog.swipe.today", defaultValue: "Today"), systemImage: "sun.max.fill")
@@ -311,6 +314,9 @@ struct BacklogView: View {
                 HapticFeedback.medium()
                 _Concurrency.Task {
                     await viewModel.moveTaskToDailyFocus(task)
+                    await MainActor.run {
+                        dailyFocusViewModel?.loadDailyTasks()
+                    }
                 }
             } label: {
                 Label(String(localized: "backlog.swipe.today", defaultValue: "Today"), systemImage: "sun.max.fill")
