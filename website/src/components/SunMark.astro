@@ -91,6 +91,16 @@ const { class: className = "" } = Astro.props;
     z-index: 2;
   }
 
+  /* Symmetrischer Highlight: wirkt horizontalkalibriert zur Section-Mitte (Two Lists u. a.). */
+  .sun-mark-two-lists .sun-mark-disc {
+    background: radial-gradient(
+      circle at 50% 38%,
+      #ffe1a8 0%,
+      #f5b042 55%,
+      #d8902a 100%
+    );
+  }
+
   .sun-mark-ring {
     position: absolute;
     inset: 16%;

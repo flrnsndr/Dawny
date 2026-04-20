@@ -18,13 +18,15 @@
   },
   "manifesto": {
     "quote": "Overdue tasks are a design flaw.",
-    "body": "Most apps treat unfinished work as failure — and put it in red. Dawny treats it as information. If something didn't get done today, it usually wasn't the priority. So why should it hijack tomorrow?"
+    "bodyMain": "Most apps cast unfinished work as failure in red. Dawny reads it as information. A miss today is about timing, not about what matters to you.",
+    "bodyMid": "Tomorrow isn't on autopilot: you decide whether it's worth today's focus, and nothing fills your list without your conscious decision.",
+    "bodyAside": "A red priority flag on a task doesn't automatically make it your priority. You already know, quite clearly, what matters and what doesn't."
   },
   "reset": {
     "eyebrow": "The 3 AM Reset",
     "title": "While you sleep,",
     "titleAccent": "your day resets.",
-    "body": "At 3 AM, Dawny quietly clears your Daily Focus. Nothing is lost — unfinished tasks return safely to the Backlog. You wake up to a clean slate, not a scoreboard.",
+    "body": "At 3 AM, Dawny quietly clears your Daily Focus. Nothing is lost. Unfinished tasks return safely to the Backlog. You wake up to a clean slate.",
     "screenLabel": "Today",
     "tasks": ["Walk the dog", "RSVP to wedding", "Doctor's appointment"],
     "steps": [
@@ -45,16 +47,19 @@
     "eyebrow": "How it works",
     "title": "Two lists. That's it.",
     "backlogLabel": "Backlog",
-    "backlogText": "Everything that could matter — held lightly, no pressure, no priority decay.",
+    "backlogText": "Everything that matters to you — No exact dates, no detailed priorities or planning.",
     "focusLabel": "Daily Focus",
-    "focusText": "What actually matters today — chosen deliberately, protected by Dawny.",
+    "focusText": "What actually matters today — You decide what's on your plate today.",
+    "progressLabel": "Back to Backlog",
+    "progressText": "Not enough time in your day? — What's left goes back to the backlog.",
     "captionBacklog": "Backlog — your library of maybes",
-    "captionFocus": "Daily Focus — today, on purpose"
+    "captionFocus": "Daily Focus — today, on purpose",
+    "captionProgress": "Daily Focus — open and completed tasks"
   },
   "contrast": {
     "eyebrow": "Why it feels different",
-    "title": "Most apps keep score.",
-    "titleAccent": "Dawny gives you a clean slate.",
+    "title": "Other apps keep you chasing old plans.",
+    "titleAccent": "Dawny gives you a fresh focus for each day.",
     "leftLabel": "Most task apps",
     "rightLabel": "Dawny",
     "rows": [
@@ -77,7 +82,10 @@
   },
   "finalCta": {
     "eyebrow": "Beta",
-    "title": "Start fresh tomorrow.",
+    "title": {
+      "line1": "Start fresh.",
+      "line2": "Every day."
+    },
     "body": "Dawny is currently in TestFlight. Your feedback directly shapes the product.",
     "cta": "Join the TestFlight Beta",
     "qrAlt": "Scan to open TestFlight on iOS"

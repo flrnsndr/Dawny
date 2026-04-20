@@ -14,10 +14,8 @@ const dict = getDict(lang);
   id="how"
   class="relative bg-[var(--color-paper)] text-[var(--color-ink)] py-32 sm:py-44"
 >
-  <SunMark />
-
   <div class="container-content relative z-10">
-    <div class="max-w-2xl mb-20">
+    <div class="mx-auto mb-20 max-w-2xl md:mx-0 md:text-left text-center">
       <p class="reveal text-xs font-medium uppercase tracking-[0.18em] text-[var(--color-ink-soft)]/70 mb-6">
         <span class="inline-block h-px w-8 bg-[var(--color-ink-soft)]/40 align-middle mr-3"></span>
         {dict.twoLists.eyebrow}
@@ -27,22 +25,27 @@ const dict = getDict(lang);
       </h2>
     </div>
 
-    <div class="grid gap-12 md:gap-8 lg:gap-16 md:grid-cols-2 items-center">
-      <div class="reveal flex flex-col items-center text-center md:items-start md:text-left">
+    <div class="two-lists-visual relative isolate">
+      <SunMark class="sun-mark-two-lists sun-anchor-two-lists pointer-events-none" />
+
+      <div
+        class="two-lists-grid relative z-10 grid gap-14 lg:grid-cols-3 lg:gap-x-8 xl:gap-x-12 xl:gap-y-14 items-start justify-items-center"
+      >
+      <div class="reveal two-lists-col flex w-full flex-col items-center justify-self-center text-center">
         <div class="phone-frame mb-8">
           <div class="phone-screen">
             <img
               src="/assets/screenshots/backlog.png"
               alt={dict.twoLists.captionBacklog}
-              width="424"
-              height="900"
+              width="470"
+              height="1024"
               loading="lazy"
               decoding="async"
             />
           </div>
           <div class="phone-glow phone-glow-cool" aria-hidden="true"></div>
         </div>
-        <span class="text-xs font-mono uppercase tracking-[0.18em] text-[var(--color-horizon)] mb-3">
+        <span class="two-lists-kicker text-xs font-mono uppercase tracking-[0.18em] mb-3">
           {dict.twoLists.backlogLabel}
         </span>
         <h3 class="text-display text-2xl sm:text-3xl mb-3 max-w-xs">
@@ -53,21 +56,21 @@ const dict = getDict(lang);
         </p>
       </div>
 
-      <div class="reveal flex flex-col items-center text-center md:items-start md:text-left">
+      <div class="reveal two-lists-col flex w-full flex-col items-center justify-self-center text-center">
         <div class="phone-frame mb-8">
           <div class="phone-screen">
             <img
               src="/assets/screenshots/today-open.png"
               alt={dict.twoLists.captionFocus}
-              width="424"
-              height="900"
+              width="470"
+              height="1024"
               loading="lazy"
               decoding="async"
             />
           </div>
           <div class="phone-glow phone-glow-warm" aria-hidden="true"></div>
         </div>
-        <span class="text-xs font-mono uppercase tracking-[0.18em] text-[var(--color-dawn)] mb-3">
+        <span class="two-lists-kicker text-xs font-mono uppercase tracking-[0.18em] mb-3">
           {dict.twoLists.focusLabel}
         </span>
         <h3 class="text-display text-2xl sm:text-3xl mb-3 max-w-xs">
@@ -77,15 +80,56 @@ const dict = getDict(lang);
           {dict.twoLists.focusText.split("—").slice(1).join("—").trim()}
         </p>
       </div>
+
+      <div class="reveal two-lists-col flex w-full flex-col items-center justify-self-center text-center">
+        <div class="phone-frame mb-8">
+          <div class="phone-screen">
+            <img
+              src="/assets/screenshots/today-progress.png"
+              alt={dict.twoLists.captionProgress}
+              width="470"
+              height="1024"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <div class="phone-glow phone-glow-dual" aria-hidden="true"></div>
+        </div>
+        <span class="two-lists-kicker text-xs font-mono uppercase tracking-[0.18em] mb-3">
+          {dict.twoLists.progressLabel}
+        </span>
+        <h3 class="text-display text-2xl sm:text-3xl mb-3 max-w-xs">
+          {dict.twoLists.progressText.split("—")[0].trim()}
+        </h3>
+        <p class="max-w-sm text-[var(--color-ink-soft)] leading-relaxed">
+          {dict.twoLists.progressText.split("—").slice(1).join("—").trim()}
+        </p>
+      </div>
+    </div>
     </div>
   </div>
 </section>
 
 <style>
+  .two-lists-kicker {
+    color: color-mix(in oklab, var(--color-ink-soft) 82%, var(--color-ink) 18%);
+  }
+
   .phone-frame {
     position: relative;
-    width: clamp(220px, 60vw, 300px);
+    width: clamp(200px, 42vw, 280px);
     isolation: isolate;
+  }
+
+  @media (min-width: 1024px) {
+    .two-lists-grid .phone-frame {
+      width: clamp(200px, 22vw, 260px);
+    }
+
+    /* Einheitliche Spaltenbreite, damit die mittlere Phone optisch wirklich in der Mitte sitzt */
+    .two-lists-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
 
   .phone-screen {
@@ -126,7 +170,32 @@ const dict = getDict(lang);
     background: radial-gradient(circle, rgba(190, 221, 230, 0.55) 0%, transparent 65%);
   }
 
+  .phone-glow-dual {
+    background:
+      radial-gradient(circle at 30% 40%, rgba(190, 221, 230, 0.35) 0%, transparent 55%),
+      radial-gradient(circle at 70% 55%, rgba(245, 176, 66, 0.38) 0%, transparent 60%);
+  }
+
   .phone-frame:hover .phone-screen {
     transform: translateY(-4px);
+  }
+
+  /* Sonne relativ zum Phone-Raster (gleicher Breitenkasten wie container-content), nicht zur Section */
+  .two-lists-visual {
+    width: 100%;
+    overflow: visible;
+  }
+
+  .two-lists-visual > :global(.sun-anchor-two-lists.sun-mark) {
+    left: 50%;
+    right: auto;
+    transform: translate(-50%, 0);
+    bottom: clamp(6%, 12vh, 22%);
+  }
+
+  @media (min-width: 1024px) {
+    .two-lists-visual > :global(.sun-anchor-two-lists.sun-mark) {
+      bottom: 10%;
+    }
   }
 </style>

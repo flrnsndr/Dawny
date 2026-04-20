@@ -124,6 +124,25 @@
   line-height: 1;
 }
 
+/* Kontrast folgt dem Hintergrund (hell/dunkel pro Pixel). Bricht ab, wenn ein Vorfahre
+   den Backdrop abschottet (z. B. transform ≠ none, filter, opacity < 1, isolation). */
+@utility text-blend-difference {
+  color: var(--color-paper);
+  mix-blend-mode: difference;
+}
+
+@utility text-blend-exclusion {
+  color: var(--color-paper);
+  mix-blend-mode: exclusion;
+}
+
+/* exclusion + möglichst achromatische Basisfarbe → weniger kühler/wärmer Stich auf der Sonne */
+@utility text-blend-exclusion-warm {
+  color: #eaeae9;
+  color: oklch(0.928 0 none);
+  mix-blend-mode: exclusion;
+}
+
 @utility btn-primary {
   display: inline-flex;
   align-items: center;
