@@ -1,0 +1,752 @@
+---
+import { type Lang, getDict } from "@/i18n";
+import SunMark from "@/components/SunMark.astro";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const dict = getDict(lang);
+const tasks = dict.reset.tasks;
+const steps = dict.reset.steps;
+const timeline = dict.reset.timeline;
+
+// Alles, was am Tagesende unerledigt war, wandert beim 3-Uhr-Reset zurück ins Backlog.
+// Referenz ist der letzte aktive Step (vor dem cleared-Step).
+const lastActiveStep = [...steps].reverse().find((s) => !s.cleared) ?? steps[0];
+const returnedTasks = tasks.slice(lastActiveStep.doneCount);
+const migratedTask = returnedTasks[0];
+---
+
+<section
+  id="reset"
+  class="relative bg-[var(--color-night)] text-white py-32 sm:py-44 overflow-hidden"
+  data-reset
+>
+  <div
+    class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
+    aria-hidden="true"
+  ></div>
+
+  <div
+    class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full opacity-30 blur-3xl"
+    style="background: radial-gradient(circle, rgba(245,176,66,0.4) 0%, transparent 60%);"
+    aria-hidden="true"
+  ></div>
+
+  <SunMark />
+
+  <div class="container-content relative z-10 grid gap-16 lg:grid-cols-[1fr_1.25fr] lg:gap-20 items-center">
+    <div>
+      <p class="reveal text-xs font-medium uppercase tracking-[0.18em] text-[var(--color-dawn-soft)] mb-6">
+        {dict.reset.eyebrow}
+      </p>
+      <h2 class="reveal text-display text-[clamp(2.25rem,5.5vw,4.5rem)]">
+        <span class="block text-white/90">{dict.reset.title}</span>
+        <span class="block bg-gradient-to-r from-[var(--color-dawn-soft)] to-[var(--color-dawn)] bg-clip-text text-transparent">
+          {dict.reset.titleAccent}
+        </span>
+      </h2>
+      <p class="reveal mt-8 max-w-md text-base sm:text-lg text-white/65 leading-relaxed">
+        {dict.reset.body}
+      </p>
+
+      <div class="reveal mt-10 inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-white/40">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 6v6l4 2"/>
+        </svg>
+        03:00 — {lang === "de" ? "automatisch, leise, jeden Tag" : "automatic, quiet, every day"}
+      </div>
+    </div>
+
+    <div class="reveal reset-stage">
+      <div class="reset-stage-cards">
+        {steps.map((step, i) => (
+          <article class="reset-card" style={`--i: ${i}`} data-phase={step.phase} data-step={i}>
+            <header class="reset-card-head">
+              <div class="reset-card-tab">
+                <span class="reset-card-tab-dot" aria-hidden="true"></span>
+                <span class="reset-card-tab-label">{dict.reset.screenLabel}</span>
+              </div>
+              <span class="reset-card-time">{step.time}</span>
+            </header>
+
+            <ul class="reset-card-list" aria-label={`${dict.reset.screenLabel} — ${step.time}`}>
+              {step.cleared ? (
+                <li class="reset-card-empty">
+                  <span class="reset-card-empty-icon" aria-hidden="true">
+                    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M8 34 H40" opacity="0.6"/>
+                      <path d="M14 34 A10 10 0 0 1 34 34" />
+                      <path d="M24 14 V18" opacity="0.55"/>
+                      <path d="M11 21 L13.5 23.5" opacity="0.45"/>
+                      <path d="M37 21 L34.5 23.5" opacity="0.45"/>
+                      <path d="M6 28 L9 28" opacity="0.35"/>
+                      <path d="M42 28 L39 28" opacity="0.35"/>
+                    </svg>
+                  </span>
+                  <span class="reset-card-empty-title">{dict.reset.emptyTitle}</span>
+                  <span class="reset-card-empty-sub">{dict.reset.emptySub}</span>
+                </li>
+              ) : (
+                tasks.map((task, taskIndex) => {
+                  const done = taskIndex < step.doneCount;
+                  return (
+                    <li class={done ? "is-done" : ""}>
+                      <span class="reset-card-bullet" aria-hidden="true">
+                        {done && (
+                          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3.5 8.5 6.5 11.5 12.5 5"/>
+                          </svg>
+                        )}
+                      </span>
+                      <span class="reset-card-text">{task}</span>
+                    </li>
+                  );
+                })
+              )}
+            </ul>
+
+            <footer class="reset-card-foot">{step.footer}</footer>
+          </article>
+        ))}
+
+        <!-- Day arrow: Card 1 → Card 2 -->
+        <div class="reset-arrow reset-arrow--1" aria-hidden="true">
+          <span class="reset-arrow-label">{timeline.arrowDay}</span>
+          <svg class="reset-arrow-svg" viewBox="0 0 40 12" preserveAspectRatio="none">
+            <path d="M0 6 H34 M30 2 L34 6 L30 10" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <div class="reset-arrow reset-arrow--2" aria-hidden="true">
+          <span class="reset-arrow-label">{timeline.arrowReset}</span>
+          <svg class="reset-arrow-svg" viewBox="0 0 40 12" preserveAspectRatio="none">
+            <path d="M0 6 H34 M30 2 L34 6 L30 10" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <!-- Transition (z-index 1, sits BEHIND Card 3): label + Backlog peek.
+             The peek is wider than its grid column and extends rightward behind Card 3,
+             so roughly 40% of the Backlog tab disappears under the Today tab. -->
+        <div class="reset-transition" aria-hidden="true">
+          <div class="reset-backlog-peek">
+            <header class="reset-backlog-head">
+              <span class="reset-backlog-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="4" rx="1"/>
+                  <rect x="5" y="8" width="14" height="12" rx="1"/>
+                  <path d="M10 13 H14"/>
+                </svg>
+              </span>
+              <span class="reset-backlog-title">{dict.reset.backlogLabel}</span>
+            </header>
+
+            <ul class="reset-backlog-list">
+              {migratedTask && (
+                <li class="reset-backlog-item reset-backlog-item--arriving">
+                  <span class="reset-backlog-bullet" aria-hidden="true"></span>
+                  <span class="reset-backlog-text">{migratedTask}</span>
+                </li>
+              )}
+              <li class="reset-backlog-item reset-backlog-hint">
+                <span class="reset-backlog-bullet reset-backlog-bullet--hint" aria-hidden="true"></span>
+                <span class="reset-backlog-skel" style="width: 82%"></span>
+              </li>
+              <li class="reset-backlog-item reset-backlog-hint">
+                <span class="reset-backlog-bullet reset-backlog-bullet--hint" aria-hidden="true"></span>
+                <span class="reset-backlog-skel" style="width: 60%"></span>
+              </li>
+              <li class="reset-backlog-item reset-backlog-hint">
+                <span class="reset-backlog-bullet reset-backlog-bullet--hint" aria-hidden="true"></span>
+                <span class="reset-backlog-skel" style="width: 70%"></span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Transit overlay (z-index 3, sits ABOVE Card 3): the floating in-transit
+             task chip and the curved arrow guiding it into the Backlog's top slot. -->
+        {migratedTask && (
+          <div class="reset-transit-overlay" aria-hidden="true">
+            <div class="reset-transit-task">
+              <span class="reset-transit-bullet"></span>
+              <span class="reset-transit-text">{migratedTask}</span>
+            </div>
+
+            <svg class="reset-transit-arrow" viewBox="0 0 120 100" preserveAspectRatio="none">
+              <defs>
+                <marker id="reset-transit-head" viewBox="0 0 10 10" refX="7.4" refY="5" markerWidth="3.4" markerHeight="3.4" orient="auto">
+                  <path d="M0 0 L10 5 L0 10 Z" fill="rgba(245,176,66,0.52)"/>
+                </marker>
+              </defs>
+              <path
+                d="M 114 10 C 111 24, 103 44, 90 66"
+                fill="none"
+                stroke="rgba(245,176,66,0.1)"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                vector-effect="non-scaling-stroke"
+              />
+              <path
+                d="M 114 10 C 111 24, 103 44, 90 66"
+                fill="none"
+                stroke="rgba(245,176,66,0.46)"
+                stroke-width="1.25"
+                stroke-linecap="round"
+                vector-effect="non-scaling-stroke"
+                marker-end="url(#reset-transit-head)"
+              />
+            </svg>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .reset-stage {
+    position: relative;
+    z-index: 2;
+  }
+
+  .reset-stage-cards {
+    /* Backlog keeps a fixed original size; overlap is controlled by shifting
+       the right Today card, not by resizing the backlog card. */
+    --gap-col: clamp(72px, 8vw, 104px);
+    --peek-width: calc(var(--gap-col) / 0.6);
+    --today-right-shift: calc(var(--gap-col) * 0.31);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    position: relative;
+  }
+
+  @media (min-width: 768px) {
+    .reset-stage-cards {
+      grid-template-columns:
+        1fr var(--gap-col) 1fr calc(2 * var(--gap-col)) 1fr;
+      align-items: stretch;
+      gap: 0.25rem;
+    }
+  }
+
+  /* ---- Today cards ---- */
+
+  .reset-card {
+    position: relative;
+    border-radius: 18px;
+    padding: 1rem 1rem 0.875rem;
+    background:
+      linear-gradient(180deg, rgba(16, 26, 48, 0.92) 0%, rgba(10, 18, 35, 0.9) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow:
+      0 10px 30px -12px rgba(0, 0, 0, 0.55),
+      0 2px 6px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(14px) saturate(120%);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+    min-height: 240px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    opacity: 0.55;
+    transform: translateY(8px);
+    transition: opacity 700ms var(--ease-soft, ease), transform 700ms var(--ease-soft, ease),
+      border-color 500ms var(--ease-soft, ease), background 700ms var(--ease-soft, ease);
+  }
+
+  @media (min-width: 768px) {
+    .reset-card:nth-of-type(1) { grid-column: 1; grid-row: 1; z-index: 1; }
+    .reset-card:nth-of-type(2) { grid-column: 3; grid-row: 1; z-index: 1; }
+    /* Card 3 sits ON TOP of the Backlog peek's right portion. */
+    .reset-card:nth-of-type(3) {
+      grid-column: 5;
+      grid-row: 1;
+      z-index: 3;
+      margin-left: var(--today-right-shift);
+    }
+  }
+
+  [data-reset].is-visible .reset-card {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: calc(var(--i) * 180ms);
+  }
+
+  /* Phase Tag 2 / Day 2: subtle warm tint on top of the solid dark card */
+  .reset-card[data-step="2"] {
+    background:
+      linear-gradient(180deg, rgba(48, 32, 14, 0.9) 0%, rgba(22, 22, 36, 0.92) 100%);
+    border-color: rgba(245, 176, 66, 0.45);
+    box-shadow:
+      0 10px 30px -12px rgba(0, 0, 0, 0.55),
+      0 0 0 1px rgba(245, 176, 66, 0.08),
+      0 0 40px -8px rgba(245, 176, 66, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  .reset-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding-bottom: 0.625rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .reset-card-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.55rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .reset-card-tab-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-dawn);
+    box-shadow: 0 0 8px var(--color-dawn);
+  }
+
+  .reset-card-tab-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.95);
+  }
+
+  .reset-card-time {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 0.04em;
+  }
+
+  .reset-card-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.95);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .reset-card-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+  }
+
+  .reset-card-bullet {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, 0.55);
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+    transition: background 400ms var(--ease-soft, ease), border-color 400ms var(--ease-soft, ease), color 400ms var(--ease-soft, ease);
+  }
+
+  .reset-card-list li.is-done .reset-card-bullet {
+    background: var(--color-dawn);
+    border-color: var(--color-dawn);
+    color: var(--color-night, #050d20);
+  }
+
+  .reset-card-bullet svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .reset-card-text {
+    flex: 1;
+    line-height: 1.35;
+  }
+
+  .reset-card-list li.is-done .reset-card-text {
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .reset-card-empty {
+    flex: 1;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    text-align: center;
+    padding: 0.5rem 0.25rem;
+  }
+
+  .reset-card-empty-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-dawn-soft, #f5c26b);
+    background: radial-gradient(circle, rgba(245, 176, 66, 0.18) 0%, transparent 70%);
+    margin-bottom: 0.125rem;
+  }
+
+  .reset-card-empty-icon svg {
+    width: 32px;
+    height: 32px;
+    filter: drop-shadow(0 0 6px rgba(245, 176, 66, 0.35));
+  }
+
+  .reset-card-empty-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.3;
+  }
+
+  .reset-card-empty-sub {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.03em;
+    line-height: 1.3;
+  }
+
+  .reset-card-foot {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.7);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 0.625rem;
+    letter-spacing: 0.02em;
+  }
+
+  /* ---- Day arrow (Card 1 → Card 2) ---- */
+
+  .reset-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.4rem;
+    color: rgba(255, 255, 255, 0.55);
+    padding: 0.25rem 0.5rem;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 600ms var(--ease-soft, ease), transform 600ms var(--ease-soft, ease);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+    min-width: 0;
+  }
+
+  @media (min-width: 768px) {
+    .reset-arrow { width: 100%; }
+    .reset-arrow--1 { grid-column: 2; grid-row: 1; align-self: center; }
+    .reset-arrow--2 {
+      grid-column: 4;
+      grid-row: 1;
+      align-self: center;
+      justify-self: start;
+      width: var(--gap-col);
+      z-index: 2;
+    }
+  }
+
+  [data-reset].is-visible .reset-arrow {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 260ms;
+  }
+
+  .reset-arrow-label {
+    font-size: 0.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    text-align: center;
+    line-height: 1.25;
+  }
+
+  .reset-arrow-svg {
+    width: min(72%, 64px);
+    height: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+  }
+
+  @media (max-width: 767px) {
+    .reset-arrow {
+      padding: 0.25rem 0;
+    }
+    .reset-arrow-svg {
+      transform: rotate(90deg);
+      width: 36px;
+      height: 12px;
+    }
+  }
+
+  /* ---- Transition: sits BEHIND Card 3 (z-index 1 < Card 3's z-index 3) ---- */
+
+  .reset-transition {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.55rem;
+    padding: 0;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 700ms var(--ease-soft, ease), transform 700ms var(--ease-soft, ease);
+  }
+
+  [data-reset].is-visible .reset-transition {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 440ms;
+  }
+
+  @media (min-width: 768px) {
+    /* Lives in the wide 4th column. The peek will overflow this column
+       to the right and get covered by Card 3 (z-index 3). */
+    .reset-transition {
+      grid-column: 4;
+      grid-row: 1;
+      align-self: stretch;
+      overflow: visible;
+    }
+  }
+
+  /* Backlog peek — visually cool (slate/blue) and deliberately understated.
+     margin-left creates the clear gap before the peek (same size as DAY gap);
+     width extends rightward and overflows column 4, where Card 3 covers 20%. */
+  .reset-backlog-peek {
+    --backlog-accent: 148, 175, 210;
+    margin-left: var(--gap-col);
+    width: var(--peek-width);
+    position: relative;
+    border-radius: 14px;
+    padding: 0.65rem 0.7rem 0.6rem;
+    background:
+      linear-gradient(180deg, rgba(30, 40, 60, 0.8) 0%, rgba(20, 28, 44, 0.85) 100%);
+    border: 1px solid rgba(var(--backlog-accent), 0.24);
+    box-shadow:
+      0 8px 22px -14px rgba(0, 0, 0, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .reset-backlog-head {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid rgba(var(--backlog-accent), 0.18);
+    color: rgba(var(--backlog-accent), 1);
+  }
+
+  .reset-backlog-icon {
+    display: inline-flex;
+    width: 14px;
+    height: 14px;
+    color: rgba(var(--backlog-accent), 0.9);
+  }
+
+  .reset-backlog-icon svg { width: 14px; height: 14px; }
+
+  .reset-backlog-title {
+    font-size: 0.66rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgba(var(--backlog-accent), 0.95);
+  }
+
+  .reset-backlog-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.42rem;
+  }
+
+  .reset-backlog-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .reset-backlog-bullet {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1.25px solid rgba(var(--backlog-accent), 0.7);
+    flex-shrink: 0;
+  }
+
+  .reset-backlog-bullet--hint {
+    border-color: rgba(var(--backlog-accent), 0.3);
+  }
+
+  .reset-backlog-text {
+    font-size: 0.78rem;
+    line-height: 1.25;
+    color: rgba(255, 255, 255, 0.95);
+  }
+
+  /* The arriving task — warm accent ties it to the Today palette */
+  .reset-backlog-item--arriving .reset-backlog-bullet {
+    border-color: rgba(245, 176, 66, 0.85);
+    box-shadow: 0 0 10px rgba(245, 176, 66, 0.4);
+  }
+
+  .reset-backlog-item--arriving .reset-backlog-text {
+    color: rgba(255, 255, 255, 1);
+    text-shadow: 0 0 10px rgba(245, 176, 66, 0.25);
+  }
+
+  .reset-backlog-hint { opacity: 0.55; }
+
+  .reset-backlog-skel {
+    height: 7px;
+    border-radius: 4px;
+    background: linear-gradient(
+      90deg,
+      rgba(var(--backlog-accent), 0.28) 0%,
+      rgba(var(--backlog-accent), 0.14) 100%
+    );
+  }
+
+  /* ---- Transit overlay: sits ABOVE Card 3 (z-index 5) ---- */
+
+  .reset-transit-overlay {
+    position: relative;
+    z-index: 5;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 700ms var(--ease-soft, ease);
+  }
+
+  [data-reset].is-visible .reset-transit-overlay {
+    opacity: 1;
+    transition-delay: 700ms;
+  }
+
+  @media (min-width: 768px) {
+    .reset-transit-overlay {
+      grid-column: 4 / span 2;
+      grid-row: 1;
+      align-self: stretch;
+    }
+  }
+
+  /* Floating "in-transit" chip — sits over Card 3's top-left area,
+     with a bit of its left edge extending over the Backlog peek. */
+  .reset-transit-task {
+    position: absolute;
+    top: 24%;
+    /* Card 3 starts at 2*gap-col from overlay-left. The chip starts ~40px
+       before Card 3's left edge, so it sits mostly on Card 3 with a small
+       tail reaching back toward the Backlog peek. */
+    left: calc(var(--gap-col) * 2 - 40px + var(--today-right-shift));
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.32rem 0.6rem 0.32rem 0.5rem;
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(28, 38, 58, 0.96) 0%, rgba(18, 26, 44, 0.96) 100%);
+    border: 1px solid rgba(245, 176, 66, 0.55);
+    box-shadow:
+      0 10px 22px -10px rgba(0, 0, 0, 0.7),
+      0 0 24px -4px rgba(245, 176, 66, 0.4);
+    transform: rotate(-2.5deg);
+    max-width: 160px;
+    white-space: nowrap;
+  }
+
+  .reset-transit-bullet {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, 0.75);
+    flex-shrink: 0;
+  }
+
+  .reset-transit-text {
+    font-size: 0.74rem;
+    color: rgba(255, 255, 255, 0.97);
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Arrow overlay — curved and dynamic, but intentionally subtle:
+     starts below the floating chip and lands near the right side of the
+     arriving backlog task text. With only 20% overlap, it reaches a bit
+     farther right than before. */
+  .reset-transit-arrow {
+    position: absolute;
+    left: var(--gap-col);
+    top: 23%;
+    width: calc(var(--gap-col) + 24px);
+    height: 48%;
+    overflow: visible;
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.18));
+  }
+
+  /* ---- Mobile: stack cards + hide overlap layering ---- */
+  @media (max-width: 767px) {
+    .reset-transition {
+      align-items: stretch;
+      gap: 0.5rem;
+    }
+    .reset-backlog-peek {
+      width: 100%;
+    }
+    .reset-transit-overlay {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const section = document.querySelector<HTMLElement>("[data-reset]");
+  if (section) {
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              section.classList.add("is-visible");
+              io.unobserve(section);
+            }
+          });
+        },
+        { threshold: 0.25 }
+      );
+      io.observe(section);
+    } else {
+      section.classList.add("is-visible");
+    }
+  }
+</script>

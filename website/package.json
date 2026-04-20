@@ -1,0 +1,32 @@
+{
+  "name": "dawny-website",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Marketing website for Dawny – the iOS task app that deletes yesterday's tasks. On purpose.",
+  "scripts": {
+    "dev": "npm run gen:assets && astro dev",
+    "start": "astro dev",
+    "gen:assets": "node scripts/generate-qr.mjs && node scripts/generate-og.mjs",
+    "prebuild": "npm run gen:assets",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "deploy:ionos": "node scripts/deploy-ionos.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.2.1",
+    "@fontsource-variable/inter": "^5.1.0",
+    "@fontsource-variable/inter-tight": "^5.1.0",
+    "@fontsource/instrument-serif": "^5.1.0",
+    "@tailwindcss/vite": "^4.2.0",
+    "astro": "^5.18.0",
+    "motion": "^11.15.0",
+    "tailwindcss": "^4.2.0"
+  },
+  "devDependencies": {
+    "basic-ftp": "^5.0.5",
+    "qrcode": "^1.5.4",
+    "sharp": "^0.34.0"
+  }
+}

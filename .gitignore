@@ -13,3 +13,11 @@ DerivedData/
 
 # Cursor IDE
 .cursor/
+
+# Website (Astro)
+website/node_modules/
+website/dist/
+website/.astro/
+website/.env
+website/.env.local
+website/.env.production
