@@ -1,0 +1,84 @@
+---
+import { type Lang, getDict } from "@/i18n";
+import SunMark from "@/components/SunMark.astro";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const dict = getDict(lang);
+---
+
+<section
+  id="manifesto"
+  class="manifesto-section relative py-32 sm:py-44"
+>
+  <SunMark />
+  <div class="container-narrow relative z-10">
+    <p class="reveal manifesto-eyebrow text-xs font-medium uppercase tracking-[0.18em] mb-10">
+      <span class="manifesto-eyebrow-rule inline-block h-px w-8 align-middle mr-3"></span>
+      {lang === "de" ? "Das Problem" : "The Problem"}
+    </p>
+
+    <blockquote class="reveal">
+      <p class="manifesto-quote text-display text-[clamp(2.25rem,6.5vw,5rem)] leading-[1.02] tracking-tight">
+        <span class="relative inline-block">
+          <span class="relative z-10">&ldquo;{dict.manifesto.quote}&rdquo;</span>
+          <span
+            class="absolute left-0 right-0 bottom-2 sm:bottom-3 h-3 sm:h-4 bg-[var(--color-dawn)]/30 -z-0"
+            aria-hidden="true"
+          ></span>
+        </span>
+      </p>
+    </blockquote>
+
+    <p class="reveal manifesto-body mt-12 max-w-prose text-lg sm:text-xl leading-[1.65]">
+      {dict.manifesto.body}
+    </p>
+  </div>
+
+</section>
+
+<style>
+  .manifesto-section {
+    background: transparent;
+    color: color-mix(
+      in oklab,
+      #ffffff calc((1 - var(--dawn-progress, 0)) * 100%),
+      var(--color-ink) calc(var(--dawn-progress, 0) * 100%)
+    );
+  }
+
+  .manifesto-quote {
+    color: color-mix(
+      in oklab,
+      #ffffff calc((1 - var(--dawn-progress, 0)) * 100%),
+      var(--color-ink) calc(var(--dawn-progress, 0) * 100%)
+    );
+  }
+
+  .manifesto-eyebrow {
+    color: color-mix(
+      in oklab,
+      rgba(255, 255, 255, 0.65) calc((1 - var(--dawn-progress, 0)) * 100%),
+      color-mix(in oklab, var(--color-ink-soft) 70%, transparent) calc(var(--dawn-progress, 0) * 100%)
+    );
+  }
+
+  .manifesto-eyebrow-rule {
+    background: color-mix(
+      in oklab,
+      rgba(255, 255, 255, 0.4) calc((1 - var(--dawn-progress, 0)) * 100%),
+      color-mix(in oklab, var(--color-ink-soft) 40%, transparent) calc(var(--dawn-progress, 0) * 100%)
+    );
+  }
+
+  .manifesto-body {
+    color: color-mix(
+      in oklab,
+      rgba(255, 255, 255, 0.8) calc((1 - var(--dawn-progress, 0)) * 100%),
+      var(--color-ink-soft) calc(var(--dawn-progress, 0) * 100%)
+    );
+  }
+</style>

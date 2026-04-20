@@ -1,0 +1,99 @@
+{
+  "meta": {
+    "title": "Dawny — A task app that deletes yesterday's tasks. On purpose.",
+    "description": "No overdue. No carryover. No guilt. Dawny resets your day at 3 AM so you can start fresh, every single day.",
+    "ogAlt": "Dawny — start fresh every day"
+  },
+  "nav": {
+    "skipToContent": "Skip to content",
+    "languageLabel": "Language",
+    "testflight": "TestFlight"
+  },
+  "hero": {
+    "eyebrow": "iOS · TestFlight Beta",
+    "headline": ["A task app that deletes", "yesterday's tasks.", "On purpose."],
+    "sub": "No overdue. No carryover. No guilt.",
+    "ctaPrimary": "Join the TestFlight Beta",
+    "ctaSecondary": "Read the manifesto"
+  },
+  "manifesto": {
+    "quote": "Overdue tasks are a design flaw.",
+    "body": "Most apps treat unfinished work as failure — and put it in red. Dawny treats it as information. If something didn't get done today, it usually wasn't the priority. So why should it hijack tomorrow?"
+  },
+  "reset": {
+    "eyebrow": "The 3 AM Reset",
+    "title": "While you sleep,",
+    "titleAccent": "your day resets.",
+    "body": "At 3 AM, Dawny quietly clears your Daily Focus. Nothing is lost — unfinished tasks return safely to the Backlog. You wake up to a clean slate, not a scoreboard.",
+    "screenLabel": "Today",
+    "tasks": ["Walk the dog", "RSVP to wedding", "Doctor's appointment"],
+    "steps": [
+      { "time": "Morning · 8 AM", "phase": "Day 1", "doneCount": 0, "cleared": false, "footer": "0 of 3 done" },
+      { "time": "Evening · 10 PM", "phase": "Day 1", "doneCount": 2, "cleared": false, "footer": "2 of 3 done" },
+      { "time": "Morning · 8 AM", "phase": "Day 2", "doneCount": 0, "cleared": true, "footer": "Clean slate" }
+    ],
+    "timeline": {
+      "arrowDay": "Day",
+      "arrowReset": "3 AM · quiet reset"
+    },
+    "emptyTitle": "Nothing chosen yet",
+    "emptySub": "Pick today, deliberately",
+    "backlogLabel": "Backlog",
+    "returnedLabel": "Back in Backlog"
+  },
+  "twoLists": {
+    "eyebrow": "How it works",
+    "title": "Two lists. That's it.",
+    "backlogLabel": "Backlog",
+    "backlogText": "Everything that could matter — held lightly, no pressure, no priority decay.",
+    "focusLabel": "Daily Focus",
+    "focusText": "What actually matters today — chosen deliberately, protected by Dawny.",
+    "captionBacklog": "Backlog — your library of maybes",
+    "captionFocus": "Daily Focus — today, on purpose"
+  },
+  "contrast": {
+    "eyebrow": "Why it feels different",
+    "title": "Most apps keep score.",
+    "titleAccent": "Dawny gives you a clean slate.",
+    "leftLabel": "Most task apps",
+    "rightLabel": "Dawny",
+    "rows": [
+      { "left": "Unfinished = failure (in red)", "right": "Unfinished = information" },
+      { "left": "Lists grow forever", "right": "Daily Focus resets every night" },
+      { "left": "Push priorities forward by default", "right": "Re-decide what matters today" },
+      { "left": "Structure scales complexity", "right": "Constraint creates clarity" }
+    ]
+  },
+  "audience": {
+    "eyebrow": "Who it's for",
+    "title": "This will feel right if…",
+    "items": [
+      "Your task list turned into a graveyard.",
+      "You reschedule more than you decide.",
+      "You want clarity, not control systems.",
+      "You think in days, not systems."
+    ],
+    "footnote": "Dawny tends to work especially well for people who don't fit rigid productivity systems — including many neurodivergent thinkers."
+  },
+  "finalCta": {
+    "eyebrow": "Beta",
+    "title": "Start fresh tomorrow.",
+    "body": "Dawny is currently in TestFlight. Your feedback directly shapes the product.",
+    "cta": "Join the TestFlight Beta",
+    "qrAlt": "Scan to open TestFlight on iOS"
+  },
+  "footer": {
+    "tagline": "A task app that deletes yesterday's tasks. On purpose.",
+    "rights": "© {year} Florian Schneider. Made with care in Germany.",
+    "links": {
+      "privacy": "Privacy",
+      "imprint": "Imprint",
+      "github": "GitHub",
+      "mail": "Contact"
+    }
+  },
+  "legal": {
+    "privacyTitle": "Privacy Policy",
+    "imprintTitle": "Imprint"
+  }
+}

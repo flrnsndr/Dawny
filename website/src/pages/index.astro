@@ -1,0 +1,38 @@
+---
+// Redirect root to a language route based on the visitor's preference.
+// Astro emits a static page; the actual language detection runs client-side
+// so the page can be served as a flat HTML file from IONOS.
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dawny</title>
+    <meta name="robots" content="noindex" />
+    <meta http-equiv="refresh" content="0; url=/en/" />
+    <link rel="canonical" href="https://dawny.app/en/" />
+    <link rel="alternate" hreflang="en" href="https://dawny.app/en/" />
+    <link rel="alternate" hreflang="de" href="https://dawny.app/de/" />
+    <link rel="alternate" hreflang="x-default" href="https://dawny.app/en/" />
+    <script>
+      (() => {
+        try {
+          const lang = (navigator.language || "en").toLowerCase();
+          const target = lang.startsWith("de") ? "/de/" : "/en/";
+          window.location.replace(target);
+        } catch {
+          window.location.replace("/en/");
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <p style="font-family: system-ui; padding: 2rem; text-align: center;">
+      <a href="/en/">Continue to Dawny in English</a>
+      &nbsp;·&nbsp;
+      <a href="/de/">Weiter zu Dawny auf Deutsch</a>
+    </p>
+  </body>
+</html>
