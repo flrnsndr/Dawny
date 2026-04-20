@@ -77,7 +77,10 @@
   },
   "finalCta": {
     "eyebrow": "Beta",
-    "title": "Start fresh tomorrow.",
+    "title": {
+      "line1": "Start fresh.",
+      "line2": "Every day."
+    },
     "body": "Dawny is currently in TestFlight. Your feedback directly shapes the product.",
     "cta": "Join the TestFlight Beta",
     "qrAlt": "Scan to open TestFlight on iOS"

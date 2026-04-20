@@ -28,7 +28,6 @@ const dict = getDict(lang);
     </div>
 
     <div class="cta-glow" aria-hidden="true"></div>
-    <div class="cta-horizon" aria-hidden="true"></div>
   </div>
 
   <div class="container-content relative py-32 sm:py-44 grid gap-12 lg:gap-16 lg:grid-cols-[1.5fr_1fr] items-center">
@@ -36,8 +35,9 @@ const dict = getDict(lang);
       <p class="reveal text-xs font-medium uppercase tracking-[0.18em] text-[var(--color-dawn-soft)] mb-6">
         {dict.finalCta.eyebrow}
       </p>
-      <h2 class="reveal text-display text-[clamp(2.5rem,6vw,5.25rem)] leading-[1.02]">
-        {dict.finalCta.title}
+      <h2 class="reveal text-display text-white text-[clamp(2.5rem,6vw,5.25rem)] leading-[1.02]">
+        <span class="block">{dict.finalCta.title.line1}</span>
+        <span class="block">{dict.finalCta.title.line2}</span>
       </h2>
       <p class="reveal mt-8 max-w-lg text-lg sm:text-xl text-white/75 leading-relaxed">
         {dict.finalCta.body}
@@ -96,15 +96,6 @@ const dict = getDict(lang);
     background: radial-gradient(circle, rgba(245, 176, 66, 0.55) 0%, rgba(245, 176, 66, 0.18) 35%, transparent 70%);
     filter: blur(20px);
     animation: glow-pulse 8s ease-in-out infinite;
-  }
-
-  .cta-horizon {
-    position: absolute;
-    inset-inline: 0;
-    bottom: 35%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent 0%, rgba(245, 176, 66, 0.6) 50%, transparent 100%);
-    box-shadow: 0 0 30px rgba(245, 176, 66, 0.5);
   }
 
   .qr-card {

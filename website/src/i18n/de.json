@@ -77,7 +77,10 @@
   },
   "finalCta": {
     "eyebrow": "Beta",
-    "title": "Starte morgen frisch.",
+    "title": {
+      "line1": "Frisch starten.",
+      "line2": "Jeden Tag."
+    },
     "body": "Dawny ist aktuell in der TestFlight-Beta. Dein Feedback formt das Produkt direkt mit.",
     "cta": "TestFlight-Beta beitreten",
     "qrAlt": "QR-Code scannen, um TestFlight auf iOS zu öffnen"
