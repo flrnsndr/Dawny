@@ -47,11 +47,14 @@
     "eyebrow": "How it works",
     "title": "Two lists. That's it.",
     "backlogLabel": "Backlog",
-    "backlogText": "Everything that could matter — held lightly, no pressure, no priority decay.",
+    "backlogText": "Everything that matters to you — No exact dates, no detailed priorities or planning.",
     "focusLabel": "Daily Focus",
-    "focusText": "What actually matters today — chosen deliberately, protected by Dawny.",
+    "focusText": "What actually matters today — You decide what's on your plate today.",
+    "progressLabel": "Back to Backlog",
+    "progressText": "Not enough time in your day? — What's left goes back to the backlog.",
     "captionBacklog": "Backlog — your library of maybes",
-    "captionFocus": "Daily Focus — today, on purpose"
+    "captionFocus": "Daily Focus — today, on purpose",
+    "captionProgress": "Daily Focus — open and completed tasks"
   },
   "contrast": {
     "eyebrow": "Why it feels different",

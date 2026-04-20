@@ -47,11 +47,14 @@
     "eyebrow": "So funktioniert es",
     "title": "Zwei Listen. Mehr nicht.",
     "backlogLabel": "Backlog",
-    "backlogText": "Alles, was wichtig sein könnte — leicht gehalten, ohne Druck, ohne Prioritätsverfall.",
+    "backlogText": "Alles, was dir wichtig ist — keine festen Termine, keine überdetaillierte Prioritätenplanung.",
     "focusLabel": "Daily Focus",
-    "focusText": "Was heute wirklich zählt — bewusst gewählt, von Dawny geschützt.",
+    "focusText": "Was heute wirklich zählt — du entscheidest, was heute auf deinem Teller liegt.",
+    "progressLabel": "Zurück ins Backlog",
+    "progressText": "Zu wenig Zeit im Tag? — Der Rest geht zurück ins Backlog.",
     "captionBacklog": "Backlog — deine Sammlung von Vielleichts",
-    "captionFocus": "Daily Focus — heute, mit Absicht"
+    "captionFocus": "Daily Focus — heute, mit Absicht",
+    "captionProgress": "Daily Focus — offen und erledigt"
   },
   "contrast": {
     "eyebrow": "Warum es sich anders anfühlt",
