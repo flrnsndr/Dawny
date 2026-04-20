@@ -18,7 +18,9 @@
   },
   "manifesto": {
     "quote": "Overdue ist ein Design-Fehler.",
-    "body": "Die meisten Apps behandeln Unerledigtes wie Versagen — und färben es rot. Dawny behandelt es als Information. Was heute nicht passiert ist, war meist nicht die Priorität. Warum sollte es morgen den Tag bestimmen?"
+    "bodyMain": "Die meisten Apps zeigen Unerledigtes als rotes Versagen. Dawny zeigt die gleichen Fakten neutral. Offen heute betrifft den Moment, nicht deine Werte.",
+    "bodyMid": "Ob morgen der richtige Tag ist, entscheidest du; ohne dein Okay staut sich nichts von selbst auf deiner To-do-Liste.",
+    "bodyAside": "Eine rote Priority-Flagge an einer Task macht sie nicht automatisch zu deiner Priorität. Du weißt selbst recht klar, welche Dinge wichtig sind und welche nicht."
   },
   "reset": {
     "eyebrow": "Der 3-Uhr-Reset",

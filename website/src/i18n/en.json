@@ -18,7 +18,9 @@
   },
   "manifesto": {
     "quote": "Overdue tasks are a design flaw.",
-    "body": "Most apps treat unfinished work as failure — and put it in red. Dawny treats it as information. If something didn't get done today, it usually wasn't the priority. So why should it hijack tomorrow?"
+    "bodyMain": "Most apps cast unfinished work as failure in red. Dawny reads it as information. A miss today is about timing, not about what matters to you.",
+    "bodyMid": "Tomorrow isn't on autopilot: you decide whether it's worth today's focus, and nothing fills your list without your conscious decision.",
+    "bodyAside": "A red priority flag on a task doesn't automatically make it your priority. You already know, quite clearly, what matters and what doesn't."
   },
   "reset": {
     "eyebrow": "The 3 AM Reset",
