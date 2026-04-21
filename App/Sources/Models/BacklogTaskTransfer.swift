@@ -12,15 +12,11 @@
 import CoreTransferable
 import UniformTypeIdentifiers
 
-extension UTType {
-    /// App-interner Typ für Backlog-Task-IDs beim Ziehen zwischen Kategorien.
-    static var dawnyBacklogTaskID = UTType(exportedAs: "Florian.Dawny.MVP.backlog-task-id")
-}
-
 struct BacklogTaskTransfer: Codable, Hashable, Transferable {
     let taskID: UUID
 
     static var transferRepresentation: some TransferRepresentation {
-        CodableRepresentation(contentType: .dawnyBacklogTaskID)
+        // App-interner Drag&Drop-Transfer; kein eigener UTI in der Info.plist notwendig.
+        CodableRepresentation(contentType: .data)
     }
 }
