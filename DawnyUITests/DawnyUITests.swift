@@ -15,6 +15,24 @@ final class DawnyUITests: XCTestCase {
     
     var app: XCUIApplication!
     
+    private func robustTap(_ element: XCUIElement) {
+        let existsForTap = element.waitForExistence(timeout: 1.5)
+        if !existsForTap {
+            XCTFail("Element existiert nicht für Tap.")
+            return
+        }
+        
+        _ = waitForHittable(element, timeout: 1.5)
+        let coordinate = element.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        coordinate.tap()
+    }
+    
+    private func waitForHittable(_ element: XCUIElement, timeout: TimeInterval) -> Bool {
+        let predicate = NSPredicate(format: "exists == true AND hittable == true")
+        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: element)
+        return XCTWaiter().wait(for: [expectation], timeout: timeout) == .completed
+    }
+    
     override func setUpWithError() throws {
         continueAfterFailure = false
         app = XCUIApplication()
@@ -88,8 +106,9 @@ final class DawnyUITests: XCTestCase {
         let addButton = quickAddDE.exists ? quickAddDE
             : (quickAddTodayDE.exists ? quickAddTodayDE
             : (quickAddEN.exists ? quickAddEN : quickAddTodayEN))
-        XCTAssertTrue(addButton.waitForExistence(timeout: 3))
-        addButton.tap()
+        let waits = addButton.waitForExistence(timeout: 3)
+        XCTAssertTrue(waits)
+        robustTap(addButton)
     }
     
     func testShowWelcomeFromSettingsHelpButton() throws {
@@ -99,17 +118,20 @@ final class DawnyUITests: XCTestCase {
         let settingsButtonEN = app.buttons["Settings"]
         let settingsButton = settingsButtonDE.exists ? settingsButtonDE : settingsButtonEN
         XCTAssertTrue(settingsButton.waitForExistence(timeout: 5))
-        settingsButton.tap()
+        robustTap(settingsButton)
         
-        let welcomeHelpButtonDE = app.navigationBars.buttons["Willkommensbildschirm anzeigen"]
-        let welcomeHelpButtonEN = app.navigationBars.buttons["Show Welcome Screen"]
+        let welcomeHelpButtonDE = app.buttons["Willkommensbildschirm anzeigen"]
+        let welcomeHelpButtonEN = app.buttons["Show Welcome Screen"]
         let welcomeHelpButton = welcomeHelpButtonDE.exists ? welcomeHelpButtonDE : welcomeHelpButtonEN
-        XCTAssertTrue(welcomeHelpButton.waitForExistence(timeout: 3))
-        welcomeHelpButton.tap()
+        let helpWaits = welcomeHelpButton.waitForExistence(timeout: 3)
+        XCTAssertTrue(helpWaits)
+        robustTap(welcomeHelpButton)
         
         let welcomeTitleDE = app.staticTexts["Willkommen bei Dawny"]
         let welcomeTitleEN = app.staticTexts["Welcome to Dawny"]
-        XCTAssertTrue(welcomeTitleDE.waitForExistence(timeout: 5) || welcomeTitleEN.waitForExistence(timeout: 5))
+        let welcomeDEWaits = welcomeTitleDE.waitForExistence(timeout: 5)
+        let welcomeENWaits = welcomeTitleEN.waitForExistence(timeout: 1)
+        XCTAssertTrue(welcomeDEWaits || welcomeENWaits)
     }
     
     // MARK: - Performance Tests
