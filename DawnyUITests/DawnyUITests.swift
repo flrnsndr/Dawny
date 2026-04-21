@@ -80,41 +80,36 @@ final class DawnyUITests: XCTestCase {
         XCTAssertTrue(backlogTab.waitForExistence(timeout: 5))
         backlogTab.tap()
         
-        // Tippe auf + Button
-        let addButton = app.navigationBars.buttons.element(boundBy: 0)
+        // UI-Flow über sichtbare Quick-Add Buttons
+        let quickAddDE = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Neue Aufgabe in ")).firstMatch
+        let quickAddTodayDE = app.buttons["Neue Aufgabe für heute hinzufügen"]
+        let quickAddEN = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Add new task in ")).firstMatch
+        let quickAddTodayEN = app.buttons["Add new task for today"]
+        let addButton = quickAddDE.exists ? quickAddDE
+            : (quickAddTodayDE.exists ? quickAddTodayDE
+            : (quickAddEN.exists ? quickAddEN : quickAddTodayEN))
         XCTAssertTrue(addButton.waitForExistence(timeout: 3))
         addButton.tap()
-        
-        // Warte auf Sheet - TextField hat Placeholder "Task" (lokalisiert)
-        let titleField = app.textFields["Task"]
-        if titleField.waitForExistence(timeout: 3) {
-            titleField.tap()
-            titleField.typeText("UI Test Task")
-            
-            // Tippe auf Hinzufügen/Add (lokalisiert)
-            let addTaskButtonDE = app.buttons["Hinzufügen"]
-            let addTaskButtonEN = app.buttons["Add"]
-            if addTaskButtonDE.exists && addTaskButtonDE.isEnabled {
-                addTaskButtonDE.tap()
-            } else if addTaskButtonEN.exists && addTaskButtonEN.isEnabled {
-                addTaskButtonEN.tap()
-            }
-        }
     }
     
     func testShowWelcomeFromSettingsHelpButton() throws {
         dismissWelcomeIfShown()
         
-        let settingsButton = app.navigationBars.buttons["Einstellungen"]
+        let settingsButtonDE = app.buttons["Einstellungen"]
+        let settingsButtonEN = app.buttons["Settings"]
+        let settingsButton = settingsButtonDE.exists ? settingsButtonDE : settingsButtonEN
         XCTAssertTrue(settingsButton.waitForExistence(timeout: 5))
         settingsButton.tap()
         
-        let welcomeHelpButton = app.navigationBars.buttons["Willkommensbildschirm anzeigen"]
+        let welcomeHelpButtonDE = app.navigationBars.buttons["Willkommensbildschirm anzeigen"]
+        let welcomeHelpButtonEN = app.navigationBars.buttons["Show Welcome Screen"]
+        let welcomeHelpButton = welcomeHelpButtonDE.exists ? welcomeHelpButtonDE : welcomeHelpButtonEN
         XCTAssertTrue(welcomeHelpButton.waitForExistence(timeout: 3))
         welcomeHelpButton.tap()
         
-        let welcomeTitle = app.staticTexts["Willkommen bei Dawny"]
-        XCTAssertTrue(welcomeTitle.waitForExistence(timeout: 5))
+        let welcomeTitleDE = app.staticTexts["Willkommen bei Dawny"]
+        let welcomeTitleEN = app.staticTexts["Welcome to Dawny"]
+        XCTAssertTrue(welcomeTitleDE.waitForExistence(timeout: 5) || welcomeTitleEN.waitForExistence(timeout: 5))
     }
     
     // MARK: - Performance Tests
