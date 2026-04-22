@@ -17,7 +17,7 @@ Verantwortlicher im Sinne der DSGVO ist:
 
 **Florian Schneider**  
 [BITTE ERGÄNZEN: Straße und Hausnummer]  
-[BITTE ERGÄNZEN: PLZ und Ort]  
+76133 Karlsruhe  
 [BITTE ERGÄNZEN: Land]
 
 E-Mail: dawny@posteo.de

@@ -10,7 +10,7 @@ canonicalPath: "/imprint/"
 
 **Florian Schneider**
 [PLEASE FILL IN: Street and number]
-[PLEASE FILL IN: Postal code and city]
+76133 Karlsruhe
 [PLEASE FILL IN: Country]
 
 ## Contact
