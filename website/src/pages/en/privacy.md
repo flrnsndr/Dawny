@@ -18,7 +18,7 @@ The data controller under the GDPR is:
 
 **Florian Schneider**
 [PLEASE FILL IN: Street and number]
-[PLEASE FILL IN: Postal code and city]
+76133 Karlsruhe
 [PLEASE FILL IN: Country]
 
 Email: dawny@posteo.de

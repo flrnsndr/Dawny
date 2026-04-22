@@ -10,7 +10,7 @@ canonicalPath: "/impressum/"
 
 **Florian Schneider**
 [BITTE ERGÄNZEN: Straße und Hausnummer]
-[BITTE ERGÄNZEN: PLZ und Ort]
+76133 Karlsruhe
 [BITTE ERGÄNZEN: Land]
 
 ## Kontakt
