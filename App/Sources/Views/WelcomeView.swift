@@ -76,6 +76,7 @@ struct WelcomeView: View {
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
             .animation(.easeInOut(duration: 0.3), value: currentPage)
+            .highPriorityGesture(closeOnLastPageSwipeGesture)
 
             bottomSection
                 .padding(.horizontal, 32)
@@ -156,6 +157,17 @@ struct WelcomeView: View {
                     .animation(.easeInOut(duration: 0.25), value: currentPage)
             }
         }
+    }
+
+    private var closeOnLastPageSwipeGesture: some Gesture {
+        DragGesture(minimumDistance: 24)
+            .onEnded { value in
+                let isLastPage = currentPage == pages.count - 1
+                let isSwipeToNext = value.translation.width < -48
+                if isLastPage && isSwipeToNext {
+                    onDismiss()
+                }
+            }
     }
 }
 

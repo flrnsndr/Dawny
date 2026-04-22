@@ -55,7 +55,7 @@ struct SettingsView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 if let onRequestShowWelcome {
-                    ToolbarItem(placement: .navigationBarTrailing) {
+                    ToolbarItem(placement: .navigationBarLeading) {
                         Button {
                             dismiss()
                             onRequestShowWelcome()
@@ -63,6 +63,7 @@ struct SettingsView: View {
                             Image(systemName: "questionmark.circle")
                         }
                         .accessibilityLabel(String(localized: "settings.welcome.help", defaultValue: "Show welcome screen"))
+                        .accessibilityIdentifier("SettingsShowWelcomeButton")
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
