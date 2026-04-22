@@ -10360,6 +10360,17 @@
         }
       }
     },
+    "task.info.button" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Task details"
+          }
+        }
+      }
+    },
     "task.status.backlog" : {
       "comment" : "TaskStatus · Display name for backlog status · Single noun. Stays as “Backlog” loanword in EU and pt-BR per glossary.",
       "extractionState" : "manual",
