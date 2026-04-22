@@ -75,9 +75,12 @@ final class AppSettings {
     // MARK: - Initializer
     
     init() {
+        let isUITesting = ProcessInfo.processInfo.arguments.contains("--uitesting")
         // Lade Werte aus UserDefaults oder verwende Defaults
         self.resetHour = UserDefaults.standard.object(forKey: Keys.resetHour) as? Int ?? 3
-        self.calendarSyncEnabled = UserDefaults.standard.object(forKey: Keys.calendarSyncEnabled) as? Bool ?? true
+        self.calendarSyncEnabled = isUITesting
+            ? false
+            : (UserDefaults.standard.object(forKey: Keys.calendarSyncEnabled) as? Bool ?? true)
         self.showCompletedTasksInToday = UserDefaults.standard.object(forKey: Keys.showCompletedTasksInToday) as? Bool ?? true
         self.showCategories = UserDefaults.standard.object(forKey: Keys.showCategories) as? Bool ?? true
         self.hasSeenWelcome = UserDefaults.standard.bool(forKey: Keys.hasSeenWelcome)
