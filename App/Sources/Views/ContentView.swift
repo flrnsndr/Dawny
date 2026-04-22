@@ -132,9 +132,13 @@ struct ContentView: View {
                     .foregroundStyle(.secondary)
                     .frame(width: 32, height: 32)
                     .contentShape(Rectangle())
+                    // Ohne das meldet XCTest oft einen separaten „gearshape.fill“-Button mit ungültigem Aktivierungspunkt,
+                    // während das Label „Einstellungen“/„Settings“ auf dem Eltern-Button liegt.
+                    .accessibilityHidden(true)
             }
             .buttonStyle(.plain)
             .accessibilityLabel(String(localized: "settings.title", defaultValue: "Settings"))
+            .accessibilityIdentifier("ToolbarSettingsButton")
 
             HStack(spacing: 4) {
                 tabSwitchButton(
