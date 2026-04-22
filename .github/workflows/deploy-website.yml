@@ -1,15 +1,18 @@
-name: Deploy website to IONOS
+name: Build website
+
+# IONOS-Deploy ist vorübergehend deaktiviert — Schritt „Deploy to IONOS via FTPS“
+# und Workflow-Name wiederherstellen, wenn der Upload wieder aktiv sein soll.
 
 on:
   push:
     branches: [main]
     paths:
       - "website/**"
-      - ".github/workflows/deploy.yml"
+      - ".github/workflows/deploy-website.yml"
   workflow_dispatch:
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -26,11 +29,3 @@ jobs:
       - run: npm ci
 
       - run: npm run build
-
-      - name: Deploy to IONOS via FTPS
-        env:
-          IONOS_FTP_HOST: ${{ secrets.IONOS_FTP_HOST }}
-          IONOS_FTP_USER: ${{ secrets.IONOS_FTP_USER }}
-          IONOS_FTP_PASSWORD: ${{ secrets.IONOS_FTP_PASSWORD }}
-          IONOS_FTP_REMOTE_DIR: ${{ secrets.IONOS_FTP_REMOTE_DIR }}
-        run: npm run deploy:ionos
