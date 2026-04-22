@@ -12,10 +12,11 @@
 import SwiftUI
 
 struct AddCategoryRow: View {
-    let onCreate: (String) -> Void
+    let onCreate: (String, Bool) -> Void
 
     @State private var isEditing = false
     @State private var draft = ""
+    @State private var isRecurring = false
     @FocusState private var isFocused: Bool
 
     private let maxLength = CategoryService.maxNameLength
@@ -60,6 +61,7 @@ struct AddCategoryRow: View {
         .onTapGesture {
             isEditing = true
             draft = ""
+            isRecurring = false
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel(
@@ -70,14 +72,24 @@ struct AddCategoryRow: View {
 
     private var activeRow: some View {
         HStack(spacing: 8) {
-            Image(systemName: "tag")
-                .font(.subheadline)
-                .foregroundStyle(Color.accentColor)
-                .frame(width: 28, height: 28)
-                .background(
-                    RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .fill(Color.accentColor.opacity(0.15))
-                )
+            Button {
+                isRecurring.toggle()
+                HapticFeedback.light()
+            } label: {
+                Image(systemName: "arrow.triangle.2.circlepath")
+                    .font(.subheadline)
+                    .foregroundStyle(isRecurring ? Color.accentColor : Color.secondary)
+                    .frame(width: 28, height: 28)
+                    .background(
+                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                            .fill(isRecurring ? Color.accentColor.opacity(0.15) : Color.secondary.opacity(0.1))
+                    )
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(
+                String(localized: "category.add.recurringToggle", defaultValue: "Recurring")
+            )
+            .accessibilityAddTraits(isRecurring ? .isSelected : [])
 
             TextField(placeholder, text: $draft)
                 .font(.headline)
@@ -120,18 +132,20 @@ struct AddCategoryRow: View {
             HapticFeedback.error()
             return
         }
-        onCreate(trimmed)
+        onCreate(trimmed, isRecurring)
         resetAfterCreate()
     }
 
     private func cancel() {
         draft = ""
+        isRecurring = false
         isEditing = false
     }
 
     /// Zuerst `draft` leeren, dann Fokus entfernen – sonst feuert `onChange` noch mit altem Text und legt doppelt an.
     private func resetAfterCreate() {
         draft = ""
+        isRecurring = false
         isFocused = false
         isEditing = false
     }

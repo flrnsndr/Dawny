@@ -17,6 +17,8 @@ struct TaskRowView: View {
     let onDelete: (() -> Void)?
     let showDragHandle: Bool
     let showBacklogBadge: Bool
+    /// Wenn `false`, kein „wiederkehrend“-Symbol in der Zeile (z. B. Backlog – Kategorie zeigt es im Header).
+    let showRecurringTaskBadge: Bool
     let showsDisabledToggle: Bool
     @Binding var focusedTaskID: UUID?
     let onSaveTitle: ((String) -> Void)?
@@ -31,6 +33,7 @@ struct TaskRowView: View {
         onDelete: (() -> Void)? = nil,
         showDragHandle: Bool = false,
         showBacklogBadge: Bool = true,
+        showRecurringTaskBadge: Bool = true,
         showsDisabledToggle: Bool = false,
         focusedTaskID: Binding<UUID?> = .constant(nil),
         onSaveTitle: ((String) -> Void)? = nil
@@ -40,6 +43,7 @@ struct TaskRowView: View {
         self.onDelete = onDelete
         self.showDragHandle = showDragHandle
         self.showBacklogBadge = showBacklogBadge
+        self.showRecurringTaskBadge = showRecurringTaskBadge
         self.showsDisabledToggle = showsDisabledToggle
         _focusedTaskID = focusedTaskID
         self.onSaveTitle = onSaveTitle
@@ -152,6 +156,18 @@ struct TaskRowView: View {
                         Label(String(localized: "task.calendar.badge", defaultValue: "Calendar"), systemImage: "calendar")
                             .font(.caption2)
                             .foregroundStyle(.blue)
+                    }
+
+                    if task.isRecurring, showRecurringTaskBadge {
+                        Image(systemName: "arrow.triangle.2.circlepath")
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                            .accessibilityLabel(
+                                String(
+                                    localized: "task.recurring.badge",
+                                    defaultValue: "Recurring"
+                                )
+                            )
                     }
                     
                     if shouldShowStatusBadge {
@@ -275,7 +291,9 @@ struct TaskRowView: View {
     
     /// Sollten Badges angezeigt werden?
     private var shouldShowBadges: Bool {
-        !task.isCompleted || task.isSyncedToCalendar
+        !task.isCompleted
+            || task.isSyncedToCalendar
+            || (task.isRecurring && showRecurringTaskBadge)
     }
 }
 

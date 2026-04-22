@@ -170,4 +170,5 @@ final class TaskModelTests: XCTestCase {
         XCTAssertEqual(task.status, .scheduled)
         XCTAssertEqual(task.scheduledDate, futureDate)
     }
+
 }

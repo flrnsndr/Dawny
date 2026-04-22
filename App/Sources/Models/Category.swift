@@ -42,6 +42,10 @@ final class Category {
     /// Solange `false`, wird `categoryType.iconName` als Default verwendet.
     var isIconCustomized: Bool = false
 
+    /// Wenn true, verhalten sich Tasks in dieser Kategorie „wiederkehrend“
+    /// (siehe Heute-Backlog-Clone-Logik).
+    var isRecurring: Bool = false
+
     /// Erstellungsdatum
     var createdAt: Date
     
@@ -62,6 +66,7 @@ final class Category {
         isUncategorized: Bool = false,
         isNameCustomized: Bool = false,
         isIconCustomized: Bool = false,
+        isRecurring: Bool = false,
         createdAt: Date = Date(),
         tasks: [Task] = []
     ) {
@@ -73,6 +78,7 @@ final class Category {
         self.isUncategorized = isUncategorized || (categoryType == .uncategorized)
         self.isNameCustomized = isNameCustomized
         self.isIconCustomized = isIconCustomized
+        self.isRecurring = isRecurring
         self.createdAt = createdAt
         self.tasks = tasks
     }
@@ -125,9 +131,14 @@ final class Category {
         !isUncategorized && categoryType != .quick
     }
 
+    /// Darf der Nutzer die wiederkehrende Markierung umschalten?
+    var canToggleRecurring: Bool {
+        !isUncategorized
+    }
+
     /// True, wenn überhaupt irgendeine Edit-Aktion verfügbar ist.
     var hasAnyEditCapability: Bool {
-        canRename || canChangeIcon || canDelete
+        canRename || canChangeIcon || canDelete || canToggleRecurring
     }
 }
 

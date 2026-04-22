@@ -250,18 +250,62 @@ final class CategoryServiceTests: XCTestCase {
         XCTAssertFalse(uncat.canRename)
         XCTAssertFalse(uncat.canChangeIcon)
         XCTAssertFalse(uncat.canDelete)
+        XCTAssertFalse(uncat.canToggleRecurring)
         XCTAssertFalse(uncat.hasAnyEditCapability)
 
         let quick = try category(.quick)
         XCTAssertTrue(quick.canRename)
         XCTAssertTrue(quick.canChangeIcon)
         XCTAssertFalse(quick.canDelete)
+        XCTAssertTrue(quick.canToggleRecurring)
         XCTAssertTrue(quick.hasAnyEditCapability)
 
         let week = try category(.thisWeek)
         XCTAssertTrue(week.canRename)
         XCTAssertTrue(week.canChangeIcon)
         XCTAssertTrue(week.canDelete)
+        XCTAssertTrue(week.canToggleRecurring)
         XCTAssertTrue(week.hasAnyEditCapability)
+    }
+
+    // MARK: - Recurring
+
+    func testDefaultRecurringCategoryIsCreated() throws {
+        let recurring = service.getCategoriesSorted().filter(\.isRecurring)
+        XCTAssertEqual(recurring.count, 1, "Eine vorgebaute wiederkehrende Kategorie")
+        XCTAssertEqual(recurring[0].categoryType, .custom)
+    }
+
+    func testCreateCustomRecurringSetsIconAndFlag() throws {
+        let _ = try service.createCustom(name: "Habit", isRecurring: true)
+        let all = try context.fetch(FetchDescriptor<Dawny.Category>())
+        let habit = try XCTUnwrap(all.first { $0.name == "Habit" })
+        XCTAssertTrue(habit.isRecurring)
+        XCTAssertEqual(habit.displayIconName, "arrow.triangle.2.circlepath")
+    }
+
+    func testSetRecurringToggle() throws {
+        let cat = try category(.thisMonth)
+        XCTAssertFalse(cat.isRecurring)
+        try service.setRecurring(cat, to: true)
+        XCTAssertTrue(cat.isRecurring)
+        try service.setRecurring(cat, to: false)
+        XCTAssertFalse(cat.isRecurring)
+    }
+
+    func testSetRecurringUncategorizedThrows() throws {
+        let cat = try category(.uncategorized)
+        XCTAssertThrowsError(try service.setRecurring(cat, to: true)) { err in
+            guard case CategoryEditError.protectedFromRecurring = err else {
+                return XCTFail("Erwartet .protectedFromRecurring, war \(err)")
+            }
+        }
+    }
+
+    func testInitializeDefaultCategoriesRecurringIdempotent() throws {
+        let before = try context.fetch(FetchDescriptor<Dawny.Category>()).count
+        service.initializeDefaultCategories()
+        let after = try context.fetch(FetchDescriptor<Dawny.Category>()).count
+        XCTAssertEqual(before, after, "Zweiter Aufruf legt keine Duplikate an")
     }
 }

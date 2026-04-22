@@ -49,7 +49,11 @@ final class Task {
     
     /// Flag ob Task abgeschlossen ist
     var isCompleted: Bool
-    
+
+    /// Setzt `complete`/`uncomplete` für wiederkehrende Aufgaben mit dem
+    /// erzeugten Backlog-Clone in Verbindung.
+    var recurringCloneID: UUID? = nil
+
     // MARK: - Relationships
     
     /// Referenz zum Parent-Backlog
@@ -72,6 +76,7 @@ final class Task {
         createdAt: Date = Date(),
         modifiedAt: Date = Date(),
         isCompleted: Bool = false,
+        recurringCloneID: UUID? = nil,
         category: Category? = nil
     ) {
         self.id = id
@@ -85,6 +90,7 @@ final class Task {
         self.createdAt = createdAt
         self.modifiedAt = modifiedAt
         self.isCompleted = isCompleted
+        self.recurringCloneID = recurringCloneID
         self.category = category
     }
     
@@ -110,7 +116,12 @@ final class Task {
         guard isCompleted, let scheduledDate = scheduledDate else { return false }
         return Calendar.current.isDateInToday(scheduledDate)
     }
-    
+
+    /// True, wenn der Task in einer als wiederkehrend markierten Kategorie liegt.
+    var isRecurring: Bool {
+        category?.isRecurring == true
+    }
+
     // MARK: - Methods
     
     /// Markiert den Task als abgeschlossen

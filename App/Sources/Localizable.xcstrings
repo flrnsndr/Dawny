@@ -862,6 +862,81 @@
         }
       }
     },
+    "category.action.makeRecurring" : {
+      "comment" : "Backlog · Confirmation dialog button · Marks a category as recurring.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Als wiederkehrend markieren" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Mark as recurring" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Marcar como recurrente" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Marquer comme récurrent" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Segna come ricorrente" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "繰り返しに設定" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "반복으로 표시" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Marcar como recorrente" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "标记为重复" } }
+      }
+    },
+    "category.action.unmakeRecurring" : {
+      "comment" : "Backlog · Confirmation dialog button · Clears recurring flag from a category.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Wiederkehrend aufheben" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Remove recurring" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Quitar recurrencia" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Retirer le récurrent" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Rimuovi ricorrenza" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "繰り返しを解除" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "반복 해제" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Remover recorrente" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "取消重复" } }
+      }
+    },
+    "category.add.recurringToggle" : {
+      "comment" : "Backlog · VoiceOver for recurring toggle in add-category row.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Wiederkehrend" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Recurring" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Recurrente" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Récurrent" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Ricorrente" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "繰り返し" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "반복" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Recorrente" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "重复" } }
+      }
+    },
+    "category.recurring.default.name" : {
+      "comment" : "Default name for the built-in recurring category.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Wiederkehrende Aufgaben" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Recurring Tasks" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Tareas recurrentes" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Tâches récurrentes" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Attività ricorrenti" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "繰り返しタスク" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "반복 작업" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Tarefas recorrentes" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "重复任务" } }
+      }
+    },
+    "task.recurring.badge" : {
+      "comment" : "Accessibility label for the recurring task/category badge icon.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Wiederkehrend" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Recurring" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Recurrente" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Récurrent" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Ricorrente" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "繰り返し" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "반복" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Recorrente" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "重复" } }
+      }
+    },
     "category.add.accessibility" : {
       "comment" : "Backlog · VoiceOver label of the “add category” row button · Imperative.",
       "extractionState" : "manual",

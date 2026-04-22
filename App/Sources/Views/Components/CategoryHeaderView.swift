@@ -45,9 +45,22 @@ struct CategoryHeaderView: View {
                     onCancel: onCancelRename
                 )
             } else {
-                Text(category.displayName)
-                    .font(.headline)
-                    .foregroundColor(.primary)
+                HStack(spacing: 6) {
+                    Text(category.displayName)
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                    if category.isRecurring {
+                        Image(systemName: "arrow.triangle.2.circlepath")
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                            .accessibilityLabel(
+                                String(
+                                    localized: "task.recurring.badge",
+                                    defaultValue: "Recurring"
+                                )
+                            )
+                    }
+                }
             }
 
             Spacer()

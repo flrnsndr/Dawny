@@ -92,13 +92,37 @@ final class DailyFocusViewModel {
     
     /// Markiert einen Task als abgeschlossen
     func completeTask(_ task: Task) async {
+        let wasRecurring = task.isRecurring
+
         task.complete()
-        
-        // Sync zu Kalender
+
+        if wasRecurring {
+            let clone = Task(
+                title: task.title,
+                notes: task.notes,
+                status: .inBacklog,
+                parentBacklogID: task.parentBacklogID,
+                sortPriority: Date(),
+                category: task.category
+            )
+            clone.backlog = task.backlog
+            if clone.backlog == nil {
+                let parentID = task.parentBacklogID
+                var backlogDescriptor = FetchDescriptor<Backlog>(predicate: #Predicate<Backlog> { $0.id == parentID })
+                backlogDescriptor.fetchLimit = 1
+                if let backlog = try? modelContext.fetch(backlogDescriptor).first {
+                    clone.backlog = backlog
+                }
+            }
+            modelContext.insert(clone)
+            task.recurringCloneID = clone.id
+        }
+
+        // Sync zu Kalender (Original; Clone ohne `externalReminderID`)
         if task.isSyncedToCalendar {
             await syncEngine.syncTaskToCalendar(task)
         }
-        
+
         do {
             try modelContext.save()
             loadDailyTasks()
@@ -113,6 +137,15 @@ final class DailyFocusViewModel {
     
     /// Markiert einen erledigten Task wieder als offen
     func uncompleteTask(_ task: Task) async {
+        if let cloneID = task.recurringCloneID {
+            var cloneDescriptor = FetchDescriptor<Task>(predicate: #Predicate<Task> { $0.id == cloneID })
+            cloneDescriptor.fetchLimit = 1
+            if let clone = try? modelContext.fetch(cloneDescriptor).first {
+                modelContext.delete(clone)
+            }
+            task.recurringCloneID = nil
+        }
+
         task.isCompleted = false
         task.status = .dailyFocus
         task.modifiedAt = Date()

@@ -485,11 +485,28 @@ final class BacklogViewModel {
         }
     }
 
+    /// Schaltet die Eigenschaft „wiederkehrend“ für eine Kategorie um.
+    @discardableResult
+    func toggleRecurring(_ category: Category) -> Bool {
+        do {
+            try categoryService.setRecurring(category, to: !category.isRecurring)
+            loadCategories()
+            HapticFeedback.success()
+            return true
+        } catch let error as CategoryEditError {
+            errorMessage = error.errorDescription
+            return false
+        } catch {
+            errorMessage = error.localizedDescription
+            return false
+        }
+    }
+
     /// Legt eine neue benutzerdefinierte Kategorie an.
     @discardableResult
-    func createCategory(name: String) -> Category? {
+    func createCategory(name: String, isRecurring: Bool = false) -> Category? {
         do {
-            let category = try categoryService.createCustom(name: name)
+            let category = try categoryService.createCustom(name: name, isRecurring: isRecurring)
             loadCategories()
             HapticFeedback.success()
             return category

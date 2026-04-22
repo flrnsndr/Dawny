@@ -187,6 +187,20 @@ final class DawnyUITests: XCTestCase {
         // Quick-Entry: nicht `firstMatch` — kann off-screen sein; erst sichtbaren Eintrag wählen / scrollen.
         tapVisibleQuickAddInBacklog()
     }
+
+    /// Standard-Kategorie „Recurring Tasks“ (EN) erscheint im Backlog (laut Default-`initializeDefaultCategories`)
+    func testRecurringDefaultCategoryVisibleInBacklog() throws {
+        dismissWelcomeIfShown()
+        XCTAssertTrue(app.buttons["Backlog"].waitForExistence(timeout: 5))
+        app.buttons["Backlog"].tap()
+        for _ in 0..<12 {
+            if app.staticTexts["Recurring Tasks"].firstMatch.exists {
+                return
+            }
+            scrollHostForBacklog().swipeUp()
+        }
+        XCTFail("Kategorie 'Recurring Tasks' nicht sichtbar")
+    }
     
     func testShowWelcomeFromSettingsHelpButton() throws {
         throw XCTSkip("Temporär deaktiviert wegen instabilem Simulator-/UI-Test-Verhalten in CI.")
