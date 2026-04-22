@@ -131,6 +131,7 @@ struct WelcomeView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.orange)
+                .accessibilityIdentifier("WelcomeStartButton")
             } else {
                 Button {
                     withAnimation {
@@ -144,6 +145,7 @@ struct WelcomeView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.orange)
+                .accessibilityIdentifier("WelcomeNextButton")
             }
         }
     }
