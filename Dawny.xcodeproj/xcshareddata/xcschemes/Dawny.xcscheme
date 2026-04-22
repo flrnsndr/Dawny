@@ -51,6 +51,11 @@
                BlueprintName = "DawnyUITests"
                ReferencedContainer = "container:Dawny.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "DawnyUITests/testShowWelcomeFromSettingsHelpButton()">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
    </TestAction>

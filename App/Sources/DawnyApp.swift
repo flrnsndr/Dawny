@@ -27,6 +27,7 @@ struct DawnyApp: App {
     
     @Environment(\.scenePhase) private var scenePhase
     @State private var hasLaunchedBefore = false
+    private let isUITesting = ProcessInfo.processInfo.arguments.contains("--uitesting")
     
     init() {
         // Initialize ModelContainer
@@ -92,22 +93,26 @@ struct DawnyApp: App {
         print("🚀 Dawny App Launching...")
         
         // 1. Request Calendar Permissions (falls noch nicht erteilt)
-        do {
-            let granted = try await calendarService.requestAccess()
-            if granted {
-                print("✅ Calendar access granted")
-            } else {
-                print("⚠️ Calendar access denied")
+        if !isUITesting {
+            do {
+                let granted = try await calendarService.requestAccess()
+                if granted {
+                    print("✅ Calendar access granted")
+                } else {
+                    print("⚠️ Calendar access denied")
+                }
+            } catch {
+                print("❌ Calendar access failed: \(error)")
             }
-        } catch {
-            print("❌ Calendar access failed: \(error)")
         }
         
         // 2. Perform Reset Check (kritisch!)
         await resetEngine.checkAndPerformResetIfNeeded()
         
         // 3. Start Sync Observer
-        await syncEngine.startObserving()
+        if !isUITesting {
+            await syncEngine.startObserving()
+        }
         
         // 4. Register Background Task
         resetEngine.registerBackgroundTask()
