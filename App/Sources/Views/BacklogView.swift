@@ -20,6 +20,7 @@ struct BacklogView: View {
     @Environment(\.syncEngine) private var syncEngine
 
     @State private var expandedCategories: Set<UUID> = []
+    @State private var focusedTaskID: UUID?
 
     // MARK: - Category Editing State
 
@@ -275,7 +276,13 @@ struct BacklogView: View {
                 }
             },
             showBacklogBadge: false,
-            showsDisabledToggle: true
+            showsDisabledToggle: true,
+            focusedTaskID: $focusedTaskID,
+            onSaveTitle: { newTitle in
+                _Concurrency.Task {
+                    await viewModel.updateTask(task, title: newTitle, notes: task.notes)
+                }
+            }
         )
         .swipeActions(edge: .leading) {
             Button {
@@ -304,7 +311,13 @@ struct BacklogView: View {
                 }
             },
             showBacklogBadge: false,
-            showsDisabledToggle: true
+            showsDisabledToggle: true,
+            focusedTaskID: $focusedTaskID,
+            onSaveTitle: { newTitle in
+                _Concurrency.Task {
+                    await viewModel.updateTask(task, title: newTitle, notes: task.notes)
+                }
+            }
         )
         .contextMenu {
             categoryContextMenu(for: task)

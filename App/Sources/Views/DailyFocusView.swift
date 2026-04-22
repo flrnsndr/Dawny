@@ -14,6 +14,7 @@ import SwiftUI
 struct DailyFocusView: View {
     @Bindable var viewModel: DailyFocusViewModel
     var backlogViewModel: BacklogViewModel
+    @State private var focusedTaskID: UUID?
 
     var body: some View {
         NavigationStack {
@@ -95,7 +96,13 @@ struct DailyFocusView: View {
                                     await viewModel.uncompleteTask(task)
                                 }
                             },
-                            onDelete: nil
+                            onDelete: nil,
+                            focusedTaskID: $focusedTaskID,
+                            onSaveTitle: { newTitle in
+                                _Concurrency.Task {
+                                    await viewModel.updateTask(task, title: newTitle, notes: task.notes)
+                                }
+                            }
                         )
                     }
                 }
@@ -115,7 +122,13 @@ struct DailyFocusView: View {
                     await viewModel.completeTask(task)
                 }
             },
-            onDelete: nil
+            onDelete: nil,
+            focusedTaskID: $focusedTaskID,
+            onSaveTitle: { newTitle in
+                _Concurrency.Task {
+                    await viewModel.updateTask(task, title: newTitle, notes: task.notes)
+                }
+            }
         )
         .swipeActions(edge: .trailing) {
             Button {

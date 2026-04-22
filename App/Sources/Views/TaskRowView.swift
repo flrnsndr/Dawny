@@ -18,8 +18,12 @@ struct TaskRowView: View {
     let showDragHandle: Bool
     let showBacklogBadge: Bool
     let showsDisabledToggle: Bool
+    @Binding var focusedTaskID: UUID?
+    let onSaveTitle: ((String) -> Void)?
     
     @State private var showingDetail = false
+    @State private var titleDraft: String = ""
+    @FocusState private var isTitleFieldFocused: Bool
     
     init(
         task: Task,
@@ -27,7 +31,9 @@ struct TaskRowView: View {
         onDelete: (() -> Void)? = nil,
         showDragHandle: Bool = false,
         showBacklogBadge: Bool = true,
-        showsDisabledToggle: Bool = false
+        showsDisabledToggle: Bool = false,
+        focusedTaskID: Binding<UUID?> = .constant(nil),
+        onSaveTitle: ((String) -> Void)? = nil
     ) {
         self.task = task
         self.onToggle = onToggle
@@ -35,6 +41,8 @@ struct TaskRowView: View {
         self.showDragHandle = showDragHandle
         self.showBacklogBadge = showBacklogBadge
         self.showsDisabledToggle = showsDisabledToggle
+        _focusedTaskID = focusedTaskID
+        self.onSaveTitle = onSaveTitle
     }
     
     var body: some View {
@@ -69,16 +77,33 @@ struct TaskRowView: View {
             }
             
             titleAndMetaColumn
-            
-            Spacer()
+
+            if isEditingTitle {
+                infoButton
+            }
         }
         .padding(.vertical, verticalPadding)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            beginTitleEditing()
+        }
+        .onAppear {
+            titleDraft = task.title
+        }
+        .onChange(of: focusedTaskID) { oldValue, newValue in
+            if oldValue == task.id && newValue != task.id {
+                commitTitleIfNeeded()
+            }
+
+            if newValue == task.id {
+                titleDraft = task.title
+                DispatchQueue.main.async {
+                    isTitleFieldFocused = true
+                }
+            }
+        }
         
         rowStack
-            .contentShape(Rectangle())
-            .onTapGesture {
-                showingDetail = true
-            }
             .listRowInsets(EdgeInsets(top: 2, leading: 16, bottom: 2, trailing: 16))
             .modifier(TrailingSwipeDeleteModifier(onDelete: onDelete))
         .sheet(isPresented: $showingDetail) {
@@ -89,10 +114,30 @@ struct TaskRowView: View {
     @ViewBuilder
     private var titleAndMetaColumn: some View {
         let column = VStack(alignment: .leading, spacing: contentSpacing) {
-            Text(task.title)
-                .font(titleFont)
-                .strikethrough(task.isCompleted)
-                .foregroundStyle(task.isCompleted ? .secondary : .primary)
+            Group {
+                if isEditingTitle {
+                    TextField("", text: $titleDraft)
+                        .font(titleFont)
+                        .foregroundStyle(task.isCompleted ? .secondary : .primary)
+                        .textInputAutocapitalization(.sentences)
+                        .autocorrectionDisabled(false)
+                        .submitLabel(.done)
+                        .focused($isTitleFieldFocused)
+                        .onSubmit {
+                            commitTitleAndEndEditing()
+                        }
+                        .onChange(of: isTitleFieldFocused) { oldValue, newValue in
+                            if oldValue, !newValue {
+                                commitTitleAndEndEditing()
+                            }
+                        }
+                } else {
+                    Text(task.title)
+                        .font(titleFont)
+                        .strikethrough(task.isCompleted)
+                        .foregroundStyle(task.isCompleted ? .secondary : .primary)
+                }
+            }
             
             if shouldShowNotes, let notes = task.notes, !notes.isEmpty {
                 Text(notes)
@@ -124,6 +169,54 @@ struct TaskRowView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         
         column
+    }
+
+    private var infoButton: some View {
+        Button {
+            if isEditingTitle {
+                commitTitleAndEndEditing()
+            }
+            showingDetail = true
+        } label: {
+            Image(systemName: "info.circle")
+                .font(.title3)
+                .foregroundStyle(.blue)
+            .frame(minWidth: 32, minHeight: 32)
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(String(localized: "task.info.button", defaultValue: "Task details"))
+    }
+
+    private var isEditingTitle: Bool {
+        focusedTaskID == task.id
+    }
+
+    private func beginTitleEditing() {
+        titleDraft = task.title
+        focusedTaskID = task.id
+        DispatchQueue.main.async {
+            isTitleFieldFocused = true
+        }
+    }
+
+    private func commitTitleAndEndEditing() {
+        commitTitleIfNeeded()
+        if focusedTaskID == task.id {
+            focusedTaskID = nil
+        }
+    }
+
+    private func commitTitleIfNeeded() {
+        let trimmed = titleDraft.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else {
+            titleDraft = task.title
+            return
+        }
+
+        if trimmed != task.title {
+            onSaveTitle?(trimmed)
+        }
+        titleDraft = trimmed
     }
     
     private var statusColor: Color {
