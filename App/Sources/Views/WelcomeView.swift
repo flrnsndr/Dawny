@@ -13,6 +13,7 @@ import SwiftUI
 
 struct WelcomeView: View {
     @State private var currentPage = 0
+    @State private var showMakeItCountLockedAlert = false
     var onDismiss: () -> Void
 
     private let pages: [WelcomePage] = [
@@ -62,6 +63,18 @@ struct WelcomeView: View {
             body: LocalizedStringResource(
                 "welcome.page4.body",
                 defaultValue: "Anything left undone slides back to the backlog overnight. Tomorrow is a clean slate."
+            )
+        ),
+        WelcomePage(
+            icon: "archivebox.fill",
+            iconColor: .indigo,
+            title: LocalizedStringResource(
+                "welcome.makeitcount.title",
+                defaultValue: "Make it count"
+            ),
+            body: LocalizedStringResource(
+                "welcome.makeitcount.body",
+                defaultValue: "Tasks you don't complete get archived instead of silently piling up. Your backlog stays lean, honest, and meaningful."
             )
         )
     ]
@@ -123,6 +136,8 @@ struct WelcomeView: View {
             pageIndicator
 
             if currentPage == pages.count - 1 {
+                makeItCountCheckbox
+
                 Button(action: onDismiss) {
                     Text(String(localized: "welcome.cta.start", defaultValue: "Get started"))
                         .font(.headline)
@@ -148,6 +163,47 @@ struct WelcomeView: View {
                 .accessibilityIdentifier("WelcomeNextButton")
             }
         }
+        .alert(
+            String(localized: "makeitcount.alert.title", defaultValue: "Make it count is essential"),
+            isPresented: $showMakeItCountLockedAlert
+        ) {
+            Button(String(localized: "settings.done", defaultValue: "Done"), role: .cancel) {}
+        } message: {
+            Text(
+                String(
+                    localized: "makeitcount.alert.message",
+                    defaultValue: "This is one of Dawny's core features. Tasks that are repeatedly not completed are archived so your backlog stays focused and meaningful. It can't be turned off."
+                )
+            )
+        }
+    }
+
+    /// Checkbox für Make it count – standardmäßig aktiv, nicht deaktivierbar.
+    /// Bei Versuch zu deaktivieren erscheint ein erklärender Alert.
+    private var makeItCountCheckbox: some View {
+        Button {
+            showMakeItCountLockedAlert = true
+        } label: {
+            HStack(spacing: 10) {
+                Image(systemName: "checkmark.square.fill")
+                    .font(.title3)
+                    .foregroundStyle(.indigo)
+                Text(String(localized: "welcome.makeitcount.checkbox", defaultValue: "Make it count"))
+                    .font(.subheadline.weight(.medium))
+                    .foregroundStyle(.primary)
+                Spacer()
+            }
+            .padding(.horizontal, 4)
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(String(localized: "welcome.makeitcount.checkbox", defaultValue: "Make it count"))
+        .accessibilityHint(
+            String(
+                localized: "welcome.makeitcount.checkbox.hint",
+                defaultValue: "This feature is always enabled"
+            )
+        )
+        .accessibilityIdentifier("WelcomeMakeItCountCheckbox")
     }
 
     private var pageIndicator: some View {

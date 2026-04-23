@@ -24,6 +24,9 @@ enum TaskStatus: String, Codable, CaseIterable {
     
     /// Task wurde abgeschlossen
     case completed
+
+    /// Task wurde nach wiederholtem Nicht-Erledigen archiviert (Make it count)
+    case archived
     
     var displayName: String {
         switch self {
@@ -35,6 +38,8 @@ enum TaskStatus: String, Codable, CaseIterable {
             return String(localized: "task.status.today", defaultValue: "Today")
         case .completed:
             return String(localized: "task.status.completed", defaultValue: "Completed")
+        case .archived:
+            return String(localized: "task.status.archived", defaultValue: "Archived")
         }
     }
     

@@ -72,6 +72,9 @@ final class ResetEngine {
         }
         
         print("📋 Resetting \(tasksToReset.count) task(s)")
+
+        let threshold = AppSettings.shared.makeItCountThreshold
+        var hasArchivedAnyTask = false
         
         // Reset jeden Task
         for (index, task) in tasksToReset.enumerated() {
@@ -79,15 +82,29 @@ final class ResetEngine {
             if task.isSyncedToCalendar {
                 await syncEngine?.removeTaskFromCalendar(task)
             }
-            
-            // Reset Task Status
-            task.resetToBacklog()
-            
-            // Setze sortPriority mit kleinem Offset für Ordnung
-            // Neuere Resets kommen weiter oben, aber innerhalb eines Resets
-            // wird die relative Ordnung beibehalten
-            let offset = TimeInterval(-index) * 0.001 // Millisekunden-Offset
-            task.sortPriority = referenceDate.addingTimeInterval(offset)
+
+            if task.isRecurring {
+                // Wiederkehrende Tasks gehen immer zurück ins Backlog, nie ins Archiv
+                task.resetToBacklog()
+                let offset = TimeInterval(-index) * 0.001
+                task.sortPriority = referenceDate.addingTimeInterval(offset)
+            } else {
+                // Nicht-wiederkehrend: Zähler erhöhen, ggf. archivieren
+                task.resetCount += 1
+                if task.resetCount >= threshold {
+                    task.archive()
+                    hasArchivedAnyTask = true
+                    print("📦 Archived task '\(task.title)' after \(task.resetCount) missed reset(s)")
+                } else {
+                    task.resetToBacklog()
+                    let offset = TimeInterval(-index) * 0.001
+                    task.sortPriority = referenceDate.addingTimeInterval(offset)
+                }
+            }
+        }
+
+        if hasArchivedAnyTask {
+            AppSettings.shared.hasNewArchivedTasks = true
         }
         
         // Save Context

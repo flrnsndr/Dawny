@@ -323,6 +323,8 @@ private struct TaskRowContent: View {
             return .orange
         case .completed:
             return .green
+        case .archived:
+            return .secondary
         }
     }
     

@@ -41,15 +41,31 @@ struct SettingsView: View {
         self._resetTime = State(initialValue: calendar.date(from: components) ?? Date())
     }
     
+    @State private var showMakeItCountLockedAlert = false
+
     var body: some View {
         NavigationStack {
             Form {
                 debugSection
                 resetSection
+                makeItCountSection
                 synchronisationSection
                 displaySection
                 categorySection
                 infoSection
+            }
+            .alert(
+                String(localized: "makeitcount.alert.title", defaultValue: "Make it count is essential"),
+                isPresented: $showMakeItCountLockedAlert
+            ) {
+                Button(String(localized: "settings.done", defaultValue: "Done"), role: .cancel) {}
+            } message: {
+                Text(
+                    String(
+                        localized: "makeitcount.alert.message",
+                        defaultValue: "This is one of Dawny's core features. Tasks that are repeatedly not completed are archived so your backlog stays focused and meaningful. It can't be turned off."
+                    )
+                )
             }
             .navigationTitle(String(localized: "settings.title", defaultValue: "Settings"))
             .navigationBarTitleDisplayMode(.inline)
@@ -108,6 +124,48 @@ struct SettingsView: View {
         }
     }
     
+    private var makeItCountSection: some View {
+        Section(String(localized: "settings.makeitcount.section", defaultValue: "Make it count")) {
+            Stepper(
+                value: $settings.makeItCountThreshold,
+                in: 1...7
+            ) {
+                HStack {
+                    Text(
+                        String(
+                            localized: "settings.makeitcount.stepper",
+                            defaultValue: "Archive after \(settings.makeItCountThreshold) missed day(s)"
+                        )
+                    )
+                    Spacer()
+                }
+            }
+
+            Text(
+                String(
+                    localized: "settings.makeitcount.description",
+                    defaultValue: "Non-recurring tasks that are not completed after the daily reset will be archived. Recurring tasks always return to the backlog."
+                )
+            )
+            .font(.caption)
+            .foregroundColor(.secondary)
+
+            Button {
+                showMakeItCountLockedAlert = true
+            } label: {
+                HStack {
+                    Label(
+                        String(localized: "settings.makeitcount.disable", defaultValue: "Disable Make it count"),
+                        systemImage: "lock.fill"
+                    )
+                    .foregroundStyle(.secondary)
+                    Spacer()
+                }
+            }
+            .buttonStyle(.plain)
+        }
+    }
+
     private var resetSection: some View {
         Section(String(localized: "settings.reset.section", defaultValue: "Reset")) {
             DatePicker(

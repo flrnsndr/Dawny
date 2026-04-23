@@ -54,6 +54,13 @@ final class Task {
     /// erzeugten Backlog-Clone in Verbindung.
     var recurringCloneID: UUID? = nil
 
+    /// Zählt wie oft der Task beim automatischen Reset nicht erledigt war.
+    /// Wird bei manuellem Zurücklegen und bei Unarchivierung auf 0 gesetzt.
+    var resetCount: Int = 0
+
+    /// Zeitpunkt der Archivierung (nil wenn nicht archiviert)
+    var archivedAt: Date? = nil
+
     // MARK: - Relationships
     
     /// Referenz zum Parent-Backlog
@@ -131,11 +138,39 @@ final class Task {
         modifiedAt = Date()
     }
     
-    /// Setzt den Task zurück ins Backlog (für 3-AM-Reset)
+    /// Setzt den Task zurück ins Backlog (für 3-AM-Reset oder manuell).
+    /// `resetCount` wird hier NICHT zurückgesetzt – das macht der ResetEngine-Aufrufer
+    /// nur beim manuellen Zurücklegen, nicht beim automatischen Reset.
     func resetToBacklog() {
         status = .inBacklog
         scheduledDate = nil
         sortPriority = Date() // Move to top
+        modifiedAt = Date()
+    }
+
+    /// Archiviert den Task nach wiederholtem Nicht-Erledigen (Make it count).
+    func archive() {
+        status = .archived
+        archivedAt = Date()
+        scheduledDate = nil
+        modifiedAt = Date()
+    }
+
+    /// Unarchiviert den Task zurück ins Backlog. Setzt resetCount auf 0.
+    func unarchiveToBacklog() {
+        status = .inBacklog
+        archivedAt = nil
+        resetCount = 0
+        sortPriority = Date()
+        modifiedAt = Date()
+    }
+
+    /// Unarchiviert den Task direkt in den Daily Focus. Setzt resetCount auf 0.
+    func unarchiveToDailyFocus(date: Date) {
+        status = .dailyFocus
+        scheduledDate = date
+        archivedAt = nil
+        resetCount = 0
         modifiedAt = Date()
     }
     
