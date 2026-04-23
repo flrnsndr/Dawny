@@ -22,6 +22,7 @@ final class TaskLifecycleTests: XCTestCase {
     var calendarService: MockCalendarService!
     var syncEngine: SyncEngine!
     var resetEngine: ResetEngine!
+    private var originalMakeItCountThreshold: Int!
     
     override func setUp() async throws {
         container = try TestModelContainer.create()
@@ -32,6 +33,16 @@ final class TaskLifecycleTests: XCTestCase {
         resetEngine = ResetEngine(timeProvider: timeProvider, modelContext: context)
         resetEngine.syncEngine = syncEngine
         resetEngine.clearLastResetDate()
+        
+        // Make-it-count-Archiv-Logik aus: Integrationstests erwarten .inBacklog, nicht .archived
+        originalMakeItCountThreshold = AppSettings.shared.makeItCountThreshold
+        AppSettings.shared.makeItCountThreshold = 99
+    }
+    
+    override func tearDown() async throws {
+        if let originalMakeItCountThreshold {
+            AppSettings.shared.makeItCountThreshold = originalMakeItCountThreshold
+        }
     }
     
     // MARK: - Full Lifecycle Tests

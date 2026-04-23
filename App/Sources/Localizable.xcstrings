@@ -4,6 +4,9 @@
     "" : {
 
     },
+    "%lld" : {
+
+    },
     "Add \\(.applicationName) for today" : {
       "comment" : "Siri Phrase · AddTaskTodayIntent · Imperative. Spoken phrase to start adding a task that lands in the Today list.",
       "extractionState" : "stale",
@@ -442,6 +445,114 @@
         }
       }
     },
+    "archive.empty.message" : {
+      "comment" : "Archive tab · Empty state body text · Motivational.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du bringst fertig, was du anfängst. Dein Archiv ist leer – weiter so!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You're finishing what you start. Your archive is empty – keep it up!"
+          }
+        }
+      }
+    },
+    "archive.empty.title" : {
+      "comment" : "Archive tab · Empty state headline.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nichts hier!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nothing here!"
+          }
+        }
+      }
+    },
+    "archive.section.header" : {
+      "comment" : "Archive tab · Section header below the tab title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archivierte Tasks können reaktiviert oder gelöscht werden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archived tasks can be reactivated or deleted."
+          }
+        }
+      }
+    },
+    "archive.swipe.backlog" : {
+      "comment" : "Archive tab · Leading swipe action label · Moves task back to Backlog.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Backlog"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Backlog"
+          }
+        }
+      }
+    },
+    "archive.swipe.delete" : {
+      "comment" : "Archive tab · Trailing swipe action label · Permanently deletes the task.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Löschen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        }
+      }
+    },
+    "archive.swipe.today" : {
+      "comment" : "Archive tab · Leading swipe action label · Moves task directly to Today.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heute"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today"
+          }
+        }
+      }
+    },
     "backlog.debug.clear.message" : {
       "comment" : "Settings · Debug confirmation alert message · Warning, plainspoken. Shown after tapping the destructive “Delete All Tasks” debug action.",
       "extractionState" : "manual",
@@ -866,75 +977,120 @@
       "comment" : "Backlog · Confirmation dialog button · Marks a category as recurring.",
       "extractionState" : "manual",
       "localizations" : {
-        "de" : { "stringUnit" : { "state" : "translated", "value" : "Als wiederkehrend markieren" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Mark as recurring" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Marcar como recurrente" } },
-        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Marquer comme récurrent" } },
-        "it" : { "stringUnit" : { "state" : "translated", "value" : "Segna come ricorrente" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "繰り返しに設定" } },
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "반복으로 표시" } },
-        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Marcar como recorrente" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "标记为重复" } }
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Als wiederkehrend markieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mark as recurring"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marcar como recurrente"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marquer comme récurrent"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Segna come ricorrente"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "繰り返しに設定"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "반복으로 표시"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marcar como recorrente"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "标记为重复"
+          }
+        }
       }
     },
     "category.action.unmakeRecurring" : {
       "comment" : "Backlog · Confirmation dialog button · Clears recurring flag from a category.",
       "extractionState" : "manual",
       "localizations" : {
-        "de" : { "stringUnit" : { "state" : "translated", "value" : "Wiederkehrend aufheben" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Remove recurring" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Quitar recurrencia" } },
-        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Retirer le récurrent" } },
-        "it" : { "stringUnit" : { "state" : "translated", "value" : "Rimuovi ricorrenza" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "繰り返しを解除" } },
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "반복 해제" } },
-        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Remover recorrente" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "取消重复" } }
-      }
-    },
-    "category.add.recurringToggle" : {
-      "comment" : "Backlog · VoiceOver for recurring toggle in add-category row.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : { "stringUnit" : { "state" : "translated", "value" : "Wiederkehrend" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Recurring" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Recurrente" } },
-        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Récurrent" } },
-        "it" : { "stringUnit" : { "state" : "translated", "value" : "Ricorrente" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "繰り返し" } },
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "반복" } },
-        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Recorrente" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "重复" } }
-      }
-    },
-    "category.recurring.default.name" : {
-      "comment" : "Default name for the built-in recurring category.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : { "stringUnit" : { "state" : "translated", "value" : "Wiederkehrende Aufgaben" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Recurring Tasks" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Tareas recurrentes" } },
-        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Tâches récurrentes" } },
-        "it" : { "stringUnit" : { "state" : "translated", "value" : "Attività ricorrenti" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "繰り返しタスク" } },
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "반복 작업" } },
-        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Tarefas recorrentes" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "重复任务" } }
-      }
-    },
-    "task.recurring.badge" : {
-      "comment" : "Accessibility label for the recurring task/category badge icon.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : { "stringUnit" : { "state" : "translated", "value" : "Wiederkehrend" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Recurring" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Recurrente" } },
-        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Récurrent" } },
-        "it" : { "stringUnit" : { "state" : "translated", "value" : "Ricorrente" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "繰り返し" } },
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "반복" } },
-        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Recorrente" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "重复" } }
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wiederkehrend aufheben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove recurring"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quitar recurrencia"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retirer le récurrent"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rimuovi ricorrenza"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "繰り返しを解除"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "반복 해제"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remover recorrente"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消重复"
+          }
+        }
       }
     },
     "category.add.accessibility" : {
@@ -1053,6 +1209,66 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "新建分类"
+          }
+        }
+      }
+    },
+    "category.add.recurringToggle" : {
+      "comment" : "Backlog · VoiceOver for recurring toggle in add-category row.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wiederkehrend"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recurring"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recurrente"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Récurrent"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ricorrente"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "繰り返し"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "반복"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recorrente"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重复"
           }
         }
       }
@@ -1863,6 +2079,66 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "快速搞定"
+          }
+        }
+      }
+    },
+    "category.recurring.default.name" : {
+      "comment" : "Default name for the built-in recurring category.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wiederkehrende Aufgaben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recurring Tasks"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tareas recurrentes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tâches récurrentes"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attività ricorrenti"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "繰り返しタスク"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "반복 작업"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tarefas recorrentes"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重复任务"
           }
         }
       }
@@ -3401,45 +3677,180 @@
       "comment" : "Debug-only · Sample test task in a recurring category · 'Add Test Items' settings.",
       "extractionState" : "manual",
       "localizations" : {
-        "de" : { "stringUnit" : { "state" : "translated", "value" : "Zähne putzen" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Brush teeth" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Lavarse los dientes" } },
-        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Se brosser les dents" } },
-        "it" : { "stringUnit" : { "state" : "translated", "value" : "Lavare i denti" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "歯を磨く" } },
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "양치하기" } },
-        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Escovar os dentes" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "刷牙" } }
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zähne putzen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brush teeth"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lavarse los dientes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se brosser les dents"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lavare i denti"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "歯を磨く"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "양치하기"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escovar os dentes"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "刷牙"
+          }
+        }
       }
     },
     "debug.testtask.recurring.2" : {
       "comment" : "Debug-only · Sample recurring test task · 'Add Test Items' settings.",
       "extractionState" : "manual",
       "localizations" : {
-        "de" : { "stringUnit" : { "state" : "translated", "value" : "Ein Glas Wasser trinken" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Drink a glass of water" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Beber un vaso de agua" } },
-        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Boire un verre d’eau" } },
-        "it" : { "stringUnit" : { "state" : "translated", "value" : "Bere un bicchiere d’acqua" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "水を一杯飲む" } },
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "물 한 잔 마시기" } },
-        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Beber um copo de água" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "喝一杯水" } }
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein Glas Wasser trinken"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drink a glass of water"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beber un vaso de agua"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Boire un verre d’eau"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bere un bicchiere d’acqua"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "水を一杯飲む"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "물 한 잔 마시기"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beber um copo de água"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "喝一杯水"
+          }
+        }
       }
     },
     "debug.testtask.recurring.3" : {
       "comment" : "Debug-only · Sample recurring test task · 'Add Test Items' settings.",
       "extractionState" : "manual",
       "localizations" : {
-        "de" : { "stringUnit" : { "state" : "translated", "value" : "5 Min. Dehnen" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "5 min stretch break" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "5 min de estiramiento" } },
-        "fr" : { "stringUnit" : { "state" : "translated", "value" : "5 min d’étirements" } },
-        "it" : { "stringUnit" : { "state" : "translated", "value" : "5 min di stiramento" } },
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "5分ストレッチ" } },
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "5분 스트레칭" } },
-        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "5 min de alongamento" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "5分钟拉伸" } }
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5 Min. Dehnen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5 min stretch break"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5 min de estiramiento"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5 min d’étirements"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5 min di stiramento"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5分ストレッチ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5분 스트레칭"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5 min de alongamento"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5分钟拉伸"
+          }
+        }
       }
     },
     "debug.testtask.someday.1" : {
@@ -4638,6 +5049,42 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "重新开始跑步"
+          }
+        }
+      }
+    },
+    "error.archive.load" : {
+      "comment" : "Error message when archive tasks can't be loaded.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archiv konnte nicht geladen werden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to load archived tasks."
+          }
+        }
+      }
+    },
+    "error.archive.save" : {
+      "comment" : "Error message when an archive operation fails to save.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speichern fehlgeschlagen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to save."
           }
         }
       }
@@ -6622,6 +7069,60 @@
         }
       }
     },
+    "makeitcount.alert.confirm" : {
+      "comment" : "Make it count · Alert dismiss button — affirmative acknowledgment.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klingt super"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sounds great"
+          }
+        }
+      }
+    },
+    "makeitcount.alert.message" : {
+      "comment" : "Make it count · Alert body text explaining why the feature can't be disabled.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das ist eines der Kern-Features von Dawny. Tasks, die nicht erledigt werden, werden archiviert, damit dein Backlog fokussiert und bedeutsam bleibt.\n\nDaher kann Make it count in Dawny nicht deaktiviert werden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This is one of Dawny's core features. Tasks that are not completed are archived so your backlog stays focused and meaningful.\n\nTherefore, Make it count cannot be disabled in Dawny."
+          }
+        }
+      }
+    },
+    "makeitcount.alert.title" : {
+      "comment" : "Make it count · Alert title when user tries to disable the feature.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make it count ist unverzichtbar"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make it count is essential"
+          }
+        }
+      }
+    },
     "New task in \\(.applicationName)" : {
       "comment" : "Siri Phrase · AddTaskIntent · Imperative.",
       "extractionState" : "stale",
@@ -8410,6 +8911,24 @@
         }
       }
     },
+    "settings.makeitcount.label" : {
+      "comment" : "Settings · Make it count · Explanation beside the numeric counter (no number in string).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make it count. Task archivieren, wenn sie so häufig nicht erledigt wurde"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make it count. Archive a task if it was incomplete on Today."
+          }
+        }
+      }
+    },
     "settings.reset.section" : {
       "comment" : "Settings · Section header for the daily reset configuration · Single noun.",
       "extractionState" : "manual",
@@ -9460,6 +9979,24 @@
         }
       }
     },
+    "tabs.archive" : {
+      "comment" : "Top tabs · Archive tab button accessibility label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archiv"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archive"
+          }
+        }
+      }
+    },
     "tabs.backlog" : {
       "comment" : "Top tabs · Switches to the Backlog tab · Single noun.",
       "extractionState" : "manual",
@@ -10371,6 +10908,84 @@
         }
       }
     },
+    "task.recurring.badge" : {
+      "comment" : "Accessibility label for the recurring task/category badge icon.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wiederkehrend"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recurring"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recurrente"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Récurrent"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ricorrente"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "繰り返し"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "반복"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recorrente"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重复"
+          }
+        }
+      }
+    },
+    "task.status.archived" : {
+      "comment" : "Task status display name for archived tasks.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archiviert"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archived"
+          }
+        }
+      }
+    },
     "task.status.backlog" : {
       "comment" : "TaskStatus · Display name for backlog status · Single noun. Stays as “Backlog” loanword in EU and pt-BR per glossary.",
       "extractionState" : "manual",
@@ -11025,6 +11640,78 @@
         }
       }
     },
+    "welcome.makeitcount.body" : {
+      "comment" : "Welcome screen · Make it count page · Body text.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tasks, die du nicht erledigst, werden archiviert statt sich still anzuhäufen. Dein Backlog bleibt schlank, ehrlich und bedeutsam."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tasks you don't complete get archived instead of silently piling up. Your backlog stays lean, honest, and meaningful."
+          }
+        }
+      }
+    },
+    "welcome.makeitcount.checkbox" : {
+      "comment" : "Welcome screen · Make it count checkbox label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make it count"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make it count"
+          }
+        }
+      }
+    },
+    "welcome.makeitcount.checkbox.hint" : {
+      "comment" : "Welcome screen · Make it count checkbox · Accessibility hint.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieses Feature ist immer aktiv"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This feature is always enabled"
+          }
+        }
+      }
+    },
+    "welcome.makeitcount.title" : {
+      "comment" : "Welcome screen · Make it count page · Title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make it count"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make it count"
+          }
+        }
+      }
+    },
     "welcome.page1.body" : {
       "comment" : "Welcome · Onboarding page 1 body · Warm, conversational, single sentence. Source string passed via LocalizedStringResource defaultValue.",
       "extractionState" : "manual",
@@ -11501,330 +12188,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在黎明重启"
-          }
-        }
-      }
-    },
-    "archive.empty.message" : {
-      "comment" : "Archive tab · Empty state body text · Motivational.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Du bringst fertig, was du anfängst. Dein Archiv ist leer – weiter so!"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You're finishing what you start. Your archive is empty – keep it up!"
-          }
-        }
-      }
-    },
-    "archive.empty.title" : {
-      "comment" : "Archive tab · Empty state headline.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nichts hier!"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nothing here!"
-          }
-        }
-      }
-    },
-    "archive.section.header" : {
-      "comment" : "Archive tab · Section header below the tab title.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Archivierte Tasks können reaktiviert oder gelöscht werden."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Archived tasks can be reactivated or deleted."
-          }
-        }
-      }
-    },
-    "archive.swipe.backlog" : {
-      "comment" : "Archive tab · Leading swipe action label · Moves task back to Backlog.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Backlog"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Backlog"
-          }
-        }
-      }
-    },
-    "archive.swipe.delete" : {
-      "comment" : "Archive tab · Trailing swipe action label · Permanently deletes the task.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Löschen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Delete"
-          }
-        }
-      }
-    },
-    "archive.swipe.today" : {
-      "comment" : "Archive tab · Leading swipe action label · Moves task directly to Today.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Heute"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Today"
-          }
-        }
-      }
-    },
-    "error.archive.load" : {
-      "comment" : "Error message when archive tasks can't be loaded.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Archiv konnte nicht geladen werden."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Failed to load archived tasks."
-          }
-        }
-      }
-    },
-    "error.archive.save" : {
-      "comment" : "Error message when an archive operation fails to save.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Speichern fehlgeschlagen."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Failed to save."
-          }
-        }
-      }
-    },
-    "makeitcount.alert.message" : {
-      "comment" : "Make it count · Alert body text explaining why the feature can't be disabled.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Das ist eines der Kern-Features von Dawny. Tasks, die nicht erledigt werden, werden archiviert, damit dein Backlog fokussiert und bedeutsam bleibt.\n\nDaher kann Make it count in Dawny nicht deaktiviert werden."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This is one of Dawny's core features. Tasks that are not completed are archived so your backlog stays focused and meaningful.\n\nTherefore, Make it count cannot be disabled in Dawny."
-          }
-        }
-      }
-    },
-    "makeitcount.alert.title" : {
-      "comment" : "Make it count · Alert title when user tries to disable the feature.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Make it count ist unverzichtbar"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Make it count is essential"
-          }
-        }
-      }
-    },
-    "makeitcount.alert.confirm" : {
-      "comment" : "Make it count · Alert dismiss button — affirmative acknowledgment.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Klingt super"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sounds great"
-          }
-        }
-      }
-    },
-    "settings.makeitcount.label" : {
-      "comment" : "Settings · Make it count · Explanation beside the numeric counter (no number in string).",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Make it count. Task archivieren, wenn sie so häufig nicht erledigt wurde"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Make it count. Archive a task if it was incomplete on Today."
-          }
-        }
-      }
-    },
-    "tabs.archive" : {
-      "comment" : "Top tabs · Archive tab button accessibility label.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Archiv"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Archive"
-          }
-        }
-      }
-    },
-    "task.status.archived" : {
-      "comment" : "Task status display name for archived tasks.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Archiviert"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Archived"
-          }
-        }
-      }
-    },
-    "welcome.makeitcount.body" : {
-      "comment" : "Welcome screen · Make it count page · Body text.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tasks, die du nicht erledigst, werden archiviert statt sich still anzuhäufen. Dein Backlog bleibt schlank, ehrlich und bedeutsam."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tasks you don't complete get archived instead of silently piling up. Your backlog stays lean, honest, and meaningful."
-          }
-        }
-      }
-    },
-    "welcome.makeitcount.checkbox" : {
-      "comment" : "Welcome screen · Make it count checkbox label.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Make it count"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Make it count"
-          }
-        }
-      }
-    },
-    "welcome.makeitcount.checkbox.hint" : {
-      "comment" : "Welcome screen · Make it count checkbox · Accessibility hint.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dieses Feature ist immer aktiv"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This feature is always enabled"
-          }
-        }
-      }
-    },
-    "welcome.makeitcount.title" : {
-      "comment" : "Welcome screen · Make it count page · Title.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Make it count"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Make it count"
           }
         }
       }
