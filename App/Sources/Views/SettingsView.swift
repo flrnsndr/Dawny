@@ -52,6 +52,7 @@ struct SettingsView: View {
                 makeItCountSection
                 synchronisationSection
                 appearanceSection
+                welcomeSection
             }
             .listSectionSpacing(.compact)
             .safeAreaInset(edge: .bottom, spacing: 0) {
@@ -209,35 +210,38 @@ struct SettingsView: View {
             }
         }
     }
-    
-    private var settingsBottomChrome: some View {
-        VStack(spacing: 10) {
-            if let onRequestShowWelcome {
+
+    @ViewBuilder
+    private var welcomeSection: some View {
+        if let showWelcomeAgain = onRequestShowWelcome {
+            Section {
                 Button {
                     dismiss()
-                    onRequestShowWelcome()
+                    showWelcomeAgain()
                 } label: {
                     Text(String(localized: "settings.welcome.showAgain", defaultValue: "Show welcome message again"))
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                        .multilineTextAlignment(.center)
-                        .frame(maxWidth: .infinity)
+                        .foregroundStyle(.primary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .contentShape(Rectangle())
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.borderless)
+                .tint(.primary)
                 .accessibilityIdentifier("SettingsShowWelcomeButton")
             }
-
-            Text(versionBuildFooterLine)
-                .font(.caption2)
-                .foregroundStyle(.tertiary)
-                .multilineTextAlignment(.center)
-                .frame(maxWidth: .infinity)
-                .accessibilityLabel(versionBuildAccessibilityLabel)
         }
-        .padding(.horizontal, 16)
-        .padding(.top, 12)
-        .padding(.bottom, 8)
-        .background(Color(uiColor: .systemGroupedBackground))
+    }
+    
+    private var settingsBottomChrome: some View {
+        Text(versionBuildFooterLine)
+            .font(.caption2)
+            .foregroundStyle(.tertiary)
+            .multilineTextAlignment(.center)
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 16)
+            .padding(.top, 10)
+            .padding(.bottom, 8)
+            .background(Color(uiColor: .systemGroupedBackground))
+            .accessibilityLabel(versionBuildAccessibilityLabel)
     }
 
     private var versionBuildFooterLine: String {

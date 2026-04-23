@@ -129,9 +129,12 @@ private struct TaskRowContent: View {
         return buildRowStack()
             .listRowInsets(EdgeInsets(top: 2, leading: 16, bottom: 2, trailing: 16))
             .modifier(TrailingSwipeDeleteModifier(onDelete: onDelete))
+            // Task detail (info icon + sheet): set Swift flag ENABLE_TASK_DETAIL in the target’s Other Swift Flags to re-enable.
+            #if ENABLE_TASK_DETAIL
             .sheet(isPresented: $showingDetail) {
                 TaskDetailView(task: task)
             }
+            #endif
     }
 
     private func buildRowStack() -> some View {
@@ -167,9 +170,11 @@ private struct TaskRowContent: View {
             
             titleAndMetaColumn
 
+            #if ENABLE_TASK_DETAIL
             if isEditingTitle {
                 infoButton
             }
+            #endif
         }
         .padding(.vertical, verticalPadding)
         .contentShape(Rectangle())
