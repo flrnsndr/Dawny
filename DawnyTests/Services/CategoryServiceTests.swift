@@ -24,6 +24,9 @@ final class CategoryServiceTests: XCTestCase {
     private var originalDefaultCategoryType: TaskCategory!
 
     override func setUp() async throws {
+        UserDefaults.standard.removeObject(
+            forKey: "DawnyMigratedRecurringDefaultBeforeUncategorizedV1"
+        )
         container = try TestModelContainer.create()
         context = container.mainContext
         service = CategoryService(modelContext: context)
@@ -274,6 +277,19 @@ final class CategoryServiceTests: XCTestCase {
         let recurring = service.getCategoriesSorted().filter(\.isRecurring)
         XCTAssertEqual(recurring.count, 1, "Eine vorgebaute wiederkehrende Kategorie")
         XCTAssertEqual(recurring[0].categoryType, .custom)
+    }
+
+    func testRecurringDefaultPlacedBeforeUncategorized() throws {
+        let uncat = try category(.uncategorized)
+        let rec = try XCTUnwrap(
+            service.getCategoriesSorted().first(where: { $0.isRecurring })
+        )
+        XCTAssertLessThan(rec.orderIndex, uncat.orderIndex, "Wiederkehrende Aufgaben unmittelbar vor Unkategorisiert (orderIndex)")
+
+        let order = service.getCategoriesSorted()
+        let rIdx = try XCTUnwrap(order.firstIndex(where: { $0.id == rec.id }))
+        let uIdx = try XCTUnwrap(order.firstIndex(where: { $0.id == uncat.id }))
+        XCTAssertLessThan(rIdx, uIdx, "Kategorie-Liste: wiederkehrend vor Unkategorisiert")
     }
 
     func testCreateCustomRecurringSetsIconAndFlag() throws {

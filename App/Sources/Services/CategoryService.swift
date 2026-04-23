@@ -93,27 +93,110 @@ final class CategoryService {
             }
 
             if !allCategories.contains(where: { $0.isRecurring }) {
-                let nextOrderIndex = (allCategories.map(\.orderIndex).max() ?? -1) + 1
                 let defaultName = String(
                     localized: "category.recurring.default.name",
                     defaultValue: "Recurring Tasks"
                 )
-                let recurring = Category(
-                    categoryType: .custom,
-                    name: defaultName,
-                    iconName: "arrow.triangle.2.circlepath",
-                    orderIndex: nextOrderIndex,
-                    isUncategorized: false,
-                    isNameCustomized: true,
-                    isIconCustomized: true,
-                    isRecurring: true
+                let recurring = try makeRecurringDefaultCategory(
+                    allCategories: &allCategories,
+                    defaultName: defaultName
                 )
                 modelContext.insert(recurring)
+                try modelContext.save()
+            } else {
+                try repositionDefaultRecurringBeforeUncategorizedIfNeeded()
                 try modelContext.save()
             }
         } catch {
             print("Fehler bei Standard-Kategorien / wiederkehrender Default: \(error)")
         }
+    }
+
+    // MARK: - Recurring default placement (direkt vor „Unkategorisiert“)
+
+    private static let fallbackDefaultRecurringNames: Set<String> = [
+        "Recurring Tasks",
+        "Wiederkehrende Aufgaben"
+    ]
+
+    private func isLikelyDefaultRecurringCategory(_ category: Category) -> Bool {
+        guard category.isRecurring, category.categoryType == .custom else { return false }
+        let loc = String(
+            localized: "category.recurring.default.name",
+            defaultValue: "Recurring Tasks"
+        )
+        if category.name == loc { return true }
+        if Self.fallbackDefaultRecurringNames.contains(category.name) { return true }
+        return false
+    }
+
+    /// Jede Kategorie mit `orderIndex >= target` rückt um eins hoch, danach entsteht freier Slot ``target`` (Einfügen der wiederkehrenden Default-Kategorie).
+    private func shiftOrderIndicesUp(from target: Int, excluding: Category? = nil) {
+        let descriptor = FetchDescriptor<Category>()
+        guard let all = try? modelContext.fetch(descriptor) else { return }
+        for c in all where c.id != excluding?.id && c.orderIndex >= target {
+            c.orderIndex += 1
+        }
+    }
+
+    private func makeRecurringDefaultCategory(
+        allCategories: inout [Category],
+        defaultName: String
+    ) throws -> Category {
+        guard let uncat = getUncategorizedCategory() else {
+            let next = (allCategories.map(\.orderIndex).max() ?? -1) + 1
+            return Category(
+                categoryType: .custom,
+                name: defaultName,
+                iconName: "arrow.triangle.2.circlepath",
+                orderIndex: next,
+                isUncategorized: false,
+                isNameCustomized: true,
+                isIconCustomized: true,
+                isRecurring: true
+            )
+        }
+        let target = uncat.orderIndex
+        shiftOrderIndicesUp(from: target, excluding: nil)
+        return Category(
+            categoryType: .custom,
+            name: defaultName,
+            iconName: "arrow.triangle.2.circlepath",
+            orderIndex: target,
+            isUncategorized: false,
+            isNameCustomized: true,
+            isIconCustomized: true,
+            isRecurring: true
+        )
+    }
+
+    private static let recurringOrderMigratedKey = "DawnyMigratedRecurringDefaultBeforeUncategorizedV1"
+
+    /// Einmal: Standard-„Wiederkehrende Aufgaben“ (falls noch unter Unkategorisiert) vorschieben. Danach bleibt die manuelle Sortierung.
+    private func repositionDefaultRecurringBeforeUncategorizedIfNeeded() throws {
+        guard !UserDefaults.standard.bool(forKey: Self.recurringOrderMigratedKey) else { return }
+        defer { UserDefaults.standard.set(true, forKey: Self.recurringOrderMigratedKey) }
+
+        let descriptor = FetchDescriptor<Category>()
+        let all = try modelContext.fetch(descriptor)
+        guard let uncat = all.first(where: { $0.isUncategorized }) else { return }
+        let candidates = all.filter { isLikelyDefaultRecurringCategory($0) }
+        guard let rec = candidates.sorted(by: { $0.createdAt < $1.createdAt }).first else { return }
+
+        let sorted = all.sorted()
+        guard
+            let uncatIndex = sorted.firstIndex(where: { $0.id == uncat.id }),
+            let recIndex = sorted.firstIndex(where: { $0.id == rec.id })
+        else { return }
+
+        if recIndex < uncatIndex { return }
+
+        rec.orderIndex = 999_999
+        let target = uncat.orderIndex
+        for c in all where c.id != rec.id && c.orderIndex >= target {
+            c.orderIndex += 1
+        }
+        rec.orderIndex = target
     }
     
     /// Gibt die "Unkategorisiert"-Kategorie zurück

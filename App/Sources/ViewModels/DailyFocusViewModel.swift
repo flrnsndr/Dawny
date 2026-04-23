@@ -39,11 +39,19 @@ final class DailyFocusViewModel {
     
     // MARK: - Task Loading
     
-    /// Leert die angezeigte Liste sofort (z. B. vor Debug-Massenlöschen), damit kein `TaskRowView` noch auf Task-Objekte zeigt.
+    /// Leert die angezeigte Liste sofort (z. B. vor Debug-Massenlöschen), damit kein `TaskRowView` noch auf Task-Objekte zeigt.
     func clearTasksFromDisplayOnly() {
         dailyTasks = []
     }
     
+    /// Liefert einen frischen `Task` aus dem aktuellen Kontext (wichtig nach
+    /// Löschungen / Saves, damit kein abgelöstes `PersistentModel` verwendet wird).
+    private func task(withID id: UUID) -> Task? {
+        var descriptor = FetchDescriptor<Task>(predicate: #Predicate { $0.id == id })
+        descriptor.fetchLimit = 1
+        return try? modelContext.fetch(descriptor).first
+    }
+
     /// Lädt alle Daily Focus Tasks für heute
     func loadDailyTasks() {
         let descriptor = FetchDescriptor<Task>(
@@ -54,10 +62,8 @@ final class DailyFocusViewModel {
             let allTasks = try modelContext.fetch(descriptor)
             let settings = AppSettings.shared
             
-            // Filter: Aktive Daily Focus Tasks
             var tasks = allTasks.filter { $0.status == .dailyFocus }
             
-            // Füge erledigte Tasks hinzu, wenn Einstellung aktiviert ist
             if settings.showCompletedTasksInToday {
                 let completedToday = allTasks.filter { $0.isCompletedToday }
                 tasks.append(contentsOf: completedToday)
@@ -78,13 +84,8 @@ final class DailyFocusViewModel {
         isLoading = true
         defer { isLoading = false }
         
-        // Prüfe ob Reset nötig
         await resetEngine.checkAndPerformResetIfNeeded()
-        
-        // Sync mit Kalender
         await syncWithCalendar()
-        
-        // Reload Tasks
         loadDailyTasks()
     }
     
@@ -92,22 +93,32 @@ final class DailyFocusViewModel {
     
     /// Markiert einen Task als abgeschlossen
     func completeTask(_ task: Task) async {
-        let wasRecurring = task.isRecurring
+        await completeTask(taskID: task.id)
+    }
 
-        task.complete()
+    /// Wie `completeTask(_:)`, aber nur mit UUID – holt den Task immer frisch aus dem
+    /// `ModelContext` (vermeidet abgelöste Referenzen aus `ForEach`-Closures).
+    ///
+    /// Calendar-Sync erst **nach** `save()` + `loadDailyTasks()`, damit kein
+    /// `await`-Yield SwiftUI die Chance gibt, mit veralteten Referenzen zu rendern.
+    func completeTask(taskID: UUID) async {
+        guard let t = self.task(withID: taskID) else { return }
+        let wasRecurring = t.isRecurring
+
+        t.complete()
 
         if wasRecurring {
             let clone = Task(
-                title: task.title,
-                notes: task.notes,
+                title: t.title,
+                notes: t.notes,
                 status: .inBacklog,
-                parentBacklogID: task.parentBacklogID,
+                parentBacklogID: t.parentBacklogID,
                 sortPriority: Date(),
-                category: task.category
+                category: t.category
             )
-            clone.backlog = task.backlog
+            clone.backlog = t.backlog
             if clone.backlog == nil {
-                let parentID = task.parentBacklogID
+                let parentID = t.parentBacklogID
                 var backlogDescriptor = FetchDescriptor<Backlog>(predicate: #Predicate<Backlog> { $0.id == parentID })
                 backlogDescriptor.fetchLimit = 1
                 if let backlog = try? modelContext.fetch(backlogDescriptor).first {
@@ -115,13 +126,11 @@ final class DailyFocusViewModel {
                 }
             }
             modelContext.insert(clone)
-            task.recurringCloneID = clone.id
+            t.recurringCloneID = clone.id
         }
 
-        // Sync zu Kalender (Original; Clone ohne `externalReminderID`)
-        if task.isSyncedToCalendar {
-            await syncEngine.syncTaskToCalendar(task)
-        }
+        let needsCalendarSync = t.isSyncedToCalendar
+        let taskID = t.id
 
         do {
             try modelContext.save()
@@ -132,29 +141,38 @@ final class DailyFocusViewModel {
                 defaultValue: "Failed to complete task: %@"
             )
             errorMessage = String(format: format, error.localizedDescription)
-        }
-    }
-    
-    /// Markiert einen erledigten Task wieder als offen
-    func uncompleteTask(_ task: Task) async {
-        if let cloneID = task.recurringCloneID {
-            var cloneDescriptor = FetchDescriptor<Task>(predicate: #Predicate<Task> { $0.id == cloneID })
-            cloneDescriptor.fetchLimit = 1
-            if let clone = try? modelContext.fetch(cloneDescriptor).first {
-                modelContext.delete(clone)
-            }
-            task.recurringCloneID = nil
+            return
         }
 
+        if needsCalendarSync, let fresh = self.task(withID: taskID) {
+            await syncEngine.syncTaskToCalendar(fresh)
+        }
+    }
+
+    /// Markiert einen erledigten Task wieder als offen
+    func uncompleteTask(_ task: Task) async {
+        await uncompleteTask(taskID: task.id)
+    }
+
+    /// Erledigten Task wieder öffnen.
+    ///
+    /// Clone-Delete + Parent-Änderung in **einem** `save()`,
+    /// `loadDailyTasks()` **sofort** danach (kein `await` dazwischen).
+    /// Calendar-Sync erst NACH dem UI-Refresh.
+    func uncompleteTask(taskID: UUID) async {
+        guard let task = self.task(withID: taskID) else { return }
+
+        if let cloneID = task.recurringCloneID, let clone = self.task(withID: cloneID) {
+            modelContext.delete(clone)
+        }
+
+        task.recurringCloneID = nil
         task.isCompleted = false
         task.status = .dailyFocus
         task.modifiedAt = Date()
-        
-        // Sync zu Kalender falls vorher synchronisiert
-        if task.isSyncedToCalendar {
-            await syncEngine.syncTaskToCalendar(task)
-        }
-        
+
+        let needsCalendarSync = task.isSyncedToCalendar
+
         do {
             try modelContext.save()
             loadDailyTasks()
@@ -165,16 +183,19 @@ final class DailyFocusViewModel {
                 defaultValue: "Failed to reopen task: %@"
             )
             errorMessage = String(format: format, error.localizedDescription)
+            return
+        }
+
+        if needsCalendarSync, let fresh = self.task(withID: taskID) {
+            await syncEngine.syncTaskToCalendar(fresh)
         }
     }
     
     /// Entfernt einen Task aus Daily Focus zurück ins Backlog
     func removeFromDailyFocus(_ task: Task) async {
-        // Entferne aus Kalender
-        if task.isSyncedToCalendar {
-            await syncEngine.removeTaskFromCalendar(task)
-        }
-        
+        let needsCalendarRemove = task.isSyncedToCalendar
+        let taskID = task.id
+
         task.resetToBacklog()
         
         do {
@@ -186,6 +207,11 @@ final class DailyFocusViewModel {
                 defaultValue: "Failed to remove task from today: %@"
             )
             errorMessage = String(format: format, error.localizedDescription)
+            return
+        }
+
+        if needsCalendarRemove, let fresh = self.task(withID: taskID) {
+            await syncEngine.removeTaskFromCalendar(fresh)
         }
     }
     
@@ -281,28 +307,23 @@ final class DailyFocusViewModel {
     
     // MARK: - Computed Properties
     
-    /// Anzahl der noch offenen Tasks
     var openTaskCount: Int {
         dailyTasks.filter { !$0.isCompleted }.count
     }
     
-    /// Anzahl der abgeschlossenen Tasks
     var completedTaskCount: Int {
         dailyTasks.filter { $0.isCompleted }.count
     }
     
-    /// Fortschritt in Prozent
     var progressPercentage: Double {
         guard !dailyTasks.isEmpty else { return 0 }
         return Double(completedTaskCount) / Double(dailyTasks.count)
     }
     
-    /// Offene Tasks
     var openTasks: [Task] {
         dailyTasks.filter { !$0.isCompleted }
     }
     
-    /// Abgeschlossene Tasks
     var completedTasks: [Task] {
         dailyTasks.filter { $0.isCompleted }
     }

@@ -3397,6 +3397,51 @@
         }
       }
     },
+    "debug.testtask.recurring.1" : {
+      "comment" : "Debug-only · Sample test task in a recurring category · 'Add Test Items' settings.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Zähne putzen" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Brush teeth" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Lavarse los dientes" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Se brosser les dents" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Lavare i denti" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "歯を磨く" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "양치하기" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Escovar os dentes" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "刷牙" } }
+      }
+    },
+    "debug.testtask.recurring.2" : {
+      "comment" : "Debug-only · Sample recurring test task · 'Add Test Items' settings.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Ein Glas Wasser trinken" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Drink a glass of water" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Beber un vaso de agua" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Boire un verre d’eau" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Bere un bicchiere d’acqua" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "水を一杯飲む" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "물 한 잔 마시기" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "Beber um copo de água" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "喝一杯水" } }
+      }
+    },
+    "debug.testtask.recurring.3" : {
+      "comment" : "Debug-only · Sample recurring test task · 'Add Test Items' settings.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "5 Min. Dehnen" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "5 min stretch break" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "5 min de estiramiento" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "5 min d’étirements" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "5 min di stiramento" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "5分ストレッチ" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "5분 스트레칭" } },
+        "pt-BR" : { "stringUnit" : { "state" : "translated", "value" : "5 min de alongamento" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "5分钟拉伸" } }
+      }
+    },
     "debug.testtask.someday.1" : {
       "comment" : "Debug-only · Sample test task title (Someday category) · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",

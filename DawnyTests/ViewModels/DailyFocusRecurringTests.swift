@@ -25,6 +25,9 @@ final class DailyFocusRecurringTests: XCTestCase {
 
     override func setUp() async throws {
         try await super.setUp()
+        UserDefaults.standard.removeObject(
+            forKey: "DawnyMigratedRecurringDefaultBeforeUncategorizedV1"
+        )
         originalCalendarEnabled = AppSettings.shared.calendarSyncEnabled
         AppSettings.shared.calendarSyncEnabled = false
         timeProvider = MockTimeProvider()

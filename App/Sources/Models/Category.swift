@@ -87,14 +87,20 @@ final class Category {
     
     /// Anzahl der Tasks in dieser Kategorie (nur Backlog-Tasks)
     var taskCount: Int {
-        tasks.filter { $0.status == .inBacklog }.count
+        liveTasks.filter { $0.status == .inBacklog }.count
     }
     
     /// Tasks die im Backlog sind (nicht completed/scheduled)
     var backlogTasks: [Task] {
-        tasks
+        liveTasks
             .filter { $0.status == .inBacklog }
             .sorted()
+    }
+
+    /// Filtert bereits als gelöscht markierte Tasks aus der Relationship.
+    /// Siehe Hinweis in `Backlog.liveTasks`.
+    private var liveTasks: [Task] {
+        tasks.filter { !$0.isDeleted }
     }
 
     // MARK: - Display

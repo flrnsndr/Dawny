@@ -10,7 +10,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
+/// Zeilen-Wrapper: löst `Task` über `ModelContext.registeredModel` auf. So wird nie auf ein
+/// SwiftData-Objekt gelesen, das bereits aus dem Kontext getrennt ist (Fatal:
+/// "backing data was detached …" / `Task.status`-Getter).
 struct TaskRowView: View {
     let task: Task
     let onToggle: (() -> Void)?
@@ -22,11 +26,9 @@ struct TaskRowView: View {
     let showsDisabledToggle: Bool
     @Binding var focusedTaskID: UUID?
     let onSaveTitle: ((String) -> Void)?
-    
-    @State private var showingDetail = false
-    @State private var titleDraft: String = ""
-    @FocusState private var isTitleFieldFocused: Bool
-    
+
+    @Environment(\.modelContext) private var modelContext
+
     init(
         task: Task,
         onToggle: (() -> Void)? = nil,
@@ -48,9 +50,92 @@ struct TaskRowView: View {
         _focusedTaskID = focusedTaskID
         self.onSaveTitle = onSaveTitle
     }
-    
+
     var body: some View {
-        let rowStack = HStack(spacing: horizontalSpacing) {
+        if let resolved: Task = modelContext.registeredModel(for: task.persistentModelID),
+           resolved.modelContext != nil,
+           !resolved.isDeleted {
+            TaskRowContent(
+                task: resolved,
+                onToggle: onToggle,
+                onDelete: onDelete,
+                showDragHandle: showDragHandle,
+                showBacklogBadge: showBacklogBadge,
+                showRecurringTaskBadge: showRecurringTaskBadge,
+                showsDisabledToggle: showsDisabledToggle,
+                focusedTaskID: $focusedTaskID,
+                onSaveTitle: onSaveTitle
+            )
+        } else {
+            EmptyView()
+        }
+    }
+}
+
+// MARK: - Row content (gültiger SwiftData-`Task`)
+
+private struct TaskRowContent: View {
+    let task: Task
+    let onToggle: (() -> Void)?
+    let onDelete: (() -> Void)?
+    let showDragHandle: Bool
+    let showBacklogBadge: Bool
+    let showRecurringTaskBadge: Bool
+    let showsDisabledToggle: Bool
+    @Binding var focusedTaskID: UUID?
+    let onSaveTitle: ((String) -> Void)?
+
+    @State private var showingDetail = false
+    @State private var titleDraft: String = ""
+    @FocusState private var isTitleFieldFocused: Bool
+
+    init(
+        task: Task,
+        onToggle: (() -> Void)? = nil,
+        onDelete: (() -> Void)? = nil,
+        showDragHandle: Bool = false,
+        showBacklogBadge: Bool = true,
+        showRecurringTaskBadge: Bool = true,
+        showsDisabledToggle: Bool = false,
+        focusedTaskID: Binding<UUID?> = .constant(nil),
+        onSaveTitle: ((String) -> Void)? = nil
+    ) {
+        self.task = task
+        self.onToggle = onToggle
+        self.onDelete = onDelete
+        self.showDragHandle = showDragHandle
+        self.showBacklogBadge = showBacklogBadge
+        self.showRecurringTaskBadge = showRecurringTaskBadge
+        self.showsDisabledToggle = showsDisabledToggle
+        _focusedTaskID = focusedTaskID
+        self.onSaveTitle = onSaveTitle
+    }
+
+    var body: some View {
+        // Defensive Guard: SwiftUI kann `TaskRowContent.body` direkt erneut auslösen
+        // (Observation-Event auf `task`), ohne dass `TaskRowView.body` erneut läuft.
+        // Der hier gehaltene `let task: Task` kann dann auf ein Objekt zeigen, dessen
+        // SwiftData-Backing bereits detached ist → Zugriff auf `task.status` etc.
+        // crasht („backing data was detached"). `modelContext` / `isDeleted` zu lesen
+        // ist dagegen safe und liefert `nil`/`false` bei detachedem Backing.
+        if task.modelContext != nil, !task.isDeleted {
+            return AnyView(liveRow)
+        } else {
+            return AnyView(EmptyView())
+        }
+    }
+
+    private var liveRow: some View {
+        return buildRowStack()
+            .listRowInsets(EdgeInsets(top: 2, leading: 16, bottom: 2, trailing: 16))
+            .modifier(TrailingSwipeDeleteModifier(onDelete: onDelete))
+            .sheet(isPresented: $showingDetail) {
+                TaskDetailView(task: task)
+            }
+    }
+
+    private func buildRowStack() -> some View {
+        HStack(spacing: horizontalSpacing) {
             // Drag Handle
             if showDragHandle {
                 Image(systemName: "line.3.horizontal")
@@ -106,15 +191,8 @@ struct TaskRowView: View {
                 }
             }
         }
-        
-        rowStack
-            .listRowInsets(EdgeInsets(top: 2, leading: 16, bottom: 2, trailing: 16))
-            .modifier(TrailingSwipeDeleteModifier(onDelete: onDelete))
-        .sheet(isPresented: $showingDetail) {
-            TaskDetailView(task: task)
-        }
     }
-    
+
     @ViewBuilder
     private var titleAndMetaColumn: some View {
         let column = VStack(alignment: .leading, spacing: contentSpacing) {
@@ -323,28 +401,39 @@ private struct TrailingSwipeDeleteModifier: ViewModifier {
 
 struct TaskDetailView: View {
     let task: Task
+    @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
-    
+
     var body: some View {
+        if let resolved: Task = modelContext.registeredModel(for: task.persistentModelID) {
+            detailList(for: resolved)
+        } else {
+            Color.clear
+                .onAppear { dismiss() }
+        }
+    }
+
+    @ViewBuilder
+    private func detailList(for task: Task) -> some View {
         NavigationStack {
             List {
                 Section(String(localized: "task.detail.section", defaultValue: "Details")) {
                     LabeledContent(String(localized: "task.detail.title.label", defaultValue: "Title"), value: task.title)
-                    
+
                     if let notes = task.notes {
                         LabeledContent(String(localized: "task.detail.notes.label", defaultValue: "Notes")) {
                             Text(notes)
                                 .foregroundStyle(.secondary)
                         }
                     }
-                    
+
                     LabeledContent(String(localized: "task.detail.status.label", defaultValue: "Status"), value: task.status.displayName)
-                    
+
                     if task.isSyncedToCalendar {
                         LabeledContent(String(localized: "task.detail.calendar.label", defaultValue: "Calendar"), value: String(localized: "task.detail.calendar.synced", defaultValue: "Synced"))
                     }
                 }
-                
+
                 Section(String(localized: "task.detail.timestamps.section", defaultValue: "Timestamps")) {
                     LabeledContent(String(localized: "task.detail.created.label", defaultValue: "Created"), value: task.createdAt.formatted(date: .abbreviated, time: .shortened))
                     LabeledContent(String(localized: "task.detail.modified.label", defaultValue: "Modified"), value: task.modifiedAt.formatted(date: .abbreviated, time: .shortened))
@@ -364,18 +453,27 @@ struct TaskDetailView: View {
 }
 
 #Preview {
+    let schema = Schema([Task.self, Backlog.self, Category.self])
+    let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: schema, configurations: [configuration])
+    let backlog = Backlog(title: "Preview", orderIndex: 0)
     let task = Task(
         title: "Sample Task",
         notes: "This is a sample task with some notes",
         status: .dailyFocus,
-        parentBacklogID: UUID()
+        parentBacklogID: backlog.id
     )
-    
-    TaskRowView(
+    task.backlog = backlog
+    container.mainContext.insert(backlog)
+    container.mainContext.insert(task)
+    try? container.mainContext.save()
+
+    return TaskRowView(
         task: task,
         onToggle: {},
         onDelete: {},
         showDragHandle: true
     )
+    .modelContainer(container)
     .padding()
 }
