@@ -24,6 +24,8 @@ final class AppSettings {
         static let showCategories = "DawnyShowCategories"
         static let defaultCategoryType = "DawnyDefaultCategoryType"
         static let hasSeenWelcome = "DawnyHasSeenWelcome"
+        static let makeItCountThreshold = "DawnyMakeItCountThreshold"
+        static let hasNewArchivedTasks = "DawnyHasNewArchivedTasks"
     }
     
     // MARK: - Properties
@@ -62,6 +64,20 @@ final class AppSettings {
             UserDefaults.standard.set(hasSeenWelcome, forKey: Keys.hasSeenWelcome)
         }
     }
+
+    /// Anzahl der fehlgeschlagenen Resets, bevor ein Task archiviert wird (1–7, Standard: 1)
+    var makeItCountThreshold: Int {
+        didSet {
+            UserDefaults.standard.set(makeItCountThreshold, forKey: Keys.makeItCountThreshold)
+        }
+    }
+
+    /// Zeigt an ob beim letzten Reset neue Tasks ins Archiv verschoben wurden (Dot-Badge)
+    var hasNewArchivedTasks: Bool {
+        didSet {
+            UserDefaults.standard.set(hasNewArchivedTasks, forKey: Keys.hasNewArchivedTasks)
+        }
+    }
     
     /// Standard-Kategorie für neue Tasks (wenn Kategorien aktiviert)
     var defaultCategoryType: TaskCategory {
@@ -84,6 +100,8 @@ final class AppSettings {
         self.showCompletedTasksInToday = UserDefaults.standard.object(forKey: Keys.showCompletedTasksInToday) as? Bool ?? true
         self.showCategories = UserDefaults.standard.object(forKey: Keys.showCategories) as? Bool ?? true
         self.hasSeenWelcome = UserDefaults.standard.bool(forKey: Keys.hasSeenWelcome)
+        self.makeItCountThreshold = UserDefaults.standard.object(forKey: Keys.makeItCountThreshold) as? Int ?? 1
+        self.hasNewArchivedTasks = UserDefaults.standard.bool(forKey: Keys.hasNewArchivedTasks)
         
         // Lade defaultCategoryType
         if let data = UserDefaults.standard.data(forKey: Keys.defaultCategoryType),

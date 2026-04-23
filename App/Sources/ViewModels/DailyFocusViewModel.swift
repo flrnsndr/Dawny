@@ -196,6 +196,7 @@ final class DailyFocusViewModel {
         let needsCalendarRemove = task.isSyncedToCalendar
         let taskID = task.id
 
+        task.resetCount = 0
         task.resetToBacklog()
         
         do {

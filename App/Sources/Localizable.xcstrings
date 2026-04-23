@@ -11624,6 +11624,384 @@
           }
         }
       }
+    },
+    "archive.empty.message" : {
+      "comment" : "Archive tab · Empty state body text · Motivational.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du bringst fertig, was du anfängst. Dein Archiv ist leer – weiter so!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You're finishing what you start. Your archive is empty – keep it up!"
+          }
+        }
+      }
+    },
+    "archive.empty.title" : {
+      "comment" : "Archive tab · Empty state headline.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nichts hier!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nothing here!"
+          }
+        }
+      }
+    },
+    "archive.section.header" : {
+      "comment" : "Archive tab · Section header below the tab title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archivierte Tasks können reaktiviert oder gelöscht werden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archived tasks can be reactivated or deleted."
+          }
+        }
+      }
+    },
+    "archive.swipe.backlog" : {
+      "comment" : "Archive tab · Leading swipe action label · Moves task back to Backlog.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Backlog"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Backlog"
+          }
+        }
+      }
+    },
+    "archive.swipe.delete" : {
+      "comment" : "Archive tab · Trailing swipe action label · Permanently deletes the task.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Löschen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        }
+      }
+    },
+    "archive.swipe.today" : {
+      "comment" : "Archive tab · Leading swipe action label · Moves task directly to Today.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heute"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today"
+          }
+        }
+      }
+    },
+    "error.archive.load" : {
+      "comment" : "Error message when archive tasks can't be loaded.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archiv konnte nicht geladen werden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to load archived tasks."
+          }
+        }
+      }
+    },
+    "error.archive.save" : {
+      "comment" : "Error message when an archive operation fails to save.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speichern fehlgeschlagen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to save."
+          }
+        }
+      }
+    },
+    "makeitcount.alert.message" : {
+      "comment" : "Make it count · Alert body text explaining why the feature can't be disabled.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das ist eines der Kern-Features von Dawny. Tasks, die nicht erledigt werden, werden archiviert, damit dein Backlog fokussiert und bedeutsam bleibt.\n\nDaher kann Make it count in Dawny nicht deaktiviert werden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This is one of Dawny's core features. Tasks that are not completed are archived so your backlog stays focused and meaningful.\n\nTherefore, Make it count cannot be disabled in Dawny."
+          }
+        }
+      }
+    },
+    "makeitcount.alert.title" : {
+      "comment" : "Make it count · Alert title when user tries to disable the feature.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make it count ist unverzichtbar"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make it count is essential"
+          }
+        }
+      }
+    },
+    "makeitcount.alert.confirm" : {
+      "comment" : "Make it count · Alert dismiss button — affirmative acknowledgment.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klingt super"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sounds great"
+          }
+        }
+      }
+    },
+    "settings.makeitcount.description" : {
+      "comment" : "Settings · Make it count section · Description text below the stepper.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicht-wiederkehrende Tasks, die nach dem Reset nicht erledigt wurden, werden archiviert. Wiederkehrende Tasks kehren immer ins Backlog zurück."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non-recurring tasks that are not completed after the daily reset will be archived. Recurring tasks always return to the backlog."
+          }
+        }
+      }
+    },
+    "settings.makeitcount.disable" : {
+      "comment" : "Settings · Make it count section · Button label to attempt disabling (triggers locked alert).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make it count deaktivieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disable Make it count"
+          }
+        }
+      }
+    },
+    "settings.makeitcount.section" : {
+      "comment" : "Settings · Section title for Make it count settings.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make it count"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make it count"
+          }
+        }
+      }
+    },
+    "settings.makeitcount.stepper" : {
+      "comment" : "Settings · Make it count stepper label. Uses interpolated threshold number.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archivieren nach \\(settings.makeItCountThreshold) verpasstem Tag(en)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archive after \\(settings.makeItCountThreshold) missed day(s)"
+          }
+        }
+      }
+    },
+    "tabs.archive" : {
+      "comment" : "Top tabs · Archive tab button accessibility label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archiv"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archive"
+          }
+        }
+      }
+    },
+    "task.status.archived" : {
+      "comment" : "Task status display name for archived tasks.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archiviert"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archived"
+          }
+        }
+      }
+    },
+    "welcome.makeitcount.body" : {
+      "comment" : "Welcome screen · Make it count page · Body text.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tasks, die du nicht erledigst, werden archiviert statt sich still anzuhäufen. Dein Backlog bleibt schlank, ehrlich und bedeutsam."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tasks you don't complete get archived instead of silently piling up. Your backlog stays lean, honest, and meaningful."
+          }
+        }
+      }
+    },
+    "welcome.makeitcount.checkbox" : {
+      "comment" : "Welcome screen · Make it count checkbox label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make it count"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make it count"
+          }
+        }
+      }
+    },
+    "welcome.makeitcount.checkbox.hint" : {
+      "comment" : "Welcome screen · Make it count checkbox · Accessibility hint.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieses Feature ist immer aktiv"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This feature is always enabled"
+          }
+        }
+      }
+    },
+    "welcome.makeitcount.title" : {
+      "comment" : "Welcome screen · Make it count page · Title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make it count"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make it count"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

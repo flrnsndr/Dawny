@@ -13,6 +13,7 @@ import SwiftUI
 
 struct WelcomeView: View {
     @State private var currentPage = 0
+    @State private var showMakeItCountLockedAlert = false
     var onDismiss: () -> Void
 
     private let pages: [WelcomePage] = [
@@ -63,6 +64,18 @@ struct WelcomeView: View {
                 "welcome.page4.body",
                 defaultValue: "Anything left undone slides back to the backlog overnight. Tomorrow is a clean slate."
             )
+        ),
+        WelcomePage(
+            icon: "archivebox.fill",
+            iconColor: .indigo,
+            title: LocalizedStringResource(
+                "welcome.makeitcount.title",
+                defaultValue: "Make it count"
+            ),
+            body: LocalizedStringResource(
+                "welcome.makeitcount.body",
+                defaultValue: "Tasks you don't complete get archived instead of silently piling up. Your backlog stays lean, honest, and meaningful."
+            )
         )
     ]
 
@@ -70,7 +83,7 @@ struct WelcomeView: View {
         VStack(spacing: 0) {
             TabView(selection: $currentPage) {
                 ForEach(Array(pages.enumerated()), id: \.offset) { index, page in
-                    pageView(page)
+                    pageView(page, pageIndex: index)
                         .tag(index)
                 }
             }
@@ -87,8 +100,9 @@ struct WelcomeView: View {
 
     // MARK: - Page Content
 
-    private func pageView(_ page: WelcomePage) -> some View {
-        VStack(spacing: 28) {
+    private func pageView(_ page: WelcomePage, pageIndex: Int) -> some View {
+        let isMakeItCountPage = pageIndex == pages.count - 1
+        return VStack(spacing: 28) {
             Spacer()
 
             Image(systemName: page.icon)
@@ -112,6 +126,12 @@ struct WelcomeView: View {
             .padding(.horizontal, 36)
 
             Spacer()
+
+            if isMakeItCountPage {
+                makeItCountCheckbox
+                    .padding(.horizontal, 32)
+            }
+
             Spacer()
         }
     }
@@ -148,6 +168,48 @@ struct WelcomeView: View {
                 .accessibilityIdentifier("WelcomeNextButton")
             }
         }
+        .alert(
+            String(localized: "makeitcount.alert.title", defaultValue: "Make it count is essential"),
+            isPresented: $showMakeItCountLockedAlert
+        ) {
+            Button(String(localized: "makeitcount.alert.confirm", defaultValue: "Sounds great"), role: .cancel) {}
+        } message: {
+            Text(
+                String(
+                    localized: "makeitcount.alert.message",
+                    defaultValue: "This is one of Dawny's core features. Tasks that are not completed are archived so your backlog stays focused and meaningful.\n\nTherefore, Make it count cannot be disabled in Dawny."
+                )
+            )
+        }
+    }
+
+    /// Checkbox für Make it count – standardmäßig aktiv, nicht deaktivierbar.
+    /// Bei Versuch zu deaktivieren erscheint ein erklärender Alert.
+    private var makeItCountCheckbox: some View {
+        Button {
+            showMakeItCountLockedAlert = true
+        } label: {
+            HStack(spacing: 12) {
+                Image(systemName: "checkmark.square.fill")
+                    .font(.system(size: 30, weight: .medium))
+                    .foregroundStyle(.indigo)
+                Text(String(localized: "welcome.makeitcount.checkbox", defaultValue: "Make it count"))
+                    .font(.title3.weight(.semibold))
+                    .foregroundStyle(.primary)
+                    .multilineTextAlignment(.center)
+            }
+            .padding(.horizontal, 4)
+            .frame(maxWidth: .infinity, alignment: .center)
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(String(localized: "welcome.makeitcount.checkbox", defaultValue: "Make it count"))
+        .accessibilityHint(
+            String(
+                localized: "welcome.makeitcount.checkbox.hint",
+                defaultValue: "This feature is always enabled"
+            )
+        )
+        .accessibilityIdentifier("WelcomeMakeItCountCheckbox")
     }
 
     private var pageIndicator: some View {

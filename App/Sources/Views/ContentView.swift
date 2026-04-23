@@ -19,6 +19,7 @@ struct ContentView: View {
     
     @State private var backlogViewModel: BacklogViewModel?
     @State private var dailyFocusViewModel: DailyFocusViewModel?
+    @State private var archiveViewModel: ArchiveViewModel?
     @State private var selectedTab: Tab = .backlog
     @State private var hasSetInitialTab = false
     @State private var showWelcome = false
@@ -40,6 +41,7 @@ struct ContentView: View {
     enum Tab: Int {
         case backlog = 0
         case today = 1
+        case archive = 2
     }
     
     var body: some View {
@@ -52,6 +54,7 @@ struct ContentView: View {
                         selectedTab = Tab(rawValue: newValue) ?? .backlog
                     }
                 ),
+                pageCount: 3,
                 page0: {
                     if let backlogVM = backlogViewModel {
                         BacklogView(
@@ -65,6 +68,13 @@ struct ContentView: View {
                 page1: {
                     if let dailyViewModel = dailyFocusViewModel, let backlogVM = backlogViewModel {
                         DailyFocusView(viewModel: dailyViewModel, backlogViewModel: backlogVM)
+                    } else {
+                        ProgressView()
+                    }
+                },
+                page2: {
+                    if let archiveVM = archiveViewModel {
+                        ArchiveView(viewModel: archiveVM)
                     } else {
                         ProgressView()
                     }
@@ -138,8 +148,8 @@ struct ContentView: View {
                     .foregroundStyle(.secondary)
                     .frame(width: 32, height: 32)
                     .contentShape(Rectangle())
-                    // Ohne das meldet XCTest oft einen separaten „gearshape.fill“-Button mit ungültigem Aktivierungspunkt,
-                    // während das Label „Einstellungen“/„Settings“ auf dem Eltern-Button liegt.
+                    // Ohne das meldet XCTest oft einen separaten „gearshape.fill"-Button mit ungültigem Aktivierungspunkt,
+                    // während das Label „Einstellungen"/„Settings" auf dem Eltern-Button liegt.
                     .accessibilityHidden(true)
             }
             .buttonStyle(.plain)
@@ -158,11 +168,46 @@ struct ContentView: View {
             }
             .padding(2)
             .background(Color(UIColor.secondarySystemFill), in: Capsule())
+
+            archiveTabButton
         }
         .padding(.horizontal, 12)
         .padding(.top, 4)
         .padding(.bottom, 2)
         .background(.thinMaterial)
+    }
+
+    /// Archiv-Tab-Button mit optionalem Dot-Badge (erscheint nach einem Reset, der neue Tasks archiviert hat).
+    private var archiveTabButton: some View {
+        Button {
+            var transaction = Transaction()
+            transaction.disablesAnimations = true
+            withTransaction(transaction) {
+                selectedTab = .archive
+                settings.hasNewArchivedTasks = false
+                archiveViewModel?.loadArchivedTasks()
+            }
+        } label: {
+            ZStack(alignment: .topTrailing) {
+                Image(systemName: selectedTab == .archive ? "archivebox.fill" : "archivebox")
+                    .font(.body)
+                    .foregroundStyle(selectedTab == .archive ? Color.primary : Color.secondary)
+                    .frame(width: 36, height: 32)
+                    .contentShape(Rectangle())
+                    .accessibilityHidden(true)
+
+                if settings.hasNewArchivedTasks {
+                    Circle()
+                        .fill(Color.orange)
+                        .frame(width: 8, height: 8)
+                        .offset(x: -4, y: 4)
+                }
+            }
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(String(localized: "tabs.archive", defaultValue: "Archive"))
+        .accessibilityAddTraits(selectedTab == .archive ? .isSelected : [])
+        .accessibilityIdentifier("ToolbarArchiveButton")
     }
 
     private func tabSwitchButton(title: String, tab: Tab) -> some View {
@@ -217,6 +262,7 @@ struct ContentView: View {
         backlogVM.loadBacklogs()
         backlogVM.loadCategories()
         dailyFocusViewModel?.loadDailyTasks()
+        archiveViewModel?.loadArchivedTasks()
         #endif
     }
 
@@ -236,6 +282,8 @@ struct ContentView: View {
             syncEngine: syncEngine,
             resetEngine: resetEngine
         )
+
+        archiveViewModel = ArchiveViewModel(modelContext: modelContext)
     }
     
     // MARK: - Tab Selection Logic
@@ -269,10 +317,12 @@ struct ContentView: View {
 /// `UIGestureRecognizerRepresentable` (iOS 18+). Der Delegate stellt sicher, dass
 /// der Pager *immer* hinter Row-Swipe-Gesten zurücktritt — exakt das Pattern,
 /// das Apple Erinnerungen für die Back-Geste verwendet.
-private struct TabPager<Page0: View, Page1: View>: View {
+private struct TabPager<Page0: View, Page1: View, Page2: View>: View {
     @Binding var selectedIndex: Int
+    let pageCount: Int
     @ViewBuilder var page0: () -> Page0
     @ViewBuilder var page1: () -> Page1
+    @ViewBuilder var page2: () -> Page2
 
     @State private var dragOffset: CGFloat = 0
     @State private var isDragging: Bool = false
@@ -290,6 +340,8 @@ private struct TabPager<Page0: View, Page1: View>: View {
                     .frame(width: width)
                 page1()
                     .frame(width: width)
+                page2()
+                    .frame(width: width)
             }
             .frame(width: width, alignment: .leading)
             .offset(x: -CGFloat(selectedIndex) * width + dragOffset)
@@ -301,7 +353,7 @@ private struct TabPager<Page0: View, Page1: View>: View {
                     onChanged: { tx in
                         isDragging = true
                         let atLeftEdge = selectedIndex == 0 && tx > 0
-                        let atRightEdge = selectedIndex == 1 && tx < 0
+                        let atRightEdge = selectedIndex == pageCount - 1 && tx < 0
                         dragOffset = (atLeftEdge || atRightEdge) ? tx / 3 : tx
                     },
                     onEnded: { tx, vx in
@@ -309,10 +361,10 @@ private struct TabPager<Page0: View, Page1: View>: View {
                         let velocityThreshold: CGFloat = 400
 
                         withAnimation(Self.snapAnimation) {
-                            if (tx < -distanceThreshold || vx < -velocityThreshold), selectedIndex == 0 {
-                                selectedIndex = 1
-                            } else if (tx > distanceThreshold || vx > velocityThreshold), selectedIndex == 1 {
-                                selectedIndex = 0
+                            if (tx < -distanceThreshold || vx < -velocityThreshold), selectedIndex < pageCount - 1 {
+                                selectedIndex += 1
+                            } else if (tx > distanceThreshold || vx > velocityThreshold), selectedIndex > 0 {
+                                selectedIndex -= 1
                             }
                             dragOffset = 0
                             isDragging = false
