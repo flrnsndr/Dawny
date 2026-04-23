@@ -58,12 +58,12 @@ struct SettingsView: View {
                 String(localized: "makeitcount.alert.title", defaultValue: "Make it count is essential"),
                 isPresented: $showMakeItCountLockedAlert
             ) {
-                Button(String(localized: "settings.done", defaultValue: "Done"), role: .cancel) {}
+                Button(String(localized: "makeitcount.alert.confirm", defaultValue: "Sounds great"), role: .cancel) {}
             } message: {
                 Text(
                     String(
                         localized: "makeitcount.alert.message",
-                        defaultValue: "This is one of Dawny's core features. Tasks that are repeatedly not completed are archived so your backlog stays focused and meaningful. It can't be turned off."
+                        defaultValue: "This is one of Dawny's core features. Tasks that are not completed are archived so your backlog stays focused and meaningful.\n\nTherefore, Make it count cannot be disabled in Dawny."
                     )
                 )
             }

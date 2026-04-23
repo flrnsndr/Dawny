@@ -83,7 +83,7 @@ struct WelcomeView: View {
         VStack(spacing: 0) {
             TabView(selection: $currentPage) {
                 ForEach(Array(pages.enumerated()), id: \.offset) { index, page in
-                    pageView(page)
+                    pageView(page, pageIndex: index)
                         .tag(index)
                 }
             }
@@ -100,8 +100,9 @@ struct WelcomeView: View {
 
     // MARK: - Page Content
 
-    private func pageView(_ page: WelcomePage) -> some View {
-        VStack(spacing: 28) {
+    private func pageView(_ page: WelcomePage, pageIndex: Int) -> some View {
+        let isMakeItCountPage = pageIndex == pages.count - 1
+        return VStack(spacing: 28) {
             Spacer()
 
             Image(systemName: page.icon)
@@ -125,6 +126,12 @@ struct WelcomeView: View {
             .padding(.horizontal, 36)
 
             Spacer()
+
+            if isMakeItCountPage {
+                makeItCountCheckbox
+                    .padding(.horizontal, 32)
+            }
+
             Spacer()
         }
     }
@@ -136,8 +143,6 @@ struct WelcomeView: View {
             pageIndicator
 
             if currentPage == pages.count - 1 {
-                makeItCountCheckbox
-
                 Button(action: onDismiss) {
                     Text(String(localized: "welcome.cta.start", defaultValue: "Get started"))
                         .font(.headline)
@@ -167,12 +172,12 @@ struct WelcomeView: View {
             String(localized: "makeitcount.alert.title", defaultValue: "Make it count is essential"),
             isPresented: $showMakeItCountLockedAlert
         ) {
-            Button(String(localized: "settings.done", defaultValue: "Done"), role: .cancel) {}
+            Button(String(localized: "makeitcount.alert.confirm", defaultValue: "Sounds great"), role: .cancel) {}
         } message: {
             Text(
                 String(
                     localized: "makeitcount.alert.message",
-                    defaultValue: "This is one of Dawny's core features. Tasks that are repeatedly not completed are archived so your backlog stays focused and meaningful. It can't be turned off."
+                    defaultValue: "This is one of Dawny's core features. Tasks that are not completed are archived so your backlog stays focused and meaningful.\n\nTherefore, Make it count cannot be disabled in Dawny."
                 )
             )
         }
@@ -184,16 +189,17 @@ struct WelcomeView: View {
         Button {
             showMakeItCountLockedAlert = true
         } label: {
-            HStack(spacing: 10) {
+            HStack(spacing: 12) {
                 Image(systemName: "checkmark.square.fill")
-                    .font(.title3)
+                    .font(.system(size: 30, weight: .medium))
                     .foregroundStyle(.indigo)
                 Text(String(localized: "welcome.makeitcount.checkbox", defaultValue: "Make it count"))
-                    .font(.subheadline.weight(.medium))
+                    .font(.title3.weight(.semibold))
                     .foregroundStyle(.primary)
-                Spacer()
+                    .multilineTextAlignment(.center)
             }
             .padding(.horizontal, 4)
+            .frame(maxWidth: .infinity, alignment: .center)
         }
         .buttonStyle(.plain)
         .accessibilityLabel(String(localized: "welcome.makeitcount.checkbox", defaultValue: "Make it count"))

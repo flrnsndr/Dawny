@@ -11776,13 +11776,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Das ist eines der Kern-Features von Dawny. Tasks, die wiederholt nicht erledigt werden, werden archiviert, damit dein Backlog fokussiert und bedeutsam bleibt. Es kann nicht deaktiviert werden."
+            "value" : "Das ist eines der Kern-Features von Dawny. Tasks, die nicht erledigt werden, werden archiviert, damit dein Backlog fokussiert und bedeutsam bleibt.\n\nDaher kann Make it count in Dawny nicht deaktiviert werden."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This is one of Dawny's core features. Tasks that are repeatedly not completed are archived so your backlog stays focused and meaningful. It can't be turned off."
+            "value" : "This is one of Dawny's core features. Tasks that are not completed are archived so your backlog stays focused and meaningful.\n\nTherefore, Make it count cannot be disabled in Dawny."
           }
         }
       }
@@ -11801,6 +11801,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Make it count is essential"
+          }
+        }
+      }
+    },
+    "makeitcount.alert.confirm" : {
+      "comment" : "Make it count · Alert dismiss button — affirmative acknowledgment.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klingt super"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sounds great"
           }
         }
       }
