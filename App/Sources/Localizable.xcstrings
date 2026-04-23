@@ -7810,66 +7810,6 @@
         }
       }
     },
-    "settings.category.description" : {
-      "comment" : "Settings · Footer text below category toggle · Plain sentence explaining the toggle.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Organisiere deine Backlog-Aufgaben in Kategorien."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Organize your backlog tasks into categories."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Organiza las tareas de tu Backlog por categorías."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Organisez les tâches de votre Backlog en catégories."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Organizza le attività del Backlog in categorie."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "バックログのタスクをカテゴリで整理します。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "백로그 작업을 카테고리로 정리합니다."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Organize as tarefas do seu Backlog em categorias."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "将待办清单中的任务按分类整理。"
-          }
-        }
-      }
-    },
     "settings.category.section" : {
       "comment" : "Settings · Section header for category-related toggles · Plural noun phrase.",
       "extractionState" : "manual",
@@ -8046,66 +7986,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "调试"
-          }
-        }
-      }
-    },
-    "settings.display.description" : {
-      "comment" : "Settings · Footer text below display toggle · Plain sentence.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zeigt erledigte Aufgaben im „Heute“-Tab."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Shows completed tasks in the Today tab."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Muestra las tareas completadas en la pestaña Hoy."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Affiche les tâches terminées dans l’onglet Aujourd’hui."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mostra le attività completate nella scheda Oggi."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "「今日」タブに完了済みのタスクを表示します。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "‘오늘’ 탭에 완료된 작업을 표시합니다."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mostra as tarefas concluídas na aba Hoje."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在“今天”标签页显示已完成的任务。"
           }
         }
       }
@@ -8530,66 +8410,6 @@
         }
       }
     },
-    "settings.reset.description" : {
-      "comment" : "Settings · Footer text below reset-time picker · Plain sentence explaining the daily reset.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nicht erledigte Aufgaben werden täglich um diese Uhrzeit zurück ins Backlog verschoben."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uncompleted tasks will be moved back to the backlog daily at this time."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Las tareas sin completar se devolverán al Backlog cada día a esta hora."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Chaque jour à cette heure, les tâches non terminées sont renvoyées vers le Backlog."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Le attività non completate vengono riportate nel Backlog ogni giorno a quest’ora."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "未完了のタスクは毎日この時刻にバックログへ戻されます。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "완료되지 않은 작업은 매일 이 시각에 백로그로 다시 이동합니다."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tarefas não concluídas voltam para o Backlog diariamente neste horário."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "未完成的任务会在每天的这个时间移回待办清单。"
-          }
-        }
-      }
-    },
     "settings.reset.section" : {
       "comment" : "Settings · Section header for the daily reset configuration · Single noun.",
       "extractionState" : "manual",
@@ -8651,61 +8471,61 @@
       }
     },
     "settings.reset.time" : {
-      "comment" : "Settings · DatePicker label for the daily reset time · Noun phrase.",
+      "comment" : "Settings · DatePicker label · Daily reset clock time.",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reset-Zeit"
+            "value" : "Uhrzeit für täglichen Reset"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reset Time"
+            "value" : "Time for daily reset"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hora de restablecimiento"
+            "value" : "Hora del reinicio diario"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Heure de réinitialisation"
+            "value" : "Heure du réinitialisation quotidienne"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ora di reimpostazione"
+            "value" : "Ora del ripristino giornaliero"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "リセット時刻"
+            "value" : "日次リセットの時刻"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "초기화 시각"
+            "value" : "매일 초기화 시각"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Horário de redefinição"
+            "value" : "Horário da redefinição diária"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "重置时间"
+            "value" : "每日重置时间"
           }
         }
       }
@@ -9006,6 +8826,66 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "显示欢迎页面"
+          }
+        }
+      }
+    },
+    "settings.welcome.showAgain" : {
+      "comment" : "Settings · Footer button · Re-opens the welcome onboarding.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Willkommensnachricht erneut anzeigen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show welcome message again"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volver a mostrar el mensaje de bienvenida"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher à nouveau le message de bienvenue"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra di nuovo il messaggio di benvenuto"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ウェルカムメッセージをもう一度表示"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "환영 메시지 다시 보기"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar mensagem de boas-vindas novamente"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "再次显示欢迎信息"
           }
         }
       }
@@ -11823,74 +11703,20 @@
         }
       }
     },
-    "settings.makeitcount.description" : {
-      "comment" : "Settings · Make it count section · Description text below the stepper.",
+    "settings.makeitcount.label" : {
+      "comment" : "Settings · Make it count · Explanation beside the numeric counter (no number in string).",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nicht-wiederkehrende Tasks, die nach dem Reset nicht erledigt wurden, werden archiviert. Wiederkehrende Tasks kehren immer ins Backlog zurück."
+            "value" : "Make it count. Task archivieren, wenn sie so häufig nicht erledigt wurde"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Non-recurring tasks that are not completed after the daily reset will be archived. Recurring tasks always return to the backlog."
-          }
-        }
-      }
-    },
-    "settings.makeitcount.disable" : {
-      "comment" : "Settings · Make it count section · Button label to attempt disabling (triggers locked alert).",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Make it count deaktivieren"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Disable Make it count"
-          }
-        }
-      }
-    },
-    "settings.makeitcount.section" : {
-      "comment" : "Settings · Section title for Make it count settings.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Make it count"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Make it count"
-          }
-        }
-      }
-    },
-    "settings.makeitcount.stepper" : {
-      "comment" : "Settings · Make it count stepper label. Uses interpolated threshold number.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Archivieren nach \\(settings.makeItCountThreshold) verpasstem Tag(en)"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Archive after \\(settings.makeItCountThreshold) missed day(s)"
+            "value" : "Make it count. Archive a task if it was incomplete on Today."
           }
         }
       }

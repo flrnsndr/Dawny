@@ -54,7 +54,7 @@ final class Task {
     /// erzeugten Backlog-Clone in Verbindung.
     var recurringCloneID: UUID? = nil
 
-    /// Zählt wie oft der Task beim automatischen Reset nicht erledigt war.
+    /// Zählt, wie oft der Task im Heute-Tab lag und beim täglichen Reset noch nicht erledigt war.
     /// Wird bei manuellem Zurücklegen und bei Unarchivierung auf 0 gesetzt.
     var resetCount: Int = 0
 

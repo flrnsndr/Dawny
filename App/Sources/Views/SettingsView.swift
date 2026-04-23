@@ -10,8 +10,11 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct SettingsView: View {
+
+    private static let makeItCountThresholdRange = 1...7
     @Bindable var settings: AppSettings
     @Environment(\.dismiss) private var dismiss
     
@@ -41,8 +44,6 @@ struct SettingsView: View {
         self._resetTime = State(initialValue: calendar.date(from: components) ?? Date())
     }
     
-    @State private var showMakeItCountLockedAlert = false
-
     var body: some View {
         NavigationStack {
             Form {
@@ -50,38 +51,15 @@ struct SettingsView: View {
                 resetSection
                 makeItCountSection
                 synchronisationSection
-                displaySection
-                categorySection
-                infoSection
+                appearanceSection
             }
-            .alert(
-                String(localized: "makeitcount.alert.title", defaultValue: "Make it count is essential"),
-                isPresented: $showMakeItCountLockedAlert
-            ) {
-                Button(String(localized: "makeitcount.alert.confirm", defaultValue: "Sounds great"), role: .cancel) {}
-            } message: {
-                Text(
-                    String(
-                        localized: "makeitcount.alert.message",
-                        defaultValue: "This is one of Dawny's core features. Tasks that are not completed are archived so your backlog stays focused and meaningful.\n\nTherefore, Make it count cannot be disabled in Dawny."
-                    )
-                )
+            .listSectionSpacing(.compact)
+            .safeAreaInset(edge: .bottom, spacing: 0) {
+                settingsBottomChrome
             }
             .navigationTitle(String(localized: "settings.title", defaultValue: "Settings"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                if let onRequestShowWelcome {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button {
-                            dismiss()
-                            onRequestShowWelcome()
-                        } label: {
-                            Image(systemName: "questionmark.circle")
-                        }
-                        .accessibilityLabel(String(localized: "settings.welcome.help", defaultValue: "Show welcome screen"))
-                        .accessibilityIdentifier("SettingsShowWelcomeButton")
-                    }
-                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(String(localized: "settings.done", defaultValue: "Done")) {
                         dismiss()
@@ -96,7 +74,7 @@ struct SettingsView: View {
     @ViewBuilder
     private var debugSection: some View {
         if onRequestAddTestItems != nil || onRequestDeleteAll != nil {
-            Section(String(localized: "settings.debug.section", defaultValue: "Debug")) {
+            Section {
                 if let onRequestAddTestItems {
                     Button {
                         onRequestAddTestItems()
@@ -125,51 +103,74 @@ struct SettingsView: View {
     }
     
     private var makeItCountSection: some View {
-        Section(String(localized: "settings.makeitcount.section", defaultValue: "Make it count")) {
-            Stepper(
-                value: $settings.makeItCountThreshold,
-                in: 1...7
-            ) {
-                HStack {
-                    Text(
-                        String(
-                            localized: "settings.makeitcount.stepper",
-                            defaultValue: "Archive after \(settings.makeItCountThreshold) missed day(s)"
-                        )
-                    )
-                    Spacer()
-                }
-            }
+        Section {
+            HStack(alignment: .center, spacing: 12) {
+                Text(String(localized: "settings.makeitcount.label", defaultValue: "Make it count. Archive a task if it was incomplete on Today."))
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
 
-            Text(
-                String(
-                    localized: "settings.makeitcount.description",
-                    defaultValue: "Non-recurring tasks that are not completed after the daily reset will be archived. Recurring tasks always return to the backlog."
-                )
-            )
-            .font(.caption)
-            .foregroundColor(.secondary)
-
-            Button {
-                showMakeItCountLockedAlert = true
-            } label: {
-                HStack {
-                    Label(
-                        String(localized: "settings.makeitcount.disable", defaultValue: "Disable Make it count"),
-                        systemImage: "lock.fill"
-                    )
-                    .foregroundStyle(.secondary)
-                    Spacer()
-                }
+                makeItCountThresholdPill
             }
-            .buttonStyle(.plain)
         }
     }
 
+    private var makeItCountThresholdPill: some View {
+        let range = Self.makeItCountThresholdRange
+        return HStack(spacing: 0) {
+            Button {
+                if settings.makeItCountThreshold > range.lowerBound {
+                    settings.makeItCountThreshold -= 1
+                }
+            } label: {
+                Image(systemName: "minus")
+                    .font(.body.weight(.medium))
+                    .frame(width: 38, height: 34)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .disabled(settings.makeItCountThreshold <= range.lowerBound)
+
+            makeItCountPillDivider
+
+            Text("\(settings.makeItCountThreshold)")
+                .font(.body.weight(.medium))
+                .monospacedDigit()
+                .frame(minWidth: 26)
+
+            makeItCountPillDivider
+
+            Button {
+                if settings.makeItCountThreshold < range.upperBound {
+                    settings.makeItCountThreshold += 1
+                }
+            } label: {
+                Image(systemName: "plus")
+                    .font(.body.weight(.medium))
+                    .frame(width: 38, height: 34)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .disabled(settings.makeItCountThreshold >= range.upperBound)
+        }
+        .foregroundStyle(.primary)
+        .padding(.horizontal, 2)
+        .padding(.vertical, 4)
+        .background(Color(uiColor: .secondarySystemFill))
+        .clipShape(Capsule())
+        .accessibilityElement(children: .combine)
+        .accessibilityIdentifier("SettingsMakeItCountThreshold")
+    }
+
+    private var makeItCountPillDivider: some View {
+        Rectangle()
+            .fill(Color.primary.opacity(0.12))
+            .frame(width: 1, height: 22)
+    }
+
     private var resetSection: some View {
-        Section(String(localized: "settings.reset.section", defaultValue: "Reset")) {
+        Section {
             DatePicker(
-                String(localized: "settings.reset.time", defaultValue: "Reset Time"),
+                String(localized: "settings.reset.time", defaultValue: "Time for daily reset"),
                 selection: $resetTime,
                 displayedComponents: .hourAndMinute
             )
@@ -177,37 +178,24 @@ struct SettingsView: View {
                 let hour = Calendar.current.component(.hour, from: newValue)
                 settings.resetHour = hour
             }
-            
-            Text(String(localized: "settings.reset.description", defaultValue: "Uncompleted tasks will be moved back to the backlog daily at this time."))
-                .font(.caption)
-                .foregroundColor(.secondary)
         }
     }
     
     private var synchronisationSection: some View {
-        Section(String(localized: "settings.sync.section", defaultValue: "Synchronization")) {
+        Section {
             Toggle(String(localized: "settings.sync.toggle", defaultValue: "Calendar Sync"), isOn: $settings.calendarSyncEnabled)
-            
+        } footer: {
             Text(String(localized: "settings.sync.description", defaultValue: "Synchronizes Daily Focus tasks with iOS Reminders."))
-                .font(.caption)
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
     
-    private var displaySection: some View {
-        Section(String(localized: "settings.display.section", defaultValue: "Display")) {
+    private var appearanceSection: some View {
+        Section {
             Toggle(String(localized: "settings.display.toggle", defaultValue: "Show Completed Tasks"), isOn: $settings.showCompletedTasksInToday)
-            
-            Text(String(localized: "settings.display.description", defaultValue: "Shows completed tasks in the Today tab."))
-                .font(.caption)
-                .foregroundColor(.secondary)
-        }
-    }
-    
-    private var categorySection: some View {
-        Section(String(localized: "settings.category.section", defaultValue: "Backlog Categories")) {
             Toggle(String(localized: "settings.category.toggle", defaultValue: "Show Categories"), isOn: $settings.showCategories)
-            
+
             if settings.showCategories {
                 Picker(String(localized: "settings.category.default", defaultValue: "Default Category for New Tasks"), selection: $settings.defaultCategoryType) {
                     ForEach(TaskCategory.allCases.filter { $0 != .uncategorized && $0 != .custom }, id: \.self) { category in
@@ -219,31 +207,49 @@ struct SettingsView: View {
                     }
                 }
             }
-            
-            Text(String(localized: "settings.category.description", defaultValue: "Organize your backlog tasks into categories."))
-                .font(.caption)
-                .foregroundColor(.secondary)
         }
     }
     
-    private var infoSection: some View {
-        Section(String(localized: "settings.info.section", defaultValue: "Info")) {
-            HStack {
-                Text(String(localized: "settings.info.version", defaultValue: "Version"))
-                Spacer()
-                Text(appVersion)
-                    .foregroundColor(.secondary)
+    private var settingsBottomChrome: some View {
+        VStack(spacing: 10) {
+            if let onRequestShowWelcome {
+                Button {
+                    dismiss()
+                    onRequestShowWelcome()
+                } label: {
+                    Text(String(localized: "settings.welcome.showAgain", defaultValue: "Show welcome message again"))
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("SettingsShowWelcomeButton")
             }
-            
-            HStack {
-                Text(String(localized: "settings.info.build", defaultValue: "Build"))
-                Spacer()
-                Text(appBuild)
-                    .foregroundColor(.secondary)
-            }
+
+            Text(versionBuildFooterLine)
+                .font(.caption2)
+                .foregroundStyle(.tertiary)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity)
+                .accessibilityLabel(versionBuildAccessibilityLabel)
         }
+        .padding(.horizontal, 16)
+        .padding(.top, 12)
+        .padding(.bottom, 8)
+        .background(Color(uiColor: .systemGroupedBackground))
     }
-    
+
+    private var versionBuildFooterLine: String {
+        "\(appVersion) (\(appBuild))"
+    }
+
+    private var versionBuildAccessibilityLabel: String {
+        let versionLabel = String(localized: "settings.info.version", defaultValue: "Version")
+        let buildLabel = String(localized: "settings.info.build", defaultValue: "Build")
+        return "\(versionLabel) \(appVersion), \(buildLabel) \(appBuild)"
+    }
+
     // MARK: - Computed Properties
     
     private var appVersion: String {

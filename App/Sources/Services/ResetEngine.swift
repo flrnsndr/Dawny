@@ -94,7 +94,7 @@ final class ResetEngine {
                 if task.resetCount >= threshold {
                     task.archive()
                     hasArchivedAnyTask = true
-                    print("📦 Archived task '\(task.title)' after \(task.resetCount) missed reset(s)")
+                    print("📦 Archived task '\(task.title)' after \(task.resetCount) incomplete day(s) on Today")
                 } else {
                     task.resetToBacklog()
                     let offset = TimeInterval(-index) * 0.001
