@@ -22,6 +22,7 @@ final class ResetEngineTests: XCTestCase {
     var calendarService: MockCalendarService!
     var syncEngine: SyncEngine!
     var resetEngine: ResetEngine!
+    private var originalMakeItCountThreshold: Int!
     
     override func setUp() async throws {
         container = try TestModelContainer.create()
@@ -35,11 +36,18 @@ final class ResetEngineTests: XCTestCase {
         
         // Setze Standard-Reset-Zeit für Tests (3 Uhr)
         AppSettings.shared.resetHour = 3
+        
+        // Make-it-count-Archiv-Logik aus: Legacy-Tests erwarten .inBacklog, nicht .archived
+        originalMakeItCountThreshold = AppSettings.shared.makeItCountThreshold
+        AppSettings.shared.makeItCountThreshold = 99
     }
     
     override func tearDown() async throws {
         // Bereinige Settings nach jedem Test
         AppSettings.shared.resetHour = 3
+        if let originalMakeItCountThreshold {
+            AppSettings.shared.makeItCountThreshold = originalMakeItCountThreshold
+        }
     }
     
     // MARK: - Helper
