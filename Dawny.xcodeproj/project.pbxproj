@@ -414,9 +414,9 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_SECURITY_COMPILER_WARNINGS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_BGTaskSchedulerPermittedIdentifiers = Flo.Dawny.reset;
 				INFOPLIST_KEY_CFBundleDisplayName = Dawny;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "Dawny syncs your daily focus tasks with Apple Reminders.";
 				INFOPLIST_KEY_NSSiriUsageDescription = "Dawny lets you add tasks hands-free with Siri.";
@@ -457,9 +457,9 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_SECURITY_COMPILER_WARNINGS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_BGTaskSchedulerPermittedIdentifiers = Flo.Dawny.reset;
 				INFOPLIST_KEY_CFBundleDisplayName = Dawny;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "Dawny syncs your daily focus tasks with Apple Reminders.";
 				INFOPLIST_KEY_NSSiriUsageDescription = "Dawny lets you add tasks hands-free with Siri.";

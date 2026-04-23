@@ -26,6 +26,7 @@ struct ContentView: View {
     @Bindable private var settings: AppSettings = .shared
     #if DEBUG
     @State private var showingClearAllConfirm = false
+    @State private var listContentRemount = 0
     #endif
 
     private var clearAllAction: (() -> Void)? {
@@ -69,6 +70,11 @@ struct ContentView: View {
                     }
                 }
             )
+            // DEBUG: Wird mit `listContentRemount` erhöht, damit Listen/Zellen nach
+            // Massenlöschung wirklich neu entstehen (keine hängenden SwiftData-Referenzen).
+            #if DEBUG
+            .id(listContentRemount)
+            #endif
             .ignoresSafeArea(.keyboard, edges: .bottom)
         }
         .environment(\.triggerWelcomeFlow) {
@@ -197,23 +203,20 @@ struct ContentView: View {
     private func clearAllBacklogTasks() async {
         #if DEBUG
         guard let backlogVM = backlogViewModel else { return }
-        let backlogTasks = backlogVM.backlogTasks
-        let todayTasks = dailyFocusViewModel?.dailyTasks ?? []
 
+        // DailyFocus-Display SOFORT leeren – innerhalb deleteAllTasks()
+        // wird auch clearTasksFromDisplayOnly() für den BacklogVM aufgerufen,
+        // beides SYNCHRON VOR dem save(), damit kein SwiftUI-Render mit
+        // tombstoned Tasks passiert.
         dailyFocusViewModel?.clearTasksFromDisplayOnly()
 
-        for task in backlogTasks {
-            await backlogVM.deleteTask(task)
-        }
+        // Calendar-Sync (darf yielden) + synchroner Delete-Block.
+        await backlogVM.deleteAllTasks()
 
-        if let dfvm = dailyFocusViewModel {
-            for task in todayTasks {
-                await dfvm.deleteTask(task)
-            }
-        }
-
+        listContentRemount += 1
         backlogVM.loadBacklogs()
         backlogVM.loadCategories()
+        dailyFocusViewModel?.loadDailyTasks()
         #endif
     }
 

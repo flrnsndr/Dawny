@@ -27,6 +27,7 @@ enum CategoryEditError: LocalizedError {
     case protectedFromRename
     case protectedFromIconChange
     case protectedFromDelete
+    case protectedFromRecurring
     case uncategorizedMissing
     case persistence(underlying: Error)
 
@@ -43,7 +44,7 @@ enum CategoryEditError: LocalizedError {
                 defaultValue: "The name may be at most %lld characters."
             )
             return String(format: format, locale: .current, maxLength)
-        case .protectedFromRename, .protectedFromIconChange, .protectedFromDelete:
+        case .protectedFromRename, .protectedFromIconChange, .protectedFromDelete, .protectedFromRecurring:
             return String(
                 localized: "category.edit.errorProtected",
                 defaultValue: "This category can't be modified."
@@ -70,40 +71,132 @@ final class CategoryService {
         self.modelContext = modelContext
     }
     
-    /// Initialisiert die Standard-Kategorien beim ersten App-Start
+    /// Initialisiert die Standard-Kategorien beim ersten App-Start und
+    /// legt bei Bedarf die Standard-„Wiederkehrende Aufgaben“-Kategorie an (Idempotent / Migration).
     func initializeDefaultCategories() {
-        // Prüfe ob bereits Kategorien existieren
         let descriptor = FetchDescriptor<Category>()
         do {
-            let existingCategories = try modelContext.fetch(descriptor)
-            
-            if !existingCategories.isEmpty {
-                // Kategorien existieren bereits
-                return
+            var allCategories = try modelContext.fetch(descriptor)
+
+            if allCategories.isEmpty {
+                let types: [TaskCategory] = [.quick, .thisWeek, .thisMonth, .thisYear, .someday, .uncategorized]
+                for categoryType in types {
+                    let category = Category(
+                        categoryType: categoryType,
+                        orderIndex: categoryType.defaultOrderIndex,
+                        isUncategorized: categoryType == .uncategorized
+                    )
+                    modelContext.insert(category)
+                }
+                try modelContext.save()
+                allCategories = try modelContext.fetch(descriptor)
+            }
+
+            if !allCategories.contains(where: { $0.isRecurring }) {
+                let defaultName = String(
+                    localized: "category.recurring.default.name",
+                    defaultValue: "Recurring Tasks"
+                )
+                let recurring = try makeRecurringDefaultCategory(
+                    allCategories: &allCategories,
+                    defaultName: defaultName
+                )
+                modelContext.insert(recurring)
+                try modelContext.save()
+            } else {
+                try repositionDefaultRecurringBeforeUncategorizedIfNeeded()
+                try modelContext.save()
             }
         } catch {
-            // Fehler beim Laden - versuche trotzdem zu erstellen
-            print("Fehler beim Laden der Kategorien: \(error)")
+            print("Fehler bei Standard-Kategorien / wiederkehrender Default: \(error)")
         }
-        
-        // Erstelle alle Standard-Kategorien
-        let categories: [TaskCategory] = [.quick, .thisWeek, .thisMonth, .thisYear, .someday, .uncategorized]
-        
-        for categoryType in categories {
-            let category = Category(
-                categoryType: categoryType,
-                orderIndex: categoryType.defaultOrderIndex,
-                isUncategorized: categoryType == .uncategorized
+    }
+
+    // MARK: - Recurring default placement (direkt vor „Unkategorisiert“)
+
+    private static let fallbackDefaultRecurringNames: Set<String> = [
+        "Recurring Tasks",
+        "Wiederkehrende Aufgaben"
+    ]
+
+    private func isLikelyDefaultRecurringCategory(_ category: Category) -> Bool {
+        guard category.isRecurring, category.categoryType == .custom else { return false }
+        let loc = String(
+            localized: "category.recurring.default.name",
+            defaultValue: "Recurring Tasks"
+        )
+        if category.name == loc { return true }
+        if Self.fallbackDefaultRecurringNames.contains(category.name) { return true }
+        return false
+    }
+
+    /// Jede Kategorie mit `orderIndex >= target` rückt um eins hoch, danach entsteht freier Slot ``target`` (Einfügen der wiederkehrenden Default-Kategorie).
+    private func shiftOrderIndicesUp(from target: Int, excluding: Category? = nil) {
+        let descriptor = FetchDescriptor<Category>()
+        guard let all = try? modelContext.fetch(descriptor) else { return }
+        for c in all where c.id != excluding?.id && c.orderIndex >= target {
+            c.orderIndex += 1
+        }
+    }
+
+    private func makeRecurringDefaultCategory(
+        allCategories: inout [Category],
+        defaultName: String
+    ) throws -> Category {
+        guard let uncat = getUncategorizedCategory() else {
+            let next = (allCategories.map(\.orderIndex).max() ?? -1) + 1
+            return Category(
+                categoryType: .custom,
+                name: defaultName,
+                iconName: "arrow.triangle.2.circlepath",
+                orderIndex: next,
+                isUncategorized: false,
+                isNameCustomized: true,
+                isIconCustomized: true,
+                isRecurring: true
             )
-            modelContext.insert(category)
         }
-        
-        // Speichere die Kategorien
-        do {
-            try modelContext.save()
-        } catch {
-            print("Fehler beim Speichern der Standard-Kategorien: \(error)")
+        let target = uncat.orderIndex
+        shiftOrderIndicesUp(from: target, excluding: nil)
+        return Category(
+            categoryType: .custom,
+            name: defaultName,
+            iconName: "arrow.triangle.2.circlepath",
+            orderIndex: target,
+            isUncategorized: false,
+            isNameCustomized: true,
+            isIconCustomized: true,
+            isRecurring: true
+        )
+    }
+
+    private static let recurringOrderMigratedKey = "DawnyMigratedRecurringDefaultBeforeUncategorizedV1"
+
+    /// Einmal: Standard-„Wiederkehrende Aufgaben“ (falls noch unter Unkategorisiert) vorschieben. Danach bleibt die manuelle Sortierung.
+    private func repositionDefaultRecurringBeforeUncategorizedIfNeeded() throws {
+        guard !UserDefaults.standard.bool(forKey: Self.recurringOrderMigratedKey) else { return }
+        defer { UserDefaults.standard.set(true, forKey: Self.recurringOrderMigratedKey) }
+
+        let descriptor = FetchDescriptor<Category>()
+        let all = try modelContext.fetch(descriptor)
+        guard let uncat = all.first(where: { $0.isUncategorized }) else { return }
+        let candidates = all.filter { isLikelyDefaultRecurringCategory($0) }
+        guard let rec = candidates.sorted(by: { $0.createdAt < $1.createdAt }).first else { return }
+
+        let sorted = all.sorted()
+        guard
+            let uncatIndex = sorted.firstIndex(where: { $0.id == uncat.id }),
+            let recIndex = sorted.firstIndex(where: { $0.id == rec.id })
+        else { return }
+
+        if recIndex < uncatIndex { return }
+
+        rec.orderIndex = 999_999
+        let target = uncat.orderIndex
+        for c in all where c.id != rec.id && c.orderIndex >= target {
+            c.orderIndex += 1
         }
+        rec.orderIndex = target
     }
     
     /// Gibt die "Unkategorisiert"-Kategorie zurück
@@ -138,7 +231,8 @@ final class CategoryService {
     }
     
     /// Legt eine neue benutzerdefinierte Kategorie an (erscheint nach bestehenden Einträgen, typisch unter „Unkategorisiert“).
-    func createCustom(name: String) throws -> Category {
+    /// - Parameter isRecurring: Wenn `true`, passendes Default-Symbol und `isRecurring` auf dem Modell.
+    func createCustom(name: String, isRecurring: Bool = false) throws -> Category {
         let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else {
             throw CategoryEditError.nameEmpty
@@ -151,18 +245,30 @@ final class CategoryService {
         let existing = try modelContext.fetch(descriptor)
         let nextOrderIndex = (existing.map(\.orderIndex).max() ?? -1) + 1
 
+        let icon = isRecurring ? "arrow.triangle.2.circlepath" : TaskCategory.custom.iconName
         let category = Category(
             categoryType: .custom,
             name: trimmed,
-            iconName: TaskCategory.custom.iconName,
+            iconName: icon,
             orderIndex: nextOrderIndex,
             isUncategorized: false,
             isNameCustomized: true,
-            isIconCustomized: true
+            isIconCustomized: true,
+            isRecurring: isRecurring
         )
         modelContext.insert(category)
         try save()
         return category
+    }
+
+    /// Setzt die Eigenschaft „wiederkehrend“ auf einer Kategorie.
+    func setRecurring(_ category: Category, to newValue: Bool) throws {
+        guard category.canToggleRecurring else {
+            throw CategoryEditError.protectedFromRecurring
+        }
+        if category.isRecurring == newValue { return }
+        category.isRecurring = newValue
+        try save()
     }
 
     /// Gibt eine Kategorie nach Typ zurück

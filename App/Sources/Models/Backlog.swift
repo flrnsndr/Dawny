@@ -54,21 +54,28 @@ final class Backlog {
     
     /// Anzahl der Tasks im Backlog
     var taskCount: Int {
-        tasks.filter { $0.status == .inBacklog }.count
+        liveTasks.filter { $0.status == .inBacklog }.count
     }
     
     /// Tasks die im Backlog sind (nicht completed/scheduled)
     var backlogTasks: [Task] {
-        tasks
+        liveTasks
             .filter { $0.status == .inBacklog }
             .sorted()
     }
     
     /// Tasks die completed sind
     var completedTasks: [Task] {
-        tasks
+        liveTasks
             .filter { $0.status == .completed }
             .sorted { $0.modifiedAt > $1.modifiedAt }
+    }
+
+    /// Filtert bereits als gelöscht markierte (tombstoned) Tasks aus der
+    /// Relationship. SwiftData hält solche Referenzen teils noch bis zum
+    /// nächsten Save – Zugriffe auf `status` o.ä. crashen sonst.
+    private var liveTasks: [Task] {
+        tasks.filter { !$0.isDeleted }
     }
     
     // MARK: - Methods

@@ -92,8 +92,9 @@ struct DailyFocusView: View {
                         TaskRowView(
                             task: task,
                             onToggle: {
+                                let taskID = task.id
                                 _Concurrency.Task {
-                                    await viewModel.uncompleteTask(task)
+                                    await viewModel.uncompleteTask(taskID: taskID)
                                 }
                             },
                             onDelete: nil,
@@ -118,8 +119,9 @@ struct DailyFocusView: View {
         TaskRowView(
             task: task,
             onToggle: {
+                let taskID = task.id
                 _Concurrency.Task {
-                    await viewModel.completeTask(task)
+                    await viewModel.completeTask(taskID: taskID)
                 }
             },
             onDelete: nil,

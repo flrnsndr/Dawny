@@ -245,6 +245,47 @@ final class BacklogViewModel {
             errorMessage = String(format: format, error.localizedDescription)
         }
     }
+
+    /// Leert die angezeigte Backlog-Liste sofort, ohne Daten zu löschen.
+    /// Wichtig vor Debug-Massenlöschen, damit keine `TaskRowView` mehr auf
+    /// SwiftData-Tasks zeigt, die gleich getombstoned werden – sonst crasht
+    /// ein SwiftUI-Zwischenrender in `Task.status.getter`.
+    func clearTasksFromDisplayOnly() {
+        currentBacklog = nil
+        backlogs = []
+    }
+
+    /// Löscht *alle* Tasks aus sämtlichen Backlogs.
+    ///
+    /// Ablauf: Calendar-Sync **zuerst** (darf yielden), danach
+    /// `clearTasksFromDisplayOnly()` + Delete + `save()` in einem
+    /// **synchronen** Block (kein `await` dazwischen, damit SwiftUI nicht
+    /// mit tombstoned Task-Objekten rendert).
+    func deleteAllTasks() async {
+        do {
+            let descriptor = FetchDescriptor<Task>()
+            let allTasks = try modelContext.fetch(descriptor)
+
+            for task in allTasks where task.isSyncedToCalendar {
+                await syncEngine.removeTaskFromCalendar(task)
+            }
+
+            // --- Ab hier synchron: kein await, damit SwiftUI nicht dazwischenrendert ---
+            clearTasksFromDisplayOnly()
+
+            for task in allTasks {
+                modelContext.delete(task)
+            }
+
+            try modelContext.save()
+        } catch {
+            let format = String(
+                localized: "error.backlog.delete_task",
+                defaultValue: "Failed to delete task: %@"
+            )
+            errorMessage = String(format: format, error.localizedDescription)
+        }
+    }
     
     /// Markiert einen Task als abgeschlossen
     func completeTask(_ task: Task) async {
@@ -485,11 +526,28 @@ final class BacklogViewModel {
         }
     }
 
+    /// Schaltet die Eigenschaft „wiederkehrend“ für eine Kategorie um.
+    @discardableResult
+    func toggleRecurring(_ category: Category) -> Bool {
+        do {
+            try categoryService.setRecurring(category, to: !category.isRecurring)
+            loadCategories()
+            HapticFeedback.success()
+            return true
+        } catch let error as CategoryEditError {
+            errorMessage = error.errorDescription
+            return false
+        } catch {
+            errorMessage = error.localizedDescription
+            return false
+        }
+    }
+
     /// Legt eine neue benutzerdefinierte Kategorie an.
     @discardableResult
-    func createCategory(name: String) -> Category? {
+    func createCategory(name: String, isRecurring: Bool = false) -> Category? {
         do {
-            let category = try categoryService.createCustom(name: name)
+            let category = try categoryService.createCustom(name: name, isRecurring: isRecurring)
             loadCategories()
             HapticFeedback.success()
             return category
@@ -584,8 +642,9 @@ final class BacklogViewModel {
 
     /// Legt realistische Beispiel-Tasks im Backlog an (für manuelles UI-Testing).
     ///
-    /// Pro Kategorie werden 5 Beispiel-Tasks angelegt. Vier davon (die ersten beiden
-    /// aus *Quick* und *This Week*) werden zusätzlich direkt in den Heute-Tab gelegt,
+    /// Pro Kategorie werden 5 Beispiel-Tasks angelegt (bei wiederkehrenden Kategorien 3).
+    /// Vier davon (die ersten beiden aus *Quick* und *This Week*) werden zusätzlich direkt
+    /// in den Heute-Tab gelegt; bei wiederkehrenden Aufgaben eine Beispielaufgabe in *Heute*,
     /// damit der Heute-View ebenfalls vorgefüllt ist.
     func addDebugTestItems(settings: AppSettings) {
         loadCategories()
@@ -596,7 +655,12 @@ final class BacklogViewModel {
         let todayDate = Calendar.current.startOfDay(for: Date())
 
         for category in assignableCategories {
-            let items = Self.debugTestItems(for: category.categoryType)
+            let items: [DebugTestItem] = {
+                if category.isRecurring {
+                    return Self.recurringDebugTestItems()
+                }
+                return Self.debugTestItems(for: category.categoryType)
+            }()
             for item in items {
                 guard let task = addTask(title: item.title, category: category) else { continue }
                 if item.placeInToday {
@@ -745,5 +809,22 @@ final class BacklogViewModel {
         case .uncategorized, .custom:
             return []
         }
+    }
+
+    private static func recurringDebugTestItems() -> [DebugTestItem] {
+        [
+            DebugTestItem(
+                title: String(localized: "debug.testtask.recurring.1", defaultValue: "Brush teeth"),
+                placeInToday: true
+            ),
+            DebugTestItem(
+                title: String(localized: "debug.testtask.recurring.2", defaultValue: "Drink a glass of water"),
+                placeInToday: false
+            ),
+            DebugTestItem(
+                title: String(localized: "debug.testtask.recurring.3", defaultValue: "5 min stretch break"),
+                placeInToday: false
+            )
+        ]
     }
 }

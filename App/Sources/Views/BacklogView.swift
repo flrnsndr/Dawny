@@ -58,7 +58,10 @@ struct BacklogView: View {
                 CategoryActionMenu(
                     actionsCategory: $actionsCategory,
                     onEdit: { category in beginRenaming(category) },
-                    onDelete: { category in requestDelete(category) }
+                    onDelete: { category in requestDelete(category) },
+                    onToggleRecurring: { category in
+                        _ = viewModel.toggleRecurring(category)
+                    }
                 )
             )
             .modifier(
@@ -154,8 +157,8 @@ struct BacklogView: View {
             }
 
             Section {
-                AddCategoryRow { name in
-                    if let created = viewModel.createCategory(name: name) {
+                AddCategoryRow { name, isRecurring in
+                    if let created = viewModel.createCategory(name: name, isRecurring: isRecurring) {
                         expandedCategories.insert(created.id)
                     }
                 }
@@ -276,6 +279,7 @@ struct BacklogView: View {
                 }
             },
             showBacklogBadge: false,
+            showRecurringTaskBadge: false,
             showsDisabledToggle: true,
             focusedTaskID: $focusedTaskID,
             onSaveTitle: { newTitle in
@@ -311,6 +315,7 @@ struct BacklogView: View {
                 }
             },
             showBacklogBadge: false,
+            showRecurringTaskBadge: false,
             showsDisabledToggle: true,
             focusedTaskID: $focusedTaskID,
             onSaveTitle: { newTitle in
@@ -477,6 +482,7 @@ private struct CategoryActionMenu: ViewModifier {
     @Binding var actionsCategory: Category?
     let onEdit: (Category) -> Void
     let onDelete: (Category) -> Void
+    let onToggleRecurring: (Category) -> Void
 
     func body(content: Content) -> some View {
         content.confirmationDialog(
@@ -493,6 +499,27 @@ private struct CategoryActionMenu: ViewModifier {
                     )
                 ) {
                     onEdit(category)
+                }
+            }
+            if category.canToggleRecurring {
+                Button {
+                    onToggleRecurring(category)
+                } label: {
+                    if category.isRecurring {
+                        Text(
+                            String(
+                                localized: "category.action.unmakeRecurring",
+                                defaultValue: "Remove recurring"
+                            )
+                        )
+                    } else {
+                        Text(
+                            String(
+                                localized: "category.action.makeRecurring",
+                                defaultValue: "Mark as recurring"
+                            )
+                        )
+                    }
                 }
             }
             if category.canDelete {
