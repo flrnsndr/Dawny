@@ -20,7 +20,7 @@ HEADER_MARKER="Licensed under PolyForm Noncommercial 1.0.0"
 
 HEADER=$'// Dawny\n// Copyright (c) 2025-2026 Florian Schneider. All rights reserved.\n// Licensed under PolyForm Noncommercial 1.0.0 \xe2\x80\x94 see LICENSE in the repository root.\n\n'
 
-DIRS=("App" "DawnyTests" "DawnyUITests")
+DIRS=("App" "DawnyTests")
 
 changed=0
 skipped=0
