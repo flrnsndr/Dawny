@@ -16,13 +16,17 @@ Das Xcode-Projekt **`Dawny.xcodeproj`** (in der **Wurzel** des Repositories) bin
 
 1. Repository **klonen** und den Projektordner öffnen.
 2. **`Dawny.xcodeproj`** per Doppelklick öffnen (oder in Xcode: *File → Open*).
-3. Oben das **Scheme „Dawny“** und einen **Simulator** (iOS 18+) wählen.
+3. Oben das **Scheme „Dawny“** und einen **Simulator** mit **iOS 26.2+** wählen.
 4. **⌘ + R** drücken – die App sollte starten.
+
+Beim **ersten Start** kann ein kurzer **Welcome**-Assistent erscheinen; durchtippen oder überspringen, bis die Hauptansicht mit der oberen Leiste sichtbar ist.
 
 ## Was du im Navigator siehst
 
 - **App** – enthält `Sources` (Swift-Code) und `Assets.xcassets`.
 - **DawnyTests** / **DawnyUITests** – Unit- und UI-Tests.
+
+**In der laufenden App** (keine klassische Tab-Leiste unten): oben **Einstellungen** (Zahnrad links), in der Mitte die Umschaltung **Backlog** / **Heute**, rechts **Archiv**. Inhalt und Wischen zwischen den Bereichen **Backlog**, **Heute** und **Archiv** erfolgen über diese Leiste bzw. den Pager darunter.
 
 ## Capabilities (Kalender / Hintergrund)
 
@@ -32,24 +36,30 @@ Falls nötig: Projekt **Dawny** auswählen → Target **Dawny** → Tab **Signin
 
 ### Test 1: Task hinzufügen
 
-1. **Backlog-Tab** (unten rechts)
-2. **+** (oben rechts)
-3. Text eingeben → **Hinzufügen** (oder Return/Fertig)
+1. Oben **Backlog** antippen.
+2. In der Liste nach unten scrollen, bis die **Quick-Entry-Zeile** sichtbar ist (Platzhalter z. B. „Neue Aufgabe …“ auf Deutsch bzw. der Text aus deiner Systemsprache).
+3. Die Zeile antippen, Titel eingeben, mit **Return** (oder dem Bestätigen-Button neben dem Feld, sobald er erscheint) anlegen.
 4. Der Task erscheint in der Liste.
+
+Wenn **Kategorien** in den Einstellungen aktiv sind, gibt es pro aufgeklappter Kategorie eine eigene Quick-Entry-Zeile am Ende der jeweiligen Sektion.
 
 ### Test 2: Task zu „Heute“ verschieben
 
-1. Task nach links wischen
-2. **Heute** antippen
-3. **Heute-Tab** (unten links) – der Task sollte dort sein.
+1. Im **Backlog** eine Task-Zeile **nach rechts wischen**, bis die Aktion **Heute** sichtbar wird (leading Swipe wie in der Erinnerungen-App).
+2. **Heute** antippen.
+3. Oben **Heute** wählen – der Task sollte dort in der Liste stehen.
 
 ### Test 3: Task abschließen
 
-Checkbox antippen – Task wird als erledigt markiert.
+Im **Heute**-Bereich die Checkbox antippen – der Task wird als erledigt markiert.
 
 ### Test 4: Kalender-Sync (echtes Gerät)
 
 Nach Zugriff auf Erinnerungen: Task zu „Heute“ verschieben und in der **Erinnerungen-App** prüfen.
+
+### Test 5: Archiv (optional)
+
+Nach einem **täglichen Reset** können erledigte bzw. archivierte Aufgaben im **Archiv** (Symbol rechts oben) landen – dort kannst du sie einsehen.
 
 ## Häufige Probleme
 
@@ -64,8 +74,7 @@ Prüfen, ob **`App/Sources`** im Projekt sichtbar ist und das Scheme **Dawny** g
 
 ### App startet nicht
 
-- Simulator mit **iOS 18+** wählen
-- **Deployment Target** des Targets auf iOS 18.0 prüfen
+- Simulator mit **iOS 26.2+** wählen (passend zum **Deployment Target** des Targets, derzeit iOS 26.2).
 
 ### Keine Berechtigung für Erinnerungen
 
