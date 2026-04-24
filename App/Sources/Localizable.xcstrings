@@ -2,31 +2,39 @@
   "sourceLanguage" : "en",
   "strings" : {
     "" : {
-
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : ""
+          }
+        }
+      }
     },
     "%lld" : {
-
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%lld"
+          }
+        }
+      }
     },
     "Add \\(.applicationName) for today" : {
       "comment" : "Siri Phrase · AddTaskTodayIntent · Imperative. Spoken phrase to start adding a task that lands in the Today list.",
       "extractionState" : "stale",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add \\(.applicationName) for today"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Für heute zu \\(.applicationName) hinzufügen"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Añadir a \\(.applicationName) para hoy"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adicionar ao \\(.applicationName) para hoje"
           }
         }
       }
@@ -35,22 +43,16 @@
       "comment" : "Siri Phrase · AddTaskTodayIntent · Imperative. Short variant for adding a task to today.",
       "extractionState" : "stale",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add \\(.applicationName) today"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Heute zu \\(.applicationName) hinzufügen"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Añadir a \\(.applicationName) hoy"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adicionar ao \\(.applicationName) hoje"
           }
         }
       }
@@ -59,22 +61,16 @@
       "comment" : "AppIntent · AddTaskIntent parameter summary · Imperative. Shown in Shortcuts editor as the natural-language summary of the action.",
       "extractionState" : "stale",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add \\(\\.$taskTitle) to backlog"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "\\(\\.$taskTitle) zum Backlog hinzufügen"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Añadir \\(\\.$taskTitle) al Backlog"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adicionar \\(\\.$taskTitle) ao Backlog"
           }
         }
       }
@@ -83,52 +79,54 @@
       "comment" : "AppIntent · AddTaskTodayIntent parameter summary · Imperative. Shown in Shortcuts editor.",
       "extractionState" : "stale",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add \\(\\.$taskTitle) to today"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "\\(\\.$taskTitle) für heute hinzufügen"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Añadir \\(\\.$taskTitle) a hoy"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adicionar \\(\\.$taskTitle) a hoje"
-          }
         }
       }
     },
     "Add ${taskTitle} to backlog" : {
-
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add ${taskTitle} to backlog"
+          }
+        }
+      }
     },
     "Add ${taskTitle} to today" : {
-
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add ${taskTitle} to today"
+          }
+        }
+      }
     },
     "Add for today in \\(.applicationName)" : {
       "comment" : "Siri Phrase · AddTaskTodayIntent · Imperative.",
       "extractionState" : "stale",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add for today in \\(.applicationName)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Für heute in \\(.applicationName) hinzufügen"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Añadir a hoy en \\(.applicationName)"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adicionar para hoje no \\(.applicationName)"
           }
         }
       }
@@ -137,22 +135,16 @@
       "comment" : "Siri Phrase · AddTaskIntent · Imperative.",
       "extractionState" : "stale",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add something to \\(.applicationName)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Etwas zu \\(.applicationName) hinzufügen"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Añadir algo a \\(.applicationName)"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adicionar algo ao \\(.applicationName)"
           }
         }
       }
@@ -161,22 +153,16 @@
       "comment" : "Siri Phrase · AddTaskIntent · Imperative.",
       "extractionState" : "stale",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add task in \\(.applicationName)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aufgabe in \\(.applicationName) hinzufügen"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Añadir tarea en \\(.applicationName)"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adicionar tarefa no \\(.applicationName)"
           }
         }
       }
@@ -185,22 +171,16 @@
       "comment" : "Siri Phrase · AddTaskTodayIntent · Imperative.",
       "extractionState" : "stale",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add today in \\(.applicationName)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Heute in \\(.applicationName) hinzufügen"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Añadir hoy en \\(.applicationName)"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adicionar hoje no \\(.applicationName)"
           }
         }
       }
@@ -209,6 +189,12 @@
       "comment" : "Archive tab · Empty state body text · Motivational.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "You're finishing what you start. Your archive is empty – keep it up!"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -227,6 +213,12 @@
       "comment" : "Archive tab · Empty state headline.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nothing here!"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -245,6 +237,12 @@
       "comment" : "Archive tab · Section header below the tab title.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Archived tasks can be reactivated or deleted."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -263,6 +261,12 @@
       "comment" : "Archive tab · Leading swipe action label · Moves task back to Backlog.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Backlog"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -281,6 +285,12 @@
       "comment" : "Archive tab · Trailing swipe action label · Permanently deletes the task.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Delete"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -299,6 +309,12 @@
       "comment" : "Archive tab · Leading swipe action label · Moves task directly to Today.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Today"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -317,6 +333,12 @@
       "comment" : "Settings · Debug confirmation alert message · Warning, plainspoken. Shown after tapping the destructive “Delete All Tasks” debug action.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "All tasks (Backlog and Today) will be deleted."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -328,18 +350,6 @@
             "state" : "translated",
             "value" : "All tasks (Backlog and Today) will be deleted."
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Se eliminarán todas las tareas (Backlog y Hoy)."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Todas as tarefas (Backlog e Hoje) serão excluídas."
-          }
         }
       }
     },
@@ -347,6 +357,12 @@
       "comment" : "Glossary · Default backlog name · Noun. Used when auto-creating the user’s first backlog.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Backlog"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -354,18 +370,6 @@
           }
         },
         "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Backlog"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Backlog"
-          }
-        },
-        "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Backlog"
@@ -377,6 +381,12 @@
       "comment" : "Backlog · Swipe action label · Imperative, single word. Moves the swiped task into the Today list.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Today"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -388,18 +398,6 @@
             "state" : "translated",
             "value" : "Today"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hoy"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hoje"
-          }
         }
       }
     },
@@ -407,6 +405,12 @@
       "comment" : "Backlog · VoiceOver name for the default backlog category · Noun.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Backlog"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -414,18 +418,6 @@
           }
         },
         "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Backlog"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Backlog"
-          }
-        },
-        "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Backlog"
@@ -437,6 +429,12 @@
       "comment" : "Backlog · VoiceOver hint on the category icon button · Imperative. Tapping it opens the symbol picker.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Change symbol"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -448,18 +446,6 @@
             "state" : "translated",
             "value" : "Change symbol"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cambiar símbolo"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Alterar símbolo"
-          }
         }
       }
     },
@@ -467,6 +453,12 @@
       "comment" : "Backlog · Confirmation dialog button · Destructive verb. Deletes the selected category.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Delete"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -478,18 +470,6 @@
             "state" : "translated",
             "value" : "Delete"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eliminar"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Excluir"
-          }
         }
       }
     },
@@ -497,6 +477,12 @@
       "comment" : "Backlog · Confirmation dialog button · Verb. Enters inline edit mode for the category.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Edit"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -508,18 +494,6 @@
             "state" : "translated",
             "value" : "Edit"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Editar"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Editar"
-          }
         }
       }
     },
@@ -527,6 +501,12 @@
       "comment" : "Backlog · Confirmation dialog button · Marks a category as recurring.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mark as recurring"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -538,18 +518,6 @@
             "state" : "translated",
             "value" : "Mark as recurring"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Marcar como recurrente"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Marcar como recorrente"
-          }
         }
       }
     },
@@ -557,6 +525,12 @@
       "comment" : "Backlog · Confirmation dialog button · Clears recurring flag from a category.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Remove recurring"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -568,18 +542,6 @@
             "state" : "translated",
             "value" : "Remove recurring"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quitar recurrencia"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Remover recorrente"
-          }
         }
       }
     },
@@ -587,6 +549,12 @@
       "comment" : "Backlog · VoiceOver label of the “add category” row button · Imperative.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add new category"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -598,18 +566,6 @@
             "state" : "translated",
             "value" : "Add new category"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Añadir nueva categoría"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adicionar nova categoria"
-          }
         }
       }
     },
@@ -617,6 +573,12 @@
       "comment" : "Backlog · Text field placeholder for naming a new category · Noun phrase. Keep short.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "New category"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -628,18 +590,6 @@
             "state" : "translated",
             "value" : "New category"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nueva categoría"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nova categoria"
-          }
         }
       }
     },
@@ -647,6 +597,12 @@
       "comment" : "Backlog · VoiceOver for recurring toggle in add-category row.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Recurring"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -658,18 +614,6 @@
             "state" : "translated",
             "value" : "Recurring"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Recurrente"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Recorrente"
-          }
         }
       }
     },
@@ -677,6 +621,12 @@
       "comment" : "Backlog · Default name for a freshly created custom category · Noun phrase, neutral.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "New category"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -688,18 +638,6 @@
             "state" : "translated",
             "value" : "New category"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nueva categoría"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nova categoria"
-          }
         }
       }
     },
@@ -707,6 +645,12 @@
       "comment" : "Backlog · Destructive button in delete-category dialog when no tasks exist · Verb only.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Delete"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -718,18 +662,6 @@
             "state" : "translated",
             "value" : "Delete"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eliminar"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Excluir"
-          }
         }
       }
     },
@@ -737,6 +669,12 @@
       "comment" : "Backlog · Destructive button in delete-category dialog when tasks exist · Action label, ≤ 3 words.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Delete Tasks Too"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -748,18 +686,6 @@
             "state" : "translated",
             "value" : "Delete Tasks Too"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eliminar también las tareas"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Excluir também as tarefas"
-          }
         }
       }
     },
@@ -767,6 +693,42 @@
       "comment" : "Backlog · Delete-category dialog body when tasks exist · Question. %lld is the number of tasks. Plural-aware via CLDR.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "variations" : {
+            "plural" : {
+              "few" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "This category contains %lld tasks. What should happen to them?"
+                }
+              },
+              "many" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "This category contains %lld tasks. What should happen to them?"
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "This category contains %lld task. What should happen to it?"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "This category contains %lld tasks. What should happen to them?"
+                }
+              },
+              "two" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "This category contains %lld tasks. What should happen to them?"
+                }
+              }
+            }
+          }
+        },
         "de" : {
           "variations" : {
             "plural" : {
@@ -802,42 +764,6 @@
               }
             }
           }
-        },
-        "es" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "Esta categoría contiene %lld tarea. ¿Qué quieres hacer con ella?"
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "Esta categoría contiene %lld tareas. ¿Qué quieres hacer con ellas?"
-                }
-              }
-            }
-          }
-        },
-        "pt-BR" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "Esta categoria contém %lld tarefa. O que fazer com ela?"
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "Esta categoria contém %lld tarefas. O que fazer com elas?"
-                }
-              }
-            }
-          }
         }
       }
     },
@@ -845,6 +771,12 @@
       "comment" : "Backlog · Delete-category dialog body when there are no tasks · Single sentence.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "This category contains no tasks."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -856,18 +788,6 @@
             "state" : "translated",
             "value" : "This category contains no tasks."
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Esta categoría no contiene tareas."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Esta categoria não contém tarefas."
-          }
         }
       }
     },
@@ -875,6 +795,12 @@
       "comment" : "Backlog · Non-destructive button in delete-category dialog · Action label.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Move Tasks to Uncategorized"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -886,18 +812,6 @@
             "state" : "translated",
             "value" : "Move Tasks to Uncategorized"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mover tareas a Sin categoría"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mover tarefas para Sem categoria"
-          }
         }
       }
     },
@@ -905,6 +819,12 @@
       "comment" : "Backlog · Delete-category confirmation title · Question. %@ is the category name in curly quotes.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Delete category “%@”?"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -916,18 +836,6 @@
             "state" : "translated",
             "value" : "Delete category “%@”?"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "¿Eliminar la categoría «%@»?"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Excluir a categoria “%@”?"
-          }
         }
       }
     },
@@ -935,6 +843,12 @@
       "comment" : "Backlog · Delete-category confirmation title fallback if name is missing · Question.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Delete category?"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -946,18 +860,6 @@
             "state" : "translated",
             "value" : "Delete category?"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "¿Eliminar la categoría?"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Excluir a categoria?"
-          }
         }
       }
     },
@@ -965,6 +867,12 @@
       "comment" : "Backlog · Error returned by CategoryService when a system category is edited · Single sentence.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "This category can’t be modified."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -976,18 +884,6 @@
             "state" : "translated",
             "value" : "This category can’t be modified."
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Esta categoría no se puede modificar."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Esta categoria não pode ser modificada."
-          }
         }
       }
     },
@@ -995,6 +891,12 @@
       "comment" : "Backlog · Internal error if the system Uncategorized category is missing · Single sentence.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "The Uncategorized category couldn’t be found."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1006,18 +908,6 @@
             "state" : "translated",
             "value" : "The Uncategorized category couldn’t be found."
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se encontró la categoría Sin categoría."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "A categoria Sem categoria não foi encontrada."
-          }
         }
       }
     },
@@ -1025,6 +915,12 @@
       "comment" : "Backlog · Context menu entry to clear a task’s category · Single noun phrase.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Uncategorized"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1036,18 +932,6 @@
             "state" : "translated",
             "value" : "Uncategorized"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sin categoría"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sem categoria"
-          }
         }
       }
     },
@@ -1055,6 +939,12 @@
       "comment" : "Backlog · Default category name for short tasks · Adjective. Avoid “fast” connotations of speed; emphasize a quick win.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Quick"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1066,18 +956,6 @@
             "state" : "translated",
             "value" : "Quick"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rápidas"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rápidas"
-          }
         }
       }
     },
@@ -1085,6 +963,12 @@
       "comment" : "Default name for the built-in recurring category.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Recurring Tasks"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1096,18 +980,6 @@
             "state" : "translated",
             "value" : "Recurring Tasks"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tareas recurrentes"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tarefas recorrentes"
-          }
         }
       }
     },
@@ -1115,6 +987,12 @@
       "comment" : "Backlog · Validation error when renaming a category to empty string · Single sentence.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "The name can’t be empty."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1126,18 +1004,6 @@
             "state" : "translated",
             "value" : "The name can’t be empty."
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "El nombre no puede estar vacío."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O nome não pode ficar em branco."
-          }
         }
       }
     },
@@ -1145,6 +1011,42 @@
       "comment" : "Backlog · Validation error when category name exceeds limit · %lld is the maximum allowed character count. Plural-aware.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "variations" : {
+            "plural" : {
+              "few" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "The name may be at most %lld characters."
+                }
+              },
+              "many" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "The name may be at most %lld characters."
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "The name may be at most %lld character."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "The name may be at most %lld characters."
+                }
+              },
+              "two" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "The name may be at most %lld characters."
+                }
+              }
+            }
+          }
+        },
         "de" : {
           "variations" : {
             "plural" : {
@@ -1180,42 +1082,6 @@
               }
             }
           }
-        },
-        "es" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "El nombre puede tener como máximo %lld carácter."
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "El nombre puede tener como máximo %lld caracteres."
-                }
-              }
-            }
-          }
-        },
-        "pt-BR" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "O nome pode ter no máximo %lld caractere."
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "O nome pode ter no máximo %lld caracteres."
-                }
-              }
-            }
-          }
         }
       }
     },
@@ -1223,6 +1089,12 @@
       "comment" : "Backlog · Default category for tasks without timing pressure · Noun.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Someday"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1234,18 +1106,6 @@
             "state" : "translated",
             "value" : "Someday"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Algún día"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Algum dia"
-          }
         }
       }
     },
@@ -1253,6 +1113,12 @@
       "comment" : "SymbolPicker · ContentUnavailableView body · Plain sentence.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Try a different search term."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1264,18 +1130,6 @@
             "state" : "translated",
             "value" : "Try a different search term."
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Prueba con otro término de búsqueda."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tente outro termo de busca."
-          }
         }
       }
     },
@@ -1283,6 +1137,12 @@
       "comment" : "SymbolPicker · ContentUnavailableView title · Short headline.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No symbols found"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1294,18 +1154,6 @@
             "state" : "translated",
             "value" : "No symbols found"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se encontraron símbolos"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nenhum símbolo encontrado"
-          }
         }
       }
     },
@@ -1313,6 +1161,12 @@
       "comment" : "SymbolPicker · Search field prompt · Single verb.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Search"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1324,18 +1178,6 @@
             "state" : "translated",
             "value" : "Search"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Buscar"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pesquisar"
-          }
         }
       }
     },
@@ -1343,6 +1185,12 @@
       "comment" : "SymbolPicker · Section header for hobby symbols · Noun.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hobby"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1350,18 +1198,6 @@
           }
         },
         "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hobby"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aficiones"
-          }
-        },
-        "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hobby"
@@ -1373,6 +1209,12 @@
       "comment" : "SymbolPicker · Section header for personal-life symbols · Noun.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Personal"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1384,18 +1226,6 @@
             "state" : "translated",
             "value" : "Personal"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Personal"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pessoal"
-          }
         }
       }
     },
@@ -1403,6 +1233,12 @@
       "comment" : "SymbolPicker · Section header for symbols matching the category name · Adjective/noun.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Recommended"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1414,18 +1250,6 @@
             "state" : "translated",
             "value" : "Recommended"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sugeridos"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sugeridos"
-          }
         }
       }
     },
@@ -1433,6 +1257,12 @@
       "comment" : "SymbolPicker · Generic catch-all section header · Noun.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Symbols"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1444,18 +1274,6 @@
             "state" : "translated",
             "value" : "Symbols"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Símbolos"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Símbolos"
-          }
         }
       }
     },
@@ -1463,6 +1281,12 @@
       "comment" : "SymbolPicker · Section header for travel/outdoor symbols · Noun phrase.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Travel & Outdoor"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1474,18 +1298,6 @@
             "state" : "translated",
             "value" : "Travel & Outdoor"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Viajes y aire libre"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Viagem e ar livre"
-          }
         }
       }
     },
@@ -1493,6 +1305,12 @@
       "comment" : "SymbolPicker · Section header for work-related symbols · Noun.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Work"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1504,18 +1322,6 @@
             "state" : "translated",
             "value" : "Work"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Trabajo"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Trabalho"
-          }
         }
       }
     },
@@ -1523,6 +1329,12 @@
       "comment" : "SymbolPicker · Sheet navigation title · Imperative phrase.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Choose symbol"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1534,18 +1346,6 @@
             "state" : "translated",
             "value" : "Choose symbol"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Elegir símbolo"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Escolher símbolo"
-          }
         }
       }
     },
@@ -1553,6 +1353,12 @@
       "comment" : "Backlog · Default category for tasks due this month · Noun phrase.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "This Month"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1564,18 +1370,6 @@
             "state" : "translated",
             "value" : "This Month"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Este mes"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Este mês"
-          }
         }
       }
     },
@@ -1583,6 +1377,12 @@
       "comment" : "Backlog · Default category for tasks due this week · Noun phrase.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "This Week"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1594,18 +1394,6 @@
             "state" : "translated",
             "value" : "This Week"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Esta semana"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Esta semana"
-          }
         }
       }
     },
@@ -1613,6 +1401,12 @@
       "comment" : "Backlog · Default category for tasks due this year · Noun phrase.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "This Year"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1624,18 +1418,6 @@
             "state" : "translated",
             "value" : "This Year"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Este año"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Este ano"
-          }
         }
       }
     },
@@ -1643,6 +1425,12 @@
       "comment" : "Backlog · System category for tasks without a custom category · Past participle, system noun.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Uncategorized"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1654,18 +1442,6 @@
             "state" : "translated",
             "value" : "Uncategorized"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sin categoría"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sem categoria"
-          }
         }
       }
     },
@@ -1673,6 +1449,12 @@
       "comment" : "Common · Destructive button · Single verb.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Delete"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1684,18 +1466,6 @@
             "state" : "translated",
             "value" : "Delete"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eliminar"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Excluir"
-          }
         }
       }
     },
@@ -1703,6 +1473,12 @@
       "comment" : "Common · Confirmation button to dismiss the keyboard or finalize edit · Single verb. Use the iOS-canonical word for “done”.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Done"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1714,18 +1490,6 @@
             "state" : "translated",
             "value" : "Done"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OK"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OK"
-          }
         }
       }
     },
@@ -1733,6 +1497,12 @@
       "comment" : "Debug-only · Sample test task title (Quick category) · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Walk the dog 🐕"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1744,18 +1514,6 @@
             "state" : "translated",
             "value" : "Walk the dog 🐕"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pasear al perro 🐕"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Passear com o cachorro 🐕"
-          }
         }
       }
     },
@@ -1763,6 +1521,12 @@
       "comment" : "Debug-only · Sample test task title (Quick category) · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Make doctor’s appointment"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1774,18 +1538,6 @@
             "state" : "translated",
             "value" : "Make doctor’s appointment"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pedir cita con el médico"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Marcar consulta médica"
-          }
         }
       }
     },
@@ -1793,6 +1545,12 @@
       "comment" : "Debug-only · Sample test task title (Quick category) · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Get concert tickets 🎟️"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1804,18 +1562,6 @@
             "state" : "translated",
             "value" : "Get concert tickets 🎟️"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Comprar entradas para el concierto 🎟️"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Comprar ingressos para o show 🎟️"
-          }
         }
       }
     },
@@ -1823,6 +1569,12 @@
       "comment" : "Debug-only · Sample test task title (Quick category) · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pick up package 📦"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1834,18 +1586,6 @@
             "state" : "translated",
             "value" : "Pick up package 📦"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Recoger paquete 📦"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Buscar encomenda 📦"
-          }
         }
       }
     },
@@ -1853,6 +1593,12 @@
       "comment" : "Debug-only · Sample test task title (Quick category) · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pay parking ticket"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1864,18 +1610,6 @@
             "state" : "translated",
             "value" : "Pay parking ticket"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pagar la multa de aparcamiento"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pagar multa de estacionamento"
-          }
         }
       }
     },
@@ -1883,6 +1617,12 @@
       "comment" : "Debug-only · Sample test task in a recurring category · 'Add Test Items' settings.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Brush teeth"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1894,18 +1634,6 @@
             "state" : "translated",
             "value" : "Brush teeth"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lavarse los dientes"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Escovar os dentes"
-          }
         }
       }
     },
@@ -1913,6 +1641,12 @@
       "comment" : "Debug-only · Sample recurring test task · 'Add Test Items' settings.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Drink a glass of water"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1924,18 +1658,6 @@
             "state" : "translated",
             "value" : "Drink a glass of water"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Beber un vaso de agua"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Beber um copo de água"
-          }
         }
       }
     },
@@ -1943,6 +1665,12 @@
       "comment" : "Debug-only · Sample recurring test task · 'Add Test Items' settings.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "5 min stretch break"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1954,18 +1682,6 @@
             "state" : "translated",
             "value" : "5 min stretch break"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "5 min de estiramiento"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "5 min de alongamento"
-          }
         }
       }
     },
@@ -1973,6 +1689,12 @@
       "comment" : "Debug-only · Sample test task title (Someday category) · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dye hair blue"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1984,18 +1706,6 @@
             "state" : "translated",
             "value" : "Dye hair blue"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Teñirme el pelo de azul"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pintar o cabelo de azul"
-          }
         }
       }
     },
@@ -2003,6 +1713,12 @@
       "comment" : "Debug-only · Sample test task title (Someday category) · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Book trip to Tokyo ✈️"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2014,18 +1730,6 @@
             "state" : "translated",
             "value" : "Book trip to Tokyo ✈️"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reservar un viaje a Tokio ✈️"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reservar uma viagem a Tóquio ✈️"
-          }
         }
       }
     },
@@ -2033,6 +1737,12 @@
       "comment" : "Debug-only · Sample test task title (Someday category) · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Learn to play guitar 🎸"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2044,18 +1754,6 @@
             "state" : "translated",
             "value" : "Learn to play guitar 🎸"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aprender a tocar la guitarra 🎸"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aprender a tocar violão 🎸"
-          }
         }
       }
     },
@@ -2063,6 +1761,12 @@
       "comment" : "Debug-only · Sample test task title (Someday category) · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Run a marathon"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2074,18 +1778,6 @@
             "state" : "translated",
             "value" : "Run a marathon"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Correr un maratón"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Correr uma maratona"
-          }
         }
       }
     },
@@ -2093,6 +1785,12 @@
       "comment" : "Debug-only · Sample test task title (Someday category) · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Write a novel"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2104,18 +1802,6 @@
             "state" : "translated",
             "value" : "Write a novel"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Escribir una novela"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Escrever um romance"
-          }
         }
       }
     },
@@ -2123,6 +1809,12 @@
       "comment" : "Debug-only · Sample test task title (This Month category) · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Replace printer cartridge"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2134,18 +1826,6 @@
             "state" : "translated",
             "value" : "Replace printer cartridge"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cambiar el cartucho de la impresora"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Trocar o cartucho da impressora"
-          }
         }
       }
     },
@@ -2153,6 +1833,12 @@
       "comment" : "Debug-only · Sample test task title (This Month category) · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Frame and hang new pictures 🖼️"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2164,18 +1850,6 @@
             "state" : "translated",
             "value" : "Frame and hang new pictures 🖼️"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Enmarcar y colgar las fotos nuevas 🖼️"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Emoldurar e pendurar as fotos novas 🖼️"
-          }
         }
       }
     },
@@ -2183,6 +1857,12 @@
       "comment" : "Debug-only · Sample test task title (This Month category) · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clean the windows ✨"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2194,18 +1874,6 @@
             "state" : "translated",
             "value" : "Clean the windows ✨"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Limpiar las ventanas ✨"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Limpar as janelas ✨"
-          }
         }
       }
     },
@@ -2213,6 +1881,12 @@
       "comment" : "Debug-only · Sample test task title (This Month category) · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Take car in for inspection 🚗"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2224,18 +1898,6 @@
             "state" : "translated",
             "value" : "Take car in for inspection 🚗"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Llevar el coche a la revisión 🚗"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Levar o carro para revisão 🚗"
-          }
         }
       }
     },
@@ -2243,6 +1905,12 @@
       "comment" : "Debug-only · Sample test task title (This Month category) · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Book birthday dinner 🎂"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2254,18 +1922,6 @@
             "state" : "translated",
             "value" : "Book birthday dinner 🎂"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reservar la cena de cumpleaños 🎂"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reservar o jantar de aniversário 🎂"
-          }
         }
       }
     },
@@ -2273,6 +1929,12 @@
       "comment" : "Debug-only · Sample test task title (This Week category) · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "RSVP to Carla’s wedding 💌"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2284,18 +1946,6 @@
             "state" : "translated",
             "value" : "RSVP to Carla’s wedding 💌"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Confirmar asistencia a la boda de Carla 💌"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Confirmar presença no casamento da Carla 💌"
-          }
         }
       }
     },
@@ -2303,6 +1953,12 @@
       "comment" : "Debug-only · Sample test task title (This Week category) · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Get groceries 🛒"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2314,18 +1970,6 @@
             "state" : "translated",
             "value" : "Get groceries 🛒"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hacer la compra 🛒"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fazer compras do mercado 🛒"
-          }
         }
       }
     },
@@ -2333,6 +1977,12 @@
       "comment" : "Debug-only · Sample test task title (This Week category) · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pick up prescription"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2344,18 +1994,6 @@
             "state" : "translated",
             "value" : "Pick up prescription"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Recoger la receta en la farmacia"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Buscar receita na farmácia"
-          }
         }
       }
     },
@@ -2363,6 +2001,12 @@
       "comment" : "Debug-only · Sample test task title (This Week category) · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Reply to Tom’s message 💬"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2374,18 +2018,6 @@
             "state" : "translated",
             "value" : "Reply to Tom’s message 💬"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Responder al mensaje de Tom 💬"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Responder à mensagem do Tom 💬"
-          }
         }
       }
     },
@@ -2393,6 +2025,12 @@
       "comment" : "Debug-only · Sample test task title (This Week category) · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Submit expense report"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2404,18 +2042,6 @@
             "state" : "translated",
             "value" : "Submit expense report"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Enviar informe de gastos"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Enviar relatório de despesas"
-          }
         }
       }
     },
@@ -2423,6 +2049,12 @@
       "comment" : "Debug-only · Sample test task title (This Year category) · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Buy a new fridge"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2434,18 +2066,6 @@
             "state" : "translated",
             "value" : "Buy a new fridge"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Comprar una nevera nueva"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Comprar uma geladeira nova"
-          }
         }
       }
     },
@@ -2453,6 +2073,12 @@
       "comment" : "Debug-only · Sample test task title (This Year category) · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Make list of birthday gifts 🎁"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2464,18 +2090,6 @@
             "state" : "translated",
             "value" : "Make list of birthday gifts 🎁"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hacer lista de regalos de cumpleaños 🎁"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fazer lista de presentes de aniversário 🎁"
-          }
         }
       }
     },
@@ -2483,6 +2097,12 @@
       "comment" : "Debug-only · Sample test task title (This Year category) · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Renew passport"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2494,18 +2114,6 @@
             "state" : "translated",
             "value" : "Renew passport"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Renovar el pasaporte"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Renovar o passaporte"
-          }
         }
       }
     },
@@ -2513,6 +2121,12 @@
       "comment" : "Debug-only · Sample test task title (This Year category) · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Plan summer vacation ☀️"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2524,18 +2138,6 @@
             "state" : "translated",
             "value" : "Plan summer vacation ☀️"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Planear las vacaciones de verano ☀️"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Planejar as férias de verão ☀️"
-          }
         }
       }
     },
@@ -2543,6 +2145,12 @@
       "comment" : "Debug-only · Sample test task title (This Year category) · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Start running again"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2554,18 +2162,6 @@
             "state" : "translated",
             "value" : "Start running again"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Volver a salir a correr"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Voltar a correr"
-          }
         }
       }
     },
@@ -2573,6 +2169,12 @@
       "comment" : "Error message when archive tasks can't be loaded.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Failed to load archived tasks."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2591,6 +2193,12 @@
       "comment" : "Error message when an archive operation fails to save.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Failed to save."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2609,6 +2217,12 @@
       "comment" : "Error banner · BacklogViewModel · Single sentence. %@ is the localized system error.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Failed to complete task: %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2620,18 +2234,6 @@
             "state" : "translated",
             "value" : "Failed to complete task: %@"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se pudo completar la tarea: %@"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Não foi possível concluir a tarefa: %@"
-          }
         }
       }
     },
@@ -2639,6 +2241,12 @@
       "comment" : "Error banner · BacklogViewModel · Single sentence. %@ is the localized system error.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Failed to create backlog: %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2650,18 +2258,6 @@
             "state" : "translated",
             "value" : "Failed to create backlog: %@"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se pudo crear el Backlog: %@"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Não foi possível criar o Backlog: %@"
-          }
         }
       }
     },
@@ -2669,6 +2265,12 @@
       "comment" : "Error banner · BacklogViewModel · Single sentence. %@ is the localized system error.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Failed to create task: %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2680,18 +2282,6 @@
             "state" : "translated",
             "value" : "Failed to create task: %@"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se pudo crear la tarea: %@"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Não foi possível criar a tarefa: %@"
-          }
         }
       }
     },
@@ -2699,6 +2289,12 @@
       "comment" : "Error banner · BacklogViewModel debug action · Single sentence. %@ is the localized system error.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Failed to create test tasks: %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2710,18 +2306,6 @@
             "state" : "translated",
             "value" : "Failed to create test tasks: %@"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se pudieron crear las tareas de prueba: %@"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Não foi possível criar tarefas de teste: %@"
-          }
         }
       }
     },
@@ -2729,6 +2313,12 @@
       "comment" : "Error banner · BacklogViewModel · Single sentence. %@ is the localized system error.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Failed to delete backlog: %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2740,18 +2330,6 @@
             "state" : "translated",
             "value" : "Failed to delete backlog: %@"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se pudo eliminar el Backlog: %@"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Não foi possível excluir o Backlog: %@"
-          }
         }
       }
     },
@@ -2759,6 +2337,12 @@
       "comment" : "Error banner · BacklogViewModel · Single sentence. %@ is the localized system error.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Failed to delete task: %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2770,18 +2354,6 @@
             "state" : "translated",
             "value" : "Failed to delete task: %@"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se pudo eliminar la tarea: %@"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Não foi possível excluir a tarefa: %@"
-          }
         }
       }
     },
@@ -2789,6 +2361,12 @@
       "comment" : "Error banner · BacklogViewModel · Single sentence. %@ is the localized system error.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Failed to load backlogs: %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2800,18 +2378,6 @@
             "state" : "translated",
             "value" : "Failed to load backlogs: %@"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se pudieron cargar los Backlogs: %@"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Não foi possível carregar os Backlogs: %@"
-          }
         }
       }
     },
@@ -2819,6 +2385,12 @@
       "comment" : "Error banner · BacklogViewModel · Single sentence. %@ is the localized system error.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Failed to move task: %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2830,18 +2402,6 @@
             "state" : "translated",
             "value" : "Failed to move task: %@"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se pudo mover la tarea: %@"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Não foi possível mover a tarefa: %@"
-          }
         }
       }
     },
@@ -2849,6 +2409,12 @@
       "comment" : "Error banner · BacklogViewModel · Single sentence. %@ is the localized system error.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Failed to change task category: %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2860,18 +2426,6 @@
             "state" : "translated",
             "value" : "Failed to change task category: %@"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se pudo cambiar la categoría de la tarea: %@"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Não foi possível alterar a categoria da tarefa: %@"
-          }
         }
       }
     },
@@ -2879,6 +2433,12 @@
       "comment" : "Error banner · BacklogViewModel · Single sentence. %@ is the localized system error.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Failed to move task to backlog: %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2890,18 +2450,6 @@
             "state" : "translated",
             "value" : "Failed to move task to backlog: %@"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se pudo mover la tarea al Backlog: %@"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Não foi possível mover a tarefa para o Backlog: %@"
-          }
         }
       }
     },
@@ -2909,6 +2457,12 @@
       "comment" : "Error banner · BacklogViewModel · Shown when an action requires a selected backlog · Short sentence.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No backlog selected."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2920,18 +2474,6 @@
             "state" : "translated",
             "value" : "No backlog selected."
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No hay ningún Backlog seleccionado."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nenhum Backlog selecionado."
-          }
         }
       }
     },
@@ -2939,6 +2481,12 @@
       "comment" : "Error banner · BacklogViewModel · Single sentence. %@ is the localized system error.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Failed to reorder tasks: %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2950,18 +2498,6 @@
             "state" : "translated",
             "value" : "Failed to reorder tasks: %@"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se pudo reordenar las tareas: %@"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Não foi possível reordenar as tarefas: %@"
-          }
         }
       }
     },
@@ -2969,6 +2505,12 @@
       "comment" : "Error banner · BacklogViewModel · Specific to reordering Today list from the backlog screen · %@ is the localized system error.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Failed to reorder Today: %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2980,18 +2522,6 @@
             "state" : "translated",
             "value" : "Failed to reorder Today: %@"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se pudo reordenar Hoy: %@"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Não foi possível reordenar Hoje: %@"
-          }
         }
       }
     },
@@ -2999,6 +2529,12 @@
       "comment" : "Error banner · BacklogViewModel · %@ is the localized system error.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Failed to update task: %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3010,18 +2546,6 @@
             "state" : "translated",
             "value" : "Failed to update task: %@"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se pudo actualizar la tarea: %@"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Não foi possível atualizar a tarefa: %@"
-          }
         }
       }
     },
@@ -3029,6 +2553,12 @@
       "comment" : "Error banner · DailyFocusViewModel · %@ is the localized system error.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Failed to complete task: %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3040,18 +2570,6 @@
             "state" : "translated",
             "value" : "Failed to complete task: %@"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se pudo completar la tarea: %@"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Não foi possível concluir a tarefa: %@"
-          }
         }
       }
     },
@@ -3059,6 +2577,12 @@
       "comment" : "Error banner · DailyFocusViewModel · %@ is the localized system error.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Failed to delete task: %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3070,18 +2594,6 @@
             "state" : "translated",
             "value" : "Failed to delete task: %@"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se pudo eliminar la tarea: %@"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Não foi possível excluir a tarefa: %@"
-          }
         }
       }
     },
@@ -3089,6 +2601,12 @@
       "comment" : "Error banner · DailyFocusViewModel · %@ is the localized system error.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Failed to load tasks: %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3100,18 +2618,6 @@
             "state" : "translated",
             "value" : "Failed to load tasks: %@"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se pudieron cargar las tareas: %@"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Não foi possível carregar as tarefas: %@"
-          }
         }
       }
     },
@@ -3119,6 +2625,12 @@
       "comment" : "Error banner · DailyFocusViewModel · %@ is the localized system error.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Failed to remove task from today: %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3130,18 +2642,6 @@
             "state" : "translated",
             "value" : "Failed to remove task from today: %@"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se pudo quitar la tarea de Hoy: %@"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Não foi possível remover a tarefa de Hoje: %@"
-          }
         }
       }
     },
@@ -3149,6 +2649,12 @@
       "comment" : "Error banner · DailyFocusViewModel · %@ is the localized system error.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Failed to reorder tasks: %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3160,18 +2666,6 @@
             "state" : "translated",
             "value" : "Failed to reorder tasks: %@"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se pudo reordenar las tareas: %@"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Não foi possível reordenar as tarefas: %@"
-          }
         }
       }
     },
@@ -3179,6 +2673,12 @@
       "comment" : "Error banner · DailyFocusViewModel · Reverting a completed task · %@ is the localized system error.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Failed to reopen task: %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3190,18 +2690,6 @@
             "state" : "translated",
             "value" : "Failed to reopen task: %@"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se pudo reabrir la tarea: %@"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Não foi possível reabrir a tarefa: %@"
-          }
         }
       }
     },
@@ -3209,6 +2697,12 @@
       "comment" : "Error banner · DailyFocusViewModel · %@ is the localized system error.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Failed to update task: %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3220,18 +2714,6 @@
             "state" : "translated",
             "value" : "Failed to update task: %@"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se pudo actualizar la tarea: %@"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Não foi possível atualizar a tarefa: %@"
-          }
         }
       }
     },
@@ -3239,6 +2721,12 @@
       "comment" : "Siri/Shortcuts · AddTaskIntent description shown in Shortcuts catalog · One sentence.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Adds a new task to your backlog"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3250,18 +2738,6 @@
             "state" : "translated",
             "value" : "Adds a new task to your backlog"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Añade una nueva tarea a tu Backlog"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adiciona uma nova tarefa ao seu Backlog"
-          }
         }
       }
     },
@@ -3269,6 +2745,12 @@
       "comment" : "Siri · AddTaskIntent spoken confirmation · Conversational, friendly. %@ is the task title the user dictated.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Done. ‘%@’ added to your backlog."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3280,18 +2762,6 @@
             "state" : "translated",
             "value" : "Done. ‘%@’ added to your backlog."
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Listo. «%@» se añadió a tu Backlog."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pronto. ‘%@’ adicionado ao seu Backlog."
-          }
         }
       }
     },
@@ -3299,6 +2769,12 @@
       "comment" : "Siri · AddTaskIntent parameter description · One sentence in Shortcuts catalog.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "The title of the task to add"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3310,18 +2786,6 @@
             "state" : "translated",
             "value" : "The title of the task to add"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "El título de la tarea que añadir"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O título da tarefa a adicionar"
-          }
         }
       }
     },
@@ -3329,6 +2793,12 @@
       "comment" : "Siri · AddTaskIntent parameter title · Single word.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Task"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3340,18 +2810,6 @@
             "state" : "translated",
             "value" : "Task"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tarea"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tarefa"
-          }
         }
       }
     },
@@ -3359,6 +2817,12 @@
       "comment" : "Siri/Shortcuts · AddTaskIntent short title for the Shortcuts gallery · 2–3 words.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add Task"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3370,18 +2834,6 @@
             "state" : "translated",
             "value" : "Add Task"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Añadir tarea"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adicionar tarefa"
-          }
         }
       }
     },
@@ -3389,6 +2841,12 @@
       "comment" : "Siri/Shortcuts · AddTaskIntent canonical title · Imperative, 2–4 words.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add Task to Dawny"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3400,18 +2858,6 @@
             "state" : "translated",
             "value" : "Add Task to Dawny"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Añadir tarea a Dawny"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adicionar tarefa ao Dawny"
-          }
         }
       }
     },
@@ -3419,6 +2865,12 @@
       "comment" : "Siri/Shortcuts · AddTaskTodayIntent description · One sentence.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Adds a new task directly to your Today list"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3430,18 +2882,6 @@
             "state" : "translated",
             "value" : "Adds a new task directly to your Today list"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Añade una nueva tarea directamente a la lista de Hoy"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adiciona uma nova tarefa direto à sua lista de Hoje"
-          }
         }
       }
     },
@@ -3449,6 +2889,12 @@
       "comment" : "Siri · AddTaskTodayIntent spoken confirmation · Conversational. %@ is the task title.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Done. ‘%@’ added to today."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3460,18 +2906,6 @@
             "state" : "translated",
             "value" : "Done. ‘%@’ added to today."
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Listo. «%@» se añadió a Hoy."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pronto. ‘%@’ adicionado a Hoje."
-          }
         }
       }
     },
@@ -3479,6 +2913,12 @@
       "comment" : "Siri · AddTaskTodayIntent parameter description · One sentence.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "The title of the task to add for today"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3490,18 +2930,6 @@
             "state" : "translated",
             "value" : "The title of the task to add for today"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "El título de la tarea que añadir para hoy"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O título da tarefa a adicionar para hoje"
-          }
         }
       }
     },
@@ -3509,6 +2937,12 @@
       "comment" : "Siri · AddTaskTodayIntent parameter title · Single word.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Task"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3520,18 +2954,6 @@
             "state" : "translated",
             "value" : "Task"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tarea"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tarefa"
-          }
         }
       }
     },
@@ -3539,6 +2961,12 @@
       "comment" : "Siri/Shortcuts · AddTaskTodayIntent short title for the Shortcuts gallery · 2–3 words.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Task for Today"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3550,18 +2978,6 @@
             "state" : "translated",
             "value" : "Task for Today"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tarea para hoy"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tarefa para hoje"
-          }
         }
       }
     },
@@ -3569,6 +2985,12 @@
       "comment" : "Siri/Shortcuts · AddTaskTodayIntent canonical title · Imperative.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add Task to Today in Dawny"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3580,18 +3002,6 @@
             "state" : "translated",
             "value" : "Add Task to Today in Dawny"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Añadir tarea a Hoy en Dawny"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adicionar tarefa a Hoje no Dawny"
-          }
         }
       }
     },
@@ -3599,6 +3009,12 @@
       "comment" : "Make it count · Alert dismiss button — affirmative acknowledgment.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sounds great"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3617,6 +3033,12 @@
       "comment" : "Make it count · Alert body text explaining why the feature can't be disabled.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "This is one of Dawny's core features. Tasks that are not completed are archived so your backlog stays focused and meaningful.\n\nTherefore, Make it count cannot be disabled in Dawny."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3635,6 +3057,12 @@
       "comment" : "Make it count · Alert title when user tries to disable the feature.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Make it count is essential"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3653,22 +3081,16 @@
       "comment" : "Siri Phrase · AddTaskIntent · Imperative.",
       "extractionState" : "stale",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "New task in \\(.applicationName)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Neue Aufgabe in \\(.applicationName)"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nueva tarea en \\(.applicationName)"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nova tarefa no \\(.applicationName)"
           }
         }
       }
@@ -3677,6 +3099,12 @@
       "comment" : "QuickAdd · Confirm button in toolbar · Single verb. Adds the new task.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3688,18 +3116,6 @@
             "state" : "translated",
             "value" : "Add"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Añadir"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adicionar"
-          }
         }
       }
     },
@@ -3707,6 +3123,12 @@
       "comment" : "Settings · Debug action button · Adds sample tasks to the database.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add Test Items"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3718,18 +3140,6 @@
             "state" : "translated",
             "value" : "Add Test Items"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Añadir elementos de prueba"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adicionar itens de teste"
-          }
         }
       }
     },
@@ -3737,6 +3147,12 @@
       "comment" : "Common · Cancel button · Single verb. iOS-canonical wording.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cancel"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3748,18 +3164,6 @@
             "state" : "translated",
             "value" : "Cancel"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cancelar"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cancelar"
-          }
         }
       }
     },
@@ -3767,6 +3171,12 @@
       "comment" : "QuickAdd · Form section header for choosing a category · Single noun.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Category"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3778,18 +3188,6 @@
             "state" : "translated",
             "value" : "Category"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Categoría"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Categoria"
-          }
         }
       }
     },
@@ -3797,6 +3195,12 @@
       "comment" : "Settings · Destructive debug action · Wipes all tasks. Used as both button title and alert title.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Delete All Tasks"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3808,18 +3212,6 @@
             "state" : "translated",
             "value" : "Delete All Tasks"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eliminar todas las tareas"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Excluir todas as tarefas"
-          }
         }
       }
     },
@@ -3827,6 +3219,12 @@
       "comment" : "QuickAdd · Section header for the optional notes field · Noun phrase.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Notes (optional)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3838,18 +3236,6 @@
             "state" : "translated",
             "value" : "Notes (optional)"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Notas (opcional)"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Notas (opcional)"
-          }
         }
       }
     },
@@ -3857,6 +3243,12 @@
       "comment" : "QuickAdd · Segmented control option · Noun. Sends the new task to the backlog.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Backlog"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3864,18 +3256,6 @@
           }
         },
         "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Backlog"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Backlog"
-          }
-        },
-        "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Backlog"
@@ -3887,6 +3267,12 @@
       "comment" : "QuickAdd · Section header for choosing destination (Backlog or Today) · Single noun.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Destination"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3898,18 +3284,6 @@
             "state" : "translated",
             "value" : "Destination"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Destino"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Destino"
-          }
         }
       }
     },
@@ -3917,6 +3291,12 @@
       "comment" : "QuickAdd · VoiceOver hint shown when destination is Today · Plain sentence.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "This task will be moved to Today"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3928,18 +3308,6 @@
             "state" : "translated",
             "value" : "This task will be moved to Today"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Esta tarea se moverá a Hoy"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Esta tarefa será movida para Hoje"
-          }
         }
       }
     },
@@ -3947,6 +3315,12 @@
       "comment" : "QuickAdd · Text field placeholder for the task title · Single noun.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Task"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3958,18 +3332,6 @@
             "state" : "translated",
             "value" : "Task"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tarea"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tarefa"
-          }
         }
       }
     },
@@ -3977,6 +3339,12 @@
       "comment" : "QuickAdd · Sheet navigation title · Noun phrase.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "New Task"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3988,18 +3356,6 @@
             "state" : "translated",
             "value" : "New Task"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nueva tarea"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nova tarefa"
-          }
         }
       }
     },
@@ -4007,6 +3363,12 @@
       "comment" : "QuickEntry · VoiceOver action label on the inline add button · Imperative. %@ is the category name.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add new task in %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4018,18 +3380,6 @@
             "state" : "translated",
             "value" : "Add new task in %@"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Añadir nueva tarea en %@"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adicionar nova tarefa em %@"
-          }
         }
       }
     },
@@ -4037,6 +3387,12 @@
       "comment" : "QuickEntry · VoiceOver action label specifically for the Today list · Imperative.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add new task for today"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4048,18 +3404,6 @@
             "state" : "translated",
             "value" : "Add new task for today"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Añadir nueva tarea para hoy"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adicionar nova tarefa para hoje"
-          }
         }
       }
     },
@@ -4067,6 +3411,12 @@
       "comment" : "QuickEntry · VoiceOver hint on the inline entry row · Plain sentence describing the gesture outcome.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Double-tap to edit the draft or create a task."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4078,18 +3428,6 @@
             "state" : "translated",
             "value" : "Double-tap to edit the draft or create a task."
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pulsa dos veces para editar el borrador o crear una tarea."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Toque duas vezes para editar o rascunho ou criar uma tarefa."
-          }
         }
       }
     },
@@ -4097,6 +3435,12 @@
       "comment" : "QuickEntry · Text field placeholder in the Backlog list · Short prompt with trailing ellipsis.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "New task…"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4108,18 +3452,6 @@
             "state" : "translated",
             "value" : "New task…"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nueva tarea…"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nova tarefa…"
-          }
         }
       }
     },
@@ -4127,6 +3459,12 @@
       "comment" : "QuickEntry · Text field placeholder in the Today list · Short prompt with trailing ellipsis.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "New task for today…"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4138,18 +3476,6 @@
             "state" : "translated",
             "value" : "New task for today…"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nueva tarea para hoy…"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nova tarefa para hoje…"
-          }
         }
       }
     },
@@ -4157,6 +3483,12 @@
       "comment" : "QuickEntry · VoiceOver label on the inline submit button · Plain sentence.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Submit like the Return key"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4168,18 +3500,6 @@
             "state" : "translated",
             "value" : "Submit like the Return key"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Enviar como con la tecla Intro"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Enviar como a tecla Return"
-          }
         }
       }
     },
@@ -4187,22 +3507,16 @@
       "comment" : "Siri Phrase · AddTaskIntent · Imperative.",
       "extractionState" : "stale",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Remember in \\(.applicationName)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "In \\(.applicationName) merken"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Recordar en \\(.applicationName)"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lembrar no \\(.applicationName)"
           }
         }
       }
@@ -4211,6 +3525,12 @@
       "comment" : "Settings · Picker label for the default category of new tasks · Plain sentence.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Default Category for New Tasks"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4222,18 +3542,6 @@
             "state" : "translated",
             "value" : "Default Category for New Tasks"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Categoría por omisión para nuevas tareas"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Categoria padrão para novas tarefas"
-          }
         }
       }
     },
@@ -4241,6 +3549,12 @@
       "comment" : "Settings · Section header for category-related toggles · Plural noun phrase.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Backlog Categories"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4252,18 +3566,6 @@
             "state" : "translated",
             "value" : "Backlog Categories"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Categorías del Backlog"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Categorias do Backlog"
-          }
         }
       }
     },
@@ -4271,6 +3573,12 @@
       "comment" : "Settings · Toggle label · Verb phrase, on/off control.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Show Categories"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4282,18 +3590,6 @@
             "state" : "translated",
             "value" : "Show Categories"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mostrar categorías"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mostrar categorias"
-          }
         }
       }
     },
@@ -4301,6 +3597,12 @@
       "comment" : "Settings · Section header for developer/debug actions · Single noun.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Debug"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4312,18 +3614,6 @@
             "state" : "translated",
             "value" : "Debug"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Depuración"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Depuração"
-          }
         }
       }
     },
@@ -4331,6 +3621,12 @@
       "comment" : "Settings · Section header for display preferences · Single noun.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Display"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4342,18 +3638,6 @@
             "state" : "translated",
             "value" : "Display"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Visualización"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Exibição"
-          }
         }
       }
     },
@@ -4361,6 +3645,12 @@
       "comment" : "Settings · Toggle label · Verb phrase.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Show Completed Tasks"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4372,18 +3662,6 @@
             "state" : "translated",
             "value" : "Show Completed Tasks"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mostrar tareas completadas"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mostrar tarefas concluídas"
-          }
         }
       }
     },
@@ -4391,6 +3669,12 @@
       "comment" : "Settings · Toolbar dismiss button · Single verb. iOS-canonical wording.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Done"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4402,18 +3686,6 @@
             "state" : "translated",
             "value" : "Done"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OK"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OK"
-          }
         }
       }
     },
@@ -4421,6 +3693,12 @@
       "comment" : "Settings · Info row label · Single noun. Followed by the build number.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Build"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4431,18 +3709,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Build"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Compilación"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Versão"
           }
         }
       }
@@ -4451,6 +3717,12 @@
       "comment" : "Settings · Section header for app info (version/build) · Single noun.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Info"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4462,18 +3734,6 @@
             "state" : "translated",
             "value" : "Info"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Información"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Informações"
-          }
         }
       }
     },
@@ -4481,6 +3741,12 @@
       "comment" : "Settings · Fallback value when version or build cannot be read from Info.plist · Adjective.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Unknown"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4492,18 +3758,6 @@
             "state" : "translated",
             "value" : "Unknown"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Desconocido"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Desconhecida"
-          }
         }
       }
     },
@@ -4511,6 +3765,12 @@
       "comment" : "Settings · Info row label · Single noun. Followed by the version number.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Version"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4522,18 +3782,6 @@
             "state" : "translated",
             "value" : "Version"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Versión"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Versão"
-          }
         }
       }
     },
@@ -4541,6 +3789,12 @@
       "comment" : "Settings · Make it count · Explanation beside the numeric counter (no number in string).",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Make it count. Archive a task if it was incomplete on Today."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4559,6 +3813,12 @@
       "comment" : "Settings · Section header for the daily reset configuration · Single noun.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Reset"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4570,18 +3830,6 @@
             "state" : "translated",
             "value" : "Reset"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Restablecer"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Redefinição"
-          }
         }
       }
     },
@@ -4589,6 +3837,12 @@
       "comment" : "Settings · DatePicker label · Daily reset clock time.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Time for daily reset"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4600,18 +3854,6 @@
             "state" : "translated",
             "value" : "Time for daily reset"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hora del reinicio diario"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Horário da redefinição diária"
-          }
         }
       }
     },
@@ -4619,6 +3861,12 @@
       "comment" : "Settings · Footer text below sync toggle · Plain sentence.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Syncs your daily focus tasks with Apple Reminders."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4630,18 +3878,6 @@
             "state" : "translated",
             "value" : "Syncs your daily focus tasks with Apple Reminders."
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sincroniza las tareas de tu foco diario con Recordatorios."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sincroniza as tarefas do seu foco do dia com o app Lembretes."
-          }
         }
       }
     },
@@ -4649,6 +3885,12 @@
       "comment" : "Settings · Section header for sync preferences · Single noun.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Synchronization"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4660,18 +3902,6 @@
             "state" : "translated",
             "value" : "Synchronization"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sincronización"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sincronização"
-          }
         }
       }
     },
@@ -4679,6 +3909,12 @@
       "comment" : "Settings · Toggle label for Reminders sync · Noun phrase.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Calendar Sync"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4690,18 +3926,6 @@
             "state" : "translated",
             "value" : "Calendar Sync"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sincronización con Recordatorios"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sincronização com Lembretes"
-          }
         }
       }
     },
@@ -4709,6 +3933,12 @@
       "comment" : "Settings · Sheet navigation title and accessibility label of the gear button · Single noun.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Settings"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4720,18 +3950,6 @@
             "state" : "translated",
             "value" : "Settings"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ajustes"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ajustes"
-          }
         }
       }
     },
@@ -4739,6 +3957,12 @@
       "comment" : "Settings · VoiceOver hint on the help button that re-opens the Welcome screen · Imperative phrase.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Show welcome screen"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4750,18 +3974,6 @@
             "state" : "translated",
             "value" : "Show welcome screen"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mostrar la pantalla de bienvenida"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mostrar tela de boas-vindas"
-          }
         }
       }
     },
@@ -4769,6 +3981,12 @@
       "comment" : "Settings · Footer button · Re-opens the welcome onboarding.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Show welcome message again"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4780,18 +3998,6 @@
             "state" : "translated",
             "value" : "Show welcome message again"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Volver a mostrar el mensaje de bienvenida"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mostrar mensagem de boas-vindas novamente"
-          }
         }
       }
     },
@@ -4799,6 +4005,42 @@
       "comment" : "Sync status · Relative time label · %lld is the number of days. Plural-aware via CLDR.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "variations" : {
+            "plural" : {
+              "few" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld days ago"
+                }
+              },
+              "many" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld days ago"
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld day ago"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld days ago"
+                }
+              },
+              "two" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld days ago"
+                }
+              }
+            }
+          }
+        },
         "de" : {
           "variations" : {
             "plural" : {
@@ -4834,42 +4076,6 @@
               }
             }
           }
-        },
-        "es" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "hace %lld día"
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "hace %lld días"
-                }
-              }
-            }
-          }
-        },
-        "pt-BR" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "há %lld dia"
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "há %lld dias"
-                }
-              }
-            }
-          }
         }
       }
     },
@@ -4877,6 +4083,42 @@
       "comment" : "Sync status · Relative time label · %lld is the number of hours. Plural-aware via CLDR. Use abbreviated unit if natural.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "variations" : {
+            "plural" : {
+              "few" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld hr ago"
+                }
+              },
+              "many" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld hr ago"
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld hr ago"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld hr ago"
+                }
+              },
+              "two" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld hr ago"
+                }
+              }
+            }
+          }
+        },
         "de" : {
           "variations" : {
             "plural" : {
@@ -4908,42 +4150,6 @@
                 "stringUnit" : {
                   "state" : "translated",
                   "value" : "%lld hr ago"
-                }
-              }
-            }
-          }
-        },
-        "es" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "hace %lld h"
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "hace %lld h"
-                }
-              }
-            }
-          }
-        },
-        "pt-BR" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "há %lld h"
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "há %lld h"
                 }
               }
             }
@@ -4955,6 +4161,12 @@
       "comment" : "Sync status · Less than a minute ago · Short label.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Just now"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4966,18 +4178,6 @@
             "state" : "translated",
             "value" : "Just now"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Justo ahora"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Agora mesmo"
-          }
         }
       }
     },
@@ -4985,6 +4185,42 @@
       "comment" : "Sync status · Relative time label · %lld is the number of minutes. Plural-aware via CLDR. Use abbreviated unit if natural.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "variations" : {
+            "plural" : {
+              "few" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld min ago"
+                }
+              },
+              "many" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld min ago"
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld min ago"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld min ago"
+                }
+              },
+              "two" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld min ago"
+                }
+              }
+            }
+          }
+        },
         "de" : {
           "variations" : {
             "plural" : {
@@ -5016,42 +4252,6 @@
                 "stringUnit" : {
                   "state" : "translated",
                   "value" : "%lld min ago"
-                }
-              }
-            }
-          }
-        },
-        "es" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "hace %lld min"
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "hace %lld min"
-                }
-              }
-            }
-          }
-        },
-        "pt-BR" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "há %lld min"
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "há %lld min"
                 }
               }
             }
@@ -5063,6 +4263,12 @@
       "comment" : "Sync status · Active progress label · Present-continuous verb with trailing ellipsis.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Syncing…"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5074,18 +4280,6 @@
             "state" : "translated",
             "value" : "Syncing…"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sincronizando…"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sincronizando…"
-          }
         }
       }
     },
@@ -5093,6 +4287,12 @@
       "comment" : "Top tabs · Archive tab button accessibility label.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Archive"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5111,6 +4311,12 @@
       "comment" : "Top tabs · Switches to the Backlog tab · Single noun.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Backlog"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5118,18 +4324,6 @@
           }
         },
         "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Backlog"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Backlog"
-          }
-        },
-        "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Backlog"
@@ -5141,6 +4335,12 @@
       "comment" : "Top tabs · Switches to the Today tab · Single noun.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Today"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5152,18 +4352,6 @@
             "state" : "translated",
             "value" : "Today"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hoy"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hoje"
-          }
         }
       }
     },
@@ -5171,6 +4359,12 @@
       "comment" : "TaskRow · Badge label shown when a task is synced to the iOS Reminders app · Single noun.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Reminders"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5182,18 +4376,6 @@
             "state" : "translated",
             "value" : "Reminders"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Recordatorios"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lembretes"
-          }
         }
       }
     },
@@ -5201,6 +4383,12 @@
       "comment" : "TaskRow · Swipe action label · Destructive verb.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Delete"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5212,18 +4400,6 @@
             "state" : "translated",
             "value" : "Delete"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eliminar"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Excluir"
-          }
         }
       }
     },
@@ -5231,6 +4407,12 @@
       "comment" : "TaskDetail · LabeledContent label · Noun.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Reminders"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5242,18 +4424,6 @@
             "state" : "translated",
             "value" : "Reminders"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Recordatorios"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lembretes"
-          }
         }
       }
     },
@@ -5261,6 +4431,12 @@
       "comment" : "TaskDetail · LabeledContent value when sync is active · Past participle, single word.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Synced"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5272,18 +4448,6 @@
             "state" : "translated",
             "value" : "Synced"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sincronizada"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sincronizada"
-          }
         }
       }
     },
@@ -5291,6 +4455,12 @@
       "comment" : "TaskDetail · LabeledContent label · Past participle. Followed by a localized date/time.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Created"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5302,18 +4472,6 @@
             "state" : "translated",
             "value" : "Created"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Creada"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Criada"
-          }
         }
       }
     },
@@ -5321,6 +4479,12 @@
       "comment" : "TaskDetail · Toolbar dismiss button · Single verb. iOS-canonical wording.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Done"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5332,18 +4496,6 @@
             "state" : "translated",
             "value" : "Done"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OK"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OK"
-          }
         }
       }
     },
@@ -5351,6 +4503,12 @@
       "comment" : "TaskDetail · LabeledContent label · Past participle. Followed by a localized date/time.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Modified"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5362,18 +4520,6 @@
             "state" : "translated",
             "value" : "Modified"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Modificada"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Modificada"
-          }
         }
       }
     },
@@ -5381,6 +4527,12 @@
       "comment" : "TaskDetail · LabeledContent label for the notes field · Single noun.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Notes"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5392,18 +4544,6 @@
             "state" : "translated",
             "value" : "Notes"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Notas"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Notas"
-          }
         }
       }
     },
@@ -5411,6 +4551,12 @@
       "comment" : "TaskDetail · Section header for primary fields · Single noun.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Details"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5421,18 +4567,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Details"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detalles"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detalhes"
           }
         }
       }
@@ -5441,6 +4575,12 @@
       "comment" : "TaskDetail · LabeledContent label · Single noun.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Status"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5452,18 +4592,6 @@
             "state" : "translated",
             "value" : "Status"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Estado"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Estado"
-          }
         }
       }
     },
@@ -5471,6 +4599,12 @@
       "comment" : "TaskDetail · Section header for created/modified dates · Plural noun phrase.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Timestamps"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5482,18 +4616,6 @@
             "state" : "translated",
             "value" : "Timestamps"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Marcas de tiempo"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Marcas de tempo"
-          }
         }
       }
     },
@@ -5501,6 +4623,12 @@
       "comment" : "TaskDetail · Sheet navigation title · Noun phrase.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Task Details"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5512,18 +4640,6 @@
             "state" : "translated",
             "value" : "Task Details"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detalles de la tarea"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detalhes da tarefa"
-          }
         }
       }
     },
@@ -5531,6 +4647,12 @@
       "comment" : "TaskDetail · LabeledContent label · Single noun.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Title"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5542,24 +4664,18 @@
             "state" : "translated",
             "value" : "Title"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Título"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Título"
-          }
         }
       }
     },
     "task.info.button" : {
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Task details"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -5572,6 +4688,12 @@
       "comment" : "Accessibility label for the recurring task/category badge icon.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Recurring"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5583,18 +4705,6 @@
             "state" : "translated",
             "value" : "Recurring"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Recurrente"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Recorrente"
-          }
         }
       }
     },
@@ -5602,6 +4712,12 @@
       "comment" : "Task status display name for archived tasks.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Archived"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5620,6 +4736,12 @@
       "comment" : "TaskStatus · Display name for backlog status · Single noun. Stays as “Backlog” loanword in EU and pt-BR per glossary.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Backlog"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5627,18 +4749,6 @@
           }
         },
         "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Backlog"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Backlog"
-          }
-        },
-        "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Backlog"
@@ -5650,6 +4760,12 @@
       "comment" : "TaskStatus · Display name for completed status · Past participle.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Completed"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5661,18 +4777,6 @@
             "state" : "translated",
             "value" : "Completed"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Completada"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Concluída"
-          }
         }
       }
     },
@@ -5680,6 +4784,12 @@
       "comment" : "TaskStatus · Display name for scheduled status · Past participle/adjective.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Scheduled"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5691,18 +4801,6 @@
             "state" : "translated",
             "value" : "Scheduled"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Programada"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Agendada"
-          }
         }
       }
     },
@@ -5710,6 +4808,12 @@
       "comment" : "TaskStatus · Display name for the daily-focus status · Single noun.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Today"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5721,18 +4825,6 @@
             "state" : "translated",
             "value" : "Today"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hoy"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hoje"
-          }
         }
       }
     },
@@ -5740,22 +4832,16 @@
       "comment" : "Siri Phrase · AddTaskTodayIntent · Imperative.",
       "extractionState" : "stale",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Today in \\(.applicationName)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Heute in \\(.applicationName)"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hoy en \\(.applicationName)"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hoje no \\(.applicationName)"
           }
         }
       }
@@ -5764,6 +4850,12 @@
       "comment" : "Today list · Section header for completed tasks today · Past participle.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Completed"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5775,18 +4867,6 @@
             "state" : "translated",
             "value" : "Completed"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Completadas"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Concluídas"
-          }
         }
       }
     },
@@ -5794,6 +4874,12 @@
       "comment" : "Today list · Section header for tasks still pending today · Adjective.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Open"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5805,18 +4891,6 @@
             "state" : "translated",
             "value" : "Open"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pendientes"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pendentes"
-          }
         }
       }
     },
@@ -5824,6 +4898,12 @@
       "comment" : "Today list · Swipe action label · Single noun. Sends a Today task back to the backlog.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Backlog"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5831,18 +4911,6 @@
           }
         },
         "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Backlog"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Backlog"
-          }
-        },
-        "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Backlog"
@@ -5854,6 +4922,12 @@
       "comment" : "Today list · Inline sync indicator · Present-continuous verb with trailing ellipsis.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Syncing…"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5865,18 +4939,6 @@
             "state" : "translated",
             "value" : "Syncing…"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sincronizando…"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sincronizando…"
-          }
         }
       }
     },
@@ -5884,6 +4946,12 @@
       "comment" : "Welcome · Continue button on intermediate pages · Single verb.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Continue"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5895,18 +4963,6 @@
             "state" : "translated",
             "value" : "Continue"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Continuar"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Continuar"
-          }
         }
       }
     },
@@ -5914,6 +4970,12 @@
       "comment" : "Welcome · CTA on the final onboarding page · Friendly imperative.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Get started"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5925,18 +4987,6 @@
             "state" : "translated",
             "value" : "Get started"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Comenzar"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Começar"
-          }
         }
       }
     },
@@ -5944,6 +4994,12 @@
       "comment" : "Welcome screen · Make it count page · Body text.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tasks you don't complete get archived instead of silently piling up. Your backlog stays lean, honest, and meaningful."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5962,6 +5018,12 @@
       "comment" : "Welcome screen · Make it count checkbox label.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Make it count"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5980,6 +5042,12 @@
       "comment" : "Welcome screen · Make it count checkbox · Accessibility hint.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "This feature is always enabled"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5998,6 +5066,12 @@
       "comment" : "Welcome screen · Make it count page · Title.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Make it count"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6016,6 +5090,12 @@
       "comment" : "Welcome · Onboarding page 1 body · Warm, conversational, single sentence. Source string passed via LocalizedStringResource defaultValue.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Your to-do list that wakes up fresh every morning, free from yesterday’s clutter."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6027,18 +5107,6 @@
             "state" : "translated",
             "value" : "Your to-do list that wakes up fresh every morning, free from yesterday’s clutter."
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tu lista de tareas que amanece nueva cada mañana, sin el desorden de ayer."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sua lista de tarefas que amanhece em ordem todo dia, sem a bagunça de ontem."
-          }
         }
       }
     },
@@ -6046,6 +5114,12 @@
       "comment" : "Welcome · Onboarding page 1 title · Friendly greeting headline.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Welcome to Dawny"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6057,18 +5131,6 @@
             "state" : "translated",
             "value" : "Welcome to Dawny"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Te damos la bienvenida a Dawny"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Boas-vindas ao Dawny"
-          }
         }
       }
     },
@@ -6076,6 +5138,12 @@
       "comment" : "Welcome · Onboarding page 2 body · Plain sentence describing the Backlog.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Drop tasks in without deadline pressure. Your backlog never forgets."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6087,18 +5155,6 @@
             "state" : "translated",
             "value" : "Drop tasks in without deadline pressure. Your backlog never forgets."
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Anota todo sin presión de fechas. Tu Backlog no olvida nada."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Anote tudo sem pressão de prazo. Seu Backlog não esquece nada."
-          }
         }
       }
     },
@@ -6106,6 +5162,12 @@
       "comment" : "Welcome · Onboarding page 2 title · Headline.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Capture everything in your Backlog"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6117,18 +5179,6 @@
             "state" : "translated",
             "value" : "Capture everything in your Backlog"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reúnelo todo en tu Backlog"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reúna tudo no seu Backlog"
-          }
         }
       }
     },
@@ -6136,6 +5186,12 @@
       "comment" : "Welcome · Onboarding page 3 body · Plain sentence about Daily Focus.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Each morning, decide what truly matters and pull it into Today."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6147,18 +5203,6 @@
             "state" : "translated",
             "value" : "Each morning, decide what truly matters and pull it into Today."
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cada mañana decide qué importa de verdad y muévelo a Hoy."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Toda manhã, escolha o que realmente importa e leve para Hoje."
-          }
         }
       }
     },
@@ -6166,6 +5210,12 @@
       "comment" : "Welcome · Onboarding page 3 title · Headline.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Plan today on purpose"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6177,18 +5227,6 @@
             "state" : "translated",
             "value" : "Plan today on purpose"
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Planifica el día con intención"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Planeje o dia com propósito"
-          }
         }
       }
     },
@@ -6196,6 +5234,12 @@
       "comment" : "Welcome · Onboarding page 4 body · Plain sentence describing the daily reset.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Anything left undone slides back to the backlog overnight. Tomorrow is a clean slate."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6207,18 +5251,6 @@
             "state" : "translated",
             "value" : "Anything left undone slides back to the backlog overnight. Tomorrow is a clean slate."
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lo que no termines vuelve al Backlog por la noche. Mañana empiezas con la mesa limpia."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O que ficar pendente volta ao Backlog durante a noite. Amanhã começa do zero."
-          }
         }
       }
     },
@@ -6226,6 +5258,12 @@
       "comment" : "Welcome · Onboarding page 4 title · Headline.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Reset at dawn"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6236,18 +5274,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Reset at dawn"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reinicio al amanecer"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Recomeço ao amanhecer"
           }
         }
       }

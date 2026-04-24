@@ -5,6 +5,12 @@
       "comment" : "Bundle display name",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dawny"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -17,6 +23,12 @@
       "comment" : "Bundle name",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dawny"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -29,6 +41,12 @@
       "comment" : "Info.plist · Reminders permission prompt · Calm, plainspoken, single sentence. Explains why we need Reminders access. Shown the first time we sync a task.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dawny syncs your daily focus tasks with Apple Reminders."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -40,18 +58,6 @@
             "state" : "translated",
             "value" : "Dawny syncs your daily focus tasks with Apple Reminders."
           }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dawny sincroniza las tareas de tu foco diario con Recordatorios."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O Dawny sincroniza as tarefas do seu foco do dia com o app Lembretes."
-          }
         }
       }
     },
@@ -59,6 +65,12 @@
       "comment" : "Info.plist · Siri permission prompt · Calm, plainspoken, single sentence. Shown when Siri is first invoked for App Intents.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dawny lets you add tasks hands-free with Siri."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -69,18 +81,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dawny lets you add tasks hands-free with Siri."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dawny te permite añadir tareas con manos libres usando Siri."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O Dawny permite adicionar tarefas sem usar as mãos com a Siri."
           }
         }
       }
