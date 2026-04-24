@@ -198,7 +198,7 @@ Florian Schneider and are not licensed under PolyForm. Forks must be renamed
 and rebranded. See [NOTICE](NOTICE) for details on trademarks, asset
 licensing, and contact info.
 
-For commercial licensing inquiries, write to **dawny@posteo.de**.
+For commercial licensing inquiries, write to **info@dawnyapp.com**.
 
 Contributions are welcome under the terms described in
 [CONTRIBUTING.md](CONTRIBUTING.md), which include an inbound-equals-outbound

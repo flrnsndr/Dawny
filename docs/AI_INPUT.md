@@ -20,7 +20,7 @@ This document is the complete, authoritative product context for Dawny. It is st
 | App Store | Not yet live |
 | Pricing | Free during beta. No pricing commitment for post-launch. |
 | Developer | Florian Schneider, Karlsruhe, Germany |
-| Contact | dawny@posteo.de |
+| Contact | info@dawnyapp.com |
 | Project type | Independent (indie), no VC backing, noncommercial license |
 | Trademark | "Dawny" and the Dawny logo are common-law trademarks. Correct capitalization must be maintained. |
 

@@ -34,4 +34,4 @@ export function alternateLang(lang: Lang): Lang {
 
 export const TESTFLIGHT_URL = "https://testflight.apple.com/join/h9JSWasd";
 export const GITHUB_URL = "https://github.com/flrnsndr/Dawny";
-export const CONTACT_EMAIL = "dawny@posteo.de";
+export const CONTACT_EMAIL = "info@dawnyapp.com";

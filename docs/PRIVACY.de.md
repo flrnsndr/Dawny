@@ -20,7 +20,7 @@ Verantwortlicher im Sinne der DSGVO ist:
 76133 Karlsruhe  
 [BITTE ERGÄNZEN: Land]
 
-E-Mail: dawny@posteo.de
+E-Mail: info@dawnyapp.com
 
 ## 2. Überblick
 
@@ -121,7 +121,7 @@ Apple bzw. von dir selbst auf deinem Gerät auszuüben:
 
 ## 8. Kontakt
 
-Bei Fragen zum Datenschutz: **dawny@posteo.de**
+Bei Fragen zum Datenschutz: **info@dawnyapp.com**
 
 ## 9. Änderungen dieser Datenschutzerklärung
 

@@ -75,5 +75,5 @@ No package manager setup is needed. Dawny has zero third-party dependencies.
 
 ## Reporting security issues
 
-Do not open public issues for security reports. Email **dawny@posteo.de** with
+Do not open public issues for security reports. Email **info@dawnyapp.com** with
 details. I will respond as fast as a single developer can.

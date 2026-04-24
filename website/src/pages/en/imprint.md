@@ -15,7 +15,7 @@ Germany
 
 ## Contact
 
-Email: dawny@posteo.de
+Email: info@dawnyapp.com
 
 ## Responsible for content under § 18 (2) MStV
 

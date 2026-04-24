@@ -18,7 +18,7 @@ Kreuzstraße 26
 76133 Karlsruhe
 Deutschland
 
-E-Mail: dawny@posteo.de
+E-Mail: info@dawnyapp.com
 
 ## 2. Überblick
 
@@ -83,7 +83,7 @@ Da Dawny keine personenbezogenen Daten beim Entwickler verarbeitet, sind viele D
 
 ## 8. Kontakt
 
-Bei Fragen zum Datenschutz: **dawny@posteo.de**
+Bei Fragen zum Datenschutz: **info@dawnyapp.com**
 
 ## 9. Änderungen dieser Datenschutzerklärung
 
