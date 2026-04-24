@@ -15,6 +15,9 @@ import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { existsSync } from "node:fs";
 import { Client } from "basic-ftp";
+import { applyDawnyWebsiteEnv } from "./load-env.mjs";
+
+applyDawnyWebsiteEnv();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = resolve(__dirname, "..");
@@ -32,7 +35,7 @@ const remoteDir = process.env.IONOS_FTP_REMOTE_DIR ?? "/";
 
 if (!host || !user || !password) {
   console.error("✗ Missing IONOS_FTP_HOST / IONOS_FTP_USER / IONOS_FTP_PASSWORD env vars.");
-  console.error("  Copy .env.example to .env and fill in the values.");
+  console.error("  Copy the repo-root .env.example to .env (or website/.env) and fill in the values.");
   process.exit(1);
 }
 
