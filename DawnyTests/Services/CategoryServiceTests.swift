@@ -27,6 +27,9 @@ final class CategoryServiceTests: XCTestCase {
         UserDefaults.standard.removeObject(
             forKey: "DawnyMigratedRecurringDefaultBeforeUncategorizedV1"
         )
+        UserDefaults.standard.removeObject(
+            forKey: "DawnyMigratedRecurringDefaultBeforeSomedayV2"
+        )
         container = try TestModelContainer.create()
         context = container.mainContext
         service = CategoryService(modelContext: context)
@@ -69,7 +72,7 @@ final class CategoryServiceTests: XCTestCase {
     // MARK: - Rename
 
     func testRenameTrimsWhitespaceAndMarksCustomized() throws {
-        let cat = try category(.thisWeek)
+        let cat = try category(.nextFewDays)
         XCTAssertFalse(cat.isNameCustomized)
 
         try service.rename(cat, to: "  Wichtig  ")
@@ -80,7 +83,7 @@ final class CategoryServiceTests: XCTestCase {
     }
 
     func testRenameEmptyThrows() throws {
-        let cat = try category(.thisWeek)
+        let cat = try category(.nextFewDays)
 
         XCTAssertThrowsError(try service.rename(cat, to: "   ")) { error in
             guard case CategoryEditError.nameEmpty = error else {
@@ -91,7 +94,7 @@ final class CategoryServiceTests: XCTestCase {
     }
 
     func testRenameTooLongThrows() throws {
-        let cat = try category(.thisWeek)
+        let cat = try category(.nextFewDays)
         let tooLong = String(repeating: "x", count: CategoryService.maxNameLength + 1)
 
         XCTAssertThrowsError(try service.rename(cat, to: tooLong)) { error in
@@ -124,7 +127,7 @@ final class CategoryServiceTests: XCTestCase {
     // MARK: - Update Icon
 
     func testUpdateIconMarksCustomized() throws {
-        let cat = try category(.thisWeek)
+        let cat = try category(.nextFewDays)
         XCTAssertFalse(cat.isIconCustomized)
 
         try service.updateIcon(cat, to: "star.fill")
@@ -135,7 +138,7 @@ final class CategoryServiceTests: XCTestCase {
     }
 
     func testUpdateIconEmptyResetsCustomFlag() throws {
-        let cat = try category(.thisWeek)
+        let cat = try category(.nextFewDays)
         try service.updateIcon(cat, to: "star.fill")
         XCTAssertTrue(cat.isIconCustomized)
 
@@ -143,7 +146,7 @@ final class CategoryServiceTests: XCTestCase {
 
         XCTAssertFalse(cat.isIconCustomized)
         // Display fällt auf Default zurück
-        XCTAssertEqual(cat.displayIconName, TaskCategory.thisWeek.iconName)
+        XCTAssertEqual(cat.displayIconName, TaskCategory.nextFewDays.iconName)
     }
 
     func testUpdateIconUncategorizedThrowsProtected() throws {
@@ -160,7 +163,7 @@ final class CategoryServiceTests: XCTestCase {
 
     func testDeleteWithStrategyDeleteTasksRemovesTasks() throws {
         let backlog = makeBacklog()
-        let cat = try category(.thisMonth)
+        let cat = try category(.nextFewWeeks)
         makeTask(in: backlog, category: cat, title: "A")
         makeTask(in: backlog, category: cat, title: "B")
 
@@ -168,7 +171,7 @@ final class CategoryServiceTests: XCTestCase {
 
         // Kategorie weg
         let remaining = service.getCategoriesSorted()
-        XCTAssertNil(remaining.first { $0.categoryType == .thisMonth })
+        XCTAssertNil(remaining.first { $0.categoryType == .nextFewWeeks })
 
         // Tasks weg
         let allTasks = try context.fetch(FetchDescriptor<Task>())
@@ -177,7 +180,7 @@ final class CategoryServiceTests: XCTestCase {
 
     func testDeleteWithStrategyMoveMovesTasksToUncategorized() throws {
         let backlog = makeBacklog()
-        let cat = try category(.thisMonth)
+        let cat = try category(.nextFewWeeks)
         let uncat = try category(.uncategorized)
         makeTask(in: backlog, category: cat, title: "A")
         makeTask(in: backlog, category: cat, title: "B")
@@ -185,7 +188,7 @@ final class CategoryServiceTests: XCTestCase {
         try service.delete(cat, strategy: .moveToUncategorized)
 
         // Kategorie weg
-        XCTAssertNil(service.getCategory(type: .thisMonth))
+        XCTAssertNil(service.getCategory(type: .nextFewWeeks))
 
         // Tasks existieren weiterhin und gehören jetzt zu Uncategorized
         let allTasks = try context.fetch(FetchDescriptor<Task>())
@@ -216,8 +219,8 @@ final class CategoryServiceTests: XCTestCase {
     }
 
     func testDeleteResetsDefaultCategoryFallback() throws {
-        AppSettings.shared.defaultCategoryType = .thisYear
-        let cat = try category(.thisYear)
+        AppSettings.shared.defaultCategoryType = .nextFewMonths
+        let cat = try category(.nextFewMonths)
 
         try service.delete(cat, strategy: .moveToUncategorized)
 
@@ -226,12 +229,12 @@ final class CategoryServiceTests: XCTestCase {
     }
 
     func testDeleteDoesNotChangeDefaultIfDifferentCategory() throws {
-        AppSettings.shared.defaultCategoryType = .thisWeek
-        let cat = try category(.thisMonth)
+        AppSettings.shared.defaultCategoryType = .nextFewDays
+        let cat = try category(.nextFewWeeks)
 
         try service.delete(cat, strategy: .moveToUncategorized)
 
-        XCTAssertEqual(AppSettings.shared.defaultCategoryType, .thisWeek)
+        XCTAssertEqual(AppSettings.shared.defaultCategoryType, .nextFewDays)
     }
 
     // MARK: - Display Properties
@@ -263,7 +266,7 @@ final class CategoryServiceTests: XCTestCase {
         XCTAssertTrue(quick.canToggleRecurring)
         XCTAssertTrue(quick.hasAnyEditCapability)
 
-        let week = try category(.thisWeek)
+        let week = try category(.nextFewDays)
         XCTAssertTrue(week.canRename)
         XCTAssertTrue(week.canChangeIcon)
         XCTAssertTrue(week.canDelete)
@@ -279,17 +282,33 @@ final class CategoryServiceTests: XCTestCase {
         XCTAssertEqual(recurring[0].categoryType, .custom)
     }
 
-    func testRecurringDefaultPlacedBeforeUncategorized() throws {
+    func testRecurringDefaultPlacedBeforeSomedayAndUncategorized() throws {
+        let someday = try category(.someday)
         let uncat = try category(.uncategorized)
         let rec = try XCTUnwrap(
             service.getCategoriesSorted().first(where: { $0.isRecurring })
         )
-        XCTAssertLessThan(rec.orderIndex, uncat.orderIndex, "Wiederkehrende Aufgaben unmittelbar vor Unkategorisiert (orderIndex)")
+        XCTAssertLessThan(rec.orderIndex, someday.orderIndex, "Wiederkehrende Aufgaben vor Someday (orderIndex)")
+        XCTAssertLessThan(someday.orderIndex, uncat.orderIndex, "Someday vor Unkategorisiert (orderIndex)")
 
         let order = service.getCategoriesSorted()
         let rIdx = try XCTUnwrap(order.firstIndex(where: { $0.id == rec.id }))
+        let sIdx = try XCTUnwrap(order.firstIndex(where: { $0.id == someday.id }))
         let uIdx = try XCTUnwrap(order.firstIndex(where: { $0.id == uncat.id }))
-        XCTAssertLessThan(rIdx, uIdx, "Kategorie-Liste: wiederkehrend vor Unkategorisiert")
+        XCTAssertLessThan(rIdx, sIdx, "Kategorie-Liste: wiederkehrend vor Someday")
+        XCTAssertLessThan(sIdx, uIdx, "Kategorie-Liste: Someday vor Unkategorisiert")
+    }
+
+    func testDefaultRecurringCategoryUsesLocalizedDisplayName() throws {
+        let rec = try XCTUnwrap(
+            service.getCategoriesSorted().first(where: { $0.isRecurring })
+        )
+        XCTAssertFalse(rec.isNameCustomized)
+        let expected = String(
+            localized: "category.recurring.default.name",
+            defaultValue: "Recurring Tasks"
+        )
+        XCTAssertEqual(rec.displayName, expected)
     }
 
     func testCreateCustomRecurringSetsIconAndFlag() throws {
@@ -301,7 +320,7 @@ final class CategoryServiceTests: XCTestCase {
     }
 
     func testSetRecurringToggle() throws {
-        let cat = try category(.thisMonth)
+        let cat = try category(.nextFewWeeks)
         XCTAssertFalse(cat.isRecurring)
         try service.setRecurring(cat, to: true)
         XCTAssertTrue(cat.isRecurring)

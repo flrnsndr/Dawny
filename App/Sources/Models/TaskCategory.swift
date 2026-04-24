@@ -16,14 +16,14 @@ enum TaskCategory: String, Codable, CaseIterable {
     /// Schnell erledigen
     case quick
     
-    /// Diese Woche
-    case thisWeek
+    /// Nächste Tage
+    case nextFewDays = "thisWeek"
     
-    /// Diesen Monat
-    case thisMonth
+    /// Nächste Wochen
+    case nextFewWeeks = "thisMonth"
     
-    /// Dieses Jahr
-    case thisYear
+    /// Nächste Monate
+    case nextFewMonths = "thisYear"
     
     /// Irgendwann
     case someday
@@ -39,12 +39,12 @@ enum TaskCategory: String, Codable, CaseIterable {
         switch self {
         case .quick:
             return String(localized: "category.quick.name", defaultValue: "Quick")
-        case .thisWeek:
-            return String(localized: "category.thisWeek.name", defaultValue: "This Week")
-        case .thisMonth:
-            return String(localized: "category.thisMonth.name", defaultValue: "This Month")
-        case .thisYear:
-            return String(localized: "category.thisYear.name", defaultValue: "This Year")
+        case .nextFewDays:
+            return String(localized: "category.nextFewDays.name", defaultValue: "Next couple of days")
+        case .nextFewWeeks:
+            return String(localized: "category.nextFewWeeks.name", defaultValue: "Next couple of weeks")
+        case .nextFewMonths:
+            return String(localized: "category.nextFewMonths.name", defaultValue: "Next couple of months")
         case .someday:
             return String(localized: "category.someday.name", defaultValue: "Someday")
         case .uncategorized:
@@ -59,11 +59,11 @@ enum TaskCategory: String, Codable, CaseIterable {
         switch self {
         case .quick:
             return "bolt.fill"
-        case .thisWeek:
+        case .nextFewDays:
             return "calendar"
-        case .thisMonth:
+        case .nextFewWeeks:
             return "calendar.badge.clock"
-        case .thisYear:
+        case .nextFewMonths:
             return "calendar.badge.exclamationmark"
         case .someday:
             return "infinity"
@@ -79,18 +79,18 @@ enum TaskCategory: String, Codable, CaseIterable {
         switch self {
         case .quick:
             return 0
-        case .thisWeek:
+        case .nextFewDays:
             return 1
-        case .thisMonth:
+        case .nextFewWeeks:
             return 2
-        case .thisYear:
+        case .nextFewMonths:
             return 3
         case .someday:
-            return 4
-        case .uncategorized:
             return 5
-        case .custom:
+        case .uncategorized:
             return 6
+        case .custom:
+            return 7
         }
     }
 }
