@@ -28,13 +28,13 @@ jobs:
 
       - run: npm run build
 
-      - name: Deploy to IONOS via SFTP
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+      - name: Deploy to IONOS via SCP
+        uses: appleboy/scp-action@v0.1.7
         with:
-          server: ${{ secrets.IONOS_FTP_HOST }}
+          host: ${{ secrets.IONOS_FTP_HOST }}
           username: ${{ secrets.IONOS_FTP_USER }}
           password: ${{ secrets.IONOS_FTP_PASSWORD }}
           port: 22
-          local_path: ./website/dist/
-          remote_path: ${{ secrets.IONOS_FTP_REMOTE_DIR }}
-          sftp_only: true
+          source: ./website/dist/*
+          target: ${{ secrets.IONOS_FTP_REMOTE_DIR }}
+          strip_components: 3
