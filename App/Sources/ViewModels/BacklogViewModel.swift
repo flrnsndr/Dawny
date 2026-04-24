@@ -714,7 +714,7 @@ final class BacklogViewModel {
                     placeInToday: false
                 )
             ]
-        case .thisWeek:
+        case .nextFewDays:
             return [
                 DebugTestItem(
                     title: String(localized: "debug.testtask.thisweek.1", defaultValue: "RSVP to Carla’s wedding 💌"),
@@ -737,7 +737,7 @@ final class BacklogViewModel {
                     placeInToday: false
                 )
             ]
-        case .thisMonth:
+        case .nextFewWeeks:
             return [
                 DebugTestItem(
                     title: String(localized: "debug.testtask.thismonth.1", defaultValue: "Replace printer cartridge"),
@@ -760,7 +760,7 @@ final class BacklogViewModel {
                     placeInToday: false
                 )
             ]
-        case .thisYear:
+        case .nextFewMonths:
             return [
                 DebugTestItem(
                     title: String(localized: "debug.testtask.thisyear.1", defaultValue: "Buy a new fridge"),

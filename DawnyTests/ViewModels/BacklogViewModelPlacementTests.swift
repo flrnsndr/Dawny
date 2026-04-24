@@ -59,7 +59,7 @@ final class BacklogViewModelPlacementTests: XCTestCase {
 
     func testAddTask_bottomPlacement_appendsAtEndOfCategory() throws {
         let backlog = try XCTUnwrap(viewModel.currentBacklog)
-        let cat = try category(.thisWeek)
+        let cat = try category(.nextFewDays)
 
         let base = Date()
         let t1 = backlog.addTask(title: "Zuerst")

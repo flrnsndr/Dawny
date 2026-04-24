@@ -1349,74 +1349,74 @@
         }
       }
     },
-    "category.thisMonth.name" : {
-      "comment" : "Backlog · Default category for tasks due this month · Noun phrase.",
+    "category.nextFewWeeks.name" : {
+      "comment" : "Backlog · Default category for tasks due in the next couple of weeks · Noun phrase.",
       "extractionState" : "manual",
       "localizations" : {
         "base" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "This Month"
+            "value" : "Next couple of weeks"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Diesen Monat"
+            "value" : "Die nächsten Wochen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This Month"
+            "value" : "Next couple of weeks"
           }
         }
       }
     },
-    "category.thisWeek.name" : {
-      "comment" : "Backlog · Default category for tasks due this week · Noun phrase.",
+    "category.nextFewDays.name" : {
+      "comment" : "Backlog · Default category for tasks due in the next couple of days · Noun phrase.",
       "extractionState" : "manual",
       "localizations" : {
         "base" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "This Week"
+            "value" : "Next couple of days"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Diese Woche"
+            "value" : "Die nächsten Tage"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This Week"
+            "value" : "Next couple of days"
           }
         }
       }
     },
-    "category.thisYear.name" : {
-      "comment" : "Backlog · Default category for tasks due this year · Noun phrase.",
+    "category.nextFewMonths.name" : {
+      "comment" : "Backlog · Default category for tasks due in the next couple of months · Noun phrase.",
       "extractionState" : "manual",
       "localizations" : {
         "base" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "This Year"
+            "value" : "Next couple of months"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dieses Jahr"
+            "value" : "Die nächsten Monate"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This Year"
+            "value" : "Next couple of months"
           }
         }
       }

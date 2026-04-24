@@ -109,7 +109,16 @@ final class Category {
     /// (re-)lokalisierte Variante aus `TaskCategory.displayName` zurück.
     /// Dadurch funktioniert ein Sprachwechsel weiterhin korrekt.
     var displayName: String {
-        isNameCustomized ? name : categoryType.displayName
+        if isNameCustomized {
+            return name
+        }
+        if isRecurring && categoryType == .custom {
+            return String(
+                localized: "category.recurring.default.name",
+                defaultValue: "Recurring Tasks"
+            )
+        }
+        return categoryType.displayName
     }
 
     /// SF-Symbol für die UI. Folgt der gleichen Logik wie `displayName`.
