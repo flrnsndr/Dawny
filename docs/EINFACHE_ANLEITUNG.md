@@ -24,7 +24,7 @@ Beim **ersten Start** kann ein kurzer **Welcome**-Assistent erscheinen; durchtip
 ## Was du im Navigator siehst
 
 - **App** – enthält `Sources` (Swift-Code) und `Assets.xcassets`.
-- **DawnyTests** / **DawnyUITests** – Unit- und UI-Tests.
+- **DawnyTests** – Unit-Tests.
 
 **In der laufenden App** (keine klassische Tab-Leiste unten): oben **Einstellungen** (Zahnrad links), in der Mitte die Umschaltung **Backlog** / **Heute**, rechts **Archiv**. Inhalt und Wischen zwischen den Bereichen **Backlog**, **Heute** und **Archiv** erfolgen über diese Leiste bzw. den Pager darunter.
 

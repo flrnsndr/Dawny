@@ -287,8 +287,6 @@ Dawny/
 
 │  └── Mocks/
 
-└── DawnyUITests/
-
 ------
 
 ## Berechtigungen
