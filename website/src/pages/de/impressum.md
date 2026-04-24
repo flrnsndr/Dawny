@@ -15,7 +15,7 @@ Deutschland
 
 ## Kontakt
 
-E-Mail: dawny@posteo.de
+E-Mail: info@dawnyapp.com
 
 ## Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV
 

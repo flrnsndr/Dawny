@@ -18,7 +18,7 @@ Kreuzstraße 26
 76133 Karlsruhe
 Germany
 
-Email: dawny@posteo.de
+Email: info@dawnyapp.com
 
 ## 2. Overview
 
@@ -83,7 +83,7 @@ Because Dawny does not process personal data on the developer's side, many GDPR 
 
 ## 8. Contact
 
-For privacy-related questions: **dawny@posteo.de**
+For privacy-related questions: **info@dawnyapp.com**
 
 ## 9. Changes to this privacy policy
 

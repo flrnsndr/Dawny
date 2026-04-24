@@ -19,7 +19,7 @@ The data controller under the GDPR is:
 76133 Karlsruhe  
 [PLEASE FILL IN: Country]
 
-Email: dawny@posteo.de
+Email: info@dawnyapp.com
 
 ## 2. Overview
 
@@ -115,7 +115,7 @@ either against Apple or by you directly on your device:
 
 ## 8. Contact
 
-For privacy-related questions: **dawny@posteo.de**
+For privacy-related questions: **info@dawnyapp.com**
 
 ## 9. Changes to this privacy policy
 
