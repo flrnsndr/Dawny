@@ -28,13 +28,14 @@ jobs:
 
       - run: npm run build
 
-      - name: Deploy to IONOS via SCP
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.IONOS_FTP_HOST }}
-          username: ${{ secrets.IONOS_FTP_USER }}
-          password: ${{ secrets.IONOS_FTP_PASSWORD }}
-          port: 22
-          source: ./website/dist/*
-          target: ${{ secrets.IONOS_FTP_REMOTE_DIR }}
-          strip_components: 3
+      - name: Install lftp
+        run: sudo apt-get update && sudo apt-get install -y lftp
+        working-directory: .
+
+      - name: Deploy to IONOS via SFTP
+        run: |
+          lftp -u "${{ secrets.IONOS_FTP_USER }},${{ secrets.IONOS_FTP_PASSWORD }}" \
+            sftp://${{ secrets.IONOS_FTP_HOST }} -e "
+            set sftp:auto-confirm yes;
+            mirror --reverse --delete --verbose dist/ ${{ secrets.IONOS_FTP_REMOTE_DIR }};
+            quit"
