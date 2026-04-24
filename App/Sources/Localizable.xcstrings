@@ -1493,6 +1493,390 @@
         }
       }
     },
+    "debug.testtask.archived.1" : {
+      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Finally unsubscribe from that annoying newsletter"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Den nervigen Newsletter endlich abbestellen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finally unsubscribe from that annoying newsletter"
+          }
+        }
+      }
+    },
+    "debug.testtask.archived.10" : {
+      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Find fresh batteries for the remote"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neue Batterien für die Fernbedienung suchen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Find fresh batteries for the remote"
+          }
+        }
+      }
+    },
+    "debug.testtask.archived.11" : {
+      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Find the partner for the lonely blue sock"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Den Partner für die einsame blaue Socke finden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Find the partner for the lonely blue sock"
+          }
+        }
+      }
+    },
+    "debug.testtask.archived.12" : {
+      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sort the top layer of the chaos drawer"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die oberste Schicht der Chaos-Schublade sortieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sort the top layer of the chaos drawer"
+          }
+        }
+      }
+    },
+    "debug.testtask.archived.13" : {
+      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Try the tea that's been in cabinet since 2023"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Den Tee probieren, der seit 2023 im Schrank steht"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try the tea that's been in cabinet since 2023"
+          }
+        }
+      }
+    },
+    "debug.testtask.archived.14" : {
+      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pick a new desktop wallpaper"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein neues Desktop-Hintergrundbild aussuchen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pick a new desktop wallpaper"
+          }
+        }
+      }
+    },
+    "debug.testtask.archived.15" : {
+      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Throw all coin change into piggy bank"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das ganze Kleingeld aus dem Portemonnaie ins Sparschwein werfen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Throw all coin change into piggy bank"
+          }
+        }
+      }
+    },
+    "debug.testtask.archived.16" : {
+      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Figure out that one fridge noise"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herausfinden, was dieses eine Geräusch im Kühlschrank ist"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Figure out that one fridge noise"
+          }
+        }
+      }
+    },
+    "debug.testtask.archived.2" : {
+      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clean up the YouTube 'Watch later' list"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die „Später ansehen“-Liste auf YouTube aussortieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clean up the YouTube 'Watch later' list"
+          }
+        }
+      }
+    },
+    "debug.testtask.archived.3" : {
+      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Make an iPhone backup (for real!)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein iPhone Backup machen (wirklich!)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make an iPhone backup (for real!)"
+          }
+        }
+      }
+    },
+    "debug.testtask.archived.4" : {
+      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Delete nearly identical selfies from gallery"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fast identische Selfies aus der Galerie löschen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete nearly identical selfies from gallery"
+          }
+        }
+      }
+    },
+    "debug.testtask.archived.5" : {
+      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clean the window that gets full sun"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Fenster putzen, auf das die Sonne direkt scheint"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clean the window that gets full sun"
+          }
+        }
+      }
+    },
+    "debug.testtask.archived.6" : {
+      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tame the cable mess behind the TV"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Den Kabelsalat hinter dem Fernseher bändigen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tame the cable mess behind the TV"
+          }
+        }
+      }
+    },
+    "debug.testtask.archived.7" : {
+      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Take out the waste paper"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Altpapier weg bringen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Take out the waste paper"
+          }
+        }
+      }
+    },
+    "debug.testtask.archived.8" : {
+      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Repot flowers that are outgrowing the pot"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Blumen umtopfen, die schon fast aus dem Topf fallen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Repot flowers that are outgrowing the pot"
+          }
+        }
+      }
+    },
+    "debug.testtask.archived.9" : {
+      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Shake crumbs out of keyboard"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Krümel aus der Tastatur schütteln"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shake crumbs out of keyboard"
+          }
+        }
+      }
+    },
     "debug.testtask.quick.1" : {
       "comment" : "Debug-only · Sample test task title (Quick category) · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",

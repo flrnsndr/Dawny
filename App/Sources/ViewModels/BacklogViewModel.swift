@@ -651,6 +651,10 @@ final class BacklogViewModel {
         let assignableCategories = categories
             .sorted()
             .filter { $0.categoryType != .uncategorized }
+        let defaultByType = Dictionary(
+            uniqueKeysWithValues: assignableCategories.map { ($0.categoryType, $0) }
+        )
+        let fallbackCategory = assignableCategories.first
 
         let todayDate = Calendar.current.startOfDay(for: Date())
 
@@ -666,6 +670,20 @@ final class BacklogViewModel {
                 if item.placeInToday {
                     task.moveToDailyFocus(date: todayDate)
                 }
+            }
+        }
+
+        for item in Self.archivedDebugTestItems() {
+            guard
+                let category = defaultByType[item.categoryType] ?? fallbackCategory,
+                let task = addTask(title: item.title, category: category)
+            else { continue }
+
+            task.isCompleted = false
+            task.archive()
+            if let archivedAt = Calendar.current.date(byAdding: .day, value: -item.daysAgo, to: Date()) {
+                task.archivedAt = archivedAt
+                task.modifiedAt = archivedAt
             }
         }
 
@@ -685,6 +703,13 @@ final class BacklogViewModel {
     private struct DebugTestItem {
         let title: String
         let placeInToday: Bool
+    }
+
+    /// Beschreibt einen Debug-Test-Task, der direkt archiviert erzeugt wird.
+    private struct ArchivedDebugTestItem {
+        let title: String
+        let categoryType: TaskCategory
+        let daysAgo: Int
     }
 
     /// Liefert die fünf Beispiel-Tasks für die gegebene Kategorie. Für unbekannte
@@ -824,6 +849,91 @@ final class BacklogViewModel {
             DebugTestItem(
                 title: String(localized: "debug.testtask.recurring.3", defaultValue: "5 min stretch break"),
                 placeInToday: false
+            )
+        ]
+    }
+
+    private static func archivedDebugTestItems() -> [ArchivedDebugTestItem] {
+        [
+            ArchivedDebugTestItem(
+                title: String(localized: "debug.testtask.archived.1", defaultValue: "Finally unsubscribe from that annoying newsletter"),
+                categoryType: .quick,
+                daysAgo: 2
+            ),
+            ArchivedDebugTestItem(
+                title: String(localized: "debug.testtask.archived.2", defaultValue: "Clean up the YouTube 'Watch later' list"),
+                categoryType: .quick,
+                daysAgo: 3
+            ),
+            ArchivedDebugTestItem(
+                title: String(localized: "debug.testtask.archived.3", defaultValue: "Make an iPhone backup (for real!)"),
+                categoryType: .nextFewDays,
+                daysAgo: 4
+            ),
+            ArchivedDebugTestItem(
+                title: String(localized: "debug.testtask.archived.4", defaultValue: "Delete nearly identical selfies from gallery"),
+                categoryType: .quick,
+                daysAgo: 5
+            ),
+            ArchivedDebugTestItem(
+                title: String(localized: "debug.testtask.archived.5", defaultValue: "Clean the window that gets full sun"),
+                categoryType: .nextFewDays,
+                daysAgo: 6
+            ),
+            ArchivedDebugTestItem(
+                title: String(localized: "debug.testtask.archived.6", defaultValue: "Tame the cable mess behind the TV"),
+                categoryType: .nextFewWeeks,
+                daysAgo: 7
+            ),
+            ArchivedDebugTestItem(
+                title: String(localized: "debug.testtask.archived.7", defaultValue: "Take out the waste paper"),
+                categoryType: .quick,
+                daysAgo: 8
+            ),
+            ArchivedDebugTestItem(
+                title: String(localized: "debug.testtask.archived.8", defaultValue: "Repot flowers that are outgrowing the pot"),
+                categoryType: .nextFewWeeks,
+                daysAgo: 9
+            ),
+            ArchivedDebugTestItem(
+                title: String(localized: "debug.testtask.archived.9", defaultValue: "Shake crumbs out of keyboard"),
+                categoryType: .quick,
+                daysAgo: 10
+            ),
+            ArchivedDebugTestItem(
+                title: String(localized: "debug.testtask.archived.10", defaultValue: "Find fresh batteries for the remote"),
+                categoryType: .nextFewDays,
+                daysAgo: 11
+            ),
+            ArchivedDebugTestItem(
+                title: String(localized: "debug.testtask.archived.11", defaultValue: "Find the partner for the lonely blue sock"),
+                categoryType: .quick,
+                daysAgo: 12
+            ),
+            ArchivedDebugTestItem(
+                title: String(localized: "debug.testtask.archived.12", defaultValue: "Sort the top layer of the chaos drawer"),
+                categoryType: .nextFewDays,
+                daysAgo: 13
+            ),
+            ArchivedDebugTestItem(
+                title: String(localized: "debug.testtask.archived.13", defaultValue: "Try the tea that's been in cabinet since 2023"),
+                categoryType: .someday,
+                daysAgo: 14
+            ),
+            ArchivedDebugTestItem(
+                title: String(localized: "debug.testtask.archived.14", defaultValue: "Pick a new desktop wallpaper"),
+                categoryType: .quick,
+                daysAgo: 15
+            ),
+            ArchivedDebugTestItem(
+                title: String(localized: "debug.testtask.archived.15", defaultValue: "Throw all coin change into piggy bank"),
+                categoryType: .nextFewDays,
+                daysAgo: 16
+            ),
+            ArchivedDebugTestItem(
+                title: String(localized: "debug.testtask.archived.16", defaultValue: "Figure out that one fridge noise"),
+                categoryType: .nextFewMonths,
+                daysAgo: 17
             )
         ]
     }

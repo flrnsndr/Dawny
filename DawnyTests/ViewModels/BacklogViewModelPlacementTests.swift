@@ -98,4 +98,15 @@ final class BacklogViewModelPlacementTests: XCTestCase {
         let titles = Set(backlog.backlogTasks.map(\.title))
         XCTAssertEqual(titles, ["Task 1", "Task 2", "Task 3"])
     }
+
+    func testAddDebugTestItems_createsArchivedUncompletedTasks() throws {
+        viewModel.addDebugTestItems(settings: AppSettings.shared)
+
+        let tasks = try context.fetch(FetchDescriptor<Task>())
+        let archived = tasks.filter { $0.status == .archived }
+
+        XCTAssertEqual(archived.count, 16)
+        XCTAssertTrue(archived.allSatisfy { !$0.isCompleted })
+        XCTAssertTrue(archived.allSatisfy { $0.archivedAt != nil })
+    }
 }
