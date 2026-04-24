@@ -192,6 +192,16 @@ git fetch -p</code>
                 <span class="label">2. Branch lokal löschen</span>
                 <code>git branch -d feature-name</code>
             </div>
+            <div class="command-group">
+                <span class="label">Alle lokalen Branches außer main (nur gemergt, <b>-d</b>)</span>
+                <code>git checkout main
+git branch --format='%(refname:short)' | grep -vx 'main' | xargs git branch -d</code>
+            </div>
+            <div class="command-group">
+                <span class="label">Alle lokalen Branches außer main (inkl. ungemergt, <b>-D</b>)</span>
+                <code>git checkout main
+git branch --format='%(refname:short)' | grep -vx 'main' | xargs git branch -D</code>
+            </div>
         </div>
 
         <div class="card">
