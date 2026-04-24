@@ -9,9 +9,9 @@ canonicalPath: "/impressum/"
 ## Angaben gemäß § 5 DDG
 
 **Florian Schneider**
-[BITTE ERGÄNZEN: Straße und Hausnummer]
+Kreuzstraße 26
 76133 Karlsruhe
-[BITTE ERGÄNZEN: Land]
+Deutschland
 
 ## Kontakt
 

@@ -4,7 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://dawny.app",
+  site: "https://dawnyapp.com",
   trailingSlash: "ignore",
   build: {
     format: "directory",

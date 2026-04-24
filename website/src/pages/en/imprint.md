@@ -9,9 +9,9 @@ canonicalPath: "/imprint/"
 ## Information according to § 5 DDG
 
 **Florian Schneider**
-[PLEASE FILL IN: Street and number]
+Kreuzstraße 26
 76133 Karlsruhe
-[PLEASE FILL IN: Country]
+Germany
 
 ## Contact
 

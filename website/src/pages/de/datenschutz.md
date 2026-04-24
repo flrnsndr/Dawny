@@ -9,18 +9,14 @@ canonicalPath: "/datenschutz/"
 **Stand:** 19. April 2026
 **Sprache:** Deutsch ([English version](/en/privacy/))
 
-> **Hinweis:** Vor Veröffentlichung müssen die mit `[BITTE ERGÄNZEN: …]`
-> markierten Stellen ausgefüllt werden. Die ladungsfähige Postanschrift
-> ist nach DSGVO Art. 13 Pflicht.
-
 ## 1. Verantwortlicher
 
 Verantwortlicher im Sinne der DSGVO ist:
 
 **Florian Schneider**
-[BITTE ERGÄNZEN: Straße und Hausnummer]
+Kreuzstraße 26
 76133 Karlsruhe
-[BITTE ERGÄNZEN: Land]
+Deutschland
 
 E-Mail: dawny@posteo.de
 
@@ -95,4 +91,4 @@ Diese Datenschutzerklärung kann angepasst werden, wenn sich die App ändert. We
 
 ## 10. Diese Webseite
 
-Diese Webseite (`dawny.app`) wird statisch bei IONOS in Deutschland gehostet. Es werden weder Cookies noch Tracking oder Analytics eingesetzt. Standardmäßige Server-Zugriffslogs können vom Hosting-Anbieter zum Betrieb des Dienstes temporär vorgehalten werden.
+Diese Webseite (`dawnyapp.com`) wird statisch bei IONOS in Deutschland gehostet. Es werden weder Cookies noch Tracking oder Analytics eingesetzt. Standardmäßige Server-Zugriffslogs können vom Hosting-Anbieter zum Betrieb des Dienstes temporär vorgehalten werden. Weitere Informationen zur Datenverarbeitung durch IONOS findest du in der [Datenschutzerklärung von IONOS](https://www.ionos.de/terms-gtc/datenschutzerklaerung/).
