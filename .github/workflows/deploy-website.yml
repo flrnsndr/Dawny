@@ -1,7 +1,4 @@
-name: Build website
-
-# IONOS-Deploy ist vorübergehend deaktiviert — Schritt „Deploy to IONOS via FTPS“
-# und Workflow-Name wiederherstellen, wenn der Upload wieder aktiv sein soll.
+name: Deploy Website to IONOS
 
 on:
   push:
@@ -12,11 +9,12 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: website
+
     steps:
       - uses: actions/checkout@v4
 
@@ -29,3 +27,14 @@ jobs:
       - run: npm ci
 
       - run: npm run build
+
+      - name: Deploy to IONOS via SFTP
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+          server: ${{ secrets.IONOS_FTP_HOST }}
+          username: ${{ secrets.IONOS_FTP_USER }}
+          password: ${{ secrets.IONOS_FTP_PASSWORD }}
+          port: 22
+          local_path: ./website/dist/*
+          remote_path: ${{ secrets.IONOS_FTP_REMOTE_DIR }}
+          sftp_only: true

@@ -62,7 +62,7 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
   <text x="80" y="500" fill="rgba(255,255,255,0.65)" font-family="-apple-system, system-ui, sans-serif" font-size="26">No overdue. No carryover. No guilt.</text>
 
   <!-- URL -->
-  <text x="80" y="580" fill="rgba(255,255,255,0.4)" font-family="-apple-system, ui-monospace, monospace" font-size="20" letter-spacing="2">dawny.app</text>
+  <text x="80" y="580" fill="rgba(255,255,255,0.4)" font-family="-apple-system, ui-monospace, monospace" font-size="20" letter-spacing="2">dawnyapp.com</text>
 </svg>
 `;
 

@@ -9,17 +9,14 @@ canonicalPath: "/privacy/"
 **Last updated:** April 19, 2026
 **Language:** English ([Deutsche Version](/de/datenschutz/))
 
-> **Note:** Before publishing, the placeholders marked `[PLEASE FILL IN: …]`
-> must be completed. The postal address is required under GDPR Art. 13.
-
 ## 1. Data Controller
 
 The data controller under the GDPR is:
 
 **Florian Schneider**
-[PLEASE FILL IN: Street and number]
+Kreuzstraße 26
 76133 Karlsruhe
-[PLEASE FILL IN: Country]
+Germany
 
 Email: dawny@posteo.de
 
@@ -94,4 +91,4 @@ This privacy policy may be updated as the app evolves. Material changes will be 
 
 ## 10. Website
 
-This website (`dawny.app`) is statically hosted on IONOS in Germany. It does not use cookies, analytics, or tracking. Standard server access logs may be temporarily kept by the hosting provider for the purpose of operating the service.
+This website (`dawnyapp.com`) is statically hosted on IONOS in Germany. It does not use cookies, analytics, or tracking. Standard server access logs may be temporarily kept by the hosting provider for the purpose of operating the service. For more information on how IONOS processes data, see [IONOS's privacy policy](https://www.ionos.de/terms-gtc/datenschutzerklaerung/).
