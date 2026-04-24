@@ -82,8 +82,10 @@ and aggressive caching.
 
 ### Manual deploy (one-shot)
 
-1. Copy `.env.example` → `.env` and fill in the SFTP credentials from the IONOS
-   control panel (*Hosting → Webspace → SFTP/SSH access*).
+1. Copy the repo-root `.env.example` → `.env` (in the repository root) and fill in
+   the SFTP credentials from the IONOS control panel (*Hosting → Webspace → SFTP/SSH access*).
+   Optionally add `website/.env` for local overrides — `deploy-ionos.mjs` loads root `.env` first,
+   then `website/.env`; variables already set in the shell or CI are not overwritten.
 2. Run:
    ```bash
    npm run build
