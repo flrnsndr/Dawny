@@ -135,7 +135,7 @@
 						CreatedOnToolsVersion = 26.2;
 						TestTargetID = 5C9C9EBE2F0180D90092AD03;
 					};
-			};
+				};
 			};
 			buildConfigurationList = 5C9C9EBA2F0180D90092AD03 /* Build configuration list for PBXProject "Dawny" */;
 			developmentRegion = en;
@@ -354,7 +354,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.3.0;
+				MARKETING_VERSION = 0.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Florian.Dawny.MVP;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -397,7 +397,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.3.0;
+				MARKETING_VERSION = 0.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Florian.Dawny.MVP;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
