@@ -559,6 +559,37 @@ final class BacklogViewModel {
             return nil
         }
     }
+
+    /// Sortiert Kategorien im dedizierten Sortiermodus um und persistiert die neue Reihenfolge.
+    func reorderCategories(from source: IndexSet, to destination: Int) {
+        var sorted = categories.sorted()
+        guard !source.isEmpty else { return }
+
+        var itemsToMove: [Category] = []
+        let sortedIndices = source.sorted(by: >)
+        for index in sortedIndices {
+            itemsToMove.insert(sorted.remove(at: index), at: 0)
+        }
+
+        let maxSourceIndex = sortedIndices.last!
+        let insertIndex = destination > maxSourceIndex ? destination - itemsToMove.count : destination
+
+        for (index, item) in itemsToMove.enumerated() {
+            sorted.insert(item, at: insertIndex + index)
+        }
+
+        for (index, category) in sorted.enumerated() {
+            category.orderIndex = index
+        }
+
+        do {
+            try modelContext.save()
+            loadCategories()
+            HapticFeedback.light()
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
     
     /// Verschiebt Tasks innerhalb einer Kategorie (Drag & Drop)
     func moveTasksWithinCategory(category: Category, from source: IndexSet, to destination: Int) {
