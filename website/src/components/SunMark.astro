@@ -37,7 +37,7 @@ const { class: className = "" } = Astro.props;
     left: 50%;
     bottom: 18%;
     transform: translate(-50%, 0);
-    width: clamp(380px, 48vw, 720px);
+    width: min(100vw, clamp(280px, 92vw, 720px));
     aspect-ratio: 1 / 1;
     pointer-events: none;
     /* Positiver z-index ist entscheidend: nur so landet der Halo im CSS-Paint-Step
