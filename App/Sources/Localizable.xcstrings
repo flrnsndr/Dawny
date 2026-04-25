@@ -497,6 +497,30 @@
         }
       }
     },
+    "category.action.reorder" : {
+      "comment" : "Backlog · Confirmation dialog button · Verb. Enters category sorting mode.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Move"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verschieben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move"
+          }
+        }
+      }
+    },
     "category.action.makeRecurring" : {
       "comment" : "Backlog · Confirmation dialog button · Marks a category as recurring.",
       "extractionState" : "manual",
@@ -541,6 +565,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Remove recurring"
+          }
+        }
+      }
+    },
+    "category.sort.title" : {
+      "comment" : "Backlog · Category sorting mode overlay title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Arrange Categories"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategorien sortieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrange Categories"
           }
         }
       }

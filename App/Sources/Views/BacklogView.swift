@@ -21,6 +21,8 @@ struct BacklogView: View {
 
     @State private var expandedCategories: Set<UUID> = []
     @State private var focusedTaskID: UUID?
+    @State private var isSortingCategories = false
+    @State private var expandedCategoriesBeforeSort: Set<UUID> = []
 
     // MARK: - Category Editing State
 
@@ -37,8 +39,12 @@ struct BacklogView: View {
         NavigationStack {
             ZStack {
                 if settings.showCategories {
-                    ScrollViewReader { proxy in
-                        categorizedTaskListView(scrollProxy: proxy)
+                    if isSortingCategories {
+                        sortModeView
+                    } else {
+                        ScrollViewReader { proxy in
+                            categorizedTaskListView(scrollProxy: proxy)
+                        }
                     }
                 } else {
                     ScrollViewReader { proxy in
@@ -59,6 +65,7 @@ struct BacklogView: View {
                     actionsCategory: $actionsCategory,
                     onEdit: { category in beginRenaming(category) },
                     onDelete: { category in requestDelete(category) },
+                    onReorder: { category in activateSortMode(startingWith: category) },
                     onToggleRecurring: { category in
                         _ = viewModel.toggleRecurring(category)
                     }
@@ -99,13 +106,38 @@ struct BacklogView: View {
                 }
             }
             .overlay(alignment: .top) {
-                if let error = viewModel.errorMessage {
-                    ErrorBannerView(message: error) {
-                        viewModel.errorMessage = nil
+                VStack(spacing: 8) {
+                    if isSortingCategories {
+                        HStack {
+                            Text(
+                                String(
+                                    localized: "category.sort.title",
+                                    defaultValue: "Arrange Categories"
+                                )
+                            )
+                            .font(.headline)
+
+                            Spacer()
+
+                            Button(
+                                String(localized: "common.done", defaultValue: "Done")
+                            ) {
+                                exitSortMode()
+                            }
+                            .fontWeight(.semibold)
+                        }
+                        .padding()
+                        .background(.regularMaterial)
                     }
-                    .padding(.top, 8)
-                    .onAppear {
-                        HapticFeedback.error()
+
+                    if let error = viewModel.errorMessage {
+                        ErrorBannerView(message: error) {
+                            viewModel.errorMessage = nil
+                        }
+                        .padding(.horizontal, 8)
+                        .onAppear {
+                            HapticFeedback.error()
+                        }
                     }
                 }
             }
@@ -167,6 +199,65 @@ struct BacklogView: View {
         .listStyle(.plain)
         .listSectionSpacing(.compact)
         .environment(\.defaultMinListRowHeight, 36)
+    }
+
+    /// Sortiermodus: flache Liste aller Kategorien ohne Tasks, Quick-Entry oder Add-Row.
+    private var sortModeView: some View {
+        let grouped = viewModel.groupedTasks
+        let sortedCategories = viewModel.categories.sorted()
+
+        return List {
+            ForEach(sortedCategories, id: \.id) { category in
+                sortModeCategoryRow(
+                    category: category,
+                    taskCount: grouped[category.id]?.count ?? 0
+                )
+            }
+            .onMove { source, destination in
+                viewModel.reorderCategories(from: source, to: destination)
+            }
+        }
+        .listStyle(.plain)
+        .environment(\.editMode, .constant(.active))
+        .environment(\.defaultMinListRowHeight, 44)
+    }
+
+    @ViewBuilder
+    private func sortModeCategoryRow(category: Category, taskCount: Int) -> some View {
+        HStack(spacing: 8) {
+            Image(systemName: category.displayIconName)
+                .foregroundColor(.secondary)
+                .frame(width: 18)
+
+            Text(category.displayName)
+                .font(.headline)
+                .foregroundColor(.primary)
+
+            if category.isRecurring {
+                Image(systemName: "arrow.triangle.2.circlepath")
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+                    .accessibilityLabel(
+                        String(
+                            localized: "task.recurring.badge",
+                            defaultValue: "Recurring"
+                        )
+                    )
+            }
+
+            Spacer()
+
+            if taskCount > 0 {
+                Text(taskCount, format: .number)
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 2)
+                    .background(Color.secondary.opacity(0.2))
+                    .clipShape(Capsule())
+            }
+        }
+        .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
     }
 
     @ViewBuilder
@@ -421,6 +512,29 @@ struct BacklogView: View {
     
     // MARK: - Category Editing Actions
 
+    private func activateSortMode(startingWith _: Category) {
+        guard !isSortingCategories else { return }
+        actionsCategory = nil
+        editingCategoryID = nil
+        iconPickerCategory = nil
+        focusedTaskID = nil
+        expandedCategoriesBeforeSort = expandedCategories
+        withAnimation(.easeInOut(duration: 0.2)) {
+            expandedCategories = []
+            isSortingCategories = true
+        }
+        HapticFeedback.light()
+    }
+
+    private func exitSortMode() {
+        withAnimation(.easeInOut(duration: 0.2)) {
+            isSortingCategories = false
+            expandedCategories = expandedCategoriesBeforeSort
+            expandedCategoriesBeforeSort = []
+        }
+        HapticFeedback.light()
+    }
+
     private func beginRenaming(_ category: Category) {
         guard category.canRename else { return }
         // Kategorie ausklappen, damit Tastatur das Feld nicht verdeckt
@@ -482,6 +596,7 @@ private struct CategoryActionMenu: ViewModifier {
     @Binding var actionsCategory: Category?
     let onEdit: (Category) -> Void
     let onDelete: (Category) -> Void
+    let onReorder: (Category) -> Void
     let onToggleRecurring: (Category) -> Void
 
     func body(content: Content) -> some View {
@@ -500,6 +615,14 @@ private struct CategoryActionMenu: ViewModifier {
                 ) {
                     onEdit(category)
                 }
+            }
+            Button(
+                String(
+                    localized: "category.action.reorder",
+                    defaultValue: "Move"
+                )
+            ) {
+                onReorder(category)
             }
             if category.canToggleRecurring {
                 Button {
