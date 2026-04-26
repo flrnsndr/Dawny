@@ -80,16 +80,6 @@ struct ArchiveView: View {
         )
         .swipeActions(edge: .leading, allowsFullSwipe: true) {
             Button {
-                viewModel.unarchiveToDailyFocus(taskID: task.id)
-            } label: {
-                Label(
-                    String(localized: "archive.swipe.today", defaultValue: "Today"),
-                    systemImage: "sun.max.fill"
-                )
-            }
-            .tint(.orange)
-
-            Button {
                 viewModel.unarchiveToBacklog(taskID: task.id)
             } label: {
                 Label(
@@ -98,6 +88,16 @@ struct ArchiveView: View {
                 )
             }
             .tint(.blue)
+
+            Button {
+                viewModel.unarchiveToDailyFocus(taskID: task.id)
+            } label: {
+                Label(
+                    String(localized: "archive.swipe.today", defaultValue: "Today"),
+                    systemImage: "sun.max.fill"
+                )
+            }
+            .tint(.orange)
         }
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
             Button(role: .destructive) {
