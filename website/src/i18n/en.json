@@ -12,14 +12,14 @@
   "hero": {
     "eyebrow": "iOS · TestFlight Beta",
     "headline": ["A task app that deletes", "yesterday's tasks.", "On purpose."],
-    "sub": "No overdue. No carryover. No guilt.",
+    "sub": ["No more abandoned tasks dragging you down.", "Dawny sweeps away the digital baggage of yesterday, helping you focus on what matters now."],
     "ctaPrimary": "Join the TestFlight Beta",
     "ctaSecondary": "Read the manifesto"
   },
   "manifesto": {
     "quote": "Overdue tasks are a design flaw.",
-    "bodyMain": "Most apps cast unfinished work as failure in red. Dawny reads it as information. A miss today is about timing, not about what matters to you.",
-    "bodyMid": "Tomorrow isn't on autopilot: you decide whether it's worth today's focus, and nothing fills your list without your conscious decision.",
+    "bodyMain": "Most apps mark unfinished tasks in red — as if you failed. But your list isn't just full of things you didn't finish. It's packed with things that stopped mattering weeks ago, sitting there because deleting them feels like giving up. Dawny reads both as information, not failure.",
+    "bodyMid": "A list that never shrinks isn't a productivity tool — it's a weight. When everything stays forever, the things that matter today drown in the things that mattered last month.",
     "bodyAside": "A red priority flag on a task doesn't automatically make it your priority. You already know, quite clearly, what matters and what doesn't."
   },
   "reset": {
@@ -79,6 +79,24 @@
       "You think in days, not systems."
     ],
     "footnote": "Dawny tends to work especially well for people who don't fit rigid productivity systems — including many neurodivergent thinkers."
+  },
+  "makeItCount": {
+    "eyebrow": "Make It Count",
+    "title": "If a task has been on your list for two weeks —",
+    "titleAccent": "is it still a priority?",
+    "narrative": "An unchecked task isn't a failure. It's information. Choosing a task for Today is a commitment to yourself. When that commitment keeps breaking, Dawny takes the signal seriously.",
+    "logicLabel": "How it works",
+    "logic": "If you don't get to a task you chose for Today, it goes back to your Backlog. If it keeps slipping, Dawny quietly moves it to the Archive — your digital baggage, out of the way.",
+    "safetyLabel": "Your safety net",
+    "safety": "Nothing in the Archive is gone. Restore any task to your Backlog or back to Today with a single tap.",
+    "flow": {
+      "backlog": "Backlog",
+      "today": "Today",
+      "archive": "Archive",
+      "edgeChoose": "you choose",
+      "edgeMissed": "missed",
+      "edgeSlipping": "keeps slipping"
+    }
   },
   "finalCta": {
     "eyebrow": "Beta",

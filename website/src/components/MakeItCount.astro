@@ -1,0 +1,274 @@
+---
+import { type Lang, getDict } from "@/i18n";
+import SunMark from "@/components/SunMark.astro";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const dict = getDict(lang);
+const mic = dict.makeItCount;
+---
+
+<section
+  id="make-it-count"
+  class="relative bg-gradient-to-b from-[#eef2f7] to-[var(--color-paper)] text-[var(--color-ink)] py-32 sm:py-44"
+>
+  <SunMark />
+
+  <div class="container-content relative z-10">
+    <div class="max-w-3xl mb-16">
+      <p class="reveal text-xs font-medium uppercase tracking-[0.18em] text-[var(--color-ink-soft)]/70 mb-6">
+        <span class="inline-block h-px w-8 bg-[var(--color-ink-soft)]/40 align-middle mr-3"></span>
+        {mic.eyebrow}
+      </p>
+      <h2 class="reveal text-display text-[clamp(2rem,5vw,4rem)]">
+        <span class="block text-[var(--color-ink)]/80">{mic.title}</span>
+        <span class="block">{mic.titleAccent}</span>
+      </h2>
+    </div>
+
+    <div class="reveal max-w-2xl mb-16">
+      <p class="text-lg sm:text-xl leading-[1.65] text-[var(--color-ink-soft)]">
+        {mic.narrative}
+      </p>
+    </div>
+
+    {/* Flow Visualisierung */}
+    <div class="reveal flow-wrap mb-16" role="img" aria-label={`${mic.flow.backlog} → ${mic.flow.today} → ${mic.flow.archive}`}>
+      <div class="flow-row">
+        <div class="flow-node flow-node--backlog">
+          <span>{mic.flow.backlog}</span>
+        </div>
+
+        <div class="flow-edge">
+          <span class="flow-edge-line"></span>
+          <span class="flow-edge-arrow">→</span>
+          <span class="flow-edge-label">{mic.flow.edgeChoose}</span>
+        </div>
+
+        <div class="flow-node flow-node--today">
+          <span>{mic.flow.today}</span>
+        </div>
+
+        <div class="flow-edge">
+          <span class="flow-edge-line"></span>
+          <span class="flow-edge-arrow">→</span>
+          <span class="flow-edge-label">{mic.flow.edgeSlipping}</span>
+        </div>
+
+        <div class="flow-node flow-node--archive">
+          <span>{mic.flow.archive}</span>
+        </div>
+      </div>
+
+      {/* Rückführender Pfeil Today → Backlog */}
+      <div class="flow-return">
+        <div class="flow-return-line"></div>
+        <span class="flow-return-label">{mic.flow.edgeMissed}</span>
+      </div>
+    </div>
+
+    <div class="reveal grid gap-8 md:grid-cols-2 max-w-3xl">
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-[0.14em] text-[var(--color-ink-soft)] mb-3">
+          {mic.logicLabel}
+        </h3>
+        <p class="text-[1.0625rem] leading-[1.65] text-[var(--color-ink-soft)]">
+          {mic.logic}
+        </p>
+      </div>
+
+      <div class="safety-card rounded-2xl border border-[var(--color-dawn)]/20 bg-[var(--color-dawn)]/5 p-6">
+        <h3 class="text-sm font-semibold uppercase tracking-[0.14em] text-[var(--color-dawn)] mb-3 flex items-center gap-2">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-dawn)" stroke-width="2.4" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          {mic.safetyLabel}
+        </h3>
+        <p class="text-[1.0625rem] leading-[1.65] text-[var(--color-ink-soft)]">
+          {mic.safety}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .flow-wrap {
+    --node-h: 3.25rem;
+    --node-radius: 9999px;
+    position: relative;
+    max-width: 44rem;
+  }
+
+  .flow-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: nowrap;
+  }
+
+  .flow-node {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--node-h);
+    padding: 0 1.25rem;
+    border-radius: var(--node-radius);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .flow-node--backlog {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .flow-node--today {
+    background: var(--color-dawn);
+    color: var(--color-night);
+  }
+
+  .flow-node--archive {
+    background: var(--color-ink-soft);
+    color: var(--color-paper);
+  }
+
+  .flow-edge {
+    display: flex;
+    align-items: center;
+    position: relative;
+    flex: 1 1 0;
+    min-width: 3rem;
+    height: var(--node-h);
+  }
+
+  .flow-edge-line {
+    position: absolute;
+    inset: 50% 0 auto 0;
+    height: 1px;
+    background: var(--color-ink-soft);
+    opacity: 0.3;
+  }
+
+  .flow-edge-arrow {
+    position: absolute;
+    right: -2px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-ink-soft);
+    opacity: 0.5;
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .flow-edge-label {
+    position: absolute;
+    top: -1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-ink-soft);
+    opacity: 0.65;
+    white-space: nowrap;
+  }
+
+  /* Return arc: Today → Backlog */
+  .flow-return {
+    position: relative;
+    height: 2.5rem;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .flow-return-line {
+    position: absolute;
+    top: 0;
+    /* Aligned to center of Backlog node and center of Today node */
+    left: calc(3.5rem);
+    right: calc(100% - 22rem);
+    height: 100%;
+    border-left: 1px dashed var(--color-ink-soft);
+    border-bottom: 1px dashed var(--color-ink-soft);
+    border-right: 1px dashed var(--color-ink-soft);
+    border-radius: 0 0 0.75rem 0.75rem;
+    opacity: 0.25;
+  }
+
+  .flow-return-label {
+    position: absolute;
+    bottom: 0.125rem;
+    left: calc(3.5rem);
+    right: calc(100% - 22rem);
+    text-align: center;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-ink-soft);
+    opacity: 0.65;
+    white-space: nowrap;
+  }
+
+  /* Mobile: stack vertically */
+  @media (max-width: 639px) {
+    .flow-row {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+
+    .flow-node {
+      height: auto;
+      padding: 0.75rem 1.25rem;
+      border-radius: 1rem;
+      justify-content: center;
+    }
+
+    .flow-edge {
+      flex-direction: column;
+      align-items: center;
+      min-width: unset;
+      height: 2.5rem;
+      min-height: 2.5rem;
+    }
+
+    .flow-edge-line {
+      inset: 0 50% 0 auto;
+      width: 1px;
+      height: 100%;
+    }
+
+    .flow-edge-arrow {
+      position: absolute;
+      right: auto;
+      bottom: 0;
+      top: auto;
+      left: 50%;
+      transform: translateX(-50%) rotate(90deg);
+    }
+
+    .flow-edge-label {
+      top: 50%;
+      left: auto;
+      right: auto;
+      transform: translateY(-50%);
+      position: relative;
+      background: var(--color-paper);
+      padding: 0 0.5rem;
+    }
+
+    .flow-return {
+      display: none;
+    }
+  }
+</style>
