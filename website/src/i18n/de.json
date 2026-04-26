@@ -40,7 +40,7 @@
     },
     "emptyTitle": "Noch nichts gewählt",
     "emptySub": "Heute bewusst entscheiden",
-    "backlogLabel": "Backlog",
+    "archiveLabel": "Archiv",
     "returnedLabel": "Zurück ins Backlog"
   },
   "twoLists": {

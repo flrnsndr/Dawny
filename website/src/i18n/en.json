@@ -40,7 +40,7 @@
     },
     "emptyTitle": "Nothing chosen yet",
     "emptySub": "Pick today, deliberately",
-    "backlogLabel": "Backlog",
+    "archiveLabel": "Archive",
     "returnedLabel": "Back in Backlog"
   },
   "twoLists": {
