@@ -141,7 +141,7 @@
                 <span class="label">1. Code retten & Main zurücksetzen</span>
                 <code>git branch feature-name
 git reset --hard HEAD~1
-git checkout feature-name</code>
+git switch feature-name</code>
             </div>
             <div class="tip">
                 <b>Erklärung:</b> Erstellt den neuen Branch (mit dem Code), setzt Main einen Schritt zurück und springt dann in den neuen Branch.
@@ -152,12 +152,12 @@ git checkout feature-name</code>
             <h2>🚀 Daily Loop</h2>
             <div class="command-group">
                 <span class="label">1. Update Main</span>
-                <code>git checkout main
+                <code>git switch main
 git pull</code>
             </div>
             <div class="command-group">
                 <span class="label">2. Neuer Branch</span>
-                <code>git checkout -b feature-name</code>
+                <code>git switch -c feature-name</code>
             </div>
             <div class="command-group">
                 <span class="label">3. Sichern & Push</span>
@@ -184,7 +184,7 @@ git branch -av</code>
             <h2>🧹 Aufräumen (nach Merge)</h2>
             <div class="command-group">
                 <span class="label">1. Sync & Prune</span>
-                <code>git checkout main
+                <code>git switch main
 git pull
 git fetch -p</code>
             </div>
@@ -194,12 +194,12 @@ git fetch -p</code>
             </div>
             <div class="command-group">
                 <span class="label">Alle lokalen Branches außer main (nur gemergt, <b>-d</b>)</span>
-                <code>git checkout main
+                <code>git switch main
 git branch --format='%(refname:short)' | grep -vx 'main' | xargs git branch -d</code>
             </div>
             <div class="command-group">
                 <span class="label">Alle lokalen Branches außer main (inkl. ungemergt, <b>-D</b>)</span>
-                <code>git checkout main
+                <code>git switch main
 git branch --format='%(refname:short)' | grep -vx 'main' | xargs git branch -D</code>
             </div>
         </div>
@@ -209,9 +209,9 @@ git branch --format='%(refname:short)' | grep -vx 'main' | xargs git branch -D</
             <p style="margin:0; font-size: 0.85rem; color: var(--text-dim);">Wenn Main sich geändert hat, während du arbeitest:</p>
             <div class="command-group">
                 <span class="label">Variante A: Rebase (Sauber)</span>
-                <code>git checkout main
+                <code>git switch main
 git pull
-git checkout -
+git switch -
 git rebase main</code>
             </div>
             <div class="command-group">
