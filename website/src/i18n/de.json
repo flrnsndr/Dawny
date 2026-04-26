@@ -58,15 +58,15 @@
   },
   "contrast": {
     "eyebrow": "Warum es sich anders anfühlt",
-    "title": "Andere Apps lassen dich alten Plänen hinterherjagen.",
-    "titleAccent": "Dawny gibt dir jeden Tag einen neuen Fokus.",
+    "title": "Die meisten Apps machen aus alten Plänen Druck.",
+    "titleAccent": "Dawny macht daraus Klarheit.",
     "leftLabel": "Klassische Task-Apps",
     "rightLabel": "Dawny",
     "rows": [
-      { "left": "Unerledigt = Versagen (rot)", "right": "Unerledigt = Information" },
-      { "left": "Listen wachsen endlos", "right": "Daily Focus startet jede Nacht neu" },
-      { "left": "Prioritäten werden vererbt", "right": "Heute wird neu entschieden" },
-      { "left": "Struktur skaliert Komplexität", "right": "Begrenzung schafft Klarheit" }
+      { "left": "Eine wachsende Liste wird zum Grundrauschen", "right": "Heute bleibt fokussiert" },
+      { "left": "Rote Overdue-Daten machen Schuldgefühle", "right": "Verpasste Aufgaben werden neutrale Signale" },
+      { "left": "Alte Pläne konkurrieren mit echten Prioritäten", "right": "Veraltete Aufgaben rücken aus dem Blick" },
+      { "left": "Du schleppst alles weiter", "right": "Du entscheidest, was einen neuen Tag verdient" }
     ]
   },
   "audience": {

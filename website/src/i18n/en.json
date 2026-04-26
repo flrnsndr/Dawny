@@ -58,15 +58,15 @@
   },
   "contrast": {
     "eyebrow": "Why it feels different",
-    "title": "Other apps keep you chasing old plans.",
-    "titleAccent": "Dawny gives you a fresh focus for each day.",
+    "title": "Most apps turn old plans into pressure.",
+    "titleAccent": "Dawny turns them into clarity.",
     "leftLabel": "Most task apps",
     "rightLabel": "Dawny",
     "rows": [
-      { "left": "Unfinished = failure (in red)", "right": "Unfinished = information" },
-      { "left": "Lists grow forever", "right": "Daily Focus resets every night" },
-      { "left": "Push priorities forward by default", "right": "Re-decide what matters today" },
-      { "left": "Structure scales complexity", "right": "Constraint creates clarity" }
+      { "left": "A growing list becomes background noise", "right": "Today stays focused" },
+      { "left": "Red overdue dates create guilt", "right": "Missed tasks become neutral signals" },
+      { "left": "Old plans compete with real priorities", "right": "Stale tasks move out of sight" },
+      { "left": "You carry everything forward", "right": "You choose what deserves another day" }
     ]
   },
   "audience": {
