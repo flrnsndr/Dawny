@@ -28,11 +28,11 @@
     "titleAccent": "startet dein Tag neu.",
     "body": "Um 3 Uhr morgens leert Dawny leise deinen Daily Focus. Unerledigte Aufgaben werden entweder archiviert oder wandern zurück ins Backlog. Du wachst mit einer leeren Liste auf. Nichts geht verloren.",
     "screenLabel": "Heute",
-    "tasks": ["Hund Gassi führen", "Hochzeit zusagen", "Arzttermin"],
+    "tasks": ["Hund Gassi führen", "Hochzeit zusagen", "Keller aufräumen"],
     "steps": [
-      { "time": "Morgens · 8:00", "phase": "Tag 1", "doneCount": 0, "cleared": false, "footer": "0 von 3 erledigt" },
-      { "time": "Abends · 22:00", "phase": "Tag 1", "doneCount": 2, "cleared": false, "footer": "2 von 3 erledigt" },
-      { "time": "Morgens · 8:00", "phase": "Tag 2", "doneCount": 0, "cleared": true, "footer": "Frischer Start" }
+      { "time": ["Morgens", "8:00"], "phase": "Tag 1", "doneCount": 0, "cleared": false, "footer": "0 von 3 erledigt" },
+      { "time": ["Abends", "22:00"], "phase": "Tag 1", "doneCount": 2, "cleared": false, "footer": "2 von 3 erledigt" },
+      { "time": ["Nachts", "3:00"], "phase": "Tag 2", "doneCount": 0, "cleared": true, "footer": "Frischer Start" }
     ],
     "timeline": {
       "arrowDay": "Tag",

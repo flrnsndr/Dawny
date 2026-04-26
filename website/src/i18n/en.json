@@ -28,11 +28,11 @@
     "titleAccent": "your day resets.",
     "body": "At 3 AM, Dawny quietly clears your Daily Focus. Unfinished tasks are either archived or return to the Backlog. You wake up to a clean slate. Nothing is lost.",
     "screenLabel": "Today",
-    "tasks": ["Walk the dog", "RSVP to wedding", "Doctor's appointment"],
+    "tasks": ["Walk the dog", "RSVP to wedding", "Clean basement"],
     "steps": [
-      { "time": "Morning · 8 AM", "phase": "Day 1", "doneCount": 0, "cleared": false, "footer": "0 of 3 done" },
-      { "time": "Evening · 10 PM", "phase": "Day 1", "doneCount": 2, "cleared": false, "footer": "2 of 3 done" },
-      { "time": "Morning · 8 AM", "phase": "Day 2", "doneCount": 0, "cleared": true, "footer": "Clean slate" }
+      { "time": ["Morning", "8 AM"], "phase": "Day 1", "doneCount": 0, "cleared": false, "footer": "0 of 3 done" },
+      { "time": ["Evening", "10 PM"], "phase": "Day 1", "doneCount": 2, "cleared": false, "footer": "2 of 3 done" },
+      { "time": ["Night", "3 AM"], "phase": "Day 2", "doneCount": 0, "cleared": true, "footer": "Clean slate" }
     ],
     "timeline": {
       "arrowDay": "Day",
