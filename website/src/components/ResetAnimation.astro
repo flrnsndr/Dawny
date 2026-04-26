@@ -22,7 +22,7 @@ const migratedTask = returnedTasks[0];
 
 <section
   id="reset"
-  class="relative bg-[var(--color-night)] text-white py-32 sm:py-44 overflow-hidden"
+  class="relative isolate bg-[var(--color-night)] text-white py-32 sm:py-44 overflow-hidden"
   data-reset
 >
   <div
@@ -36,22 +36,21 @@ const migratedTask = returnedTasks[0];
     aria-hidden="true"
   ></div>
 
-  <SunMark />
+  <div class="reset-sun-layer" aria-hidden="true">
+    <SunMark class="reset-sun-mark" />
+  </div>
 
-  <div class="container-content relative z-10 grid gap-16 lg:grid-cols-[1fr_1.25fr] lg:gap-20 items-center">
-    <div>
+  <div class="container-content reset-layout">
+    <div class="reset-heading">
       <p class="reveal text-xs font-medium uppercase tracking-[0.18em] text-[var(--color-dawn-soft)] mb-6">
         {dict.reset.eyebrow}
       </p>
-      <h2 class="reveal text-display text-[clamp(2.25rem,5.5vw,4.5rem)]">
+      <h2 class="reveal reset-title text-display text-[clamp(2.25rem,5.5vw,4.5rem)]">
         <span class="block text-white/90">{dict.reset.title}</span>
-        <span class="block bg-gradient-to-r from-[var(--color-dawn-soft)] to-[var(--color-dawn)] bg-clip-text text-transparent">
+        <span class="block text-blend-exclusion-warm">
           {dict.reset.titleAccent}
         </span>
       </h2>
-      <p class="reveal mt-8 max-w-md text-base sm:text-lg text-white/65 leading-relaxed">
-        {dict.reset.body}
-      </p>
     </div>
 
     <div class="reveal reset-stage">
@@ -191,13 +190,58 @@ const migratedTask = returnedTasks[0];
         )}
       </div>
     </div>
+
+    <p class="reveal reset-body text-base sm:text-lg text-white/75 leading-relaxed">
+      {dict.reset.body}
+    </p>
   </div>
 </section>
 
 <style>
+  .reset-layout {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .reset-heading {
+    position: relative;
+    width: 100%;
+  }
+
+  .reset-heading :global(.reveal) {
+    will-change: auto;
+  }
+
+  [data-reset].is-visible .reset-heading :global(.reveal) {
+    transform: none;
+  }
+
+  .reset-title {
+    color: rgba(255, 255, 255, 0.92);
+    line-height: 0.95;
+  }
+
+  .reset-body {
+    position: relative;
+    width: min(100%, 56rem);
+    margin: 0;
+  }
+
   .reset-stage {
     position: relative;
-    z-index: 2;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .reset-sun-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
   }
 
   .reset-stage-cards {
@@ -214,6 +258,7 @@ const migratedTask = returnedTasks[0];
 
   @media (min-width: 768px) {
     .reset-stage-cards {
+      width: max-content;
       grid-template-columns:
         auto var(--gap-col) auto var(--gap-col) auto calc(2 * var(--gap-col));
       align-items: stretch;
@@ -749,6 +794,14 @@ const migratedTask = returnedTasks[0];
 
   /* ---- Mobile: stack cards + hide overlap layering ---- */
   @media (max-width: 767px) {
+    .reset-layout {
+      align-items: stretch;
+    }
+
+    .reset-body {
+      width: 100%;
+    }
+
     .reset-card:nth-of-type(1) { grid-row: 1; }
     .reset-arrow--1 { grid-row: 2; }
     .reset-card:nth-of-type(2) { grid-row: 3; }

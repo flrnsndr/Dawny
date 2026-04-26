@@ -1,0 +1,35 @@
+---
+import SunMark from "@/components/SunMark.astro";
+import "@/styles/global.css";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dawny Sun</title>
+    <meta name="robots" content="noindex" />
+  </head>
+  <body>
+    <main class="sun-page" aria-label="Dawny sun">
+      <SunMark class="sun-page-mark" />
+    </main>
+  </body>
+</html>
+
+<style>
+  .sun-page {
+    position: relative;
+    min-height: 100svh;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 50% 55%, rgba(245, 176, 66, 0.18) 0%, transparent 42%),
+      var(--color-night);
+  }
+
+  :global(.sun-page-mark) {
+    bottom: 50%;
+    transform: translate(-50%, 50%);
+  }
+</style>
