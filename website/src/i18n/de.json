@@ -18,8 +18,8 @@
   },
   "manifesto": {
     "quote": "Overdue ist ein Design-Fehler.",
-    "bodyMain": "Die meisten Apps markieren Unerledigtes rot – als hättest du versagt. Aber deine Liste ist nicht nur voll mit Dingen, die du nicht geschafft hast. Sie ist voll mit Aufgaben, die längst keine Rolle mehr spielen – die niemand löscht, weil Löschen sich nach Aufgeben anfühlt. Dawny liest beides als Information, nicht als Misserfolg.",
-    "bodyMid": "Eine Liste, die nie kürzer wird, ist kein Produktivitätssystem – sie ist Ballast. Wenn alles ewig stehenbleibt, ertrinkt das, was heute zählt, in dem, was letzten Monat mal zählte.",
+    "bodyMid": "Wenn alte Aufgaben nie verschwinden, ertrinkt das, was heute zählt, in dem, was letzten Monat mal zählte.",
+    "bodyExtra": "Dein Leben ist kein Projekt, bei dem du jeden Tag Wochen im Voraus planen kannst.",
     "bodyAside": "Eine rote Priority-Flagge an einer Task macht sie nicht automatisch zu deiner Priorität. Du weißt selbst recht klar, welche Dinge wichtig sind und welche nicht."
   },
   "reset": {

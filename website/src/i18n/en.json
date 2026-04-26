@@ -18,8 +18,8 @@
   },
   "manifesto": {
     "quote": "Overdue tasks are a design flaw.",
-    "bodyMain": "Most apps mark unfinished tasks in red — as if you failed. But your list isn't just full of things you didn't finish. It's packed with things that stopped mattering weeks ago, sitting there because deleting them feels like giving up. Dawny reads both as information, not failure.",
-    "bodyMid": "A list that never shrinks isn't a productivity tool — it's a weight. When everything stays forever, the things that matter today drown in the things that mattered last month.",
+    "bodyMid": "When old tasks never leave, what matters today drowns in what mattered last month.",
+    "bodyExtra": "Your life isn't a project where you can plan each day weeks in advance.",
     "bodyAside": "A red priority flag on a task doesn't automatically make it your priority. You already know, quite clearly, what matters and what doesn't."
   },
   "reset": {
