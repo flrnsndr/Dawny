@@ -26,7 +26,7 @@
     "eyebrow": "The 3 AM Reset",
     "title": "While you sleep,",
     "titleAccent": "your day resets.",
-    "body": "At 3 AM, Dawny quietly clears your Daily Focus. Nothing is lost. Unfinished tasks return safely to the Backlog. You wake up to a clean slate.",
+    "body": "At 3 AM, Dawny quietly clears your Daily Focus. Unfinished tasks are either archived or return to the Backlog. You wake up to a clean slate. Nothing is lost.",
     "screenLabel": "Today",
     "tasks": ["Walk the dog", "RSVP to wedding", "Doctor's appointment"],
     "steps": [

@@ -26,7 +26,7 @@
     "eyebrow": "Der 3-Uhr-Reset",
     "title": "Während du schläfst,",
     "titleAccent": "startet dein Tag neu.",
-    "body": "Um 3 Uhr morgens leert Dawny leise deinen Daily Focus. Nichts geht verloren. Unerledigte Aufgaben wandern zurück ins Backlog. Du wachst mit einer leeren Liste auf.",
+    "body": "Um 3 Uhr morgens leert Dawny leise deinen Daily Focus. Unerledigte Aufgaben werden entweder archiviert oder wandern zurück ins Backlog. Du wachst mit einer leeren Liste auf. Nichts geht verloren.",
     "screenLabel": "Heute",
     "tasks": ["Hund Gassi führen", "Hochzeit zusagen", "Arzttermin"],
     "steps": [
