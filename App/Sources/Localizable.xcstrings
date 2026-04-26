@@ -4163,7 +4163,1094 @@
           }
         }
       }
-    }
+    },
+    "Move \\(\\.$task) to today in \\(.applicationName)": {
+      "comment": "Siri Phrase · MoveTaskToTodayIntent.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Move \\(\\.$task) to today in \\(.applicationName)"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verschiebe \\(\\.$task) auf heute in \\(.applicationName)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move \\(\\.$task) to today in \\(.applicationName)"
+          }
+        }
+      }
+    },
+    "Mark ${task} as done": {},
+    "What's on my \\(.applicationName) today": {
+      "comment": "Siri Phrase · ListTodayTasksIntent.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "What's on my \\(.applicationName) today"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Was steht heute in \\(.applicationName) an"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What's on my \\(.applicationName) today"
+          }
+        }
+      }
+    },
+    "intent.error.categoryNotFound": {
+      "comment": "Siri · Error if a category entity no longer exists.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "I couldn't find that category."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ich konnte diese Kategorie nicht finden."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I couldn't find that category."
+          }
+        }
+      }
+    },
+    "intent.listtoday.description": {
+      "comment": "Siri/Shortcuts · ListTodayTasksIntent description.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Reads your open tasks for today"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Liest deine offenen Aufgaben für heute vor"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reads your open tasks for today"
+          }
+        }
+      }
+    },
+    "Add task to today in \\(.applicationName)": {
+      "comment": "Siri Phrase · AddTaskTodayIntent.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Add task to today in \\(.applicationName)"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aufgabe für heute in \\(.applicationName) hinzufügen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add task to today in \\(.applicationName)"
+          }
+        }
+      }
+    },
+    "intent.listtoday.shorttitle": {
+      "comment": "Siri/Shortcuts · ListTodayTasksIntent short title.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Today List"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Heute-Liste"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today List"
+          }
+        }
+      }
+    },
+    "intent.addtask.param.category.description": {
+      "comment": "Siri · AddTaskIntent category parameter description.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "The category for the new task"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Kategorie für die neue Aufgabe"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The category for the new task"
+          }
+        }
+      }
+    },
+    "Task": {},
+    "List today's tasks": {
+      "comment": "AppIntent · ListTodayTasksIntent parameter summary.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "List today's tasks"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Heutige Aufgaben vorlesen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "List today's tasks"
+          }
+        }
+      }
+    },
+    "intent.movetoday.param.task.description": {
+      "comment": "Siri · MoveTaskToTodayIntent task parameter description.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "The backlog task to move to today"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Backlog-Aufgabe, die auf heute verschoben werden soll"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The backlog task to move to today"
+          }
+        }
+      }
+    },
+    "intent.listtoday.dialog": {
+      "comment": "Siri · ListTodayTasksIntent spoken response. %@ is a localized task list.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Today: %@."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Heute steht an: %@."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today: %@."
+          }
+        }
+      }
+    },
+    "Add ${taskTitle} to ${category} in backlog": {},
+    "intent.complete.shorttitle": {
+      "comment": "Siri/Shortcuts · CompleteTaskIntent short title.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Complete Task"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aufgabe erledigen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Complete Task"
+          }
+        }
+      }
+    },
+    "intent.complete.param.task": {
+      "comment": "Siri · CompleteTaskIntent task parameter title.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Task"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aufgabe"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Task"
+          }
+        }
+      }
+    },
+    "intent.error.taskAlreadyCompleted": {
+      "comment": "Siri · Error if a task is already completed.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "That task is already completed."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diese Aufgabe ist schon erledigt."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "That task is already completed."
+          }
+        }
+      }
+    },
+    "intent.error.taskArchived": {
+      "comment": "Siri · Error if a task is archived.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "That task is archived."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diese Aufgabe ist archiviert."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "That task is archived."
+          }
+        }
+      }
+    },
+    "intent.movetoday.description": {
+      "comment": "Siri/Shortcuts · MoveTaskToTodayIntent description.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Moves a Dawny task to today's focus"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verschiebt eine Dawny-Aufgabe in den heutigen Fokus"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Moves a Dawny task to today's focus"
+          }
+        }
+      }
+    },
+    "Move \\(\\.$task) to today": {
+      "comment": "AppIntent · MoveTaskToTodayIntent parameter summary.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Move \\(\\.$task) to today"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "\\(\\.$task) auf heute verschieben"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move \\(\\.$task) to today"
+          }
+        }
+      }
+    },
+    "Add \\(\\.$taskTitle) to today in \\(.applicationName)": {
+      "comment": "Siri Phrase · AddTaskTodayIntent · Adds a task to today.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Add \\(\\.$taskTitle) to today in \\(.applicationName)"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Füge \\(\\.$taskTitle) für heute in \\(.applicationName) hinzu"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add \\(\\.$taskTitle) to today in \\(.applicationName)"
+          }
+        }
+      }
+    },
+    "List today's tasks in \\(.applicationName)": {
+      "comment": "Siri Phrase · ListTodayTasksIntent.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "List today's tasks in \\(.applicationName)"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lies die heutigen Aufgaben in \\(.applicationName) vor"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "List today's tasks in \\(.applicationName)"
+          }
+        }
+      }
+    },
+    "intent.complete.param.task.description": {
+      "comment": "Siri · CompleteTaskIntent task parameter description.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "The task to complete"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Aufgabe, die erledigt werden soll"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The task to complete"
+          }
+        }
+      }
+    },
+    "Add \\(\\.$taskTitle) to \\(.applicationName)": {
+      "comment": "Siri Phrase · AddTaskIntent · Adds a task without specifying a category.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Add \\(\\.$taskTitle) to \\(.applicationName)"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Füge \\(\\.$taskTitle) zu \\(.applicationName) hinzu"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add \\(\\.$taskTitle) to \\(.applicationName)"
+          }
+        }
+      }
+    },
+    "Add task to \\(\\.$category) in \\(.applicationName)": {
+      "comment": "Siri Phrase · AddTaskIntent · Category-only phrase because AppShortcut phrases cannot contain String parameters.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Add task to \\(\\.$category) in \\(.applicationName)"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aufgabe zu \\(\\.$category) in \\(.applicationName) hinzufügen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add task to \\(\\.$category) in \\(.applicationName)"
+          }
+        }
+      }
+    },
+    "Add \\(\\.$taskTitle) to \\(\\.$category) in backlog": {
+      "comment": "AppIntent · AddTaskIntent parameter summary · Includes optional category.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Add \\(\\.$taskTitle) to \\(\\.$category) in backlog"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "\\(\\.$taskTitle) in \\(\\.$category) zum Backlog hinzufügen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add \\(\\.$taskTitle) to \\(\\.$category) in backlog"
+          }
+        }
+      }
+    },
+    "Add \\(\\.$taskTitle) to \\(\\.$category) for today": {
+      "comment": "AppIntent · AddTaskTodayIntent parameter summary · Includes optional category.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Add \\(\\.$taskTitle) to \\(\\.$category) for today"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "\\(\\.$taskTitle) in \\(\\.$category) für heute hinzufügen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add \\(\\.$taskTitle) to \\(\\.$category) for today"
+          }
+        }
+      }
+    },
+    "intent.movetoday.shorttitle": {
+      "comment": "Siri/Shortcuts · MoveTaskToTodayIntent short title.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Move to Today"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Auf heute"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move to Today"
+          }
+        }
+      }
+    },
+    "Move ${task} to today": {},
+    "Mark \\(\\.$task) as done": {
+      "comment": "AppIntent · CompleteTaskIntent parameter summary.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Mark \\(\\.$task) as done"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "\\(\\.$task) als erledigt markieren"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mark \\(\\.$task) as done"
+          }
+        }
+      }
+    },
+    "Add task to \\(\\.$category) for today in \\(.applicationName)": {
+      "comment": "Siri Phrase · AddTaskTodayIntent · Category-only phrase because AppShortcut phrases cannot contain String parameters.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Add task to \\(\\.$category) for today in \\(.applicationName)"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aufgabe zu \\(\\.$category) für heute in \\(.applicationName) hinzufügen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add task to \\(\\.$category) for today in \\(.applicationName)"
+          }
+        }
+      }
+    },
+    "intent.addtask.param.category": {
+      "comment": "Siri · AddTaskIntent category parameter title.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Category"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kategorie"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Category"
+          }
+        }
+      }
+    },
+    "intent.complete.title": {
+      "comment": "Siri/Shortcuts · CompleteTaskIntent canonical title.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Complete Task"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aufgabe erledigen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Complete Task"
+          }
+        }
+      }
+    },
+    "Add \\(\\.$taskTitle) to \\(\\.$category) for today in \\(.applicationName)": {
+      "comment": "Siri Phrase · AddTaskTodayIntent · Adds a task to today with category.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Add \\(\\.$taskTitle) to \\(\\.$category) for today in \\(.applicationName)"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Füge \\(\\.$taskTitle) zu \\(\\.$category) für heute in \\(.applicationName) hinzu"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add \\(\\.$taskTitle) to \\(\\.$category) for today in \\(.applicationName)"
+          }
+        }
+      }
+    },
+    "Complete \\(\\.$task) in \\(.applicationName)": {
+      "comment": "Siri Phrase · CompleteTaskIntent.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Complete \\(\\.$task) in \\(.applicationName)"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erledige \\(\\.$task) in \\(.applicationName)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Complete \\(\\.$task) in \\(.applicationName)"
+          }
+        }
+      }
+    },
+    "intent.listtoday.dialog.empty": {
+      "comment": "Siri · ListTodayTasksIntent empty-state response.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "There is nothing on your Today list."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Für heute steht nichts in deiner Liste."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "There is nothing on your Today list."
+          }
+        }
+      }
+    },
+    "Add ${taskTitle} to ${category} for today": {},
+    "intent.listtoday.title": {
+      "comment": "Siri/Shortcuts · ListTodayTasksIntent canonical title.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "List Today's Tasks"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Heutige Aufgaben vorlesen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "List Today's Tasks"
+          }
+        }
+      }
+    },
+    "intent.addtasktoday.param.category.description": {
+      "comment": "Siri · AddTaskTodayIntent category parameter description.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "The category for the new task"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Kategorie für die neue Aufgabe"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The category for the new task"
+          }
+        }
+      }
+    },
+    "intent.complete.dialog": {
+      "comment": "Siri · CompleteTaskIntent spoken confirmation. %@ is task title.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Done. '%@' is completed."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erledigt. „%@“ ist abgeschlossen."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done. '%@' is completed."
+          }
+        }
+      }
+    },
+    "intent.listtoday.dialog.more": {
+      "comment": "Siri · ListTodayTasksIntent suffix. %@ is visible tasks, %lld is remaining count.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "%@, and %lld more"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ und %lld weitere"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, and %lld more"
+          }
+        }
+      }
+    },
+    "Add \\(\\.$taskTitle) to \\(\\.$category) in \\(.applicationName)": {
+      "comment": "Siri Phrase · AddTaskIntent · Adds a task to a category.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Add \\(\\.$taskTitle) to \\(\\.$category) in \\(.applicationName)"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Füge \\(\\.$taskTitle) zu \\(\\.$category) in \\(.applicationName) hinzu"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add \\(\\.$taskTitle) to \\(\\.$category) in \\(.applicationName)"
+          }
+        }
+      }
+    },
+    "intent.complete.description": {
+      "comment": "Siri/Shortcuts · CompleteTaskIntent description.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Marks a Dawny task as completed"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Markiert eine Dawny-Aufgabe als erledigt"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marks a Dawny task as completed"
+          }
+        }
+      }
+    },
+    "Mark \\(\\.$task) done in \\(.applicationName)": {
+      "comment": "Siri Phrase · CompleteTaskIntent.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Mark \\(\\.$task) done in \\(.applicationName)"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Markiere \\(\\.$task) in \\(.applicationName) als erledigt"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mark \\(\\.$task) done in \\(.applicationName)"
+          }
+        }
+      }
+    },
+    "%@": {},
+    "Plan \\(\\.$task) for today in \\(.applicationName)": {
+      "comment": "Siri Phrase · MoveTaskToTodayIntent.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Plan \\(\\.$task) for today in \\(.applicationName)"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plane \\(\\.$task) für heute in \\(.applicationName)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plan \\(\\.$task) for today in \\(.applicationName)"
+          }
+        }
+      }
+    },
+    "intent.movetoday.dialog": {
+      "comment": "Siri · MoveTaskToTodayIntent spoken confirmation. %@ is task title.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Done. '%@' moved to today."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erledigt. „%@“ ist für heute eingeplant."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done. '%@' moved to today."
+          }
+        }
+      }
+    },
+    "intent.addtasktoday.param.category": {
+      "comment": "Siri · AddTaskTodayIntent category parameter title.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Category"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kategorie"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Category"
+          }
+        }
+      }
+    },
+    "intent.movetoday.param.task": {
+      "comment": "Siri · MoveTaskToTodayIntent task parameter title.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Task"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aufgabe"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Task"
+          }
+        }
+      }
+    },
+    "intent.movetoday.title": {
+      "comment": "Siri/Shortcuts · MoveTaskToTodayIntent canonical title.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Move Task to Today"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aufgabe auf heute verschieben"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move Task to Today"
+          }
+        }
+      }
+    },
+    "intent.error.taskNotFound": {
+      "comment": "Siri · Error if a task entity no longer exists.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "I couldn't find that task."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ich konnte diese Aufgabe nicht finden."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I couldn't find that task."
+          }
+        }
+      }
+    },
+    "Remember \\(\\.$taskTitle) in \\(.applicationName)": {
+      "comment": "Siri Phrase · AddTaskIntent.",
+      "extractionState": "manual",
+      "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Remember \\(\\.$taskTitle) in \\(.applicationName)"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Merke \\(\\.$taskTitle) in \\(.applicationName)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remember \\(\\.$taskTitle) in \\(.applicationName)"
+          }
+        }
+      }
+    },
+    "Category": {}
   },
   "version": "1.0"
 }
