@@ -11,6 +11,9 @@
         }
       }
     },
+    "%@" : {
+
+    },
     "%lld" : {
       "localizations" : {
         "base" : {
@@ -57,6 +60,126 @@
         }
       }
     },
+    "Add \\(\\.$taskTitle) to \\(.applicationName)" : {
+      "comment" : "Siri Phrase · AddTaskIntent · Adds a task without specifying a category.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add \\(\\.$taskTitle) to \\(.applicationName)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Füge \\(\\.$taskTitle) zu \\(.applicationName) hinzu"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add \\(\\.$taskTitle) to \\(.applicationName)"
+          }
+        }
+      }
+    },
+    "Add \\(\\.$taskTitle) to \\(\\.$category) for today" : {
+      "comment" : "AppIntent · AddTaskTodayIntent parameter summary · Includes optional category.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add \\(\\.$taskTitle) to \\(\\.$category) for today"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\\(\\.$taskTitle) in \\(\\.$category) für heute hinzufügen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add \\(\\.$taskTitle) to \\(\\.$category) for today"
+          }
+        }
+      }
+    },
+    "Add \\(\\.$taskTitle) to \\(\\.$category) for today in \\(.applicationName)" : {
+      "comment" : "Siri Phrase · AddTaskTodayIntent · Adds a task to today with category.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add \\(\\.$taskTitle) to \\(\\.$category) for today in \\(.applicationName)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Füge \\(\\.$taskTitle) zu \\(\\.$category) für heute in \\(.applicationName) hinzu"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add \\(\\.$taskTitle) to \\(\\.$category) for today in \\(.applicationName)"
+          }
+        }
+      }
+    },
+    "Add \\(\\.$taskTitle) to \\(\\.$category) in \\(.applicationName)" : {
+      "comment" : "Siri Phrase · AddTaskIntent · Adds a task to a category.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add \\(\\.$taskTitle) to \\(\\.$category) in \\(.applicationName)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Füge \\(\\.$taskTitle) zu \\(\\.$category) in \\(.applicationName) hinzu"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add \\(\\.$taskTitle) to \\(\\.$category) in \\(.applicationName)"
+          }
+        }
+      }
+    },
+    "Add \\(\\.$taskTitle) to \\(\\.$category) in backlog" : {
+      "comment" : "AppIntent · AddTaskIntent parameter summary · Includes optional category.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add \\(\\.$taskTitle) to \\(\\.$category) in backlog"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\\(\\.$taskTitle) in \\(\\.$category) zum Backlog hinzufügen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add \\(\\.$taskTitle) to \\(\\.$category) in backlog"
+          }
+        }
+      }
+    },
     "Add \\(\\.$taskTitle) to backlog" : {
       "comment" : "AppIntent · AddTaskIntent parameter summary · Imperative. Shown in Shortcuts editor as the natural-language summary of the action.",
       "extractionState" : "stale",
@@ -93,7 +216,38 @@
         }
       }
     },
+    "Add \\(\\.$taskTitle) to today in \\(.applicationName)" : {
+      "comment" : "Siri Phrase · AddTaskTodayIntent · Adds a task to today.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add \\(\\.$taskTitle) to today in \\(.applicationName)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Füge \\(\\.$taskTitle) für heute in \\(.applicationName) hinzu"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add \\(\\.$taskTitle) to today in \\(.applicationName)"
+          }
+        }
+      }
+    },
+    "Add ${taskTitle} to ${category} for today" : {
+
+    },
+    "Add ${taskTitle} to ${category} in backlog" : {
+
+    },
     "Add ${taskTitle} to backlog" : {
+      "extractionState" : "stale",
       "localizations" : {
         "base" : {
           "stringUnit" : {
@@ -104,6 +258,7 @@
       }
     },
     "Add ${taskTitle} to today" : {
+      "extractionState" : "stale",
       "localizations" : {
         "base" : {
           "stringUnit" : {
@@ -163,6 +318,78 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aufgabe in \\(.applicationName) hinzufügen"
+          }
+        }
+      }
+    },
+    "Add task to \\(\\.$category) for today in \\(.applicationName)" : {
+      "comment" : "Siri Phrase · AddTaskTodayIntent · Category-only phrase because AppShortcut phrases cannot contain String parameters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add task to \\(\\.$category) for today in \\(.applicationName)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufgabe zu \\(\\.$category) für heute in \\(.applicationName) hinzufügen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add task to \\(\\.$category) for today in \\(.applicationName)"
+          }
+        }
+      }
+    },
+    "Add task to \\(\\.$category) in \\(.applicationName)" : {
+      "comment" : "Siri Phrase · AddTaskIntent · Category-only phrase because AppShortcut phrases cannot contain String parameters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add task to \\(\\.$category) in \\(.applicationName)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufgabe zu \\(\\.$category) in \\(.applicationName) hinzufügen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add task to \\(\\.$category) in \\(.applicationName)"
+          }
+        }
+      }
+    },
+    "Add task to today in \\(.applicationName)" : {
+      "comment" : "Siri Phrase · AddTaskTodayIntent.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add task to today in \\(.applicationName)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufgabe für heute in \\(.applicationName) hinzufügen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add task to today in \\(.applicationName)"
           }
         }
       }
@@ -425,6 +652,9 @@
         }
       }
     },
+    "Category" : {
+
+    },
     "category.action.changeIcon" : {
       "comment" : "Backlog · VoiceOver hint on the category icon button · Imperative. Tapping it opens the symbol picker.",
       "extractionState" : "manual",
@@ -497,30 +727,6 @@
         }
       }
     },
-    "category.action.reorder" : {
-      "comment" : "Backlog · Confirmation dialog button · Verb. Enters category sorting mode.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "base" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Move"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Verschieben"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Move"
-          }
-        }
-      }
-    },
     "category.action.makeRecurring" : {
       "comment" : "Backlog · Confirmation dialog button · Marks a category as recurring.",
       "extractionState" : "manual",
@@ -545,6 +751,30 @@
         }
       }
     },
+    "category.action.reorder" : {
+      "comment" : "Backlog · Confirmation dialog button · Verb. Enters category sorting mode.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Move"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verschieben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move"
+          }
+        }
+      }
+    },
     "category.action.unmakeRecurring" : {
       "comment" : "Backlog · Confirmation dialog button · Clears recurring flag from a category.",
       "extractionState" : "manual",
@@ -565,30 +795,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Remove recurring"
-          }
-        }
-      }
-    },
-    "category.sort.title" : {
-      "comment" : "Backlog · Category sorting mode overlay title.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "base" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Arrange Categories"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kategorien sortieren"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Arrange Categories"
           }
         }
       }
@@ -983,6 +1189,78 @@
         }
       }
     },
+    "category.nextFewDays.name" : {
+      "comment" : "Backlog · Default category for tasks due in the next couple of days · Noun phrase.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Next couple of days"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die nächsten Tage"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next couple of days"
+          }
+        }
+      }
+    },
+    "category.nextFewMonths.name" : {
+      "comment" : "Backlog · Default category for tasks due in the next couple of months · Noun phrase.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Next couple of months"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die nächsten Monate"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next couple of months"
+          }
+        }
+      }
+    },
+    "category.nextFewWeeks.name" : {
+      "comment" : "Backlog · Default category for tasks due in the next couple of weeks · Noun phrase.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Next couple of weeks"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die nächsten Wochen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next couple of weeks"
+          }
+        }
+      }
+    },
     "category.quick.name" : {
       "comment" : "Backlog · Default category name for short tasks · Adjective. Avoid “fast” connotations of speed; emphasize a quick win.",
       "extractionState" : "manual",
@@ -1153,6 +1431,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Someday"
+          }
+        }
+      }
+    },
+    "category.sort.title" : {
+      "comment" : "Backlog · Category sorting mode overlay title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Arrange Categories"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategorien sortieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrange Categories"
           }
         }
       }
@@ -1397,78 +1699,6 @@
         }
       }
     },
-    "category.nextFewWeeks.name" : {
-      "comment" : "Backlog · Default category for tasks due in the next couple of weeks · Noun phrase.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "base" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Next couple of weeks"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Die nächsten Wochen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Next couple of weeks"
-          }
-        }
-      }
-    },
-    "category.nextFewDays.name" : {
-      "comment" : "Backlog · Default category for tasks due in the next couple of days · Noun phrase.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "base" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Next couple of days"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Die nächsten Tage"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Next couple of days"
-          }
-        }
-      }
-    },
-    "category.nextFewMonths.name" : {
-      "comment" : "Backlog · Default category for tasks due in the next couple of months · Noun phrase.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "base" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Next couple of months"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Die nächsten Monate"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Next couple of months"
-          }
-        }
-      }
-    },
     "category.uncategorized.name" : {
       "comment" : "Backlog · System category for tasks without a custom category · Past participle, system noun.",
       "extractionState" : "manual",
@@ -1541,6 +1771,30 @@
         }
       }
     },
+    "Complete \\(\\.$task) in \\(.applicationName)" : {
+      "comment" : "Siri Phrase · CompleteTaskIntent.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Complete \\(\\.$task) in \\(.applicationName)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erledige \\(\\.$task) in \\(.applicationName)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Complete \\(\\.$task) in \\(.applicationName)"
+          }
+        }
+      }
+    },
     "debug.testtask.archived.1" : {
       "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
       "extractionState" : "manual",
@@ -1561,174 +1815,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Finally unsubscribe from that annoying newsletter"
-          }
-        }
-      }
-    },
-    "debug.testtask.archived.10" : {
-      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "base" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Find fresh batteries for the remote"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Neue Batterien für die Fernbedienung suchen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Find fresh batteries for the remote"
-          }
-        }
-      }
-    },
-    "debug.testtask.archived.11" : {
-      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "base" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Find the partner for the lonely blue sock"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Den Partner für die einsame blaue Socke finden"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Find the partner for the lonely blue sock"
-          }
-        }
-      }
-    },
-    "debug.testtask.archived.12" : {
-      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "base" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sort the top layer of the chaos drawer"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Die oberste Schicht der Chaos-Schublade sortieren"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sort the top layer of the chaos drawer"
-          }
-        }
-      }
-    },
-    "debug.testtask.archived.13" : {
-      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "base" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Try the tea that's been in cabinet since 2023"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Den Tee probieren, der seit 2023 im Schrank steht"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Try the tea that's been in cabinet since 2023"
-          }
-        }
-      }
-    },
-    "debug.testtask.archived.14" : {
-      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "base" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Pick a new desktop wallpaper"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ein neues Desktop-Hintergrundbild aussuchen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pick a new desktop wallpaper"
-          }
-        }
-      }
-    },
-    "debug.testtask.archived.15" : {
-      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "base" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Throw all coin change into piggy bank"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Das ganze Kleingeld aus dem Portemonnaie ins Sparschwein werfen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Throw all coin change into piggy bank"
-          }
-        }
-      }
-    },
-    "debug.testtask.archived.16" : {
-      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "base" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Figure out that one fridge noise"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Herausfinden, was dieses eine Geräusch im Kühlschrank ist"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Figure out that one fridge noise"
           }
         }
       }
@@ -1921,6 +2007,174 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Shake crumbs out of keyboard"
+          }
+        }
+      }
+    },
+    "debug.testtask.archived.10" : {
+      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Find fresh batteries for the remote"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neue Batterien für die Fernbedienung suchen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Find fresh batteries for the remote"
+          }
+        }
+      }
+    },
+    "debug.testtask.archived.11" : {
+      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Find the partner for the lonely blue sock"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Den Partner für die einsame blaue Socke finden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Find the partner for the lonely blue sock"
+          }
+        }
+      }
+    },
+    "debug.testtask.archived.12" : {
+      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sort the top layer of the chaos drawer"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die oberste Schicht der Chaos-Schublade sortieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sort the top layer of the chaos drawer"
+          }
+        }
+      }
+    },
+    "debug.testtask.archived.13" : {
+      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Try the tea that's been in cabinet since 2023"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Den Tee probieren, der seit 2023 im Schrank steht"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try the tea that's been in cabinet since 2023"
+          }
+        }
+      }
+    },
+    "debug.testtask.archived.14" : {
+      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pick a new desktop wallpaper"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein neues Desktop-Hintergrundbild aussuchen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pick a new desktop wallpaper"
+          }
+        }
+      }
+    },
+    "debug.testtask.archived.15" : {
+      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Throw all coin change into piggy bank"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das ganze Kleingeld aus dem Portemonnaie ins Sparschwein werfen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Throw all coin change into piggy bank"
+          }
+        }
+      }
+    },
+    "debug.testtask.archived.16" : {
+      "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Figure out that one fridge noise"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herausfinden, was dieses eine Geräusch im Kühlschrank ist"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Figure out that one fridge noise"
           }
         }
       }
@@ -3197,6 +3451,54 @@
         }
       }
     },
+    "intent.addtask.param.category" : {
+      "comment" : "Siri · AddTaskIntent category parameter title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Category"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategorie"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Category"
+          }
+        }
+      }
+    },
+    "intent.addtask.param.category.description" : {
+      "comment" : "Siri · AddTaskIntent category parameter description.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "The category for the new task"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Kategorie für die neue Aufgabe"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The category for the new task"
+          }
+        }
+      }
+    },
     "intent.addtask.param.description" : {
       "comment" : "Siri · AddTaskIntent parameter description · One sentence in Shortcuts catalog.",
       "extractionState" : "manual",
@@ -3341,6 +3643,54 @@
         }
       }
     },
+    "intent.addtasktoday.param.category" : {
+      "comment" : "Siri · AddTaskTodayIntent category parameter title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Category"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategorie"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Category"
+          }
+        }
+      }
+    },
+    "intent.addtasktoday.param.category.description" : {
+      "comment" : "Siri · AddTaskTodayIntent category parameter description.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "The category for the new task"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Kategorie für die neue Aufgabe"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The category for the new task"
+          }
+        }
+      }
+    },
     "intent.addtasktoday.param.description" : {
       "comment" : "Siri · AddTaskTodayIntent parameter description · One sentence.",
       "extractionState" : "manual",
@@ -3437,6 +3787,582 @@
         }
       }
     },
+    "intent.complete.description" : {
+      "comment" : "Siri/Shortcuts · CompleteTaskIntent description.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Marks a Dawny task as completed"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Markiert eine Dawny-Aufgabe als erledigt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marks a Dawny task as completed"
+          }
+        }
+      }
+    },
+    "intent.complete.dialog" : {
+      "comment" : "Siri · CompleteTaskIntent spoken confirmation. %@ is task title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Done. '%@' is completed."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erledigt. „%@“ ist abgeschlossen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done. '%@' is completed."
+          }
+        }
+      }
+    },
+    "intent.complete.param.task" : {
+      "comment" : "Siri · CompleteTaskIntent task parameter title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Task"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufgabe"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Task"
+          }
+        }
+      }
+    },
+    "intent.complete.param.task.description" : {
+      "comment" : "Siri · CompleteTaskIntent task parameter description.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "The task to complete"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Aufgabe, die erledigt werden soll"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The task to complete"
+          }
+        }
+      }
+    },
+    "intent.complete.shorttitle" : {
+      "comment" : "Siri/Shortcuts · CompleteTaskIntent short title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Complete Task"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufgabe erledigen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Complete Task"
+          }
+        }
+      }
+    },
+    "intent.complete.title" : {
+      "comment" : "Siri/Shortcuts · CompleteTaskIntent canonical title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Complete Task"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufgabe erledigen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Complete Task"
+          }
+        }
+      }
+    },
+    "intent.error.categoryNotFound" : {
+      "comment" : "Siri · Error if a category entity no longer exists.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "I couldn't find that category."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ich konnte diese Kategorie nicht finden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I couldn't find that category."
+          }
+        }
+      }
+    },
+    "intent.error.taskAlreadyCompleted" : {
+      "comment" : "Siri · Error if a task is already completed.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "That task is already completed."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Aufgabe ist schon erledigt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "That task is already completed."
+          }
+        }
+      }
+    },
+    "intent.error.taskArchived" : {
+      "comment" : "Siri · Error if a task is archived.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "That task is archived."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Aufgabe ist archiviert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "That task is archived."
+          }
+        }
+      }
+    },
+    "intent.error.taskNotFound" : {
+      "comment" : "Siri · Error if a task entity no longer exists.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "I couldn't find that task."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ich konnte diese Aufgabe nicht finden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I couldn't find that task."
+          }
+        }
+      }
+    },
+    "intent.listtoday.description" : {
+      "comment" : "Siri/Shortcuts · ListTodayTasksIntent description.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Reads your open tasks for today"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Liest deine offenen Aufgaben für heute vor"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reads your open tasks for today"
+          }
+        }
+      }
+    },
+    "intent.listtoday.dialog" : {
+      "comment" : "Siri · ListTodayTasksIntent spoken response. %@ is a localized task list.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Today: %@."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heute steht an: %@."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today: %@."
+          }
+        }
+      }
+    },
+    "intent.listtoday.dialog.empty" : {
+      "comment" : "Siri · ListTodayTasksIntent empty-state response.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "There is nothing on your Today list."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Für heute steht nichts in deiner Liste."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There is nothing on your Today list."
+          }
+        }
+      }
+    },
+    "intent.listtoday.dialog.more" : {
+      "comment" : "Siri · ListTodayTasksIntent suffix. %@ is visible tasks, %lld is remaining count.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@, and %lld more"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ und %lld weitere"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, and %lld more"
+          }
+        }
+      }
+    },
+    "intent.listtoday.shorttitle" : {
+      "comment" : "Siri/Shortcuts · ListTodayTasksIntent short title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Today List"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heute-Liste"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today List"
+          }
+        }
+      }
+    },
+    "intent.listtoday.title" : {
+      "comment" : "Siri/Shortcuts · ListTodayTasksIntent canonical title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "List Today's Tasks"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heutige Aufgaben vorlesen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "List Today's Tasks"
+          }
+        }
+      }
+    },
+    "intent.movetoday.description" : {
+      "comment" : "Siri/Shortcuts · MoveTaskToTodayIntent description.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Moves a Dawny task to today's focus"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verschiebt eine Dawny-Aufgabe in den heutigen Fokus"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moves a Dawny task to today's focus"
+          }
+        }
+      }
+    },
+    "intent.movetoday.dialog" : {
+      "comment" : "Siri · MoveTaskToTodayIntent spoken confirmation. %@ is task title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Done. '%@' moved to today."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erledigt. „%@“ ist für heute eingeplant."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done. '%@' moved to today."
+          }
+        }
+      }
+    },
+    "intent.movetoday.param.task" : {
+      "comment" : "Siri · MoveTaskToTodayIntent task parameter title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Task"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufgabe"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Task"
+          }
+        }
+      }
+    },
+    "intent.movetoday.param.task.description" : {
+      "comment" : "Siri · MoveTaskToTodayIntent task parameter description.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "The backlog task to move to today"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Backlog-Aufgabe, die auf heute verschoben werden soll"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The backlog task to move to today"
+          }
+        }
+      }
+    },
+    "intent.movetoday.shorttitle" : {
+      "comment" : "Siri/Shortcuts · MoveTaskToTodayIntent short title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Move to Today"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auf heute"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move to Today"
+          }
+        }
+      }
+    },
+    "intent.movetoday.title" : {
+      "comment" : "Siri/Shortcuts · MoveTaskToTodayIntent canonical title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Move Task to Today"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufgabe auf heute verschieben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move Task to Today"
+          }
+        }
+      }
+    },
+    "List today's tasks" : {
+      "comment" : "AppIntent · ListTodayTasksIntent parameter summary.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "List today's tasks"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heutige Aufgaben vorlesen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "List today's tasks"
+          }
+        }
+      }
+    },
+    "List today's tasks in \\(.applicationName)" : {
+      "comment" : "Siri Phrase · ListTodayTasksIntent.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "List today's tasks in \\(.applicationName)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lies die heutigen Aufgaben in \\(.applicationName) vor"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "List today's tasks in \\(.applicationName)"
+          }
+        }
+      }
+    },
     "makeitcount.alert.confirm" : {
       "comment" : "Make it count · Alert dismiss button — affirmative acknowledgment.",
       "extractionState" : "manual",
@@ -3509,6 +4435,108 @@
         }
       }
     },
+    "Mark \\(\\.$task) as done" : {
+      "comment" : "AppIntent · CompleteTaskIntent parameter summary.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mark \\(\\.$task) as done"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\\(\\.$task) als erledigt markieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mark \\(\\.$task) as done"
+          }
+        }
+      }
+    },
+    "Mark \\(\\.$task) done in \\(.applicationName)" : {
+      "comment" : "Siri Phrase · CompleteTaskIntent.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mark \\(\\.$task) done in \\(.applicationName)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Markiere \\(\\.$task) in \\(.applicationName) als erledigt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mark \\(\\.$task) done in \\(.applicationName)"
+          }
+        }
+      }
+    },
+    "Mark ${task} as done" : {
+
+    },
+    "Move \\(\\.$task) to today" : {
+      "comment" : "AppIntent · MoveTaskToTodayIntent parameter summary.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Move \\(\\.$task) to today"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\\(\\.$task) auf heute verschieben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move \\(\\.$task) to today"
+          }
+        }
+      }
+    },
+    "Move \\(\\.$task) to today in \\(.applicationName)" : {
+      "comment" : "Siri Phrase · MoveTaskToTodayIntent.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Move \\(\\.$task) to today in \\(.applicationName)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verschiebe \\(\\.$task) auf heute in \\(.applicationName)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move \\(\\.$task) to today in \\(.applicationName)"
+          }
+        }
+      }
+    },
+    "Move ${task} to today" : {
+
+    },
     "New task in \\(.applicationName)" : {
       "comment" : "Siri Phrase · AddTaskIntent · Imperative.",
       "extractionState" : "stale",
@@ -3523,6 +4551,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Neue Aufgabe in \\(.applicationName)"
+          }
+        }
+      }
+    },
+    "Plan \\(\\.$task) for today in \\(.applicationName)" : {
+      "comment" : "Siri Phrase · MoveTaskToTodayIntent.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Plan \\(\\.$task) for today in \\(.applicationName)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plane \\(\\.$task) für heute in \\(.applicationName)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plan \\(\\.$task) for today in \\(.applicationName)"
           }
         }
       }
@@ -3931,6 +4983,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Submit like the Return key"
+          }
+        }
+      }
+    },
+    "Remember \\(\\.$taskTitle) in \\(.applicationName)" : {
+      "comment" : "Siri Phrase · AddTaskIntent.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Remember \\(\\.$taskTitle) in \\(.applicationName)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Merke \\(\\.$taskTitle) in \\(.applicationName)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remember \\(\\.$taskTitle) in \\(.applicationName)"
           }
         }
       }
@@ -4786,6 +5862,9 @@
           }
         }
       }
+    },
+    "Task" : {
+
     },
     "task.calendar.badge" : {
       "comment" : "TaskRow · Badge label shown when a task is synced to the iOS Reminders app · Single noun.",
@@ -5706,6 +6785,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Reset at dawn"
+          }
+        }
+      }
+    },
+    "What's on my \\(.applicationName) today" : {
+      "comment" : "Siri Phrase · ListTodayTasksIntent.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "What's on my \\(.applicationName) today"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Was steht heute in \\(.applicationName) an"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What's on my \\(.applicationName) today"
           }
         }
       }
