@@ -1,12 +1,12 @@
 ---
 layout: "@/layouts/Legal.astro"
 title: "Privacy Policy"
-description: "Dawny's privacy policy. No tracking. No analytics. No third-party SDKs."
+description: "Dawny's privacy policy. Privacy-first. No third-party SDKs in the app. Cookieless web analytics."
 lang: "en"
 canonicalPath: "/privacy/"
 ---
 
-**Last updated:** April 19, 2026
+**Last updated:** April 27, 2026
 **Language:** English ([Deutsche Version](/de/datenschutz/))
 
 ## 1. Data Controller
@@ -91,4 +91,25 @@ This privacy policy may be updated as the app evolves. Material changes will be 
 
 ## 10. Website
 
-This website (`dawnyapp.com`) is statically hosted on IONOS in Germany. It does not use cookies, analytics, or tracking. Standard server access logs may be temporarily kept by the hosting provider for the purpose of operating the service. For more information on how IONOS processes data, see [IONOS's privacy policy](https://www.ionos.de/terms-gtc/datenschutzerklaerung/).
+This website (`dawnyapp.com`) is statically hosted on IONOS in Germany. Standard server access logs may be temporarily kept by the hosting provider for the purpose of operating the service. For more information on how IONOS processes data, see [IONOS's privacy policy](https://www.ionos.de/terms-gtc/datenschutzerklaerung/).
+
+### 10.1 Cookieless web analytics (PostHog)
+
+For audience measurement and conversion tracking, this website uses **PostHog** in fully **cookieless mode**. This means:
+
+- **No cookies** are set.
+- **No `localStorage` or `sessionStorage`** is used.
+- There is **no cross-device tracking** and **no user identification**.
+- No cookie banner is needed because no information is stored on or read from your device.
+
+**Provider:** PostHog, Inc. All data is processed exclusively in the **EU (Frankfurt, AWS eu-central-1)**.
+
+**How it works:** When you visit a page, your IP address and user agent are sent to PostHog servers in Frankfurt. PostHog generates an **irreversible hash** (`hash of team ID + daily salt + IP + user agent + hostname`). The daily salt rotates every day and is deleted after processing. No personal data can be derived from the hash.
+
+**Information collected:** Page views, approximate time on page, scroll depth, device type, browser, operating system, approximate geographic region (derived from IP, not stored), referrer and UTM parameters, and explicitly measured clicks on Download/TestFlight buttons.
+
+**Legal basis:** Legitimate interest in audience measurement and website improvement (Art. 6(1)(f) GDPR). Since no information is stored on your device, consent under the ePrivacy Directive is not required.
+
+**Opt-out:** You can prevent processing by disabling JavaScript in your browser or using a content/tracking blocker.
+
+More information: [PostHog Privacy Policy](https://posthog.com/privacy), [PostHog DPA](https://posthog.com/dpa).
