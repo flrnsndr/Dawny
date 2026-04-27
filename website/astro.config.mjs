@@ -19,6 +19,7 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
+      filter: (page) => page !== "https://dawnyapp.com/",
       i18n: {
         defaultLocale: "en",
         locales: {

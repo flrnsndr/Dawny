@@ -8,6 +8,7 @@ interface Props {
     description?: string;
     lang: Lang;
     canonicalPath: string;
+    altCanonicalPath?: string;
   };
 }
 
@@ -19,6 +20,7 @@ const { frontmatter } = Astro.props;
   title={`${frontmatter.title} — Dawny`}
   description={frontmatter.description}
   canonicalPath={frontmatter.canonicalPath}
+  altCanonicalPath={frontmatter.altCanonicalPath}
 >
   <article class="legal-article">
     <div class="container-narrow">

@@ -4,6 +4,7 @@ title: "Privacy Policy"
 description: "Dawny's privacy policy. Privacy-first. No third-party SDKs in the app. Cookieless web analytics."
 lang: "en"
 canonicalPath: "/privacy/"
+altCanonicalPath: "/datenschutz/"
 ---
 
 **Last updated:** April 27, 2026

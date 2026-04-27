@@ -4,6 +4,7 @@ title: "Datenschutzerklärung"
 description: "Datenschutzerklärung für Dawny. Privatsphäre-zuerst. Keine Drittanbieter-SDKs in der App. Cookieless Web-Analyse."
 lang: "de"
 canonicalPath: "/datenschutz/"
+altCanonicalPath: "/privacy/"
 ---
 
 **Stand:** 27. April 2026

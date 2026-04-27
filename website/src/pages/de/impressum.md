@@ -4,6 +4,7 @@ title: "Impressum"
 description: "Impressum nach § 5 DDG für Dawny."
 lang: "de"
 canonicalPath: "/impressum/"
+altCanonicalPath: "/imprint/"
 ---
 
 ## Angaben gemäß § 5 DDG

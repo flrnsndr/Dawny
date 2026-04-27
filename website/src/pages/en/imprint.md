@@ -4,6 +4,7 @@ title: "Imprint"
 description: "Legal information for Dawny under German § 5 DDG."
 lang: "en"
 canonicalPath: "/imprint/"
+altCanonicalPath: "/impressum/"
 ---
 
 ## Information according to § 5 DDG
