@@ -4,6 +4,8 @@
 
 This document is the complete, authoritative product context for Dawny. It is structured for consumption by an AI tasked with planning a comprehensive marketing campaign. All sections carry equal weight. Do not invent features, audiences, or positioning beyond what is documented here. Where constraints are listed, treat them as hard limits.
 
+Last source-code review for factual product state: April 27, 2026. Re-verify before major launch campaigns or App Store copy.
+
 ---
 
 ## 1. PRODUCT IDENTITY
@@ -14,7 +16,7 @@ This document is the complete, authoritative product context for Dawny. It is st
 | Category | iOS task management app |
 | Official tagline | "A task app that deletes yesterday's tasks. On purpose." |
 | One-liner | "Dawny turns unfinished tasks into signal—not failure." |
-| Platform | iOS 26.2+ (iPhone), native SwiftUI |
+| Platform | iOS 26.2+, native SwiftUI. Designed and tested primarily for iPhone; do not position as an iPad-optimized product unless separately verified. |
 | Distribution | Public Beta via TestFlight |
 | TestFlight link | https://testflight.apple.com/join/h9JSWasd |
 | App Store | Not yet live |
@@ -35,16 +37,20 @@ Every design decision in Dawny follows from one thesis:
 
 If a task didn't get done, it usually wasn't the actual priority. Classic tools punish this with red badges and overdue flags — creating guilt, not clarity. Dawny removes that mechanism entirely.
 
-### Three principles that are non-negotiable
+### Core principles that are non-negotiable
 
 **Zero-Overdue Policy**
-There are no overdue tasks in Dawny. No red. No late. No accumulated guilt. If something is not done by the end of the day, it returns to the backlog — silently, without judgment.
+There are no overdue tasks in Dawny. No red. No late. No accumulated guilt. If something is not done by the daily reset, it is processed without judgment: it either returns to the Backlog or, once the Make It Count threshold is reached, moves to the Archive.
 
 **The 3 AM Reset**
-Every night at 3 AM (triggered on next app launch after that time), Dawny resets. All tasks that were not completed in Daily Focus return to the Backlog. The next day starts clean by default. No manual cleanup. No friction. No residue.
+The default reset time is 3 AM. This is also the product metaphor and recommended marketing phrase. In the app, the reset hour is configurable in Settings. The reset is checked when the app launches or becomes active, and Dawny also schedules a local background refresh when iOS allows it. The promise is not "an exact server-side cron job"; the promise is that the user's Daily Focus is cleared automatically without manual cleanup.
 
 **Make It Count**
-Tasks that repeatedly sit in Daily Focus without being completed are eventually archived (not silently re-added to the backlog). The threshold is configurable: 1–7 days. This feature is core and cannot be disabled. It treats a repeatedly-deferred task as a signal that it may never be the priority — and makes that visible.
+Make It Count is Dawny's mechanism for turning repeated non-completion into a clear signal. Each non-recurring task tracks how many times it was in Daily Focus and still incomplete at the daily reset. The threshold is configurable from 1–7 missed resets, with a default of 1. When the task reaches that threshold, it is moved to the Archive instead of being quietly returned to the Backlog again.
+
+The Archive is not deletion and not punishment. It is a visible, recoverable holding area for tasks that the user's actual behavior has repeatedly deprioritized. Archived tasks are out of the way, but not lost: the user can restore them to Backlog, restore them directly to Today/Daily Focus, or delete them permanently. This is central to Dawny's philosophy: an unfinished task is information, not failure.
+
+Make It Count is a core feature and cannot be disabled. Recurring-category tasks are the exception: they return to Backlog at reset and are not archived by Make It Count.
 
 **Intentional Days**
 Dawny enforces a deliberate daily choice. Nothing moves to Today automatically. The user decides each morning what actually matters. Dawny then protects that decision until the reset.
@@ -58,25 +64,41 @@ Dawny enforces a deliberate daily choice. Nothing moves to Today automatically. 
 **Two-List System**
 - Backlog: everything that *could* matter someday, with no deadline pressure
 - Daily Focus (labeled "Heute" in German / "Today" in English): what actually matters today
-- These are the only two temporal contexts. There are no due dates, no scheduling, no calendar views.
+- These are the only two user-facing planning contexts. There are no due dates, deadline reminders, manual scheduling screens, or calendar views.
 
 **3 AM Reset**
-- All incomplete Daily Focus tasks return to Backlog automatically
-- Triggered on the first app launch after 3:00 AM
-- Requires no user action
+- The default reset hour is 3:00 AM; users can change the reset hour in Settings
+- The reset is checked on app launch and when the app becomes active
+- Dawny also schedules a local BackgroundTasks refresh, subject to iOS background execution rules
+- Incomplete Daily Focus tasks are processed automatically: most return to Backlog, but tasks that reach the Make It Count threshold move to Archive instead
+- Requires no manual cleanup from the user
 
 **Make It Count / Archive**
-- Tasks that reach the configured threshold (1–7 days in Daily Focus without completion) are archived
-- Archived tasks are viewable in a dedicated Archive section
-- Archived tasks can be restored to Backlog or Daily Focus
-- The threshold is user-configurable in Settings (default: 1 day)
+- Make It Count tracks missed Daily Focus commitments per non-recurring task
+- A "miss" happens when a task is still incomplete in Daily Focus at the daily reset
+- The threshold is user-configurable in Settings from 1–7 missed resets
+- The default threshold is 1, meaning a non-recurring task can be archived after the first missed reset
+- Before the threshold is reached, the task returns to Backlog at reset
+- Once the threshold is reached, the task moves to Archive instead of returning to Backlog again
+- The Archive is a dedicated section/tab, not a trash bin
+- Archived tasks remain visible and recoverable
+- Archived tasks can be restored to Backlog
+- Archived tasks can be restored directly to Daily Focus / Today
+- Archived tasks can also be deleted permanently by the user
+- A dot badge can indicate that new tasks were archived by the latest reset
+- Restoring a task from Archive resets its missed-reset count
+- Manually moving a task out of Daily Focus back to Backlog resets its missed-reset count
+- Completed tasks are not archived by Make It Count
+- Tasks in recurring categories are not archived by Make It Count; they return to Backlog at reset
 - Make It Count cannot be disabled — it is a core feature
+- Marketing framing: this is not shame, punishment, or deletion. It is a calm signal that the task has repeatedly not been the real priority.
 
 **Categories**
 - Lightweight grouping within the Backlog
 - User-defined categories with custom names and icons
 - Categories can be marked as "recurring" (a default "Recurring Tasks" category exists)
-- Recurring categories persist after the reset and are not affected by daily clearing
+- Tasks in recurring categories return to Backlog at reset and are excluded from Make It Count archiving
+- When a recurring-category task is completed in Today, Dawny creates a fresh Backlog copy so the recurring item remains available
 - Categories are optional; a flat uncategorized view is also available
 
 **Quick Entry**
@@ -85,32 +107,41 @@ Dawny enforces a deliberate daily choice. Nothing moves to Today automatically. 
 - Also available in Daily Focus / Today view
 
 **Apple Reminders Sync**
-- Bidirectional sync with iOS Reminders via EventKit
-- Daily Focus tasks appear in the iOS Reminders app
-- Changes made in Reminders sync back to Dawny
-- Conflict resolution: last-write-wins
+- Permission-dependent sync with iOS Reminders via EventKit
+- Sync can be toggled in Settings and is enabled by default, but still requires the user's iOS Reminders permission
+- Daily Focus tasks can appear in the iOS Reminders app
+- Changes made to linked Reminders can sync back to Dawny
+- Conflict resolution: last-write-wins based on modification timestamps
+- This is not a full Reminders import or a general calendar-planning feature
 
 **Siri / App Intents**
 - "Hey Siri, add [task] to Dawny" → adds to Backlog
 - "Hey Siri, add [task] to Dawny today" → adds to Daily Focus
 
-**Privacy-first architecture**
-- No server, no backend, no developer-side data collection
-- No analytics, no tracking, no third-party SDKs
-- All data stays on the device or in the user's own iCloud account (via Reminders sync)
-- Privacy Nutrition Labels in App Store: "No data collected"
+**Privacy-first app architecture**
+- The Dawny app has no server, no backend, and no developer-side task-data collection
+- The app has no analytics, no tracking, no advertising SDKs, and no third-party SDKs
+- App data stays on the device, except where the user chooses Apple-owned services such as Apple Reminders, which Apple may sync through the user's own iCloud settings
+- Reminders sync uses the user's own Apple Reminders database; nothing is sent to a Dawny-controlled backend
+- Privacy Nutrition Labels in App Store should be "No data collected" for the app, as long as this architecture remains unchanged
+
+**Website analytics distinction**
+- The marketing website may use cookieless PostHog analytics for audience measurement and conversion tracking
+- This does not contradict the app's privacy-first architecture, but marketing must not claim "no analytics anywhere" across app + website
+- Correct framing: "The app has no analytics or tracking. The website may use cookieless, non-identifying analytics as described in the privacy policy."
 
 **Navigation model**
 - Top bar (not a bottom tab bar): Settings (gear icon, left) / Backlog + Today segment (center) / Archive (right)
-- Swipe between Backlog and Today pager-style
+- Pager-style swipe navigation across Backlog, Today, and Archive
 
 ### Features that do NOT exist — marketing must not reference these
 
 - Due dates or deadline reminders of any kind
 - Subtasks or task hierarchies
-- Notes longer than a single text field per task *(note: there is a notes field in the QuickAdd sheet, but it is minimal)*
-- Recurring task automation (recurring categories exist, but individual tasks do not auto-repeat)
-- macOS, iPadOS, Android, or web versions
+- Rich notes, attachments, comments, or document-like task detail pages
+- Date-based recurring task schedules (recurring categories exist, but there are no scheduled repeat rules like "every Monday")
+- Dedicated macOS, Android, or web app versions
+- iPad-optimized positioning unless separately tested and verified
 - Team collaboration or shared lists
 - iCloud Sync (on roadmap, not live)
 - Home Screen Widget (on roadmap, not live)
@@ -192,20 +223,20 @@ Dawny enforces a deliberate daily choice. Nothing moves to Today automatically. 
 Other apps could add a "hide overdue" setting. Dawny removes the concept entirely from its data model. There is no overdue state. This is architectural, not cosmetic.
 
 **2. The 3 AM Reset as a product metaphor**
-No competitor uses a daily reset as a primary feature and brand identity. It is novel, memorable, and genuinely changes how users relate to their list.
+The daily reset is a primary product behavior and brand metaphor. It is memorable and genuinely changes how users relate to their list. Avoid unverified absolute claims such as "no competitor does this."
 
 **3. Make It Count as honest signal**
-Instead of letting ignored tasks silently pile up, Dawny acknowledges them: if something keeps not happening, it gets archived. This respects the user's intelligence.
+Instead of letting ignored tasks silently pile up, Dawny acknowledges them: if a task repeatedly misses the user's chosen day, it gets archived into a visible, recoverable place. This respects the user's intelligence without turning non-completion into failure.
 
 **4. Radical reduction as a deliberate choice**
 Dawny documents what it doesn't do and explains why. This is rare in the productivity app market and resonates strongly with burned-out users.
 
 **5. Privacy-first by architecture**
-Zero developer-side data collection is not a setting or a plan tier — it is the default and only mode. No backend means nothing to breach.
+For the app, zero developer-side task-data collection is not a setting or a plan tier — it is the default and only mode. No app backend means there is no Dawny-controlled task database to breach.
 
 ### Single-sentence differentiator
 
-*"Dawny is the only task app that treats an unfinished task as information, not failure — and enforces that philosophy in its architecture."*
+*"Dawny treats an unfinished task as information, not failure — and enforces that philosophy in its architecture."*
 
 ---
 
@@ -221,10 +252,16 @@ Zero developer-side data collection is not a setting or a plan tier — it is th
 
 ### Language
 
-- Primary language: English (the app is localized EN/DE; marketing language is not fixed but English-first is recommended for reach)
+- Primary language: English for broad reach; German is also a first-class marketing language because the app and website are localized EN/DE
 - Short sentences preferred
 - Active voice
 - Avoid: "boost productivity," "supercharge," "game-changer," "revolutionary," "seamless," corporate jargon
+
+### Approved neurodivergence phrasing
+
+- English: "Dawny tends to work especially well for people who don't fit rigid productivity systems — including many neurodivergent thinkers."
+- German: "Dawny passt oft besonders gut zu Menschen, die in starre Produktivitätssysteme nicht hineinpassen — darunter viele neurodivergente Köpfe."
+- Do not say Dawny treats ADHD, improves mental health, reduces symptoms, or is a medical/clinical tool.
 
 ### Existing key phrases (cleared for reuse)
 
@@ -249,6 +286,7 @@ Zero developer-side data collection is not a setting or a plan tier — it is th
 - **App Store:** Not yet live
 - **Feedback:** TestFlight beta testers directly shape the product
 - **Pricing post-launch:** Not publicly defined. Marketing must not make pricing commitments in either direction.
+- **Platform positioning:** iOS 26.2+. Developed and tested primarily for iPhone. Do not market as iPad-optimized unless separately verified.
 - **Tech stack (relevant for developer/tech media):** Swift 6, SwiftUI, SwiftData, EventKit, App Intents, BackgroundTasks framework
 
 ---
@@ -257,13 +295,15 @@ Zero developer-side data collection is not a setting or a plan tier — it is th
 
 These are non-negotiable boundaries derived from factual product state and legal/ethical requirements.
 
-1. **Do not promise features that do not exist.** See Section 3 "Features that do NOT exist." This especially includes: due dates, widgets, Apple Watch, iCloud Sync, Android, macOS.
-2. **Do not make pricing statements.** Neither "free" nor any specific price point has been committed post-launch.
+1. **Do not promise features that do not exist.** See Section 3 "Features that do NOT exist." This especially includes: due dates, widgets, Apple Watch, iCloud Sync, Android, macOS, web, and iPad-optimized workflows.
+2. **Do not make post-launch pricing statements.** Dawny is free during TestFlight beta. No specific post-launch price point or free-plan commitment has been made.
 3. **Do not make medical or clinical claims** about ADHD, neurodivergence, or mental health. Use "tends to work especially well for people who don't fit rigid productivity systems."
-4. **Do not promise cross-platform availability.** Dawny is iOS only.
+4. **Do not promise cross-platform availability.** Dawny is iOS only, developed and tested primarily for iPhone.
 5. **Use correct trademark.** The app is always "Dawny" — capital D, no other spelling.
 6. **Do not imply enterprise, team, or collaboration features.** This is a personal productivity tool only.
-7. **Do not imply data syncs to any cloud service controlled by the developer.** All data is local or in the user's own iCloud (via Apple Reminders only).
+7. **Do not imply data syncs to any cloud service controlled by the developer.** App data is local or in Apple-owned services the user chooses, such as Apple Reminders behavior controlled by Apple and the user's own iCloud settings.
+8. **Keep app privacy claims separate from website analytics.** The app has no analytics or third-party SDKs. The website may use cookieless PostHog analytics as disclosed in the privacy policy.
+9. **Do not overpromise background timing.** The 3 AM Reset is the default product metaphor and reset time, but iOS controls background execution. It is safe to say Dawny resets automatically; do not imply a remote server guarantees exact execution at 3:00:00 AM.
 
 ---
 
@@ -273,11 +313,11 @@ For rapid orientation when generating marketing copy:
 
 | Question | Answer |
 |---|---|
-| What is Dawny? | A minimalist iOS task app that resets daily and removes overdue entirely |
+| What is Dawny? | A minimalist iOS task app, designed primarily for iPhone, that resets daily and removes overdue entirely |
 | What problem does it solve? | Task list anxiety, guilt from accumulated undone items, tool fatigue |
 | Who is it for? | People overwhelmed by their own task systems; minimalists; dynamic workers; neurodivergent-friendly |
-| What makes it different? | Zero-Overdue by design, 3 AM Reset, Make It Count archiving, radical reduction |
-| What does it NOT do? | No due dates, no subtasks, no team features, no cross-platform |
+| What makes it different? | Zero-Overdue by design, 3 AM Reset, Make It Count archiving, recoverable Archive, radical reduction |
+| What does it NOT do? | No due dates, no subtasks, no team features, no cross-platform, no iPad-optimized promise |
 | How do I get it? | TestFlight beta: https://testflight.apple.com/join/h9JSWasd |
 | Who made it? | Florian Schneider, indie developer, Karlsruhe, Germany |
 | What should the tone be? | Calm, confident, honest, anti-hustle, slightly poetic |
