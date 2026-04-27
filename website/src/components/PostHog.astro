@@ -36,46 +36,54 @@ const host = import.meta.env.PUBLIC_POSTHOG_HOST ?? "https://eu.i.posthog.com";
     }, true);
 
     (function () {
-      var milestones = [25, 50, 75, 100];
-      var firedDepths = [];
-      var content = document.querySelector('main');
-      if (!content) return;
+      function initScrollDepthTracking() {
+        var milestones = [25, 50, 75, 100];
+        var firedDepths = [];
+        var content = document.querySelector('main');
+        if (!content) return;
 
-      var lastCall = 0;
-      function throttledCheck() {
-        var now = Date.now();
-        if (now - lastCall < 200) return;
-        lastCall = now;
-        checkScrollDepth();
-      }
+        var lastCall = 0;
+        function throttledCheck() {
+          var now = Date.now();
+          if (now - lastCall < 200) return;
+          lastCall = now;
+          checkScrollDepth();
+        }
 
-      function checkScrollDepth() {
-        if (!window.posthog) return;
-        var rect = content.getBoundingClientRect();
-        var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-        var contentTop = rect.top + window.scrollY;
-        var viewportBottom = window.scrollY + viewportHeight;
-        var totalH = content.scrollHeight;
-        if (!totalH) return;
-        var visible = viewportBottom - contentTop;
-        var pct = Math.max(0, Math.min(100, Math.floor((visible / totalH) * 100)));
-        for (var i = 0; i < milestones.length; i++) {
-          var d = milestones[i];
-          if (pct >= d && firedDepths.indexOf(d) === -1) {
-            firedDepths.push(d);
-            window.posthog.capture('scroll_depth_reached', {
-              depth: d,
-              path: window.location.pathname,
-              lang: document.documentElement.lang || undefined
-            });
+        function checkScrollDepth() {
+          if (!window.posthog) return;
+          var rect = content.getBoundingClientRect();
+          var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+          var contentTop = rect.top + window.scrollY;
+          var viewportBottom = window.scrollY + viewportHeight;
+          var totalH = content.scrollHeight;
+          if (!totalH) return;
+          var visible = viewportBottom - contentTop;
+          var pct = Math.max(0, Math.min(100, Math.floor((visible / totalH) * 100)));
+          for (var i = 0; i < milestones.length; i++) {
+            var d = milestones[i];
+            if (pct >= d && firedDepths.indexOf(d) === -1) {
+              firedDepths.push(d);
+              window.posthog.capture('scroll_depth_reached', {
+                depth: d,
+                path: window.location.pathname,
+                lang: document.documentElement.lang || undefined
+              });
+            }
           }
         }
+
+        window.addEventListener('scroll', throttledCheck, { passive: true });
+        window.addEventListener('resize', throttledCheck);
+        checkScrollDepth();
+        setTimeout(checkScrollDepth, 500);
       }
 
-      window.addEventListener('scroll', throttledCheck, { passive: true });
-      window.addEventListener('resize', throttledCheck);
-      checkScrollDepth();
-      setTimeout(checkScrollDepth, 500);
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initScrollDepthTracking, { once: true });
+      } else {
+        initScrollDepthTracking();
+      }
     })();
   </script>
 ) : null}
