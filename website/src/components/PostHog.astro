@@ -52,10 +52,12 @@ const host = import.meta.env.PUBLIC_POSTHOG_HOST ?? "https://eu.i.posthog.com";
       function checkScrollDepth() {
         if (!window.posthog) return;
         var rect = content.getBoundingClientRect();
-        var vh = window.innerHeight || document.documentElement.clientHeight;
+        var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+        var contentTop = rect.top + window.scrollY;
+        var viewportBottom = window.scrollY + viewportHeight;
         var totalH = content.scrollHeight;
         if (!totalH) return;
-        var visible = vh - rect.top;
+        var visible = viewportBottom - contentTop;
         var pct = Math.max(0, Math.min(100, Math.floor((visible / totalH) * 100)));
         for (var i = 0; i < milestones.length; i++) {
           var d = milestones[i];
@@ -70,9 +72,10 @@ const host = import.meta.env.PUBLIC_POSTHOG_HOST ?? "https://eu.i.posthog.com";
         }
       }
 
-      document.addEventListener('scroll', throttledCheck, { passive: true });
+      window.addEventListener('scroll', throttledCheck, { passive: true });
       window.addEventListener('resize', throttledCheck);
       checkScrollDepth();
+      setTimeout(checkScrollDepth, 500);
     })();
   </script>
 ) : null}
