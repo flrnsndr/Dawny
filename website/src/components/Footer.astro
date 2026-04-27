@@ -41,16 +41,22 @@ const imprintPath = lang === "de" ? "/de/impressum/" : "/en/imprint/";
       <a
         href={privacyPath}
         class="text-white/60 hover:text-white transition-colors"
+        data-ph-event="legal_click"
+        data-ph-target="privacy"
       >{dict.footer.links.privacy}</a>
       <a
         href={imprintPath}
         class="text-white/60 hover:text-white transition-colors"
+        data-ph-event="legal_click"
+        data-ph-target="imprint"
       >{dict.footer.links.imprint}</a>
       <a
         href={GITHUB_URL}
         target="_blank"
         rel="noopener"
         class="text-white/60 hover:text-white transition-colors inline-flex items-center gap-1.5"
+        data-ph-event="outbound_click"
+        data-ph-target="github"
       >
         {dict.footer.links.github}
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -60,6 +66,8 @@ const imprintPath = lang === "de" ? "/de/impressum/" : "/en/imprint/";
       <a
         href={`mailto:${CONTACT_EMAIL}`}
         class="text-white/60 hover:text-white transition-colors"
+        data-ph-event="outbound_click"
+        data-ph-target="mail"
       >{dict.footer.links.mail}</a>
     </nav>
   </div>

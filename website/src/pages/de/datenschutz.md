@@ -1,12 +1,12 @@
 ---
 layout: "@/layouts/Legal.astro"
 title: "Datenschutzerklärung"
-description: "Datenschutzerklärung für Dawny. Kein Tracking. Keine Analytics. Keine Drittanbieter-SDKs."
+description: "Datenschutzerklärung für Dawny. Privatsphäre-zuerst. Keine Drittanbieter-SDKs in der App. Cookieless Web-Analyse."
 lang: "de"
 canonicalPath: "/datenschutz/"
 ---
 
-**Stand:** 19. April 2026
+**Stand:** 27. April 2026
 **Sprache:** Deutsch ([English version](/en/privacy/))
 
 ## 1. Verantwortlicher
@@ -91,4 +91,25 @@ Diese Datenschutzerklärung kann angepasst werden, wenn sich die App ändert. We
 
 ## 10. Diese Webseite
 
-Diese Webseite (`dawnyapp.com`) wird statisch bei IONOS in Deutschland gehostet. Es werden weder Cookies noch Tracking oder Analytics eingesetzt. Standardmäßige Server-Zugriffslogs können vom Hosting-Anbieter zum Betrieb des Dienstes temporär vorgehalten werden. Weitere Informationen zur Datenverarbeitung durch IONOS findest du in der [Datenschutzerklärung von IONOS](https://www.ionos.de/terms-gtc/datenschutzerklaerung/).
+Diese Webseite (`dawnyapp.com`) wird statisch bei IONOS in Deutschland gehostet. Standardmäßige Server-Zugriffslogs können vom Hosting-Anbieter zum Betrieb des Dienstes temporär vorgehalten werden. Weitere Informationen zur Datenverarbeitung durch IONOS findest du in der [Datenschutzerklärung von IONOS](https://www.ionos.de/terms-gtc/datenschutzerklaerung/).
+
+### 10.1 Cookielose Web-Analyse (PostHog)
+
+Zur Reichweiten- und Conversion-Messung setzt diese Webseite **PostHog** ein – im vollständig **cookielosen Modus**. Das bedeutet:
+
+- Es werden **keine Cookies** gesetzt.
+- Es wird **kein `localStorage` oder `sessionStorage`** genutzt.
+- Es findet **kein Cross-Device-Tracking** und **keine Nutzer-Identifikation** statt.
+- Es gibt keinen Cookie-Banner, da keine Informationen auf deinem Endgerät gespeichert oder ausgelesen werden (§ 25 TDDDG / Art. 5 Abs. 3 ePrivacy-Richtlinie).
+
+**Anbieter:** PostHog, Inc., wobei die Daten ausschließlich in der **EU (Frankfurt, AWS eu-central-1)** verarbeitet werden.
+
+**Wie es funktioniert:** Beim Seitenaufruf werden IP-Adresse und User-Agent an PostHog-Server in Frankfurt übertragen. PostHog erzeugt daraus einen **irreversiblen Hash** (`Hash aus Team-ID + Tages-Salt + IP + User-Agent + Hostname`). Der Tages-Salt rotiert täglich und wird nach Verarbeitung gelöscht. Aus dem Hash lassen sich keine personenbezogenen Daten zurückgewinnen.
+
+**Erfasste Informationen:** Seitenaufrufe, ungefähre Verweildauer, Scroll-Tiefe, Gerätetyp, Browser, Betriebssystem, ungefähre geographische Region (aus IP abgeleitet, nicht gespeichert), Referrer und UTM-Parameter sowie explizit gemessene Klicks auf Download-/TestFlight-Buttons.
+
+**Rechtsgrundlage:** Berechtigtes Interesse an der Reichweitenmessung und Verbesserung der Webseite (Art. 6 Abs. 1 lit. f DSGVO). Da keine Informationen auf deinem Endgerät gespeichert werden, ist keine Einwilligung nach § 25 TDDDG erforderlich.
+
+**Widerspruch:** Du kannst die Verarbeitung verhindern, indem du JavaScript in deinem Browser deaktivierst oder einen Content-/Tracking-Blocker verwendest.
+
+Weitere Informationen: [PostHog Datenschutzrichtlinie](https://posthog.com/privacy), [PostHog DPA / Auftragsverarbeitungsvertrag](https://posthog.com/dpa).
