@@ -34,5 +34,45 @@ const host = import.meta.env.PUBLIC_POSTHOG_HOST ?? "https://eu.i.posthog.com";
       if (el.tagName === 'A' && el.href) props.href = el.href;
       window.posthog.capture(name, props);
     }, true);
+
+    (function () {
+      var milestones = [25, 50, 75, 100];
+      var firedDepths = [];
+      var content = document.querySelector('main');
+      if (!content) return;
+
+      var lastCall = 0;
+      function throttledCheck() {
+        var now = Date.now();
+        if (now - lastCall < 200) return;
+        lastCall = now;
+        checkScrollDepth();
+      }
+
+      function checkScrollDepth() {
+        if (!window.posthog) return;
+        var rect = content.getBoundingClientRect();
+        var vh = window.innerHeight || document.documentElement.clientHeight;
+        var totalH = content.scrollHeight;
+        if (!totalH) return;
+        var visible = vh - rect.top;
+        var pct = Math.max(0, Math.min(100, Math.floor((visible / totalH) * 100)));
+        for (var i = 0; i < milestones.length; i++) {
+          var d = milestones[i];
+          if (pct >= d && firedDepths.indexOf(d) === -1) {
+            firedDepths.push(d);
+            window.posthog.capture('scroll_depth_reached', {
+              depth: d,
+              path: window.location.pathname,
+              lang: document.documentElement.lang || undefined
+            });
+          }
+        }
+      }
+
+      document.addEventListener('scroll', throttledCheck, { passive: true });
+      window.addEventListener('resize', throttledCheck);
+      checkScrollDepth();
+    })();
   </script>
 ) : null}
