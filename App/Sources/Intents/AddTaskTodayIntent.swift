@@ -19,7 +19,11 @@ struct AddTaskTodayIntent: AppIntent {
     // Öffnet die App nicht
     static var openAppWhenRun: Bool = false
     
-    @Parameter(title: "intent.addtasktoday.param.title", description: "intent.addtasktoday.param.description")
+    @Parameter(
+        title: "intent.addtasktoday.param.title",
+        description: "intent.addtasktoday.param.description",
+        requestValueDialog: IntentDialog("intent.addtasktoday.requestvalue.title")
+    )
     var taskTitle: String
 
     @Parameter(title: "intent.addtasktoday.param.category", description: "intent.addtasktoday.param.category.description")
@@ -29,16 +33,20 @@ struct AddTaskTodayIntent: AppIntent {
         Summary("Add \(\.$taskTitle) to \(\.$category) for today")
     }
     
+    @Dependency
+    var dataStore: any TaskDataStoring
+
+    @Dependency
+    var syncEngine: SyncEngine
+
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
-        let context = try IntentDataStore.makeContext()
-        let task = try IntentDataStore.addTask(
+        let task = try dataStore.addTask(
             title: taskTitle,
             categoryID: category?.id,
-            status: .dailyFocus,
-            in: context
+            status: .dailyFocus
         )
-        await IntentDataStore.syncTaskIfNeeded(task, in: context)
+        await syncEngine.syncTaskToCalendar(task)
         
         let dialogFormat = String(
             localized: "intent.addtasktoday.dialog",

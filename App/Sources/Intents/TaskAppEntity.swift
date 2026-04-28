@@ -3,13 +3,14 @@
 // Licensed under PolyForm Noncommercial 1.0.0 — see LICENSE in the repository root.
 
 import AppIntents
+import CoreSpotlight
 import Foundation
-import SwiftData
 
-struct TaskAppEntity: AppEntity, Identifiable {
+struct TaskAppEntity: AppEntity, IndexedEntity, Identifiable {
     let id: UUID
     let displayName: String
     let statusRawValue: String
+    let categoryName: String?
 
     static var typeDisplayRepresentation: TypeDisplayRepresentation = "Task"
     static var defaultQuery = TaskEntityQuery()
@@ -21,6 +22,16 @@ struct TaskAppEntity: AppEntity, Identifiable {
         )
     }
 
+    var attributeSet: CSSearchableItemAttributeSet {
+        let attributes = CSSearchableItemAttributeSet()
+        attributes.displayName = displayName
+        attributes.contentDescription = [statusDisplayName, categoryName]
+            .compactMap { $0 }
+            .joined(separator: " · ")
+        attributes.keywords = [statusDisplayName, categoryName].compactMap { $0 }
+        return attributes
+    }
+
     private var statusDisplayName: String {
         TaskStatus(rawValue: statusRawValue)?.displayName ?? ""
     }
@@ -29,27 +40,31 @@ struct TaskAppEntity: AppEntity, Identifiable {
         self.id = task.id
         self.displayName = task.title
         self.statusRawValue = task.status.rawValue
+        self.categoryName = task.category?.displayName
     }
 }
 
 struct TaskEntityQuery: EntityQuery, EntityStringQuery {
+    @Dependency
+    var dataStore: any TaskDataStoring
+
+    @MainActor
     func entities(for identifiers: [TaskAppEntity.ID]) async throws -> [TaskAppEntity] {
-        let context = try await IntentDataStore.makeContext()
-        return try await searchableTasks(in: context)
+        try searchableTasks()
             .filter { identifiers.contains($0.id) }
             .map(TaskAppEntity.init)
     }
 
+    @MainActor
     func suggestedEntities() async throws -> [TaskAppEntity] {
-        let context = try await IntentDataStore.makeContext()
-        return try await searchableTasks(in: context)
+        try searchableTasks()
             .prefix(20)
             .map(TaskAppEntity.init)
     }
 
+    @MainActor
     func entities(matching string: String) async throws -> [TaskAppEntity] {
-        let context = try await IntentDataStore.makeContext()
-        let tasks = try await searchableTasks(in: context)
+        let tasks = try searchableTasks()
 
         return IntentTextMatcher.bestMatches(for: string, in: tasks) { task in
             [task.title]
@@ -57,8 +72,9 @@ struct TaskEntityQuery: EntityQuery, EntityStringQuery {
         .map(TaskAppEntity.init)
     }
 
-    private func searchableTasks(in context: ModelContext) async throws -> [Task] {
-        try await IntentDataStore.allTasks(in: context)
+    @MainActor
+    private func searchableTasks() throws -> [Task] {
+        try dataStore.allTasks()
             .filter { task in
                 !task.isCompleted && task.status != .completed && task.status != .archived
             }

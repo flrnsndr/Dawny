@@ -3,7 +3,6 @@
 // Licensed under PolyForm Noncommercial 1.0.0 — see LICENSE in the repository root.
 
 import AppIntents
-import SwiftData
 
 /// Intent zum Abschließen eines Tasks via Siri.
 struct CompleteTaskIntent: AppIntent {
@@ -11,18 +10,27 @@ struct CompleteTaskIntent: AppIntent {
     static var description = IntentDescription("intent.complete.description")
     static var openAppWhenRun: Bool = false
 
-    @Parameter(title: "intent.complete.param.task", description: "intent.complete.param.task.description")
+    @Parameter(
+        title: "intent.complete.param.task",
+        description: "intent.complete.param.task.description",
+        requestValueDialog: IntentDialog("intent.complete.requestvalue.task")
+    )
     var task: TaskAppEntity
 
     static var parameterSummary: some ParameterSummary {
         Summary("Mark \(\.$task) as done")
     }
 
+    @Dependency
+    var dataStore: any TaskDataStoring
+
+    @Dependency
+    var syncEngine: SyncEngine
+
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
-        let context = try IntentDataStore.makeContext()
-        let completedTask = try IntentDataStore.completeTask(taskID: task.id, in: context)
-        await IntentDataStore.syncTaskIfNeeded(completedTask, in: context)
+        let completedTask = try dataStore.completeTask(taskID: task.id)
+        await syncEngine.syncTaskToCalendar(completedTask)
 
         let dialogFormat = String(
             localized: "intent.complete.dialog",

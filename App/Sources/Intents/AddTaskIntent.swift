@@ -19,7 +19,11 @@ struct AddTaskIntent: AppIntent {
     // Öffnet die App nicht
     static var openAppWhenRun: Bool = false
     
-    @Parameter(title: "intent.addtask.param.title", description: "intent.addtask.param.description")
+    @Parameter(
+        title: "intent.addtask.param.title",
+        description: "intent.addtask.param.description",
+        requestValueDialog: IntentDialog("intent.addtask.requestvalue.title")
+    )
     var taskTitle: String
 
     @Parameter(title: "intent.addtask.param.category", description: "intent.addtask.param.category.description")
@@ -29,14 +33,15 @@ struct AddTaskIntent: AppIntent {
         Summary("Add \(\.$taskTitle) to \(\.$category) in backlog")
     }
     
+    @Dependency
+    var dataStore: any TaskDataStoring
+
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
-        let context = try IntentDataStore.makeContext()
-        let task = try IntentDataStore.addTask(
+        let task = try dataStore.addTask(
             title: taskTitle,
             categoryID: category?.id,
-            status: .inBacklog,
-            in: context
+            status: .inBacklog
         )
         
         let dialogFormat = String(

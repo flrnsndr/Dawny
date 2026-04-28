@@ -3547,6 +3547,9 @@
         }
       }
     },
+    "intent.addtask.requestvalue.title" : {
+
+    },
     "intent.addtask.shorttitle" : {
       "comment" : "Siri/Shortcuts · AddTaskIntent short title for the Shortcuts gallery · 2–3 words.",
       "extractionState" : "manual",
@@ -3739,6 +3742,9 @@
         }
       }
     },
+    "intent.addtasktoday.requestvalue.title" : {
+
+    },
     "intent.addtasktoday.shorttitle" : {
       "comment" : "Siri/Shortcuts · AddTaskTodayIntent short title for the Shortcuts gallery · 2–3 words.",
       "extractionState" : "manual",
@@ -3883,6 +3889,9 @@
         }
       }
     },
+    "intent.complete.requestvalue.task" : {
+
+    },
     "intent.complete.shorttitle" : {
       "comment" : "Siri/Shortcuts · CompleteTaskIntent short title.",
       "extractionState" : "manual",
@@ -3955,6 +3964,17 @@
         }
       }
     },
+    "intent.error.dataStoreUnavailable" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Sorry, I can't access your tasks right now. Please try again."
+          }
+        }
+      }
+    },
     "intent.error.taskAlreadyCompleted" : {
       "comment" : "Siri · Error if a task is already completed.",
       "extractionState" : "manual",
@@ -4023,6 +4043,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "I couldn't find that task."
+          }
+        }
+      }
+    },
+    "intent.error.titleEmpty" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Please provide a task title."
           }
         }
       }
@@ -4266,6 +4297,9 @@
           }
         }
       }
+    },
+    "intent.movetoday.requestvalue.task" : {
+
     },
     "intent.movetoday.shorttitle" : {
       "comment" : "Siri/Shortcuts · MoveTaskToTodayIntent short title.",

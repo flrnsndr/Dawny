@@ -3,7 +3,6 @@
 // Licensed under PolyForm Noncommercial 1.0.0 — see LICENSE in the repository root.
 
 import AppIntents
-import SwiftData
 
 /// Intent zum Vorlesen der heutigen offenen Tasks.
 struct ListTodayTasksIntent: AppIntent {
@@ -15,10 +14,12 @@ struct ListTodayTasksIntent: AppIntent {
         Summary("List today's tasks")
     }
 
+    @Dependency
+    var dataStore: any TaskDataStoring
+
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
-        let context = try IntentDataStore.makeContext()
-        let tasks = try IntentDataStore.todayTasks(in: context)
+        let tasks = try dataStore.todayTasks()
 
         if tasks.isEmpty {
             let dialogText = String(

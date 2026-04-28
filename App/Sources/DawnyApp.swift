@@ -51,6 +51,16 @@ struct DawnyApp: App {
         // Cross-reference for reset engine
         resetEngine.syncEngine = syncEngine
         
+        // Register dependencies for App Intents
+        let container = modelContainer
+        let sync = syncEngine
+        AppDependencyManager.shared.add {
+            TaskDataStore(container: container) as any TaskDataStoring
+        }
+        AppDependencyManager.shared.add {
+            sync
+        }
+        
         // Siri Shortcuts registrieren
         DawnyShortcuts.updateAppShortcutParameters()
     }
@@ -101,6 +111,11 @@ struct DawnyApp: App {
         // 5. Initialize Categories
         let categoryService = CategoryService(modelContext: modelContainer.mainContext)
         categoryService.initializeDefaultCategories()
+        
+        // 6. Reindex entities for Spotlight / Apple Intelligence
+        let dataStore = TaskDataStore(container: modelContainer)
+        await EntityIndexer.reindexAllTasks(using: dataStore)
+        await EntityIndexer.reindexAllCategories(using: dataStore)
         
         print("✅ App launch tasks completed")
     }
