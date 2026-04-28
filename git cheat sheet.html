@@ -228,6 +228,31 @@ git rebase main</code>
             </div>
         </div>
 
+        <div class="card">
+            <h2>🏷️ Tags (Releases)</h2>
+            <div class="command-group">
+                <span class="label">Tag erstellen (z. B. für eine Version)</span>
+                <code>git tag v0.5.0</code>
+            </div>
+            <div class="command-group">
+                <span class="label">Tag mit Nachricht (annotated)</span>
+                <code>git tag -a v0.5.0 -m "Version 0.5.0"</code>
+            </div>
+            <div class="command-group">
+                <span class="label">Tag auf Remote pushen</span>
+                <code>git push origin v0.5.0</code>
+            </div>
+            <div class="command-group">
+                <span class="label">Alle Tags anzeigen</span>
+                <code>git tag -l</code>
+            </div>
+            <div class="command-group">
+                <span class="label">Tag löschen (lokal + remote)</span>
+                <code>git tag -d v0.5.0
+git push origin --delete v0.5.0</code>
+            </div>
+        </div>
+
         <div class="card danger">
             <h2>🛠️ Rettung</h2>
             <div class="command-group">
