@@ -3,10 +3,10 @@
 // Licensed under PolyForm Noncommercial 1.0.0 — see LICENSE in the repository root.
 
 import AppIntents
+import CoreSpotlight
 import Foundation
-import SwiftData
 
-struct CategoryAppEntity: AppEntity, Identifiable {
+struct CategoryAppEntity: AppEntity, IndexedEntity, Identifiable {
     let id: UUID
     let displayName: String
     let categoryTypeRawValue: String
@@ -19,6 +19,15 @@ struct CategoryAppEntity: AppEntity, Identifiable {
         DisplayRepresentation(title: "\(displayName)")
     }
 
+    var attributeSet: CSSearchableItemAttributeSet {
+        let attributes = CSSearchableItemAttributeSet()
+        attributes.displayName = displayName
+        if let type = TaskCategory(rawValue: categoryTypeRawValue) {
+            attributes.keywords = type.spokenSynonyms
+        }
+        return attributes
+    }
+
     init(category: Category) {
         self.id = category.id
         self.displayName = category.displayName
@@ -28,21 +37,24 @@ struct CategoryAppEntity: AppEntity, Identifiable {
 }
 
 struct CategoryEntityQuery: EntityQuery, EntityStringQuery {
+    @Dependency
+    var dataStore: any TaskDataStoring
+
+    @MainActor
     func entities(for identifiers: [CategoryAppEntity.ID]) async throws -> [CategoryAppEntity] {
-        let context = try await IntentDataStore.makeContext()
-        return try await IntentDataStore.allCategories(in: context)
+        try dataStore.allCategories()
             .filter { identifiers.contains($0.id) }
             .map(CategoryAppEntity.init)
     }
 
+    @MainActor
     func suggestedEntities() async throws -> [CategoryAppEntity] {
-        let context = try await IntentDataStore.makeContext()
-        return try await IntentDataStore.allCategories(in: context).map(CategoryAppEntity.init)
+        try dataStore.allCategories().map(CategoryAppEntity.init)
     }
 
+    @MainActor
     func entities(matching string: String) async throws -> [CategoryAppEntity] {
-        let context = try await IntentDataStore.makeContext()
-        let categories = try await IntentDataStore.allCategories(in: context)
+        let categories = try dataStore.allCategories()
 
         return IntentTextMatcher.bestMatches(for: string, in: categories) { category in
             var candidates = [category.displayName, category.name]

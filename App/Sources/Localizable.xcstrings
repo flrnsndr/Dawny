@@ -2303,6 +2303,12 @@
       "comment": "Siri/Shortcuts · AddTaskIntent description shown in Shortcuts catalog · One sentence.",
       "extractionState": "manual",
       "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Adds a new task to your backlog"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -2321,6 +2327,12 @@
       "comment": "Siri · AddTaskIntent spoken confirmation · Conversational, friendly. %@ is the task title the user dictated.",
       "extractionState": "manual",
       "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Done. ‘%@’ added to your backlog."
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -2339,6 +2351,12 @@
       "comment": "Siri · AddTaskIntent parameter description · One sentence in Shortcuts catalog.",
       "extractionState": "manual",
       "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "The title of the task to add"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -2357,6 +2375,12 @@
       "comment": "Siri · AddTaskIntent parameter title · Single word.",
       "extractionState": "manual",
       "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Task"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -2375,6 +2399,12 @@
       "comment": "Siri/Shortcuts · AddTaskIntent short title for the Shortcuts gallery · 2–3 words.",
       "extractionState": "manual",
       "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Add Task"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -2393,6 +2423,12 @@
       "comment": "Siri/Shortcuts · AddTaskIntent canonical title · Imperative, 2–4 words.",
       "extractionState": "manual",
       "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Add Task to Dawny"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -2411,6 +2447,12 @@
       "comment": "Siri/Shortcuts · AddTaskTodayIntent description · One sentence.",
       "extractionState": "manual",
       "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Adds a new task directly to your Today list"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -2429,6 +2471,12 @@
       "comment": "Siri · AddTaskTodayIntent spoken confirmation · Conversational. %@ is the task title.",
       "extractionState": "manual",
       "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Done. ‘%@’ added to today."
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -2447,6 +2495,12 @@
       "comment": "Siri · AddTaskTodayIntent parameter description · One sentence.",
       "extractionState": "manual",
       "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "The title of the task to add for today"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -2465,6 +2519,12 @@
       "comment": "Siri · AddTaskTodayIntent parameter title · Single word.",
       "extractionState": "manual",
       "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Task"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -2483,6 +2543,12 @@
       "comment": "Siri/Shortcuts · AddTaskTodayIntent short title for the Shortcuts gallery · 2–3 words.",
       "extractionState": "manual",
       "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Task for Today"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -2501,6 +2567,12 @@
       "comment": "Siri/Shortcuts · AddTaskTodayIntent canonical title · Imperative.",
       "extractionState": "manual",
       "localizations": {
+        "base": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Add Task to Today in Dawny"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -5250,7 +5322,33 @@
         }
       }
     },
-    "Category": {}
+    "Category": {},
+    "intent.addtasktoday.requestvalue.title": {},
+    "intent.movetoday.requestvalue.task": {},
+    "intent.complete.requestvalue.task": {},
+    "intent.addtask.requestvalue.title": {},
+    "intent.error.dataStoreUnavailable": {
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Sorry, I can't access your tasks right now. Please try again."
+          }
+        }
+      }
+    },
+    "intent.error.titleEmpty": {
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Please provide a task title."
+          }
+        }
+      }
+    }
   },
   "version": "1.0"
 }

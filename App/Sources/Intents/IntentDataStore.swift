@@ -5,23 +5,33 @@
 import Foundation
 import SwiftData
 
-enum IntentDataStoreError: LocalizedError {
+enum IntentDataStoreError: LocalizedError, CustomLocalizedStringResourceConvertible {
     case categoryNotFound
     case taskNotFound
     case taskAlreadyCompleted
     case taskArchived
+    case titleEmpty
+    case dataStoreUnavailable
 
-    var errorDescription: String? {
+    var localizedStringResource: LocalizedStringResource {
         switch self {
         case .categoryNotFound:
-            return String(localized: "intent.error.categoryNotFound", defaultValue: "I couldn't find that category.")
+            LocalizedStringResource("intent.error.categoryNotFound", defaultValue: "I couldn't find that category.")
         case .taskNotFound:
-            return String(localized: "intent.error.taskNotFound", defaultValue: "I couldn't find that task.")
+            LocalizedStringResource("intent.error.taskNotFound", defaultValue: "I couldn't find that task.")
         case .taskAlreadyCompleted:
-            return String(localized: "intent.error.taskAlreadyCompleted", defaultValue: "That task is already completed.")
+            LocalizedStringResource("intent.error.taskAlreadyCompleted", defaultValue: "That task is already completed.")
         case .taskArchived:
-            return String(localized: "intent.error.taskArchived", defaultValue: "That task is archived.")
+            LocalizedStringResource("intent.error.taskArchived", defaultValue: "That task is archived.")
+        case .titleEmpty:
+            LocalizedStringResource("intent.error.titleEmpty", defaultValue: "Please provide a task title.")
+        case .dataStoreUnavailable:
+            LocalizedStringResource("intent.error.dataStoreUnavailable", defaultValue: "Sorry, I can't access your tasks right now. Please try again.")
         }
+    }
+
+    var errorDescription: String? {
+        String(localized: localizedStringResource)
     }
 }
 
@@ -122,6 +132,8 @@ enum IntentDataStore {
 
         context.insert(task)
         try context.save()
+        let indexTarget = task
+        _Concurrency.Task { await EntityIndexer.indexTask(indexTarget) }
         return task
     }
 
@@ -138,6 +150,8 @@ enum IntentDataStore {
 
         task.moveToDailyFocus(date: Calendar.current.startOfDay(for: Date()))
         try context.save()
+        let indexTarget = task
+        _Concurrency.Task { await EntityIndexer.indexTask(indexTarget) }
         return task
     }
 
@@ -154,6 +168,8 @@ enum IntentDataStore {
 
         task.complete()
         try context.save()
+        let taskID = task.id
+        _Concurrency.Task { await EntityIndexer.deindexTask(id: taskID) }
         return task
     }
 
