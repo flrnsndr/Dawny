@@ -175,8 +175,16 @@ git push -u origin HEAD</code>
 git branch -av</code>
             </div>
             <div class="command-group">
-                <span class="label">Grafischer Verlauf</span>
+                <span class="label">Grafischer Verlauf (letzte 10)</span>
                 <code>git log --oneline --graph --all -n 10</code>
+            </div>
+            <div class="command-group">
+                <span class="label">Visuelle Übersicht: alle Branches & Commits</span>
+                <code>git log --all --oneline --graph --decorate</code>
+            </div>
+            <div class="command-group">
+                <span class="label">Kompakter Überblick: nur Branch-/Tag-Refs</span>
+                <code>git log --all --oneline --graph --decorate --simplify-by-decoration</code>
             </div>
         </div>
 
