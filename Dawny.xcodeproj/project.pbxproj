@@ -6,19 +6,8 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXContainerItemProxy section */
-		5C9C9ECD2F0180DB0092AD03 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5C9C9EB72F0180D90092AD03 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5C9C9EBE2F0180D90092AD03;
-			remoteInfo = Dawny;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		5C9C9EBF2F0180D90092AD03 /* Dawny.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dawny.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		5C9C9ECC2F0180DB0092AD03 /* DawnyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DawnyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -42,13 +31,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5C9C9EC92F0180DB0092AD03 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -65,7 +47,6 @@
 			isa = PBXGroup;
 			children = (
 				5C9C9EBF2F0180D90092AD03 /* Dawny.app */,
-				5C9C9ECC2F0180DB0092AD03 /* DawnyTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,29 +76,6 @@
 			productReference = 5C9C9EBF2F0180D90092AD03 /* Dawny.app */;
 			productType = "com.apple.product-type.application";
 		};
-		5C9C9ECB2F0180DB0092AD03 /* DawnyTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5C9C9EE32F0180DB0092AD03 /* Build configuration list for PBXNativeTarget "DawnyTests" */;
-			buildPhases = (
-				5C9C9EC82F0180DB0092AD03 /* Sources */,
-				5C9C9EC92F0180DB0092AD03 /* Frameworks */,
-				5C9C9ECA2F0180DB0092AD03 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				5C9C9ECE2F0180DB0092AD03 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				5C9C9ECF2F0180DB0092AD03 /* DawnyTests */,
-			);
-			name = DawnyTests;
-			packageProductDependencies = (
-			);
-			productName = DawnyTests;
-			productReference = 5C9C9ECC2F0180DB0092AD03 /* DawnyTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -130,10 +88,6 @@
 				TargetAttributes = {
 					5C9C9EBE2F0180D90092AD03 = {
 						CreatedOnToolsVersion = 26.2;
-					};
-					5C9C9ECB2F0180DB0092AD03 = {
-						CreatedOnToolsVersion = 26.2;
-						TestTargetID = 5C9C9EBE2F0180D90092AD03;
 					};
 				};
 			};
@@ -153,20 +107,12 @@
 			projectRoot = "";
 			targets = (
 				5C9C9EBE2F0180D90092AD03 /* Dawny */,
-				5C9C9ECB2F0180DB0092AD03 /* DawnyTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		5C9C9EBD2F0180D90092AD03 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5C9C9ECA2F0180DB0092AD03 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -183,22 +129,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5C9C9EC82F0180DB0092AD03 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		5C9C9ECE2F0180DB0092AD03 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5C9C9EBE2F0180D90092AD03 /* Dawny */;
-			targetProxy = 5C9C9ECD2F0180DB0092AD03 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		5C9C9EDE2F0180DB0092AD03 /* Debug */ = {
@@ -410,48 +341,6 @@
 			};
 			name = Release;
 		};
-		5C9C9EE42F0180DB0092AD03 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Flo.DawnyTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Dawny.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Dawny";
-			};
-			name = Debug;
-		};
-		5C9C9EE52F0180DB0092AD03 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Flo.DawnyTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Dawny.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Dawny";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -469,15 +358,6 @@
 			buildConfigurations = (
 				5C9C9EE12F0180DB0092AD03 /* Debug */,
 				5C9C9EE22F0180DB0092AD03 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		5C9C9EE32F0180DB0092AD03 /* Build configuration list for PBXNativeTarget "DawnyTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5C9C9EE42F0180DB0092AD03 /* Debug */,
-				5C9C9EE52F0180DB0092AD03 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
