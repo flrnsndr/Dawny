@@ -126,7 +126,7 @@ final class DailyFocusRecurringTests: XCTestCase {
         try context.save()
 
         await vm.completeTask(t1)
-        var clone1 = try XCTUnwrap(try findTask(id: t1.recurringCloneID!))
+        let clone1 = try XCTUnwrap(try findTask(id: t1.recurringCloneID!))
         clone1.moveToDailyFocus(date: Calendar.current.startOfDay(for: Date()))
         try context.save()
 
