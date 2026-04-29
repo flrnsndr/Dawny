@@ -18,6 +18,7 @@
   },
   "manifesto": {
     "quote": "Overdue tasks are a design flaw.",
+    "quoteSub": "",
     "bodyMid": "When old tasks never leave, what matters today drowns in what mattered last month.",
     "bodyExtra": "Your life isn't a project where you can plan each day weeks in advance.",
     "bodyAside": "If a task has been on your list for two weeks, is it still a priority?"
@@ -28,7 +29,7 @@
     "titleAccent": "your day resets.",
     "body": "At 3 AM, Dawny quietly clears your Daily Focus. Unfinished tasks are either archived or return to the Backlog. You wake up to a clean slate. Nothing is lost.",
     "screenLabel": "Today",
-    "tasks": ["Walk the dog", "RSVP to wedding", "Clean basement"],
+    "tasks": ["Clean basement", "Walk the dog", "RSVP to wedding"],
     "steps": [
       { "time": ["Morning", "8 AM"], "phase": "Day 1", "doneCount": 0, "cleared": false, "footer": "0 of 3 done" },
       { "time": ["Evening", "10 PM"], "phase": "Day 1", "doneCount": 2, "cleared": false, "footer": "2 of 3 done" },
@@ -45,13 +46,13 @@
   },
   "twoLists": {
     "eyebrow": "How it works",
-    "title": "Two lists. That's it.",
+    "title": "One list, one focus, one archive. That's it.",
     "backlogLabel": "Backlog",
-    "backlogText": "Everything that matters to you — Capture what matters, then decide when it deserves your focus.",
+    "backlogText": "Your tasks — Collect everything you want to get done.",
     "focusLabel": "Daily Focus",
-    "focusText": "Your commitments for today — Move tasks here when you're ready to make them count.",
-    "progressLabel": "Back to Backlog",
-    "progressText": "A safe place for stale tasks — Dawny moves neglected commitments aside, but keeps them within reach.",
+    "focusText": "What matters today — Move tasks here when they deserve your focus today.",
+    "progressLabel": "Archive",
+    "progressText": "For what kept slipping — What wasn't important enough gets cleared away.",
     "captionBacklog": "Backlog — your library of maybes",
     "captionFocus": "Daily Focus — today, on purpose",
     "captionProgress": "Daily Focus — open and completed tasks"
@@ -76,7 +77,7 @@
       "Your task list has become a graveyard of good intentions.",
       "You keep moving the same tasks forward without choosing them again.",
       "You want a clean today, not another productivity system to maintain.",
-      "You need a place for future tasks that doesn't crowd the present."
+      "You want tasks to have a sense of \"when\" without forcing due dates on them."
     ],
     "footnote": "Dawny tends to work especially well for people who don't fit rigid productivity systems, including many neurodivergent thinkers."
   },

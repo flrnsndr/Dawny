@@ -16,7 +16,7 @@ const resetArrowParts = timeline.arrowReset.split("·").map((part) => part.trim(
 // Alles, was am Tagesende unerledigt war, wandert beim 3-Uhr-Reset zurück ins Backlog.
 // Referenz ist der letzte aktive Step (vor dem cleared-Step).
 const lastActiveStep = [...steps].reverse().find((s) => !s.cleared) ?? steps[0];
-const returnedTasks = tasks.slice(lastActiveStep.doneCount);
+const returnedTasks = tasks.slice(0, tasks.length - lastActiveStep.doneCount);
 const migratedTask = returnedTasks[0];
 ---
 
@@ -88,7 +88,7 @@ const migratedTask = returnedTasks[0];
                 </li>
               ) : (
                 tasks.map((task, taskIndex) => {
-                  const done = taskIndex < step.doneCount;
+                  const done = taskIndex >= tasks.length - step.doneCount;
                   return (
                     <li class={done ? "is-done" : ""}>
                       <span class="reset-card-bullet" aria-hidden="true">
@@ -415,6 +415,8 @@ const migratedTask = returnedTasks[0];
 
   .reset-card-list li.is-done .reset-card-text {
     color: rgba(255, 255, 255, 0.55);
+    text-decoration: line-through;
+    text-decoration-color: rgba(255, 255, 255, 0.4);
   }
 
   .reset-card-empty {

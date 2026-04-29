@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Dawny — Eine Task-App, die gestern löscht. Absichtlich.",
-    "description": "Kein Overdue. Kein Übertrag. Kein schlechtes Gewissen. Dawny setzt deinen Tag um 3 Uhr morgens zurück — jeden Tag von vorn.",
+    "title": "Dawny - To Do App, die Aufgaben von gestern löscht",
+    "description": "Dawny ist eine minimalistische To Do App fürs iPhone. Keine überfälligen Aufgaben, kein tägliches Mitschleppen. Dein Daily Focus startet jeden Morgen frisch.",
     "ogAlt": "Dawny — jeden Tag frisch starten"
   },
   "nav": {
@@ -11,24 +11,25 @@
   },
   "hero": {
     "eyebrow": "iOS · TestFlight Beta",
-    "headline": ["Eine Task-App,", "die gestern löscht.", "Absichtlich."],
-    "sub": ["Kein Mitschleifen mehr.", "Dawny archiviert deinen Ballast automatisch – damit du jeden Morgen mit klarem Fokus startest."],
+    "headline": ["Eine To Do App, die", "deine Aufgaben löscht.", "Absichtlich."],
+    "sub": ["Was gestern offen blieb, blockiert heute nicht.", "Du entscheidest jeden Morgen neu, was wirklich zählt."],
     "ctaPrimary": "TestFlight-Beta beitreten",
     "ctaSecondary": "Manifest lesen"
   },
   "manifesto": {
-    "quote": "Overdue ist ein Design-Fehler.",
-    "bodyMid": "Wenn alte Aufgaben nie verschwinden, ertrinkt das, was heute zählt, in dem, was letzten Monat mal zählte.",
+    "quote": "Warum zeigt dir deine App noch, was gestern nicht abgehakt wurde?",
+    "quoteSub": "Dein Tag sollte nicht mit dem anfangen, was gestern übrig blieb.",
+    "bodyMid": "Je länger alte Aufgaben stehen bleiben, desto schwerer findest du den Fokus für heute.",
     "bodyExtra": "Dein Leben ist kein Projekt, bei dem du jeden Tag Wochen im Voraus planen kannst.",
-    "bodyAside": "Wenn eine Aufgabe seit zwei Wochen auf deiner Liste steht – ist sie dann noch eine Priorität?"
+    "bodyAside": "Wenn eine Aufgabe seit zwei Wochen auf deiner Liste steht – wird sie dort besser oder nur älter?"
   },
   "reset": {
     "eyebrow": "Der 3-Uhr-Reset",
     "title": "Während du schläfst,",
     "titleAccent": "startet dein Tag neu.",
-    "body": "Um 3 Uhr morgens leert Dawny leise deinen Daily Focus. Unerledigte Aufgaben werden entweder archiviert oder wandern zurück ins Backlog. Du wachst mit einer leeren Liste auf. Nichts geht verloren.",
+    "body": "Um 3 Uhr morgens räumt Dawny deinen Daily Focus auf. Offene Aufgaben wandern ins Archiv oder zurück ins Backlog. Du startest mit einer leeren Heute-Liste. Nichts geht verloren.",
     "screenLabel": "Heute",
-    "tasks": ["Hund Gassi führen", "Hochzeit zusagen", "Keller aufräumen"],
+    "tasks": ["Keller aufräumen", "Mit Hund raus", "Hochzeit zusagen"],
     "steps": [
       { "time": ["Morgens", "8:00"], "phase": "Tag 1", "doneCount": 0, "cleared": false, "footer": "0 von 3 erledigt" },
       { "time": ["Abends", "22:00"], "phase": "Tag 1", "doneCount": 2, "cleared": false, "footer": "2 von 3 erledigt" },
@@ -45,13 +46,13 @@
   },
   "twoLists": {
     "eyebrow": "So funktioniert es",
-    "title": "Zwei Listen. Mehr nicht.",
+    "title": "Eine Liste, ein Fokus, ein Archiv. Mehr nicht.",
     "backlogLabel": "Backlog",
-    "backlogText": "Alles, was dir wichtig ist — festhalten, was zählt, und später entscheiden, wann es deinen Fokus verdient.",
+    "backlogText": "Deine Aufgaben — Sammle hier alles, was du erledigen möchtest.",
     "focusLabel": "Daily Focus",
-    "focusText": "Deine Zusagen für heute — verschiebe Aufgaben hierher, wenn du bereit bist, sie zählen zu lassen.",
-    "progressLabel": "Zurück ins Backlog",
-    "progressText": "Ein sicherer Ort für alte Aufgaben — Dawny räumt vernachlässigte Zusagen aus dem Weg, hält sie aber erreichbar.",
+    "focusText": "Was heute zählt — Verschiebe Aufgaben hierher, wenn sie heute deinen Fokus verdienen.",
+    "progressLabel": "Archiv",
+    "progressText": "Für Liegengebliebenes — Was nicht wichtig genug war, wird weggeräumt.",
     "captionBacklog": "Backlog — deine Sammlung von Vielleichts",
     "captionFocus": "Daily Focus — heute, mit Absicht",
     "captionProgress": "Daily Focus — offen und erledigt"
@@ -64,27 +65,27 @@
     "rightLabel": "Dawny",
     "rows": [
       { "left": "Eine wachsende Liste wird zum Grundrauschen", "right": "Heute bleibt fokussiert" },
-      { "left": "Rote Overdue-Daten machen Schuldgefühle", "right": "Verpasste Aufgaben werden neutrale Signale" },
+      { "left": "Rote Überfällig-Markierungen erzeugen künstliche Dringlichkeit", "right": "Verpasste Aufgaben werden neutrale Signale" },
       { "left": "Alte Pläne konkurrieren mit echten Prioritäten", "right": "Veraltete Aufgaben rücken aus dem Blick" },
       { "left": "Du schleppst alles weiter", "right": "Du entscheidest, was einen neuen Tag verdient" }
     ]
   },
   "audience": {
     "eyebrow": "Für wen Dawny gemacht ist",
-    "title": "Das fühlt sich richtig an, wenn…",
+    "title": "Dawny passt zu dir, wenn…",
     "items": [
-      "deine Task-Liste zum Friedhof guter Vorsätze geworden ist.",
-      "du dieselben Aufgaben immer weiter verschiebst, ohne sie neu zu wählen.",
-      "du ein klares Heute willst, kein weiteres Produktivitätssystem zum Pflegen.",
-      "du einen Ort für spätere Aufgaben brauchst, der die Gegenwart nicht überfüllt."
+      "deine To Do Liste zum Friedhof guter Vorsätze geworden ist.",
+      "du Aufgaben mitschleppst, die du seit Tagen nicht mehr anschaust.",
+      "du für deine Tagesplanung kein komplexes Projektmanagement-Tool verwalten willst.",
+      "du Aufgaben zeitlich einordnen willst, ohne ihnen ein künstliches Datum zu geben."
     ],
-    "footnote": "Dawny funktioniert besonders gut für Menschen, die in starre Produktivitätssysteme nicht hineinpassen, darunter viele neurodivergente Köpfe."
+    "footnote": "Dawny passt oft besonders gut zu Menschen, denen klassische Planungsregeln oft zu starr sind. Das gilt ganz besonders auch für viele neurodivergente Menschen."
   },
   "makeItCount": {
     "eyebrow": "Make It Count",
-    "title": "Wenn eine Aufgabe seit zwei Wochen auf deiner Liste steht —",
+    "title": "Wenn eine Aufgabe immer wieder liegen bleibt —",
     "titleAccent": "ist sie dann noch eine Priorität?",
-    "narrative": "Unerledigt ist kein Versagen. Es ist Information. Eine Aufgabe für Heute zu wählen, ist eine Zusage an dich selbst. Wenn diese Zusage immer wieder bricht, nimmt Dawny das Signal ernst.",
+    "narrative": "Nicht erledigt heißt nicht gescheitert. Es heißt: vielleicht war es nicht wichtig genug für heute. Wenn eine Aufgabe immer wieder liegen bleibt, nimmt Dawny dieses Signal ernst.",
     "logicLabel": "So funktioniert es",
     "logic": "Schaffst du eine Heute-Aufgabe nicht, wandert sie zurück ins Backlog. Bleibt sie immer wieder liegen, verschiebt Dawny sie leise ins Archiv – dein digitaler Ballast, aus dem Weg.",
     "safetyLabel": "Dein Sicherheitsnetz",
@@ -109,7 +110,7 @@
     "qrAlt": "QR-Code scannen, um TestFlight auf iOS zu öffnen"
   },
   "footer": {
-    "tagline": "Eine Task-App, die gestern löscht. Absichtlich.",
+    "tagline": "Eine To Do App, die Aufgaben von gestern löscht. Absichtlich.",
     "rights": "© {year} Florian Schneider. Mit Sorgfalt in Deutschland gemacht.",
     "links": {
       "privacy": "Datenschutz",
