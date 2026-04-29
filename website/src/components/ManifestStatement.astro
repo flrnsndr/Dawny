@@ -27,6 +27,11 @@ const dict = getDict(lang);
       <p class="manifesto-quote text-display text-[clamp(2.25rem,6.5vw,5rem)] leading-[1.02] tracking-tight">
         &ldquo;{dict.manifesto.quote}&rdquo;
       </p>
+      {dict.manifesto.quoteSub && (
+        <p class="manifesto-quote-sub mt-8 text-lg sm:text-xl leading-relaxed">
+          {dict.manifesto.quoteSub}
+        </p>
+      )}
     </blockquote>
 
     <div
@@ -57,6 +62,14 @@ const dict = getDict(lang);
       in oklab,
       #ffffff calc((1 - var(--dawn-progress, 0)) * 100%),
       var(--color-ink) calc(var(--dawn-progress, 0) * 100%)
+    );
+  }
+
+  .manifesto-quote-sub {
+    color: color-mix(
+      in oklab,
+      rgba(255, 255, 255, 0.85) calc((1 - var(--dawn-progress, 0)) * 100%),
+      var(--color-ink-soft) calc(var(--dawn-progress, 0) * 100%)
     );
   }
 

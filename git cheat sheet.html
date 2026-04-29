@@ -253,6 +253,31 @@ git push origin --delete v0.5.0</code>
             </div>
         </div>
 
+        <div class="card status">
+            <h2>🌐 Website lokal starten</h2>
+            <p style="margin:0; font-size: 0.85rem; color: var(--text-dim);">Marketing-Website aus dem aktuellen Branch auf localhost bauen:</p>
+            <div class="command-group">
+                <span class="label">Dev-Server (Live Hot Reload — zum aktiven Arbeiten)</span>
+                <code>cd website
+npm ci
+npm run dev</code>
+            </div>
+            <div class="command-group">
+                <span class="label">Produktions-Preview (exakt wie auf IONOS — zum Prüfen vor Deploy)</span>
+                <code>cd website
+npm run build
+npm run preview</code>
+            </div>
+            <div class="command-group">
+                <span class="label">Schnellstart (ohne Asset-Generierung)</span>
+                <code>cd website
+npx astro dev</code>
+            </div>
+            <div class="tip">
+                <b>Wann was?</b> <code style="display:inline; padding:2px 6px; border:none;">npm run dev</code> → wenn du aktiv an der Seite arbeitest (Änderungen erscheinen sofort im Browser dank Live Hot Reload). <code style="display:inline; padding:2px 6px; border:none;">npm run build + preview</code> → wenn du vor dem Deploy prüfen willst, ob alles korrekt gebaut wird (Minifizierung, Routing, Assets). <code style="display:inline; padding:2px 6px; border:none;">npx astro dev</code> → Schnellstart, wenn Assets schon existieren. Alles auf <b>http://localhost:4321</b>
+            </div>
+        </div>
+
         <div class="card danger">
             <h2>🛠️ Rettung</h2>
             <div class="command-group">

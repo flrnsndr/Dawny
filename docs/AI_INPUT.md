@@ -15,7 +15,7 @@ Last source-code review for factual product state: April 27, 2026. Re-verify bef
 | Name | Dawny |
 | Category | iOS task management app |
 | Official tagline | "A task app that deletes yesterday's tasks. On purpose." |
-| One-liner | "Dawny turns unfinished tasks into signal—not failure." |
+| One-liner | "Dawny turns unfinished tasks into a clear priority signal." |
 | Platform | iOS 26.2+, native SwiftUI. Designed and tested primarily for iPhone; do not position as an iPad-optimized product unless separately verified. |
 | Distribution | Public Beta via TestFlight |
 | TestFlight link | https://testflight.apple.com/join/h9JSWasd |
@@ -33,14 +33,14 @@ Last source-code review for factual product state: April 27, 2026. Re-verify bef
 Every design decision in Dawny follows from one thesis:
 
 > **Overdue tasks are a design flaw.**
-> Most task apps assume unfinished = failure. Dawny assumes unfinished = information.
+> Most task apps treat unfinished tasks as overdue. Dawny treats them as a priority signal.
 
-If a task didn't get done, it usually wasn't the actual priority. Classic tools punish this with red badges and overdue flags — creating guilt, not clarity. Dawny removes that mechanism entirely.
+If a task didn't get done, it usually wasn't the actual priority. Classic tools keep surfacing it with red badges and overdue flags — creating artificial urgency instead of clarity. Dawny removes that mechanism entirely.
 
 ### Core principles that are non-negotiable
 
 **Zero-Overdue Policy**
-There are no overdue tasks in Dawny. No red. No late. No accumulated guilt. If something is not done by the daily reset, it is processed without judgment: it either returns to the Backlog or, once the Make It Count threshold is reached, moves to the Archive.
+There are no overdue tasks in Dawny. No red. No late. No accumulated pressure. If something is not done by the daily reset, it is processed without judgment: it either returns to the Backlog or, once the Make It Count threshold is reached, moves to the Archive.
 
 **The 3 AM Reset**
 The default reset time is 3 AM. This is also the product metaphor and recommended marketing phrase. In the app, the reset hour is configurable in Settings. The reset is checked when the app launches or becomes active, and Dawny also schedules a local background refresh when iOS allows it. The promise is not "an exact server-side cron job"; the promise is that the user's Daily Focus is cleared automatically without manual cleanup.
@@ -48,7 +48,7 @@ The default reset time is 3 AM. This is also the product metaphor and recommende
 **Make It Count**
 Make It Count is Dawny's mechanism for turning repeated non-completion into a clear signal. Each non-recurring task tracks how many times it was in Daily Focus and still incomplete at the daily reset. The threshold is configurable from 1–7 missed resets, with a default of 1. When the task reaches that threshold, it is moved to the Archive instead of being quietly returned to the Backlog again.
 
-The Archive is not deletion and not punishment. It is a visible, recoverable holding area for tasks that the user's actual behavior has repeatedly deprioritized. Archived tasks are out of the way, but not lost: the user can restore them to Backlog, restore them directly to Today/Daily Focus, or delete them permanently. This is central to Dawny's philosophy: an unfinished task is information, not failure.
+The Archive is not punishment. It is a visible, recoverable holding area for tasks that the user's actual behavior has repeatedly deprioritized. Archived tasks are out of the way, but not lost: the user can restore them to Backlog, restore them directly to Today/Daily Focus, or delete them permanently. This is central to Dawny's philosophy: repeated non-completion is a signal about priority.
 
 Make It Count is a core feature and cannot be disabled. Recurring-category tasks are the exception: they return to Backlog at reset and are not archived by Make It Count.
 
@@ -91,7 +91,7 @@ Dawny enforces a deliberate daily choice. Nothing moves to Today automatically. 
 - Completed tasks are not archived by Make It Count
 - Tasks in recurring categories are not archived by Make It Count; they return to Backlog at reset
 - Make It Count cannot be disabled — it is a core feature
-- Marketing framing: this is not shame, punishment, or deletion. It is a calm signal that the task has repeatedly not been the real priority.
+- Marketing framing: this is not punishment and not a moral judgment. It is a calm signal that the task has repeatedly not been the real priority.
 
 **Categories**
 - Lightweight grouping within the Backlog
@@ -158,12 +158,12 @@ Dawny enforces a deliberate daily choice. Nothing moves to Today automatically. 
 - Reliably capture tasks, but the list grows faster than it shrinks
 - Accumulated backlog becomes emotionally draining and loses relevance
 - Repeatedly reschedule tasks rather than deciding
-- Feel guilt or avoidance when opening their task app
+- Feel overload or avoidance when opening their task app
 - Have tried multiple tools; none stick long-term
 
 **Key insight:** They do not fail at discipline. The system fails them by design.
 
-**What Dawny offers this group:** A system that acknowledges reality instead of fighting it. Tasks don't become overdue — they return to the pool. Each day is a fresh start.
+**What Dawny offers this group:** A system that acknowledges reality instead of fighting it. Tasks don't become overdue — they return to the pool or move to the Archive. Each day is a fresh start.
 
 ### High-relevance sub-segment — neurodivergent people (especially ADHD)
 
@@ -171,7 +171,7 @@ Dawny enforces a deliberate daily choice. Nothing moves to Today automatically. 
 
 **Why the fit exists:**
 - Difficulty with long-term prioritization → Dawny only asks: "what matters today?"
-- Fluctuating energy across days → the reset means yesterday's missed tasks don't haunt today
+- Fluctuating energy across days → the reset means yesterday's missed tasks don't fill today's view
 - High sensitivity to visual overload and "open loops" → Dawny removes both with the reset
 - Low attachment to artificial deadlines → Dawny has none
 - Classic tools often get abandoned entirely → Dawny's simplicity reduces that risk
@@ -188,7 +188,7 @@ Dawny enforces a deliberate daily choice. Nothing moves to Today automatically. 
 **Knowledge workers with dynamic priorities**
 - Product managers, founders, freelancers, creatives
 - Their priorities genuinely shift daily; deadline-based tools create false urgency
-- Need to feel "done enough" at end of day without guilt
+- Need to end the day without dragging every open loop into tomorrow
 
 **"Tool fatigue" users**
 - Have tried Todoist, Things, Notion, Reminders, etc.
@@ -210,7 +210,7 @@ Dawny enforces a deliberate daily choice. Nothing moves to Today automatically. 
 
 | Competitor | Core model | Dawny's difference |
 |---|---|---|
-| Todoist | Due dates, projects, labels, karma score | Dawny has no due dates; no score; no guilt mechanism |
+| Todoist | Due dates, projects, labels, karma score | Dawny has no due dates; no score; no overdue-pressure mechanism |
 | Things 3 | Areas, projects, deadlines, "Today" list | Things' Today list doesn't reset; overdue stays overdue |
 | Microsoft To Do | Lists, due dates, "My Day" (manual) | My Day is manual and doesn't enforce a reset philosophy |
 | Apple Reminders | Date/time reminders, lists | Reminder-centric; missed = overdue notification |
@@ -226,7 +226,7 @@ Other apps could add a "hide overdue" setting. Dawny removes the concept entirel
 The daily reset is a primary product behavior and brand metaphor. It is memorable and genuinely changes how users relate to their list. Avoid unverified absolute claims such as "no competitor does this."
 
 **3. Make It Count as honest signal**
-Instead of letting ignored tasks silently pile up, Dawny acknowledges them: if a task repeatedly misses the user's chosen day, it gets archived into a visible, recoverable place. This respects the user's intelligence without turning non-completion into failure.
+Instead of letting ignored tasks silently pile up, Dawny acknowledges them: if a task repeatedly misses the user's chosen day, it gets archived into a visible, recoverable place. This respects the user's intelligence and treats repeated non-completion as a priority signal.
 
 **4. Radical reduction as a deliberate choice**
 Dawny documents what it doesn't do and explains why. This is rare in the productivity app market and resonates strongly with burned-out users.
@@ -236,7 +236,7 @@ For the app, zero developer-side task-data collection is not a setting or a plan
 
 ### Single-sentence differentiator
 
-*"Dawny treats an unfinished task as information, not failure — and enforces that philosophy in its architecture."*
+*"Dawny treats repeated non-completion as a priority signal — and enforces that philosophy in its architecture."*
 
 ---
 
@@ -259,23 +259,24 @@ For the app, zero developer-side task-data collection is not a setting or a plan
 
 ### Approved neurodivergence phrasing
 
-- English: "Dawny tends to work especially well for people who don't fit rigid productivity systems — including many neurodivergent thinkers."
-- German: "Dawny passt oft besonders gut zu Menschen, die in starre Produktivitätssysteme nicht hineinpassen — darunter viele neurodivergente Köpfe."
+- English: "Dawny tends to work especially well for people who find classic productivity systems too rigid — including many neurodivergent thinkers."
+- German: "Dawny passt oft besonders gut zu Menschen, für die klassische Produktivitätssysteme zu starr sind — darunter auch viele neurodivergente Köpfe."
 - Do not say Dawny treats ADHD, improves mental health, reduces symptoms, or is a medical/clinical tool.
 
 ### Existing key phrases (cleared for reuse)
 
 - "Start fresh. Every single day."
-- "No overdue. No carryover. No guilt."
+- "No overdue. No carryover. Just clarity."
 - "Just clarity."
 - "Your to-do list that wakes up fresh every morning, free from yesterday's clutter."
 - "The 3 AM Reset"
 - "Make it count"
 - "Intentional days"
 - "Overdue tasks are a design flaw."
-- "Unfinished = information, not failure."
+- "Not done does not mean failed. It means: maybe it wasn't important enough for today."
+- German: "Nicht erledigt heißt nicht gescheitert. Es heißt: vielleicht war es nicht wichtig genug für heute."
 - "A clean slate."
-- "No red. No guilt. No unfinished tasks blocking your list."
+- "No red. No artificial urgency. No unfinished tasks blocking your list."
 
 ---
 
@@ -314,7 +315,7 @@ For rapid orientation when generating marketing copy:
 | Question | Answer |
 |---|---|
 | What is Dawny? | A minimalist iOS task app, designed primarily for iPhone, that resets daily and removes overdue entirely |
-| What problem does it solve? | Task list anxiety, guilt from accumulated undone items, tool fatigue |
+| What problem does it solve? | Task list overload, stale tasks blocking today's focus, tool fatigue |
 | Who is it for? | People overwhelmed by their own task systems; minimalists; dynamic workers; neurodivergent-friendly |
 | What makes it different? | Zero-Overdue by design, 3 AM Reset, Make It Count archiving, recoverable Archive, radical reduction |
 | What does it NOT do? | No due dates, no subtasks, no team features, no cross-platform, no iPad-optimized promise |
