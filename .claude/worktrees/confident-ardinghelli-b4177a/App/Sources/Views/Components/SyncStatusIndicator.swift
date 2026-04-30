@@ -1,0 +1,121 @@
+// Dawny
+// Copyright (c) 2025-2026 Florian Schneider. All rights reserved.
+// Licensed under PolyForm Noncommercial 1.0.0 — see LICENSE in the repository root.
+
+//
+//  SyncStatusIndicator.swift
+//  Dawny
+//
+//  Sync Status Indicator Component
+//
+
+import SwiftUI
+
+enum SyncStatus {
+    case idle
+    case syncing
+    case success
+    case error
+    
+    var icon: String {
+        switch self {
+        case .idle:
+            return "arrow.triangle.2.circlepath"
+        case .syncing:
+            return "arrow.triangle.2.circlepath"
+        case .success:
+            return "checkmark.circle.fill"
+        case .error:
+            return "exclamationmark.triangle.fill"
+        }
+    }
+    
+    var color: Color {
+        switch self {
+        case .idle:
+            return .gray
+        case .syncing:
+            return .blue
+        case .success:
+            return .green
+        case .error:
+            return .red
+        }
+    }
+}
+
+struct SyncStatusIndicator: View {
+    let status: SyncStatus
+    let lastSyncDate: Date?
+    
+    @State private var isAnimating = false
+    
+    var body: some View {
+        HStack(spacing: 6) {
+            Image(systemName: status.icon)
+                .foregroundStyle(status.color)
+                .rotationEffect(.degrees(isAnimating && status == .syncing ? 360 : 0))
+                .animation(
+                    status == .syncing ? .linear(duration: 1).repeatForever(autoreverses: false) : .default,
+                    value: isAnimating
+                )
+            
+            if let lastSync = lastSyncDate, status != .syncing {
+                Text(timeAgo(from: lastSync))
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+            } else if status == .syncing {
+                Text(String(localized: "sync.status.progress", defaultValue: "Syncing…"))
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .onAppear {
+            if status == .syncing {
+                isAnimating = true
+            }
+        }
+        .onChange(of: status) { oldValue, newValue in
+            isAnimating = newValue == .syncing
+        }
+    }
+    
+    private func timeAgo(from date: Date) -> String {
+        let interval = Date().timeIntervalSince(date)
+
+        if interval < 60 {
+            return String(localized: "sync.status.just_now", defaultValue: "Just now")
+        } else if interval < 3600 {
+            let minutes = Int(interval / 60)
+            let format = String(
+                localized: "sync.status.minutes_ago",
+                defaultValue: "%lld min ago"
+            )
+            return String(format: format, locale: .current, minutes)
+        } else if interval < 86400 {
+            let hours = Int(interval / 3600)
+            let format = String(
+                localized: "sync.status.hours_ago",
+                defaultValue: "%lld hr ago"
+            )
+            return String(format: format, locale: .current, hours)
+        } else {
+            let days = Int(interval / 86400)
+            let format = String(
+                localized: "sync.status.days_ago",
+                defaultValue: "%lld days ago"
+            )
+            return String(format: format, locale: .current, days)
+        }
+    }
+}
+
+#Preview {
+    VStack(spacing: 20) {
+        SyncStatusIndicator(status: .idle, lastSyncDate: Date().addingTimeInterval(-300))
+        SyncStatusIndicator(status: .syncing, lastSyncDate: nil)
+        SyncStatusIndicator(status: .success, lastSyncDate: Date().addingTimeInterval(-60))
+        SyncStatusIndicator(status: .error, lastSyncDate: Date().addingTimeInterval(-3600))
+    }
+    .padding()
+}

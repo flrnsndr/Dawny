@@ -1,0 +1,27 @@
+---
+import Base from "@/layouts/Base.astro";
+import SunriseStage from "@/components/SunriseStage.astro";
+import HeroSunrise from "@/components/HeroSunrise.astro";
+import ManifestStatement from "@/components/ManifestStatement.astro";
+import ResetAnimation from "@/components/ResetAnimation.astro";
+import TwoLists from "@/components/TwoLists.astro";
+import ContrastBlock from "@/components/ContrastBlock.astro";
+import AudienceBlock from "@/components/AudienceBlock.astro";
+
+import FinalCTA from "@/components/FinalCTA.astro";
+
+const lang = "de" as const;
+---
+
+<Base lang={lang} canonicalPath="/">
+  <SunriseStage>
+    <HeroSunrise lang={lang} />
+    <ManifestStatement lang={lang} />
+  </SunriseStage>
+  <ResetAnimation lang={lang} />
+
+  <TwoLists lang={lang} />
+  <ContrastBlock lang={lang} />
+  <AudienceBlock lang={lang} />
+  <FinalCTA lang={lang} />
+</Base>

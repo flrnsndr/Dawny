@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git Solo Cheat Sheet - Ultimate Edition</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f1f5f9;
+            --text-dim: #94a3b8;
+            --accent: #38bdf8;
+            --success: #4ade80;
+            --danger: #fb7185;
+            --warning: #fbbf24;
+            --code-bg: #000000;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 { 
+            color: var(--accent); 
+            margin: 0; 
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            border-top: 4px solid var(--accent);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .card.cleanup { border-top-color: var(--warning); }
+        .card.status { border-top-color: var(--success); }
+        .card.danger { border-top-color: var(--danger); }
+        .card.oops { border-top-color: #f472b6; } /* Pink für Oops-Momente */
+
+        h2 { margin: 0; font-size: 1.3rem; display: flex; align-items: center; gap: 10px; }
+
+        .command-group {
+            position: relative;
+        }
+
+        .label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        code {
+            display: block;
+            background-color: var(--code-bg);
+            padding: 14px;
+            padding-right: 45px;
+            border-radius: 8px;
+            color: var(--accent);
+            font-family: 'Fira Code', 'Cascadia Code', monospace;
+            font-size: 0.95rem;
+            border: 1px solid #334155;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 34px;
+            right: 10px;
+            background: #1e293b;
+            border: 1px solid #475569;
+            border-radius: 6px;
+            cursor: pointer;
+            color: var(--text-dim);
+            padding: 5px;
+            display: flex;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+            background: #0f172a;
+        }
+
+        .copy-btn svg { width: 18px; height: 18px; }
+
+        .tip {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            background: rgba(244, 114, 182, 0.1);
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 3px solid #f472b6;
+        }
+
+        footer {
+            margin-top: 60px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header><h1>Git Solo Cheat Sheet</h1></header>
+
+    <div class="grid">
+        <div class="card oops">
+            <h2>🆘 Oops! Auf Main committet</h2>
+            <p style="margin:0; font-size: 0.9rem;">Du hast Änderungen im <b>main</b> gespeichert, die in einen <b>neuen Branch</b> sollen:</p>
+            <div class="command-group">
+                <span class="label">1. Code retten & Main zurücksetzen</span>
+                <code>git branch feature-name
+git reset --hard HEAD~1
+git switch feature-name</code>
+            </div>
+            <div class="tip">
+                <b>Erklärung:</b> Erstellt den neuen Branch (mit dem Code), setzt Main einen Schritt zurück und springt dann in den neuen Branch.
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🚀 Daily Loop</h2>
+            <div class="command-group">
+                <span class="label">1. Update Main</span>
+                <code>git switch main
+git pull</code>
+            </div>
+            <div class="command-group">
+                <span class="label">2. Neuer Branch</span>
+                <code>git switch -c feature-name</code>
+            </div>
+            <div class="command-group">
+                <span class="label">3. Sichern & Push</span>
+                <code>git add .
+git commit -m "update"
+git push -u origin HEAD</code>
+            </div>
+        </div>
+
+        <div class="card status">
+            <h2>🔍 Übersicht</h2>
+            <div class="command-group">
+                <span class="label">Status & Branch-Check</span>
+                <code>git status
+git branch -av</code>
+            </div>
+            <div class="command-group">
+                <span class="label">Grafischer Verlauf (letzte 10)</span>
+                <code>git log --oneline --graph --all -n 10</code>
+            </div>
+            <div class="command-group">
+                <span class="label">Visuelle Übersicht: alle Branches & Commits</span>
+                <code>git log --all --oneline --graph --decorate</code>
+            </div>
+            <div class="command-group">
+                <span class="label">Kompakter Überblick: nur Branch-/Tag-Refs</span>
+                <code>git log --all --oneline --graph --decorate --simplify-by-decoration</code>
+            </div>
+        </div>
+
+        <div class="card cleanup">
+            <h2>🧹 Aufräumen (nach Merge)</h2>
+            <div class="command-group">
+                <span class="label">1. Sync & Prune</span>
+                <code>git switch main
+git pull
+git fetch -p</code>
+            </div>
+            <div class="command-group">
+                <span class="label">2. Branch lokal löschen</span>
+                <code>git branch -d feature-name</code>
+            </div>
+            <div class="command-group">
+                <span class="label">Alle lokalen Branches außer main (nur gemergt, <b>-d</b>)</span>
+                <code>git switch main
+git branch --format='%(refname:short)' | grep -vx 'main' | xargs git branch -d</code>
+            </div>
+            <div class="command-group">
+                <span class="label">Alle lokalen Branches außer main (inkl. ungemergt, <b>-D</b>)</span>
+                <code>git switch main
+git branch --format='%(refname:short)' | grep -vx 'main' | xargs git branch -D</code>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🔄 Branch aktualisieren</h2>
+            <p style="margin:0; font-size: 0.85rem; color: var(--text-dim);">Wenn Main sich geändert hat, während du arbeitest:</p>
+            <div class="command-group">
+                <span class="label">Variante A: Rebase (Sauber)</span>
+                <code>git switch main
+git pull
+git switch -
+git rebase main</code>
+            </div>
+            <div class="command-group">
+                <span class="label">Variante B: Merge (Einfach)</span>
+                <code>git merge main</code>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🏷️ Tags (Releases)</h2>
+            <div class="command-group">
+                <span class="label">Tag erstellen (z. B. für eine Version)</span>
+                <code>git tag v0.5.0</code>
+            </div>
+            <div class="command-group">
+                <span class="label">Tag mit Nachricht (annotated)</span>
+                <code>git tag -a v0.5.0 -m "Version 0.5.0"</code>
+            </div>
+            <div class="command-group">
+                <span class="label">Tag auf Remote pushen</span>
+                <code>git push origin v0.5.0</code>
+            </div>
+            <div class="command-group">
+                <span class="label">Alle Tags anzeigen</span>
+                <code>git tag -l</code>
+            </div>
+            <div class="command-group">
+                <span class="label">Tag löschen (lokal + remote)</span>
+                <code>git tag -d v0.5.0
+git push origin --delete v0.5.0</code>
+            </div>
+        </div>
+
+        <div class="card status">
+            <h2>🌐 Website lokal starten</h2>
+            <p style="margin:0; font-size: 0.85rem; color: var(--text-dim);">Marketing-Website aus dem aktuellen Branch auf localhost bauen:</p>
+            <div class="command-group">
+                <span class="label">Dev-Server (Live Hot Reload — zum aktiven Arbeiten)</span>
+                <code>cd website
+npm ci
+npm run dev</code>
+            </div>
+            <div class="command-group">
+                <span class="label">Produktions-Preview (exakt wie auf IONOS — zum Prüfen vor Deploy)</span>
+                <code>cd website
+npm run build
+npm run preview</code>
+            </div>
+            <div class="command-group">
+                <span class="label">Schnellstart (ohne Asset-Generierung)</span>
+                <code>cd website
+npx astro dev</code>
+            </div>
+            <div class="tip">
+                <b>Wann was?</b> <code style="display:inline; padding:2px 6px; border:none;">npm run dev</code> → wenn du aktiv an der Seite arbeitest (Änderungen erscheinen sofort im Browser dank Live Hot Reload). <code style="display:inline; padding:2px 6px; border:none;">npm run build + preview</code> → wenn du vor dem Deploy prüfen willst, ob alles korrekt gebaut wird (Minifizierung, Routing, Assets). <code style="display:inline; padding:2px 6px; border:none;">npx astro dev</code> → Schnellstart, wenn Assets schon existieren. Alles auf <b>http://localhost:4321</b>
+            </div>
+        </div>
+
+        <div class="card danger">
+            <h2>🛠️ Rettung</h2>
+            <div class="command-group">
+                <span class="label">Alles im Branch verwerfen</span>
+                <code>git reset --hard HEAD</code>
+            </div>
+            <div class="command-group">
+                <span class="label">Reflog (Letzte Rettung)</span>
+                <code>git reflog</code>
+            </div>
+        </div>
+    </div>
+
+    <footer>Terminal & Cursor Workflow • 2026</footer>
+</div>
+
+<script>
+    const copyIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
+    const checkIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+
+    function initCopyButtons() {
+        document.querySelectorAll('.command-group').forEach(group => {
+            const codeEl = group.querySelector('code');
+            const btn = document.createElement('button');
+            btn.className = 'copy-btn';
+            btn.innerHTML = copyIcon;
+            
+            btn.onclick = () => {
+                const textToCopy = codeEl.innerText.trim();
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    btn.innerHTML = checkIcon;
+                    btn.style.color = "var(--success)";
+                    setTimeout(() => {
+                        btn.innerHTML = copyIcon;
+                        btn.style.color = "";
+                    }, 1500);
+                });
+            };
+            group.appendChild(btn);
+        });
+    }
+    document.addEventListener('DOMContentLoaded', initCopyButtons);
+</script>
+
+</body>
+</html>

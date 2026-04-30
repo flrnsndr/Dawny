@@ -1,0 +1,109 @@
+---
+import { type Lang, getDict } from "@/i18n";
+import SunMark from "@/components/SunMark.astro";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const dict = getDict(lang);
+---
+
+<section
+  id="manifesto"
+  class="manifesto-section relative py-32 sm:py-44"
+>
+  <SunMark />
+  <div
+    class="relative z-10 mx-auto w-full max-w-[min(100%,56rem)] px-6 md:px-10"
+  >
+    <p class="reveal manifesto-eyebrow text-xs font-medium uppercase tracking-[0.18em] mb-10">
+      <span class="manifesto-eyebrow-rule inline-block h-px w-8 align-middle mr-3"></span>
+      {lang === "de" ? "Das Problem" : "The Problem"}
+    </p>
+
+    <blockquote class="reveal">
+      <p class="manifesto-quote text-display text-[clamp(2.25rem,6.5vw,5rem)] leading-[1.02] tracking-tight">
+        &ldquo;{dict.manifesto.quote}&rdquo;
+      </p>
+      {dict.manifesto.quoteSub && (
+        <p class="manifesto-quote-sub mt-8 text-lg sm:text-xl leading-relaxed">
+          {dict.manifesto.quoteSub}
+        </p>
+      )}
+    </blockquote>
+
+    <div
+      class="reveal manifesto-body-wrap mt-12 grid grid-cols-1 gap-8 text-lg sm:text-xl leading-[1.65] lg:grid-cols-[minmax(0,1fr)_1px_minmax(0,1fr)_1px_minmax(0,1fr)] lg:gap-x-8 lg:gap-y-0 xl:gap-x-10"
+    >
+      <p class="manifesto-body min-w-0 m-0">{dict.manifesto.bodyExtra}</p>
+      <div class="manifesto-body-divider h-px w-full lg:h-full lg:w-px lg:min-h-[1em]" aria-hidden="true"></div>
+      <p class="manifesto-body min-w-0 m-0">{dict.manifesto.bodyAside}</p>
+      <div class="manifesto-body-divider h-px w-full lg:h-full lg:w-px lg:min-h-[1em]" aria-hidden="true"></div>
+      <p class="manifesto-body min-w-0 m-0">{dict.manifesto.bodyMid}</p>
+    </div>
+  </div>
+
+</section>
+
+<style>
+  .manifesto-section {
+    background: transparent;
+    color: color-mix(
+      in oklab,
+      #ffffff calc((1 - var(--dawn-progress, 0)) * 100%),
+      var(--color-ink) calc(var(--dawn-progress, 0) * 100%)
+    );
+  }
+
+  .manifesto-quote {
+    color: color-mix(
+      in oklab,
+      #ffffff calc((1 - var(--dawn-progress, 0)) * 100%),
+      var(--color-ink) calc(var(--dawn-progress, 0) * 100%)
+    );
+  }
+
+  .manifesto-quote-sub {
+    color: color-mix(
+      in oklab,
+      rgba(255, 255, 255, 0.85) calc((1 - var(--dawn-progress, 0)) * 100%),
+      var(--color-ink-soft) calc(var(--dawn-progress, 0) * 100%)
+    );
+  }
+
+  .manifesto-eyebrow {
+    color: color-mix(
+      in oklab,
+      rgba(255, 255, 255, 0.65) calc((1 - var(--dawn-progress, 0)) * 100%),
+      color-mix(in oklab, var(--color-ink-soft) 70%, transparent) calc(var(--dawn-progress, 0) * 100%)
+    );
+  }
+
+  .manifesto-eyebrow-rule {
+    background: color-mix(
+      in oklab,
+      rgba(255, 255, 255, 0.4) calc((1 - var(--dawn-progress, 0)) * 100%),
+      color-mix(in oklab, var(--color-ink-soft) 40%, transparent) calc(var(--dawn-progress, 0) * 100%)
+    );
+  }
+
+  .manifesto-body {
+    color: color-mix(
+      in oklab,
+      rgba(255, 255, 255, 0.8) calc((1 - var(--dawn-progress, 0)) * 100%),
+      var(--color-ink-soft) calc(var(--dawn-progress, 0) * 100%)
+    );
+  }
+
+  .manifesto-body-divider {
+    background: color-mix(
+      in oklab,
+      rgba(255, 255, 255, 0.28) calc((1 - var(--dawn-progress, 0)) * 100%),
+      color-mix(in oklab, var(--color-ink-soft) 35%, transparent) calc(var(--dawn-progress, 0) * 100%)
+    );
+    justify-self: stretch;
+    align-self: stretch;
+  }
+</style>

@@ -1,0 +1,71 @@
+---
+import { type Lang, getDict, alternateLang, TESTFLIGHT_URL } from "@/i18n";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const dict = getDict(lang);
+const altLang = alternateLang(lang);
+
+// Map equivalent paths between languages so the language toggle on legal
+// pages keeps the visitor on the equivalent page instead of 404'ing.
+const pathMap: Record<string, { en: string; de: string }> = {
+  "": { en: "/en/", de: "/de/" },
+  privacy: { en: "/en/privacy/", de: "/de/datenschutz/" },
+  datenschutz: { en: "/en/privacy/", de: "/de/datenschutz/" },
+  imprint: { en: "/en/imprint/", de: "/de/impressum/" },
+  impressum: { en: "/en/imprint/", de: "/de/impressum/" },
+};
+
+const segment = (Astro.url.pathname.split("/")[2] ?? "").replace(/\/+$/, "");
+const altHref = pathMap[segment]?.[altLang] ?? `/${altLang}/`;
+---
+
+<header class="absolute top-0 left-0 right-0 z-30 pt-6 sm:pt-8">
+  <div class="container-content flex items-center justify-between gap-4">
+    <a href={`/${lang}/`} class="flex items-center gap-2.5 group" aria-label="Dawny">
+      <span class="relative inline-flex items-center justify-center">
+        <img
+          src="/assets/icons/dawny-icon-dark.png"
+          alt=""
+          width="36"
+          height="36"
+          class="h-9 w-9 rounded-[8px] shadow-[0_8px_24px_-12px_rgba(245,176,66,0.6)]"
+          loading="eager"
+          decoding="async"
+        />
+      </span>
+      <span class="text-display text-[1.1rem] tracking-tight text-white/90 group-hover:text-white transition-colors">
+        Dawny
+      </span>
+    </a>
+
+    <nav class="flex items-center gap-2 sm:gap-3" aria-label={dict.nav.languageLabel}>
+      <a
+        href={altHref}
+        hreflang={altLang}
+        class="text-xs sm:text-sm font-medium text-white/65 hover:text-white transition-colors px-3 py-2 rounded-full hover:bg-white/8"
+        data-ph-event="language_toggle"
+        data-ph-target={altLang}
+      >
+        <span class="uppercase tracking-wider">{altLang}</span>
+      </a>
+      <a
+        href={TESTFLIGHT_URL}
+        target="_blank"
+        rel="noopener"
+        class="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold text-white/85 hover:text-white px-3.5 py-2 rounded-full bg-white/8 hover:bg-white/12 backdrop-blur transition"
+        data-ph-event="testflight_click"
+        data-ph-location="header"
+        data-ph-target="testflight"
+      >
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M17.5 12.5c0-3 2.5-4.4 2.6-4.5-1.4-2-3.6-2.3-4.4-2.4-1.9-.2-3.6 1.1-4.6 1.1-.9 0-2.4-1.1-4-1-2 0-3.9 1.2-5 3-2.1 3.7-.5 9.1 1.5 12.1 1 1.5 2.2 3.1 3.8 3.1 1.5-.1 2.1-1 3.9-1 1.8 0 2.4 1 4 .9 1.6 0 2.7-1.5 3.7-3 1.2-1.7 1.6-3.4 1.7-3.5-.1 0-3.2-1.2-3.2-4.8zM14.6 3.5c.8-1 1.4-2.4 1.2-3.8-1.2 0-2.6.8-3.4 1.8-.8.9-1.5 2.4-1.3 3.7 1.3.1 2.7-.7 3.5-1.7z"/>
+        </svg>
+        {dict.nav.testflight}
+      </a>
+    </nav>
+  </div>
+</header>
