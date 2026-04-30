@@ -2,7 +2,7 @@
 
 ## Projektübersicht
 
-Dawny ist eine minimalistische iOS-App für bewusstes tägliches Task-Management. Die App verfolgt eine einzigartige "Zero-Overdue-Philosophie": Es gibt keine überfälligen Tasks. Um 3 Uhr morgens werden alle nicht erledigten Tasks automatisch zurück ins Backlog verschoben.
+Dawny ist eine minimalistische iOS-App für bewusstes tägliches Task-Management. Die App verfolgt eine einzigartige "Zero-Overdue-Philosophie": Es gibt keine überfälligen Tasks. Um 3 Uhr morgens (konfigurierbar) werden nicht erledigte Tasks automatisch entweder zurück ins Backlog oder ins Archiv verschoben – abhängig von der App-Konfiguration (Miss-Threshold) und dem Task-Typ (wiederkehrend oder nicht).
 
 Plattform: iOS 18.0+
 
@@ -22,7 +22,17 @@ Siri-Integration: App Intents Framework
 
 ### Zero-Overdue-Policy
 
-Dawny basiert auf der Überzeugung, dass überfällige Tasks psychologischen Stress verursachen. Anstatt Tasks als "überfällig" zu markieren, werden sie automatisch um 3:00 Uhr morgens zurück ins Backlog verschoben. Jeden Tag beginnt der Nutzer mit einer sauberen Liste.
+Dawny basiert auf der Überzeugung, dass überfällige Tasks psychologischen Stress verursachen. Anstatt Tasks als "überfällig" zu markieren, werden sie beim konfigurierbaren Reset (Standard: 3:00 Uhr) automatisch verarbeitet. Jeden Tag beginnt der Nutzer mit einer sauberen Liste.
+
+### Make it Count
+
+Nicht erledigte Today-Tasks werden je nach Konfiguration und Task-Typ unterschiedlich behandelt:
+
+- **Wiederkehrende Tasks**: Immer zurück ins Backlog (egal ob erledigt oder nicht)
+- **Normaler Task, threshold = 1** (Standard): Direkt ins Archiv bei einmaligem Verpassen
+- **Normaler Task, threshold > 1**: Zurück ins Backlog bei jedem Verpassen – beim letzten erlaubten Verpassen ins Archiv
+
+Archivierte Tasks sind nicht gelöscht und können jederzeit aus dem Archiv wiederhergestellt werden.
 
 ### Bewusste Tagesplanung
 
@@ -32,19 +42,27 @@ Der Nutzer entscheidet jeden Tag aktiv, welche Tasks er in den "Daily Focus" ver
 
 ## Hauptfunktionen
 
-### 1. Zwei-Listen-System
+### 1. Drei-Bereiche-System
 
-- Backlog: Sammlung aller ungeplanten Tasks
+- Backlog: Sammlung aller ungeplanten Tasks (strukturiert nach Zeithorizonten)
 
-- Daily Focus: Tasks für den heutigen Tag
+- Today (Daily Focus): Tasks für den heutigen Tag
 
-### 2. 3-AM-Reset
+- Archiv: Abgelaufene, archivierte oder erledigte Tasks
 
-- Nicht erledigte Daily Focus Tasks werden um 3:00 Uhr zurück ins Backlog verschoben
+### 2. Konfigurierbarer Reset ("Make it Count")
 
-- Die Reset-Zeit wurde gewählt, weil die meisten Menschen dann schlafen
+- Reset-Zeit: konfigurierbar, Standard 3:00 Uhr (gewählt, weil die meisten Menschen dann schlafen)
 
-- Der Reset passiert beim nächsten App-Start nach 3:00 Uhr
+- Der Reset passiert beim nächsten App-Start nach der Reset-Zeit
+
+- **Wiederkehrende Tasks**: Immer zurück ins Backlog
+
+- **Normale Tasks (threshold = 1, Standard)**: Beim ersten Verpassen direkt ins Archiv
+
+- **Normale Tasks (threshold > 1)**: Bei jedem Verpassen zurück ins Backlog; nach Erreichen des Thresholds ins Archiv
+
+- Archivierte Tasks können manuell aus dem Archiv wiederhergestellt werden
 
 ### 3. EventKit-Synchronisation
 
@@ -126,7 +144,7 @@ Intents (Siri):
 
 ### Automatischer Reset
 
-1. Nutzer hat um 23:00 Uhr 3 offene Tasks in Daily Focus
+1. Nutzer hat um 23:00 Uhr 3 offene Tasks in Today
 
 1. Nutzer schließt App und schläft
 
@@ -134,7 +152,7 @@ Intents (Siri):
 
 1. App prüft: Letzter Reset war gestern → Reset durchführen
 
-1. Die 3 Tasks sind jetzt im Backlog (ganz oben, mit aktuellem Datum)
+1. Wiederkehrende Tasks landen im Backlog; normale Tasks landen je nach Miss-Threshold im Backlog oder direkt im Archiv
 
 ### Siri-Workflow
 
@@ -173,7 +191,7 @@ Intents (Siri):
 | Überfällige Tasks    | Existieren nicht            | Bleiben überfällig      |
 | Fälligkeitsdaten     | Nur "Heute" oder nicht      | Beliebige Termine       |
 | Listen               | 1 Backlog                   | Unbegrenzt              |
-| Wiederkehrende Tasks | Nein                        | Ja                      |
+| Wiederkehrende Tasks | Ja (immer zurück ins Backlog) | Ja                    |
 | Subtasks             | Nein                        | Ja                      |
 | Tags                 | Nein                        | Ja                      |
 | Cross-Platform       | Nur iOS                     | Alle Plattformen        |
@@ -302,8 +320,6 @@ Dawny/
 ## Zukünftige Erweiterungen (nicht implementiert)
 
 - Mehrere Backlogs
-
-- Wiederkehrende Tasks
 
 - Widget für Home Screen
 
