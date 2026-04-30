@@ -1,0 +1,35 @@
+# macOS system files
+.DS_Store
+
+# IDE configuration
+.cursor/
+
+# Xcode project internals (use source files directly)
+Dawny.xcodeproj/project.pbxproj
+Dawny.xcodeproj/xcuserdata/
+Dawny.xcodeproj/project.xcworkspace/
+
+# Binary image assets
+App/Assets.xcassets/AppIcon.appiconset/*.png
+website/public/og-image.png
+
+# Generated / cache files
+.astro/
+
+# Dependency lock files
+website/package-lock.json
+
+# Reference documents (not project source)
+git cheat sheet.html
+
+# docs/ — excluded from auto-indexing; pointers in CLAUDE.md tell when to read each file
+docs/AI Input/architecture.md
+docs/AI Input/AI_INPUT.md
+docs/AI Input/PRD.md
+docs/AI Input/Zielgruppe.md
+docs/AI Input/Dawny Make it count explanation.md
+docs/AI Input/EINFACHE_ANLEITUNG.md
+docs/APP_STORE_CONNECT_CHECKLIST.md
+docs/QA_checklist.md
+docs/PRIVACY.de.md
+docs/PRIVACY.en.md
