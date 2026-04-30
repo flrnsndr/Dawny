@@ -14,8 +14,9 @@ dist/
 DerivedData/
 .derivedData/
 
-# Cursor IDE
+# Cursor and Claude IDEs
 .cursor/
+.claude/
 
 # Website (Astro)
 website/node_modules/
