@@ -67,3 +67,20 @@ Two active locales: **English (en)** and **German (de)**. All strings live in `A
 ## Website
 
 `/website/` is an Astro 5 + Tailwind CSS 4 site deployed to IONOS via GitHub Actions (`.github/workflows/deploy-website.yml`). It is fully independent from the iOS app. Deploy triggers on pushes to `main` affecting `website/**`.
+
+## Further Documentation
+
+The following files exist but are excluded from auto-indexing. Read them explicitly when relevant.
+
+| File | When to read |
+|---|---|
+| [`docs/AI Input/architecture.md`](docs/AI%20Input/architecture.md) | Detailed technical architecture (V3, April 2026): full SwiftData schema with all fields and constraints, `TaskStatus` state machine diagram, `AppSettings` property table, `ResetEngine` algorithm step-by-step, custom `TabPager` / UIKit gesture bridge, `CategoryService` rules, app launch sequence, known constraints (SwiftData predicate limitations, tombstoned objects, `fatalError` on schema mismatch). Read for any architectural decision, schema question, or work touching `ResetEngine`/`SyncEngine`/`CategoryService`. |
+| [`docs/AI Input/AI_INPUT.md`](docs/AI%20Input/AI_INPUT.md) | Complete marketing context document: product identity, full feature inventory, target audiences, competitive positioning, tone & voice guidelines, approved phrases, hard marketing constraints. Read for any App Store copy, marketing, or communication task. |
+| [`docs/AI Input/PRD.md`](docs/AI%20Input/PRD.md) | Product Requirements Document: high-level architecture overview, core philosophy, main features, user flows, planned future features. Read to understand product goals or when evaluating scope of new features. |
+| [`docs/AI Input/Zielgruppe.md`](docs/AI%20Input/Zielgruppe.md) | Detailed target audience analysis: primary audience, neurodivergence relevance and framing rules, secondary audiences. Read for UX decisions, onboarding copy, or audience-sensitive wording. |
+| [`docs/AI Input/Dawny Make it count explanation.md`](<docs/AI Input/Dawny Make it count explanation.md>) | Early product description of the Make It Count mechanic and reset logic with example flows. Supplementary to `architecture.md`. |
+| [`docs/AI Input/EINFACHE_ANLEITUNG.md`](docs/AI%20Input/EINFACHE_ANLEITUNG.md) | Quick-start guide for developers: project structure, Xcode setup steps, manual test scenarios, common build issues. Read for onboarding or build setup questions. |
+| [`docs/APP_STORE_CONNECT_CHECKLIST.md`](docs/APP_STORE_CONNECT_CHECKLIST.md) | App Store Connect checklist: EULA, Privacy Policy URL, App Privacy Labels, Privacy Manifest, Export Compliance, trademark notes. Read before any TestFlight or App Store submission. |
+| [`docs/QA_checklist.md`](docs/QA_checklist.md) | Manual QA release checklist: Siri/App Intents, Reset mechanic, EventKit sync edge cases, SwiftData persistence, UI/Accessibility. Read when preparing a release build. |
+| [`docs/PRIVACY.de.md`](docs/PRIVACY.de.md) | German privacy policy (incomplete: postal address still missing). Read before hosting or updating the privacy policy. |
+| [`docs/PRIVACY.en.md`](docs/PRIVACY.en.md) | English privacy policy (incomplete: postal address still missing). Read before hosting or updating the privacy policy. |
