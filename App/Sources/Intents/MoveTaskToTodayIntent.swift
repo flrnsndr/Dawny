@@ -3,11 +3,15 @@
 // Licensed under PolyForm Noncommercial 1.0.0 — see LICENSE in the repository root.
 
 import AppIntents
+import SwiftData
 
-/// Intent zum Verschieben eines Backlog-Tasks in die heutige Fokusliste.
 struct MoveTaskToTodayIntent: AppIntent {
     static var title: LocalizedStringResource = "intent.movetoday.title"
-    static var description = IntentDescription("intent.movetoday.description")
+    static var description = IntentDescription(
+        "intent.movetoday.description",
+        categoryName: "Tasks",
+        searchKeywords: ["move", "today", "focus", "schedule", "plan", "task"]
+    )
     static var openAppWhenRun: Bool = false
 
     @Parameter(
@@ -21,22 +25,15 @@ struct MoveTaskToTodayIntent: AppIntent {
         Summary("Move \(\.$task) to today")
     }
 
-    @Dependency
-    var dataStore: any TaskDataStoring
-
-    @Dependency
-    var syncEngine: SyncEngine
-
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
-        let movedTask = try dataStore.moveTaskToToday(taskID: task.id)
-        await syncEngine.syncTaskToCalendar(movedTask)
-
+        let context = try IntentDataStore.makeContext()
+        let movedTask = try IntentDataStore.moveTaskToToday(taskID: task.id, in: context)
         let dialogFormat = String(
             localized: "intent.movetoday.dialog",
             defaultValue: "Done. '%@' moved to today."
         )
-        let dialogText = String(format: dialogFormat, movedTask.title)
-        return .result(dialog: IntentDialog(stringLiteral: dialogText))
+        return .result(dialog: IntentDialog(stringLiteral: String(format: dialogFormat, movedTask.title)))
     }
 }
+

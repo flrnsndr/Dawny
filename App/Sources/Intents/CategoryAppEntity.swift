@@ -5,6 +5,7 @@
 import AppIntents
 import CoreSpotlight
 import Foundation
+import SwiftData
 
 struct CategoryAppEntity: AppEntity, IndexedEntity, Identifiable {
     let id: UUID
@@ -37,33 +38,32 @@ struct CategoryAppEntity: AppEntity, IndexedEntity, Identifiable {
 }
 
 struct CategoryEntityQuery: EntityQuery, EntityStringQuery {
-    @Dependency
-    var dataStore: any TaskDataStoring
 
     @MainActor
     func entities(for identifiers: [CategoryAppEntity.ID]) async throws -> [CategoryAppEntity] {
-        try dataStore.allCategories()
+        let context = try IntentDataStore.makeContext()
+        return try IntentDataStore.allCategories(in: context)
             .filter { identifiers.contains($0.id) }
             .map(CategoryAppEntity.init)
     }
 
     @MainActor
     func suggestedEntities() async throws -> [CategoryAppEntity] {
-        try dataStore.allCategories().map(CategoryAppEntity.init)
+        let context = try IntentDataStore.makeContext()
+        return try IntentDataStore.allCategories(in: context).map(CategoryAppEntity.init)
     }
 
     @MainActor
     func entities(matching string: String) async throws -> [CategoryAppEntity] {
-        let categories = try dataStore.allCategories()
+        let context = try IntentDataStore.makeContext()
+        let categories = try IntentDataStore.allCategories(in: context)
 
         return IntentTextMatcher.bestMatches(for: string, in: categories) { category in
             var candidates = [category.displayName, category.name]
             candidates.append(contentsOf: category.categoryType.spokenSynonyms)
-
             if category.categoryType == .custom {
                 candidates.append(category.name)
             }
-
             return candidates
         }
         .map(CategoryAppEntity.init)

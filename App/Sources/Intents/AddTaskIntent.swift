@@ -10,46 +10,46 @@
 //
 
 import AppIntents
+import SwiftData
 
-/// Intent zum Hinzufügen eines Tasks zum Backlog via Siri
 struct AddTaskIntent: AppIntent {
     static var title: LocalizedStringResource = "intent.addtask.title"
-    static var description = IntentDescription("intent.addtask.description")
-    
-    // Öffnet die App nicht
+    static var description = IntentDescription(
+        "intent.addtask.description",
+        categoryName: "Tasks",
+        searchKeywords: ["add", "create", "new", "task", "backlog", "remember"]
+    )
     static var openAppWhenRun: Bool = false
-    
+
     @Parameter(
         title: "intent.addtask.param.title",
         description: "intent.addtask.param.description",
         requestValueDialog: IntentDialog("intent.addtask.requestvalue.title")
     )
-    var taskTitle: String
+    var title: String
 
     @Parameter(title: "intent.addtask.param.category", description: "intent.addtask.param.category.description")
     var category: CategoryAppEntity?
-    
+
     static var parameterSummary: some ParameterSummary {
-        Summary("Add \(\.$taskTitle) to \(\.$category) in backlog")
+        Summary("Add \(\.$title) to \(\.$category) in backlog")
     }
-    
-    @Dependency
-    var dataStore: any TaskDataStoring
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
-        let task = try dataStore.addTask(
-            title: taskTitle,
+        let context = try IntentDataStore.makeContext()
+        let task = try IntentDataStore.addTask(
+            title: title,
             categoryID: category?.id,
-            status: .inBacklog
+            status: .inBacklog,
+            in: context
         )
-        
         let dialogFormat = String(
             localized: "intent.addtask.dialog",
             defaultValue: "Done. '%@' added to your backlog."
         )
-        let dialogText = String(format: dialogFormat, task.title)
-        return .result(dialog: IntentDialog(stringLiteral: dialogText))
+        return .result(dialog: IntentDialog(stringLiteral: String(format: dialogFormat, task.title)))
     }
 }
+
 

@@ -9,18 +9,18 @@ import Foundation
 @MainActor
 enum EntityIndexer {
 
-    static func reindexAllTasks(using dataStore: any TaskDataStoring) async {
-        guard let tasks = try? dataStore.allTasks() else { return }
-        let entities = tasks
-            .filter { !$0.isCompleted && $0.status != .archived }
-            .map(TaskAppEntity.init)
-        try? await CSSearchableIndex.default().indexAppEntities(entities)
-    }
-
-    static func reindexAllCategories(using dataStore: any TaskDataStoring) async {
-        guard let categories = try? dataStore.allCategories() else { return }
-        let entities = categories.map(CategoryAppEntity.init)
-        try? await CSSearchableIndex.default().indexAppEntities(entities)
+    static func reindexAll() async {
+        guard let context = try? IntentDataStore.makeContext() else { return }
+        if let tasks = try? IntentDataStore.allTasks(in: context) {
+            let entities = tasks
+                .filter { !$0.isCompleted && $0.status != .archived }
+                .map(TaskAppEntity.init)
+            try? await CSSearchableIndex.default().indexAppEntities(entities)
+        }
+        if let categories = try? IntentDataStore.allCategories(in: context) {
+            let entities = categories.map(CategoryAppEntity.init)
+            try? await CSSearchableIndex.default().indexAppEntities(entities)
+        }
     }
 
     static func indexTask(_ task: Task) async {

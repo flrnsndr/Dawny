@@ -5,6 +5,7 @@
 import AppIntents
 import CoreSpotlight
 import Foundation
+import SwiftData
 
 struct TaskAppEntity: AppEntity, IndexedEntity, Identifiable {
     let id: UUID
@@ -16,9 +17,12 @@ struct TaskAppEntity: AppEntity, IndexedEntity, Identifiable {
     static var defaultQuery = TaskEntityQuery()
 
     var displayRepresentation: DisplayRepresentation {
-        DisplayRepresentation(
+        let subtitle = [categoryName, statusDisplayName]
+            .compactMap { $0 }
+            .joined(separator: " · ")
+        return DisplayRepresentation(
             title: "\(displayName)",
-            subtitle: "\(statusDisplayName)"
+            subtitle: LocalizedStringResource(stringLiteral: subtitle)
         )
     }
 
@@ -45,36 +49,37 @@ struct TaskAppEntity: AppEntity, IndexedEntity, Identifiable {
 }
 
 struct TaskEntityQuery: EntityQuery, EntityStringQuery {
-    @Dependency
-    var dataStore: any TaskDataStoring
 
     @MainActor
     func entities(for identifiers: [TaskAppEntity.ID]) async throws -> [TaskAppEntity] {
-        try searchableTasks()
+        let context = try IntentDataStore.makeContext()
+        return try searchableTasks(in: context)
             .filter { identifiers.contains($0.id) }
             .map(TaskAppEntity.init)
     }
 
     @MainActor
     func suggestedEntities() async throws -> [TaskAppEntity] {
-        try searchableTasks()
-            .prefix(20)
+        let context = try IntentDataStore.makeContext()
+        return try searchableTasks(in: context)
+            .prefix(50)
             .map(TaskAppEntity.init)
     }
 
     @MainActor
     func entities(matching string: String) async throws -> [TaskAppEntity] {
-        let tasks = try searchableTasks()
+        let context = try IntentDataStore.makeContext()
+        let tasks = try searchableTasks(in: context)
 
         return IntentTextMatcher.bestMatches(for: string, in: tasks) { task in
-            [task.title]
+            [task.title, task.category?.displayName].compactMap { $0 }
         }
         .map(TaskAppEntity.init)
     }
 
     @MainActor
-    private func searchableTasks() throws -> [Task] {
-        try dataStore.allTasks()
+    private func searchableTasks(in context: ModelContext) throws -> [Task] {
+        try IntentDataStore.allTasks(in: context)
             .filter { task in
                 !task.isCompleted && task.status != .completed && task.status != .archived
             }
@@ -90,11 +95,11 @@ struct TaskEntityQuery: EntityQuery, EntityStringQuery {
 private extension TaskStatus {
     nonisolated var siriSortRank: Int {
         switch self {
-        case .inBacklog:
-            return 0
         case .dailyFocus:
-            return 1
+            return 0
         case .scheduled:
+            return 1
+        case .inBacklog:
             return 2
         case .completed:
             return 3

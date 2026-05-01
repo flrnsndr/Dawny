@@ -23,17 +23,15 @@ struct DawnyShortcuts: AppShortcutsProvider {
             phrases: [
                 "New task in \(.applicationName)",
                 "Add task in \(.applicationName)",
-                "Add task to \(\.$category) in \(.applicationName)",
                 "Remember in \(.applicationName)",
                 "Neue Aufgabe in \(.applicationName)",
                 "Aufgabe in \(.applicationName) hinzufügen",
-                "Aufgabe zu \(\.$category) in \(.applicationName) hinzufügen",
                 "Etwas in \(.applicationName) merken"
             ],
             shortTitle: LocalizedStringResource("intent.addtask.shorttitle", defaultValue: "Add Task"),
             systemImageName: "plus.circle"
         )
-        
+
         // MARK: - Task für heute hinzufügen
         AppShortcut(
             intent: AddTaskTodayIntent(),
@@ -41,10 +39,9 @@ struct DawnyShortcuts: AppShortcutsProvider {
                 "Today in \(.applicationName)",
                 "Add for today in \(.applicationName)",
                 "Add task to today in \(.applicationName)",
-                "Add task to \(\.$category) for today in \(.applicationName)",
                 "Heute in \(.applicationName)",
-                "Aufgabe für heute in \(.applicationName) hinzufügen",
-                "Aufgabe zu \(\.$category) für heute in \(.applicationName) hinzufügen"
+                "Aufgabe für heute in \(.applicationName)",
+                "Aufgabe für heute in \(.applicationName) hinzufügen"
             ],
             shortTitle: LocalizedStringResource("intent.addtasktoday.shorttitle", defaultValue: "Task for Today"),
             systemImageName: "sun.max"
@@ -56,7 +53,7 @@ struct DawnyShortcuts: AppShortcutsProvider {
             phrases: [
                 "Move \(\.$task) to today in \(.applicationName)",
                 "Plan \(\.$task) for today in \(.applicationName)",
-                "\(\.$task) auf heute in \(.applicationName) verschieben",
+                "\(\.$task) auf heute in \(.applicationName)",
                 "\(\.$task) für heute in \(.applicationName) planen"
             ],
             shortTitle: LocalizedStringResource("intent.movetoday.shorttitle", defaultValue: "Move to Today"),
@@ -69,8 +66,8 @@ struct DawnyShortcuts: AppShortcutsProvider {
             phrases: [
                 "Mark \(\.$task) done in \(.applicationName)",
                 "Complete \(\.$task) in \(.applicationName)",
-                "\(\.$task) in \(.applicationName) als erledigt markieren",
-                "\(\.$task) in \(.applicationName) erledigen"
+                "\(\.$task) in \(.applicationName) erledigen",
+                "\(\.$task) in \(.applicationName) abschließen"
             ],
             shortTitle: LocalizedStringResource("intent.complete.shorttitle", defaultValue: "Complete Task"),
             systemImageName: "checkmark.circle"
@@ -82,8 +79,7 @@ struct DawnyShortcuts: AppShortcutsProvider {
             phrases: [
                 "What's on my \(.applicationName) today",
                 "List today's tasks in \(.applicationName)",
-                "Was steht heute in \(.applicationName) an",
-                "Heutige Aufgaben in \(.applicationName) vorlesen"
+                "Was steht heute in \(.applicationName) an"
             ],
             shortTitle: LocalizedStringResource("intent.listtoday.shorttitle", defaultValue: "Today List"),
             systemImageName: "list.bullet"

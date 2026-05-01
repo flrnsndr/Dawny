@@ -179,11 +179,4 @@ enum IntentDataStore {
             .sorted()
     }
 
-    static func syncTaskIfNeeded(_ task: Task, in context: ModelContext) async {
-        let syncEngine = SyncEngine(
-            calendarService: EventKitCalendarService(),
-            modelContext: context
-        )
-        await syncEngine.syncTaskToCalendar(task)
-    }
 }
