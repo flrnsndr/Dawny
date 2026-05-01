@@ -31,21 +31,7 @@ struct DawnyApp: App {
     init() {
         // Initialize ModelContainer
         do {
-            let schema = Schema([
-                Task.self,
-                Backlog.self,
-                Category.self
-            ])
-            
-            let modelConfiguration = ModelConfiguration(
-                schema: schema,
-                isStoredInMemoryOnly: false
-            )
-            
-            modelContainer = try ModelContainer(
-                for: schema,
-                configurations: [modelConfiguration]
-            )
+            modelContainer = try IntentDataStore.makeModelContainer()
         } catch {
             fatalError("Failed to initialize ModelContainer: \(error)")
         }
@@ -115,6 +101,9 @@ struct DawnyApp: App {
         // 5. Initialize Categories
         let categoryService = CategoryService(modelContext: modelContainer.mainContext)
         categoryService.initializeDefaultCategories()
+        
+        // 6. Reindex entities for Spotlight / Apple Intelligence
+        await EntityIndexer.reindexAll()
         
         print("✅ App launch tasks completed")
     }
