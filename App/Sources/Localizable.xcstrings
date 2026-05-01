@@ -5462,13 +5462,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Was du nicht geschafft hast, wandert über Nacht zurück ins Backlog. Morgen ist ein neuer Anfang."
+            "value" : "Was du nicht abgehakt hast, wandert über Nacht ins Archiv. Morgen ist ein neuer Anfang."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Anything left undone slides back to the backlog overnight. Tomorrow is a clean slate."
+            "value" : "What you don't check off moves to the Archive overnight. Tomorrow is a new beginning."
           }
         }
       }
@@ -5487,6 +5487,42 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Reset at dawn"
+          }
+        }
+      }
+    },
+    "welcome.siri.body" : {
+      "comment" : "Welcome · Onboarding Siri page body · Examples echo App Shortcut phrases; mentions more commands.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du kannst Dawny auch per Siri steuern — zum Beispiel:\n\n„Neue Aufgabe in Dawny“\n„Aufgabe für heute in Dawny“\n\nEs gibt noch weitere Befehle und Kurzbefehle."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can use Siri with Dawny — for example:\n\n“New task in Dawny”\n“Add task to today in Dawny”\n\nMore commands and Shortcuts are available."
+          }
+        }
+      }
+    },
+    "welcome.siri.title" : {
+      "comment" : "Welcome · Onboarding Siri page title · Headline.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Siri & Kurzbefehle"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Siri & Shortcuts"
           }
         }
       }

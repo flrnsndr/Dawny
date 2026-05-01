@@ -62,7 +62,19 @@ struct WelcomeView: View {
             ),
             body: LocalizedStringResource(
                 "welcome.page4.body",
-                defaultValue: "Anything left undone slides back to the backlog overnight. Tomorrow is a clean slate."
+                defaultValue: "What you don't check off moves to the Archive overnight. Tomorrow is a new beginning."
+            )
+        ),
+        WelcomePage(
+            icon: "mic.fill",
+            iconColor: .purple,
+            title: LocalizedStringResource(
+                "welcome.siri.title",
+                defaultValue: "Siri & Shortcuts"
+            ),
+            body: LocalizedStringResource(
+                "welcome.siri.body",
+                defaultValue: "You can use Siri with Dawny — for example:\n\n“New task in Dawny”\n“Add task to today in Dawny”\n\nMore commands and Shortcuts are available."
             )
         ),
         WelcomePage(
