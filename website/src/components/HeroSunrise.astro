@@ -30,7 +30,7 @@ const dict = getDict(lang);
 
     <h1 class="reveal text-display text-white text-[clamp(2.5rem,7vw,5.75rem)] leading-[0.98] max-w-[18ch]">
       {dict.hero.headline.map((line, i) => (
-        <span class="block" style={`transition-delay: ${120 + i * 80}ms`}>
+        <span class="block">
           {i === dict.hero.headline.length - 1 ? (
             <span class="text-blend-exclusion-warm">{line}</span>
           ) : (
@@ -137,41 +137,10 @@ const dict = getDict(lang);
     z-index: 3;
   }
 
-  /* Reveal stagger inside hero */
-  [data-hero] .reveal {
-    opacity: 0;
-    transform: translateY(18px);
-    will-change: auto;
-    transition: opacity 900ms var(--ease-soft, ease), transform 900ms var(--ease-soft, ease);
-  }
-  [data-hero].is-loaded .reveal {
-    opacity: 1;
-    transform: none;
-  }
-  [data-hero] .reveal.is-visible {
-    transform: none;
-  }
-  [data-hero].is-loaded .reveal:nth-child(1) { transition-delay: 100ms; }
-  [data-hero].is-loaded .reveal:nth-child(2) { transition-delay: 220ms; }
-  [data-hero].is-loaded .reveal:nth-child(3) { transition-delay: 460ms; }
-  [data-hero].is-loaded .reveal:nth-child(4) { transition-delay: 600ms; }
-
   @media (prefers-reduced-motion: reduce) {
     .hero-sunrise-glow {
       animation: none !important;
     }
-    [data-hero] .reveal {
-      opacity: 1;
-      transform: none;
-    }
   }
 </style>
 
-<script>
-  const hero = document.querySelector<HTMLElement>("[data-hero]");
-  if (hero) {
-    requestAnimationFrame(() => {
-      hero.classList.add("is-loaded");
-    });
-  }
-</script>
