@@ -22,6 +22,8 @@ struct QuickEntryRow: View {
     /// Wird aufgerufen, wenn sich die Tastatur-Fokussierung ändert (für Auto-Scroll).
     var onFocusChange: ((Bool) -> Void)?
 
+    private let maxLength = 150
+
     @FocusState private var fieldFocused: Bool
     @State private var draft = ""
 
@@ -45,27 +47,9 @@ struct QuickEntryRow: View {
                 .foregroundStyle(textFieldForeground)
                 .textInputAutocapitalization(.sentences)
                 .autocorrectionDisabled(false)
-                .submitLabel(.next)
+                .submitLabel(.return)
                 .focused($fieldFocused)
                 .onSubmit { commitFromUser() }
-
-            if fieldFocused {
-                Button {
-                    commitFromUser()
-                } label: {
-                    Image(systemName: "arrow.turn.down.left")
-                        .font(.subheadline.weight(.semibold))
-                        .symbolRenderingMode(.monochrome)
-                        .foregroundStyle(canCommit ? Color.accentColor : Color.secondary)
-                        .frame(minWidth: 28, minHeight: 28)
-                        .contentShape(Rectangle())
-                }
-                .buttonStyle(.borderless)
-                .disabled(!canCommit)
-                .accessibilityLabel(
-                    String(localized: "quickentry.submit.accessibility", defaultValue: "Submit like the Return key")
-                )
-            }
         }
         .padding(.vertical, 2)
         .contentShape(Rectangle())
@@ -78,13 +62,20 @@ struct QuickEntryRow: View {
         .accessibilityValue(accessibilityValueText)
         .accessibilityHint(String(localized: "quickentry.accessibility.hint", defaultValue: "Double-tap to edit the draft or create a task."))
         .accessibilityAddTraits(.isButton)
+        .onChange(of: draft) { _, newValue in
+            if newValue.count > maxLength {
+                draft = String(newValue.prefix(maxLength))
+                HapticFeedback.error()
+                return
+            }
+            if let newlineRange = newValue.range(of: "\n") {
+                draft = String(newValue[..<newlineRange.lowerBound])
+                commitFromUser()
+            }
+        }
         .onChange(of: fieldFocused) { _, newValue in
             onFocusChange?(newValue)
         }
-    }
-
-    private var canCommit: Bool {
-        hasMeaningfulDraft
     }
 
     private var textFieldForeground: Color {
