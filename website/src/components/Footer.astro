@@ -1,5 +1,7 @@
 ---
+import { Image } from "astro:assets";
 import { type Lang, getDict, GITHUB_URL, CONTACT_EMAIL } from "@/i18n";
+import iconLight from "@/assets/icons/dawny-icon-light.png";
 
 interface Props {
   lang: Lang;
@@ -22,11 +24,13 @@ const imprintPath = lang === "de" ? "/de/impressum/" : "/en/imprint/";
   <div class="container-content grid gap-10 md:grid-cols-[1.4fr_1fr] items-start">
     <div class="space-y-4">
       <div class="flex items-center gap-3">
-        <img
-          src="/assets/icons/dawny-icon-light.png"
+        <Image
+          src={iconLight}
           alt=""
-          width="32"
-          height="32"
+          width={32}
+          height={32}
+          widths={[32, 64]}
+          sizes="32px"
           class="h-8 w-8 rounded-md opacity-90"
           loading="lazy"
         />

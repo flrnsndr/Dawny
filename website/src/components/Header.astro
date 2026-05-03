@@ -1,5 +1,7 @@
 ---
+import { Image } from "astro:assets";
 import { type Lang, getDict, alternateLang, TESTFLIGHT_URL } from "@/i18n";
+import iconDark from "@/assets/icons/dawny-icon-dark.png";
 
 interface Props {
   lang: Lang;
@@ -27,11 +29,13 @@ const altHref = pathMap[segment]?.[altLang] ?? `/${altLang}/`;
   <div class="container-content flex items-center justify-between gap-4">
     <a href={`/${lang}/`} class="flex items-center gap-2.5 group" aria-label="Dawny">
       <span class="relative inline-flex items-center justify-center">
-        <img
-          src="/assets/icons/dawny-icon-dark.png"
+        <Image
+          src={iconDark}
           alt=""
-          width="36"
-          height="36"
+          width={36}
+          height={36}
+          widths={[36, 72]}
+          sizes="36px"
           class="h-9 w-9 rounded-[8px] shadow-[0_8px_24px_-12px_rgba(245,176,66,0.6)]"
           loading="eager"
           decoding="async"
