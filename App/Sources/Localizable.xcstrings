@@ -1,16 +1,7 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "" : {
-
-    },
     "%@" : {
-
-    },
-    "%lld" : {
-
-    },
-    "add" : {
 
     },
     "Add \\(.applicationName) for today" : {
@@ -204,12 +195,6 @@
           }
         }
       }
-    },
-    "Add ${title} to ${category} for today" : {
-
-    },
-    "Add ${title} to ${category} in backlog" : {
-
     },
     "Add for today in \\(.applicationName)" : {
       "comment" : "Siri Phrase · AddTaskTodayIntent · Imperative.",
@@ -439,9 +424,6 @@
         }
       }
     },
-    "backlog" : {
-
-    },
     "backlog.debug.clear.message" : {
       "comment" : "Settings · Debug confirmation alert message · Warning, plainspoken. Shown after tapping the destructive “Delete All Tasks” debug action.",
       "extractionState" : "manual",
@@ -513,9 +495,6 @@
           }
         }
       }
-    },
-    "Category" : {
-
     },
     "category.action.changeIcon" : {
       "comment" : "Backlog · VoiceOver hint on the category icon button · Imperative. Tapping it opens the symbol picker.",
@@ -1321,9 +1300,6 @@
         }
       }
     },
-    "complete" : {
-
-    },
     "Complete \\(\\.$task) in \\(.applicationName)" : {
       "comment" : "Siri Phrase · CompleteTaskIntent.",
       "extractionState" : "manual",
@@ -1347,12 +1323,6 @@
           }
         }
       }
-    },
-    "create" : {
-
-    },
-    "daily" : {
-
     },
     "debug.testtask.archived.1" : {
       "comment" : "Debug-only · Archived sample test task title · Used by 'Add Test Items' settings action.",
@@ -2146,12 +2116,6 @@
         }
       }
     },
-    "done" : {
-
-    },
-    "erledigen" : {
-
-    },
     "error.archive.load" : {
       "comment" : "Error message when archive tasks can't be loaded.",
       "extractionState" : "manual",
@@ -2565,12 +2529,6 @@
           }
         }
       }
-    },
-    "finish" : {
-
-    },
-    "focus" : {
-
     },
     "intent.addtask.description" : {
       "comment" : "Siri/Shortcuts · AddTaskIntent description shown in Shortcuts catalog · One sentence.",
@@ -3196,17 +3154,6 @@
         }
       }
     },
-    "intent.error.dataStoreUnavailable" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Sorry, I can't access your tasks right now. Please try again."
-          }
-        }
-      }
-    },
     "intent.error.taskAlreadyCompleted" : {
       "comment" : "Siri · Error if a task is already completed.",
       "extractionState" : "manual",
@@ -3275,17 +3222,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "I couldn't find that task."
-          }
-        }
-      }
-    },
-    "intent.error.titleEmpty" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Please provide a task title."
           }
         }
       }
@@ -3602,9 +3538,6 @@
         }
       }
     },
-    "list" : {
-
-    },
     "List today's tasks" : {
       "comment" : "AppIntent · ListTodayTasksIntent parameter summary.",
       "extractionState" : "manual",
@@ -3707,9 +3640,6 @@
         }
       }
     },
-    "mark" : {
-
-    },
     "Mark \\(\\.$task) as done" : {
       "comment" : "AppIntent · CompleteTaskIntent parameter summary.",
       "extractionState" : "manual",
@@ -3757,12 +3687,6 @@
           }
         }
       }
-    },
-    "Mark ${task} as done" : {
-
-    },
-    "move" : {
-
     },
     "Move \\(\\.$task) to today" : {
       "comment" : "AppIntent · MoveTaskToTodayIntent parameter summary.",
@@ -3812,12 +3736,6 @@
         }
       }
     },
-    "Move ${task} to today" : {
-
-    },
-    "new" : {
-
-    },
     "New task in \\(.applicationName)" : {
       "comment" : "Siri Phrase · AddTaskIntent · Imperative.",
       "extractionState" : "stale",
@@ -3829,12 +3747,6 @@
           }
         }
       }
-    },
-    "now" : {
-
-    },
-    "plan" : {
-
     },
     "Plan \\(\\.$task) for today in \\(.applicationName)" : {
       "comment" : "Siri Phrase · MoveTaskToTodayIntent.",
@@ -4148,30 +4060,6 @@
         }
       }
     },
-    "quickentry.submit.accessibility" : {
-      "comment" : "QuickEntry · VoiceOver label on the inline submit button · Plain sentence.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wie Eingabetaste bestätigen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Submit like the Return key"
-          }
-        }
-      }
-    },
-    "read" : {
-
-    },
-    "remember" : {
-
-    },
     "Remember \\(\\.$title) in \\(.applicationName)" : {
       "comment" : "Siri Phrase · AddTaskIntent.",
       "extractionState" : "manual",
@@ -4207,9 +4095,6 @@
           }
         }
       }
-    },
-    "schedule" : {
-
     },
     "settings.category.default" : {
       "comment" : "Settings · Picker label for the default category of new tasks · Plain sentence.",
@@ -4787,12 +4672,6 @@
         }
       }
     },
-    "task" : {
-
-    },
-    "Task" : {
-
-    },
     "task.calendar.badge" : {
       "comment" : "TaskRow · Badge label shown when a task is synced to the iOS Reminders app · Single noun.",
       "extractionState" : "manual",
@@ -5027,17 +4906,6 @@
         }
       }
     },
-    "task.info.button" : {
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Task details"
-          }
-        }
-      }
-    },
     "task.recurring.badge" : {
       "comment" : "Accessibility label for the recurring task/category badge icon.",
       "extractionState" : "manual",
@@ -5145,15 +5013,6 @@
           }
         }
       }
-    },
-    "tasks" : {
-
-    },
-    "Tasks" : {
-
-    },
-    "today" : {
-
     },
     "Today in \\(.applicationName)" : {
       "comment" : "Siri Phrase · AddTaskTodayIntent · Imperative.",
@@ -5526,9 +5385,6 @@
           }
         }
       }
-    },
-    "what" : {
-
     },
     "What's on my \\(.applicationName) today" : {
       "comment" : "Siri Phrase · ListTodayTasksIntent.",
