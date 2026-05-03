@@ -1,10 +1,12 @@
 ---
 import "@/styles/global.css";
+import { getImage } from "astro:assets";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import PostHog from "@/components/PostHog.astro";
 import SchemaOrg from "@/components/SchemaOrg.astro";
 import { type Lang, getDict, alternateLang } from "@/i18n";
+import appleTouchIconSrc from "@/assets/icons/dawny-icon-light.png";
 
 interface Props {
   lang: Lang;
@@ -35,6 +37,7 @@ const url = `${site}/${lang}${canonicalPath}`.replace(/\/+$/, "/");
 const altUrl = `${site}/${altLang}${otherLangPath}`.replace(/\/+$/, "/");
 const xDefaultUrl = `${site}/en${enPath}`.replace(/\/+$/, "/");
 const ogImage = `${site}/og-image.png`;
+const appleTouchIcon = await getImage({ src: appleTouchIconSrc, width: 180, height: 180, format: "png" });
 ---
 
 <!doctype html>
@@ -53,7 +56,7 @@ const ogImage = `${site}/og-image.png`;
     <link rel="alternate" hreflang="x-default" href={xDefaultUrl} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/assets/icons/dawny-icon-light.png" />
+    <link rel="apple-touch-icon" href={appleTouchIcon.src} />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={pageTitle} />
