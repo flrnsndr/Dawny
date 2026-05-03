@@ -8,6 +8,7 @@ export default defineConfig({
   trailingSlash: "ignore",
   build: {
     format: "directory",
+    inlineStylesheets: "always",
   },
   i18n: {
     defaultLocale: "en",
