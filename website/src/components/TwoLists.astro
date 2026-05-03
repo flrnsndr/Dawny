@@ -1,6 +1,10 @@
 ---
+import { Image } from "astro:assets";
 import { type Lang, getDict } from "@/i18n";
 import SunMark from "@/components/SunMark.astro";
+import backlogImg from "@/assets/screenshots/backlog.png";
+import todayOpenImg from "@/assets/screenshots/today-open.png";
+import todayProgressImg from "@/assets/screenshots/today-progress.png";
 
 interface Props {
   lang: Lang;
@@ -34,13 +38,12 @@ const dict = getDict(lang);
       <div class="reveal two-lists-col flex w-full flex-col items-center justify-self-center text-center">
         <div class="phone-frame mb-8">
           <div class="phone-screen">
-            <img
-              src="/assets/screenshots/backlog.png"
+            <Image
+              src={backlogImg}
               alt={dict.twoLists.captionBacklog}
-              width="470"
-              height="1024"
               loading="lazy"
-              decoding="async"
+              widths={[235, 470]}
+              sizes="(min-width: 1024px) 22vw, 42vw"
             />
           </div>
           <div class="phone-glow phone-glow-cool" aria-hidden="true"></div>
@@ -59,13 +62,12 @@ const dict = getDict(lang);
       <div class="reveal two-lists-col flex w-full flex-col items-center justify-self-center text-center">
         <div class="phone-frame mb-8">
           <div class="phone-screen">
-            <img
-              src="/assets/screenshots/today-open.png"
+            <Image
+              src={todayOpenImg}
               alt={dict.twoLists.captionFocus}
-              width="470"
-              height="1024"
               loading="lazy"
-              decoding="async"
+              widths={[235, 470]}
+              sizes="(min-width: 1024px) 22vw, 42vw"
             />
           </div>
           <div class="phone-glow phone-glow-warm" aria-hidden="true"></div>
@@ -84,13 +86,12 @@ const dict = getDict(lang);
       <div class="reveal two-lists-col flex w-full flex-col items-center justify-self-center text-center">
         <div class="phone-frame mb-8">
           <div class="phone-screen">
-            <img
-              src="/assets/screenshots/today-progress.png"
+            <Image
+              src={todayProgressImg}
               alt={dict.twoLists.captionProgress}
-              width="470"
-              height="1024"
               loading="lazy"
-              decoding="async"
+              widths={[235, 470]}
+              sizes="(min-width: 1024px) 22vw, 42vw"
             />
           </div>
           <div class="phone-glow phone-glow-dual" aria-hidden="true"></div>
