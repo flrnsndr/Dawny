@@ -1,0 +1,42 @@
+---
+interface Props {
+  description: string;
+  lang: string;
+}
+
+const { description, lang } = Astro.props;
+
+const softwareApp = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Dawny",
+  operatingSystem: "iOS",
+  applicationCategory: "ProductivityApplication",
+  description,
+  url: "https://dawnyapp.com",
+  softwareVersion: "0.1",
+  inLanguage: lang === "de" ? "de" : "en",
+  author: {
+    "@type": "Person",
+    name: "Florian Schneider",
+    url: "https://dawnyapp.com",
+  },
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "EUR",
+  },
+};
+
+const website = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Dawny",
+  url: "https://dawnyapp.com",
+  description,
+  inLanguage: lang === "de" ? "de" : "en",
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(softwareApp)} />
+<script type="application/ld+json" set:html={JSON.stringify(website)} />
