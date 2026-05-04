@@ -98,10 +98,10 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showingSettings) {
             SettingsView(
-                onRequestAddTestItems: {
-                    triggerTestWorkflow()
-                },
+                #if DEBUG
+                onRequestAddTestItems: { triggerTestWorkflow() },
                 onRequestDeleteAll: clearAllAction,
+                #endif
                 onRequestShowWelcome: {
                     showingSettings = false
                     showWelcome = true
