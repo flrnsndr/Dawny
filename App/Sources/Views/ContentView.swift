@@ -30,6 +30,14 @@ struct ContentView: View {
     @State private var listContentRemount = 0
     #endif
 
+    private var addTestItemsAction: (() -> Void)? {
+        #if DEBUG
+        return { triggerTestWorkflow() }
+        #else
+        return nil
+        #endif
+    }
+
     private var clearAllAction: (() -> Void)? {
         #if DEBUG
         return { showingClearAllConfirm = true }
@@ -98,10 +106,8 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showingSettings) {
             SettingsView(
-                #if DEBUG
-                onRequestAddTestItems: { triggerTestWorkflow() },
+                onRequestAddTestItems: addTestItemsAction,
                 onRequestDeleteAll: clearAllAction,
-                #endif
                 onRequestShowWelcome: {
                     showingSettings = false
                     showWelcome = true
