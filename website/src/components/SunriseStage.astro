@@ -95,17 +95,22 @@
       stage.style.setProperty("--dawn-progress", "0");
     } else {
       let raf = 0;
+      let total = Math.max(1, stage.offsetHeight - window.innerHeight);
+
       const update = () => {
         cancelAnimationFrame(raf);
         raf = requestAnimationFrame(() => {
           const rect = stage.getBoundingClientRect();
-          const total = Math.max(1, stage.offsetHeight - window.innerHeight);
           const progress = Math.max(0, Math.min(1, -rect.top / total));
           stage.style.setProperty("--dawn-progress", progress.toFixed(4));
         });
       };
+
       window.addEventListener("scroll", update, { passive: true });
-      window.addEventListener("resize", update);
+      window.addEventListener("resize", () => {
+        total = Math.max(1, stage.offsetHeight - window.innerHeight);
+        update();
+      });
     }
   }
 </script>
