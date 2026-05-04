@@ -10,8 +10,8 @@ altCanonicalPath: "/imprint/"
 ## Angaben gemäß § 5 DDG
 
 **Florian Schneider**
-Kreuzstraße 26
-76133 Karlsruhe
+Postfach 11 13 15
+76063 Karlsruhe
 Deutschland
 
 ## Kontakt

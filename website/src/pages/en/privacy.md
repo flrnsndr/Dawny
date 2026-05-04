@@ -15,8 +15,8 @@ altCanonicalPath: "/datenschutz/"
 The data controller under the GDPR is:
 
 **Florian Schneider**
-Kreuzstraße 26
-76133 Karlsruhe
+Postfach 11 13 15
+76063 Karlsruhe
 Germany
 
 Email: info@dawnyapp.com

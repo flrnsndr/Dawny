@@ -16,9 +16,9 @@
 Verantwortlicher im Sinne der DSGVO ist:
 
 **Florian Schneider**  
-[BITTE ERGÄNZEN: Straße und Hausnummer]  
-76133 Karlsruhe  
-[BITTE ERGÄNZEN: Land]
+Postfach 11 13 15  
+76063 Karlsruhe  
+Deutschland
 
 E-Mail: info@dawnyapp.com
 
