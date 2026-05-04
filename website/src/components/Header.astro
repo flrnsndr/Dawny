@@ -38,6 +38,7 @@ const altHref = pathMap[segment]?.[altLang] ?? `/${altLang}/`;
           sizes="36px"
           class="h-9 w-9 rounded-[8px] shadow-[0_8px_24px_-12px_rgba(245,176,66,0.6)]"
           loading="eager"
+          fetchpriority="high"
           decoding="async"
         />
       </span>
