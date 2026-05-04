@@ -1,7 +1,8 @@
 <h1 align="center">Dawny</h1>
 
 <p align="center">
-  <strong>A task app that deletes yesterday’s tasks. On purpose.</strong>
+  <strong>A task app that deletes yesterday's tasks. On purpose.</strong><br>
+  <a href="https://dawnyapp.com">dawnyapp.com</a>
 </p>
 
 <p align="center">
@@ -9,13 +10,9 @@
   <img alt="Swift" src="https://img.shields.io/badge/Swift-6-orange">
   <img alt="UI" src="https://img.shields.io/badge/UI-SwiftUI-0A84FF">
   <img alt="Persistence" src="https://img.shields.io/badge/Data-SwiftData-34C759">
-  <a href="https://testflight.apple.com/join/h9JSWasd"><img alt="TestFlight" src="https://img.shields.io/badge/TestFlight-Join%20Beta-000000?logo=apple"></a>
+  <img alt="Dependencies" src="https://img.shields.io/badge/dependencies-zero-brightgreen">
   <img alt="Status" src="https://img.shields.io/badge/status-beta-yellow">
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-lightgrey"></a>
-</p>
-
-<p align="center">
-  <img alt="Dawny logo hero" src="App/Assets.xcassets/AppIcon.appiconset/Dawny%20Icon%20Gemini%201024x1024%20300dpi.png" width="300">
 </p>
 
 <p align="center">
@@ -25,187 +22,94 @@
 </p>
 
 <p align="center">
-  <strong>🌅</strong><br>
-  <strong>NO OVERDUE.</strong><br>
-  <strong>NO CARRYOVER.</strong><br>
-  <strong>NO UNFINISHED TASKS BLOCKING YOUR LIST.</strong><br>
-  <strong>🌅</strong>
+  <img alt="Dawny app icon" src="App/Assets.xcassets/AppIcon.appiconset/Dawny%20Icon%20Gemini%201024x1024%20300dpi.png" width="120">
 </p>
 
 ---
 
-### 🌅 Start fresh. Every single day.
+Dawny is an iOS task app built around a single mechanic: unfinished daily tasks reset instead of going overdue. Every night at 3 AM, anything left in **Daily Focus** either returns to the **Backlog** or moves to the **Archive**, depending on how many times it has slipped. No red dates. No carried-over guilt. A clean slate every morning.
 
-- ✅ Most task apps keep score  
-- ✅ Dawny gives you a clean slate  
-- ✅ No red  
-- ✅ No guilt  
-- ✅ No unfinished tasks blocking your list  
-
-**Just clarity.**
+The codebase is Swift 6 with SwiftUI and SwiftData, zero third-party dependencies. Daily Focus tasks optionally sync to Apple Reminders via EventKit: when you add something to your day in Dawny, it appears in Reminders (and Calendar's task list) automatically, and changes made externally sync back. Conflicts are resolved by last-write-wins using modification timestamps, and if a Reminder is deleted outside the app, the task quietly returns to the Backlog rather than disappearing.
 
 ---
 
-## 🧠 The idea
+## Getting Dawny
 
-> **Overdue tasks are a design flaw.**
-
-Most task apps assume unfinished = failure.  
-Dawny assumes unfinished = information.
-
-If something didn’t get done, it usually wasn’t the priority.  
-So why should it hijack today?
+Install via the [TestFlight beta](https://testflight.apple.com/join/h9JSWasd). Dawny will be available on the App Store soon. Any feedback before the 1.0 release is much appreciated.
 
 ---
 
-## ⚡ The difference
+## Architecture
 
-### 🌙 The 3 AM Reset
+MVVM + Service-Oriented Architecture. Business logic lives in services injected via SwiftUI's `Environment`; views bind to `@Observable` ViewModels.
 
-Dawny quietly resets your day while you sleep.
+| Layer | Key types | Role |
+|:---|:---|:---|
+| Models | `Task`, `Backlog`, `Category` | SwiftData `@Model` classes; domain state |
+| Services | `ResetEngine`, `SyncEngine` | Core business logic; `@MainActor` |
+| ViewModels | `DailyFocusViewModel`, `BacklogViewModel`, `ArchiveViewModel` | `@Observable`; bridge models to views |
+| Views | `ContentView`, `BacklogView`, `DailyFocusView`, `ArchiveView` | SwiftUI; three-tab layout via custom pager |
+| Intents | `AddTaskIntent`, `AddTaskTodayIntent` | Siri / App Shortcuts via `AppIntents` |
 
-- Unfinished tasks leave **Daily Focus**  
-- They return safely to **Backlog**  
-- Your next day starts **clean by default**
+Persistence uses three distinct layers: SwiftData for domain models, `UserDefaults` for `AppSettings` preferences, and a dedicated `UserDefaults` key (`DawnyLastResetDate`) as the reset gate.
 
-No cleanup. No friction. No residue.
+### ResetEngine
 
----
+Fires on app launch, every scene phase `.active` transition, and via `BGAppRefreshTask` as a background supplement. On each trigger: computes the most recent `resetHour` threshold (default 3 AM), compares it against `DawnyLastResetDate`, and, if a reset is due, processes all incomplete Daily Focus tasks. Recurring tasks (where `category.isRecurring == true`) always return to Backlog. Non-recurring tasks increment `resetCount`; once it reaches `makeItCountThreshold` (default: 1), the task is archived and `AppSettings.shared.hasNewArchivedTasks` is set to show the Archive badge dot.
 
-## 🧩 How it works
+### SyncEngine
 
-**Two lists. That’s it.**
-
-- **Backlog** → everything that *could* matter  
-- **Daily Focus** → what *actually* matters today  
-
-You choose deliberately.  
-Dawny enforces the boundary.
+Bidirectional sync between Daily Focus tasks and Apple Reminders via EventKit. Subscribes to `.EKEventStoreChanged` through an `AsyncStream` wrapper with a 1-second debounce. Conflict resolution: last-write-wins using `Task.modifiedAt` vs. `EKReminder.modificationDate`. If a Reminder is deleted externally, the task is moved back to Backlog.
 
 ---
 
-## ✂️ Why it feels different
+## Key Patterns
 
-Most productivity tools equate structure with control.
+**`TimeProvider` protocol:** abstracts `Date()` in `ResetEngine`. `MockTimeProvider` lets tests advance "current time" to trigger reset thresholds deterministically, no `sleep()` required.
 
-Dawny doesn’t.
+**`CalendarServiceProtocol`:** abstracts EventKit in `SyncEngine`. `MockCalendarService` makes sync tests hermetic with no Reminders permission needed.
 
-**More structure ≠ more clarity.**  
-**More structure = more friction.**
+**DI via Environment:** `ResetEngine` and `SyncEngine` are instantiated at the root in `DawnyApp.swift` and injected as custom `EnvironmentKey`s (`\.resetEngine`, `\.syncEngine`). No global singletons for services.
 
-So it removes what gets in the way:
+**Recurring task clone pattern:** completing a recurring task immediately inserts a fresh clone into the Backlog. If the user uncompletes it, the clone is deleted and the original is restored.
 
-- No nested systems  
-- No complex hierarchies  
-- No artificial planning overhead  
+**UIKit gesture bridge:** SwiftUI's `DragGesture` and `List` swipe actions compete for the same touch stream. `ContentView` uses a `UIPanGestureRecognizer` via `UIGestureRecognizerRepresentable` (iOS 18+) that only begins when horizontal velocity exceeds vertical by 1.2×, and bails if a `UICollectionViewCell` is found in the touch hierarchy. Any future work on list gestures or navigation transitions must account for this.
 
-What remains:
-
-- Clear priorities  
-- Intentional days  
-- A system you actually keep using  
+**SwiftData predicate workaround:** `TaskStatus` is an enum; SwiftData `#Predicate` does not support enum comparisons. All status-based filtering fetches all tasks and filters in Swift.
 
 ---
 
-## 🎯 Who Dawny is for
+## Project Structure
 
-**This will feel right if:**
-
-- Your task list turned into a graveyard  
-- You reschedule more than you decide  
-- You want clarity, not control systems  
-- You prefer thinking in *days*, not systems  
-
-Dawny tends to work especially well for people who don’t fit rigid productivity systems — including many **neurodivergent** thinkers.
-
----
-
-## 🚫 Who it’s not for
-
-Dawny is intentionally limited.
-
-It does **not** aim to support:
-
-- Deep task hierarchies  
-- Complex planning systems  
-- Heavy organizational logic  
-
-**Not because it can’t.  
-Because it shouldn’t.**
-
-If you need structure to scale complexity, use another tool.  
-If you want clarity, this is it.
+```
+Dawny/
+├── App/Sources/
+│   ├── DawnyApp.swift          # Entry point, service wiring, EnvironmentKeys
+│   ├── Models/                 # SwiftData @Model types + AppSettings (UserDefaults)
+│   ├── Protocols/              # TimeProvider, CalendarServiceProtocol
+│   ├── Services/               # ResetEngine, SyncEngine, EventKitCalendarService
+│   ├── ViewModels/             # @Observable VMs for each tab
+│   ├── Views/                  # SwiftUI views + Components/
+│   └── Intents/                # App Intents for Siri
+├── DawnyTests/
+│   ├── Mocks/                  # MockTimeProvider, MockCalendarService, TestModelContainer
+│   ├── Services/               # ResetEngineTests, SyncEngineTests, MakeItCountResetTests
+│   ├── ViewModels/             # VM-level unit tests
+│   ├── Models/                 # Model unit tests
+│   └── Integration/            # PersistenceTests, TaskLifecycleTests
+├── website/                    # Astro 5 + Tailwind CSS marketing site (independent)
+└── docs/                       # Architecture docs, PRD, QA checklists
+```
 
 ---
 
-## ⚙️ Features
-
-- **Daily Focus system** for intentional planning  
-- **Automatic 3 AM reset** (core behavior)  
-- **Apple Reminders sync** (bidirectional)  
-- **Siri integration** via App Intents  
-- **Categories** for lightweight grouping  
-- Fully **native iOS experience**  
-
----
-
-## 🧭 Philosophy
-
-Dawny doesn’t help you manage everything.
-
-**It helps you decide what matters today.**
-
-And then it protects that decision.
-
----
-
-## 🚀 Get it
-
-Dawny is currently in TestFlight.
-
-<a href="https://testflight.apple.com/join/h9JSWasd">
-  <img alt="Join the TestFlight Beta" src="https://img.shields.io/badge/TestFlight-Join%20the%20Beta-000000?style=for-the-badge&logo=apple">
-</a>
-
-Your feedback directly shapes the product.
-
----
-
-## 🧱 Tech
-
-- Swift 6  
-- SwiftUI  
-- SwiftData  
-- EventKit  
-- App Intents (Siri)  
-- BackgroundTasks  
-
----
 
 ## License
 
 Dawny is **source-available, not open source**.
 
-The source code in this repository is licensed under the
-[PolyForm Noncommercial License 1.0.0](LICENSE). In short: you may read,
-study, modify, and use the code for personal, educational, research, hobby,
-and other noncommercial purposes. You may **not** use the code (in original
-or modified form) as part of any product or service that generates revenue,
-including paid apps, ad-supported apps, or apps with in-app purchases.
+The source code in this repository is licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE). In short: you may read, study, modify, and use the code for personal, educational, research, hobby, and other noncommercial purposes. You may **not** use the code (in original or modified form) as part of any product or service that generates revenue, including paid apps, ad-supported apps, or apps with in-app purchases.
 
-The name "Dawny", the Dawny logo, and the app icon are **trademarks** of
-Florian Schneider and are not licensed under PolyForm. Forks must be renamed
-and rebranded. See [NOTICE](NOTICE) for details on trademarks, asset
-licensing, and contact info.
+The name "Dawny", the Dawny logo, and the app icon are **trademarks** of Florian Schneider and are not licensed under PolyForm. Forks must be renamed and rebranded. See [NOTICE](NOTICE) for details on trademarks, asset licensing, and contact info.
 
 For commercial licensing inquiries, write to **info@dawnyapp.com**.
-
-Contributions are welcome under the terms described in
-[CONTRIBUTING.md](CONTRIBUTING.md), which include an inbound-equals-outbound
-clause and a relicensing grant to the project owner.
-
----
-
-## 🧠 One line to remember
-
-**Dawny turns unfinished tasks into signal—not failure.**
