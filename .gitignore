@@ -55,3 +55,6 @@ pnpm-debug.log*
 *.pem
 *.p12
 *.mobileprovision
+
+# Persönliche Betriebsdokumente
+docs/RELEASE_RUNBOOK.md
