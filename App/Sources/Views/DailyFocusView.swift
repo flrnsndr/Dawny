@@ -10,11 +10,13 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct DailyFocusView: View {
     @Bindable var viewModel: DailyFocusViewModel
     var backlogViewModel: BacklogViewModel
     @State private var focusedTaskID: UUID?
+    @Environment(\.requestReview) private var requestReview
 
     var body: some View {
         NavigationStack {
@@ -34,6 +36,11 @@ struct DailyFocusView: View {
             }
             .onAppear {
                 viewModel.loadDailyTasks()
+            }
+            .onChange(of: viewModel.openTasks) { _, newOpen in
+                if newOpen.isEmpty && !viewModel.completedTasks.isEmpty {
+                    maybeRequestReview()
+                }
             }
             .overlay(alignment: .top) {
                 if let error = viewModel.errorMessage {
@@ -145,6 +152,13 @@ struct DailyFocusView: View {
         }
     }
     
+    private func maybeRequestReview() {
+        let settings = AppSettings.shared
+        guard settings.isEligibleForReviewPrompt else { return }
+        settings.lastReviewPromptDate = Date()
+        requestReview()
+    }
+
     private var syncIndicatorView: some View {
         VStack {
             Spacer()

@@ -115,7 +115,8 @@ final class ResetEngine {
             print("❌ Failed to save reset: \(error)")
         }
         
-        // Speichere Reset-Zeitpunkt
+        // Speichere Reset-Zeitpunkt und zähle Event für Review-Eligibility
+        AppSettings.shared.totalResetEventCount += 1
         saveLastResetDate(referenceDate)
     }
     

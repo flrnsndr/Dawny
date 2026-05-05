@@ -11,6 +11,7 @@
 
 import SwiftUI
 import UIKit
+import MessageUI
 
 struct SettingsView: View {
 
@@ -23,6 +24,8 @@ struct SettingsView: View {
     let onRequestShowWelcome: (() -> Void)?
 
     @State private var resetTime: Date
+    @State private var showingFeedbackMail = false
+    @State private var showingNoMailAlert = false
     
     init(
         settings: AppSettings = .shared,
@@ -53,10 +56,31 @@ struct SettingsView: View {
                 synchronisationSection
                 appearanceSection
                 welcomeSection
+                feedbackSection
             }
             .listSectionSpacing(.compact)
             .safeAreaInset(edge: .bottom, spacing: 0) {
                 settingsBottomChrome
+            }
+            .sheet(isPresented: $showingFeedbackMail) {
+                MailComposeView(
+                    recipients: [FeedbackService.recipient],
+                    subject: FeedbackService.mailSubject(version: appVersion, build: appBuild),
+                    body: FeedbackService.deviceInfoBody(),
+                    isPresented: $showingFeedbackMail
+                )
+                .ignoresSafeArea()
+            }
+            .alert(
+                String(localized: "settings.feedback.nomail.title", defaultValue: "No Mail Account"),
+                isPresented: $showingNoMailAlert
+            ) {
+                Button(String(localized: "settings.feedback.nomail.copy", defaultValue: "Copy Address")) {
+                    UIPasteboard.general.string = FeedbackService.recipient
+                }
+                Button(String(localized: "general.ok", defaultValue: "OK"), role: .cancel) {}
+            } message: {
+                Text(String(localized: "settings.feedback.nomail.message", defaultValue: "No mail client is set up on this device. You can reach us at \(FeedbackService.recipient)."))
             }
             .navigationTitle(String(localized: "settings.title", defaultValue: "Settings"))
             .navigationBarTitleDisplayMode(.inline)
@@ -231,6 +255,35 @@ struct SettingsView: View {
         }
     }
     
+    private var feedbackSection: some View {
+        Section {
+            Button {
+                if MFMailComposeViewController.canSendMail() {
+                    showingFeedbackMail = true
+                } else if let url = FeedbackService.mailtoFallbackURL(version: appVersion, build: appBuild) {
+                    UIApplication.shared.open(url, options: [:]) { success in
+                        if !success {
+                            DispatchQueue.main.async { showingNoMailAlert = true }
+                        }
+                    }
+                } else {
+                    showingNoMailAlert = true
+                }
+            } label: {
+                Label(
+                    String(localized: "settings.feedback.send", defaultValue: "Send Feedback"),
+                    systemImage: "envelope"
+                )
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .foregroundStyle(.primary)
+            }
+            .buttonStyle(.borderless)
+            .accessibilityIdentifier("SettingsFeedbackSendButton")
+        } header: {
+            Text(String(localized: "settings.feedback.header", defaultValue: "Feedback"))
+        }
+    }
+
     private var settingsBottomChrome: some View {
         Text(versionBuildFooterLine)
             .font(.caption2)
