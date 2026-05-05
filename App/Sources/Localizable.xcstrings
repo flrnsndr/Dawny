@@ -4166,6 +4166,114 @@
         }
       }
     },
+    "settings.feedback.header": {
+      "comment": "Settings · Feedback section header.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Feedback"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Feedback"
+          }
+        }
+      }
+    },
+    "settings.feedback.send": {
+      "comment": "Settings · Feedback section · Opens mail composer to send feedback.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Feedback senden"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send Feedback"
+          }
+        }
+      }
+    },
+    "settings.feedback.nomail.title": {
+      "comment": "Settings · Feedback · Alert title when no mail client is available.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kein E-Mail-Konto"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No Mail Account"
+          }
+        }
+      }
+    },
+    "settings.feedback.nomail.message": {
+      "comment": "Settings · Feedback · Alert message when no mail client is available. %@ is the email address.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kein E-Mail-Client eingerichtet. Schreib uns direkt an info@dawnyapp.com."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No mail client is set up on this device. You can reach us at info@dawnyapp.com."
+          }
+        }
+      }
+    },
+    "settings.feedback.nomail.copy": {
+      "comment": "Settings · Feedback · Alert button to copy the email address to clipboard.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adresse kopieren"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy Address"
+          }
+        }
+      }
+    },
+    "general.ok": {
+      "comment": "General · OK button label.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        }
+      }
+    },
     "sync.status.days_ago": {
       "comment": "Sync status · Relative time label · %lld is the number of days. Plural-aware via CLDR.",
       "extractionState": "manual",

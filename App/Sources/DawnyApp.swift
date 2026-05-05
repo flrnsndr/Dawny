@@ -76,7 +76,10 @@ struct DawnyApp: App {
     /// Führt wichtige Tasks beim App-Start aus
     private func performAppLaunchTasks() async {
         print("🚀 Dawny App Launching...")
-        
+
+        // 0. Launch-Counter erhöhen (für Review-Prompt-Eligibility)
+        AppSettings.shared.appLaunchCount += 1
+
         // 1. Request Calendar Permissions (falls noch nicht erteilt)
         do {
             let granted = try await calendarService.requestAccess()

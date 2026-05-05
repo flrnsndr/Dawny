@@ -26,6 +26,9 @@ final class AppSettings {
         static let hasSeenWelcome = "DawnyHasSeenWelcome"
         static let makeItCountThreshold = "DawnyMakeItCountThreshold"
         static let hasNewArchivedTasks = "DawnyHasNewArchivedTasks"
+        static let appLaunchCount = "DawnyAppLaunchCount"
+        static let totalResetEventCount = "DawnyTotalResetEventCount"
+        static let lastReviewPromptDate = "DawnyLastReviewPromptDate"
     }
     
     // MARK: - Properties
@@ -79,6 +82,27 @@ final class AppSettings {
         }
     }
     
+    /// Anzahl der App-Starts (für Review-Prompt-Eligibility)
+    var appLaunchCount: Int {
+        didSet {
+            UserDefaults.standard.set(appLaunchCount, forKey: Keys.appLaunchCount)
+        }
+    }
+
+    /// Anzahl abgeschlossener Reset-Events (für Review-Prompt-Eligibility)
+    var totalResetEventCount: Int {
+        didSet {
+            UserDefaults.standard.set(totalResetEventCount, forKey: Keys.totalResetEventCount)
+        }
+    }
+
+    /// Datum des letzten Review-Prompts (Rate-Limiting)
+    var lastReviewPromptDate: Date? {
+        didSet {
+            UserDefaults.standard.set(lastReviewPromptDate, forKey: Keys.lastReviewPromptDate)
+        }
+    }
+
     /// Standard-Kategorie für neue Tasks (wenn Kategorien aktiviert)
     var defaultCategoryType: TaskCategory {
         didSet {
@@ -99,6 +123,9 @@ final class AppSettings {
         self.hasSeenWelcome = UserDefaults.standard.bool(forKey: Keys.hasSeenWelcome)
         self.makeItCountThreshold = UserDefaults.standard.object(forKey: Keys.makeItCountThreshold) as? Int ?? 1
         self.hasNewArchivedTasks = UserDefaults.standard.bool(forKey: Keys.hasNewArchivedTasks)
+        self.appLaunchCount = UserDefaults.standard.object(forKey: Keys.appLaunchCount) as? Int ?? 0
+        self.totalResetEventCount = UserDefaults.standard.object(forKey: Keys.totalResetEventCount) as? Int ?? 0
+        self.lastReviewPromptDate = UserDefaults.standard.object(forKey: Keys.lastReviewPromptDate) as? Date
         
         // Lade defaultCategoryType
         if let data = UserDefaults.standard.data(forKey: Keys.defaultCategoryType),
@@ -110,8 +137,19 @@ final class AppSettings {
         }
     }
     
+    // MARK: - Computed
+
+    /// True wenn alle Bedingungen für den Review-Prompt erfüllt sind
+    var isEligibleForReviewPrompt: Bool {
+        guard appLaunchCount >= 5, totalResetEventCount >= 2 else { return false }
+        if let last = lastReviewPromptDate {
+            return Date().timeIntervalSince(last) >= 60 * 60 * 24 * 60
+        }
+        return true
+    }
+
     // MARK: - Singleton
-    
+
     /// Shared Instance für App-weite Nutzung
     static let shared = AppSettings()
 }
