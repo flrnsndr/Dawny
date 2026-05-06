@@ -1,0 +1,273 @@
+---
+import Base from "@/layouts/Base.astro";
+import { TESTFLIGHT_URL } from "@/i18n";
+
+interface FAQ {
+  q: string;
+  a: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  seoKeyword: string;
+  category: string;
+  tags: string[];
+  slug: string;
+  faqs?: FAQ[];
+}
+
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  seoKeyword,
+  category,
+  tags,
+  slug,
+  faqs,
+} = Astro.props;
+
+const canonicalPath = `/blog/${slug}`;
+const site = "https://dawnyapp.com";
+const url = `${site}/en${canonicalPath}`;
+
+const formatDate = (d: Date) =>
+  d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+
+const blogPosting = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: title,
+  description,
+  url,
+  datePublished: pubDate.toISOString(),
+  ...(updatedDate && { dateModified: updatedDate.toISOString() }),
+  author: {
+    "@type": "Organization",
+    name: "Dawny",
+    url: "https://dawnyapp.com",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Dawny",
+    url: "https://dawnyapp.com",
+  },
+  keywords: [seoKeyword, ...tags].join(", "),
+};
+
+const faqSchema = faqs && faqs.length > 0
+  ? {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map(({ q, a }) => ({
+        "@type": "Question",
+        name: q,
+        acceptedAnswer: { "@type": "Answer", text: a },
+      })),
+    }
+  : null;
+
+const categoryLabels: Record<string, string> = {
+  "daily-planning": "Daily Planning",
+  "task-management": "Task Management",
+  focus: "Focus",
+  comparison: "Comparison",
+  adhd: "ADHD",
+};
+---
+
+<Base
+  lang="en"
+  title={title}
+  description={description}
+  canonicalPath={canonicalPath}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(blogPosting)} slot="head" />
+  {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} slot="head" />}
+
+  <article class="py-16 sm:py-24">
+    <div class="container-narrow">
+      <header class="mb-10">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="category-badge">
+            {categoryLabels[category] ?? category}
+          </span>
+          <time datetime={pubDate.toISOString()} class="text-sm text-[var(--color-ink-soft)]">
+            {formatDate(pubDate)}
+          </time>
+          {updatedDate && (
+            <span class="text-sm text-[var(--color-ink-soft)]">
+              · Updated <time datetime={updatedDate.toISOString()}>{formatDate(updatedDate)}</time>
+            </span>
+          )}
+        </div>
+        <h1 class="text-[2rem] sm:text-[2.5rem] font-display font-bold tracking-tight leading-[1.1] text-[var(--color-ink)] mb-4">
+          {title}
+        </h1>
+        <p class="text-lg text-[var(--color-ink-soft)] leading-relaxed">
+          {description}
+        </p>
+      </header>
+
+      <div class="prose">
+        <slot />
+      </div>
+
+      <footer class="mt-16 pt-8 border-t border-[var(--color-ink)]/10">
+        <p class="text-sm text-[var(--color-ink-soft)] italic mb-8">
+          The developer behind Dawny has ADHD and built the app after years of trying — and abandoning — every productivity app on the market.
+        </p>
+        <div class="bg-[var(--color-paper-warm)] border border-[var(--color-dawn)]/40 rounded-2xl p-6 text-center">
+          <p class="text-[var(--color-ink)] font-medium mb-1">
+            Want to try a task app built around this philosophy?
+          </p>
+          <p class="text-sm text-[var(--color-ink-soft)] mb-4">
+            Dawny is free to test on TestFlight — no commitment required.
+          </p>
+          <a
+            href={TESTFLIGHT_URL}
+            target="_blank"
+            rel="noopener"
+            class="btn-primary inline-flex"
+            data-ph-event="testflight_click"
+            data-ph-location="blog_footer"
+          >
+            Try Dawny free on TestFlight
+          </a>
+        </div>
+      </footer>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .category-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    background: color-mix(in oklab, var(--color-dawn) 15%, transparent);
+    color: color-mix(in oklab, var(--color-dawn) 80%, var(--color-ink));
+  }
+
+  .prose {
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--color-ink);
+  }
+
+  .prose :global(h2) {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: var(--color-ink);
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .prose :global(h3) {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+    color: var(--color-ink);
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .prose :global(p) {
+    margin-bottom: 1.25rem;
+  }
+
+  /* Quick Answer block — blockquote immediately after h1 */
+  .prose :global(blockquote) {
+    background: var(--color-paper-warm);
+    border-left: 3px solid var(--color-dawn);
+    border-radius: 0 0.75rem 0.75rem 0;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+    color: var(--color-ink);
+  }
+
+  .prose :global(blockquote p) {
+    margin-bottom: 0;
+  }
+
+  .prose :global(ul),
+  .prose :global(ol) {
+    padding-left: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .prose :global(ul) {
+    list-style-type: disc;
+  }
+
+  .prose :global(ol) {
+    list-style-type: decimal;
+  }
+
+  .prose :global(li) {
+    margin-bottom: 0.4rem;
+  }
+
+  .prose :global(a) {
+    color: color-mix(in oklab, var(--color-dawn) 70%, var(--color-ink));
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: color-mix(in oklab, var(--color-dawn) 40%, transparent);
+    transition: color 200ms, text-decoration-color 200ms;
+  }
+
+  .prose :global(a:hover) {
+    color: var(--color-dawn);
+    text-decoration-color: var(--color-dawn);
+  }
+
+  .prose :global(strong) {
+    font-weight: 700;
+    color: var(--color-ink);
+  }
+
+  .prose :global(hr) {
+    border: none;
+    border-top: 1px solid color-mix(in oklab, var(--color-ink) 12%, transparent);
+    margin: 2.5rem 0;
+  }
+
+  .prose :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+    font-size: 0.9375rem;
+  }
+
+  .prose :global(th) {
+    text-align: left;
+    font-weight: 600;
+    padding: 0.5rem 0.75rem;
+    background: color-mix(in oklab, var(--color-ink) 5%, transparent);
+    border-bottom: 2px solid color-mix(in oklab, var(--color-ink) 12%, transparent);
+  }
+
+  .prose :global(td) {
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid color-mix(in oklab, var(--color-ink) 8%, transparent);
+    vertical-align: top;
+  }
+
+  .prose :global(tr:last-child td) {
+    border-bottom: none;
+  }
+</style>

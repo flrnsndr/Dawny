@@ -1,0 +1,88 @@
+---
+import { getCollection } from "astro:content";
+import Base from "@/layouts/Base.astro";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const categoryLabels: Record<string, string> = {
+  "daily-planning": "Daily Planning",
+  "task-management": "Task Management",
+  focus: "Focus",
+  comparison: "Comparison",
+  adhd: "ADHD",
+};
+
+const formatDate = (d: Date) =>
+  d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+---
+
+<Base
+  lang="en"
+  title="Blog — Dawny"
+  description="Practical guides on daily planning, task management, and beating decision fatigue. From the team behind Dawny, the iOS task app built on a daily reset."
+  canonicalPath="/blog/"
+>
+  <section class="py-16 sm:py-24">
+    <div class="container-narrow">
+      <header class="mb-12">
+        <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-dawn)] mb-3">Blog</p>
+        <h1 class="text-[2rem] sm:text-[2.75rem] font-display font-bold tracking-tight leading-[1.05] text-[var(--color-ink)] mb-4">
+          Practical guides on getting things done
+        </h1>
+        <p class="text-lg text-[var(--color-ink-soft)] leading-relaxed">
+          Articles on daily planning, task management, and the science behind why our to-do lists often work against us.
+        </p>
+      </header>
+
+      {posts.length === 0 ? (
+        <p class="text-[var(--color-ink-soft)]">No articles yet — check back soon.</p>
+      ) : (
+        <ul class="space-y-8">
+          {posts.map((post) => (
+            <li>
+              <a
+                href={`/en/blog/${post.slug}/`}
+                class="group block p-6 rounded-2xl bg-white border border-[var(--color-ink)]/8 hover:border-[var(--color-dawn)]/40 hover:shadow-[0_4px_24px_-8px_rgba(245,176,66,0.2)] transition-all duration-200"
+              >
+                <div class="flex items-center gap-3 mb-3">
+                  <span class="category-badge">
+                    {categoryLabels[post.data.category] ?? post.data.category}
+                  </span>
+                  <time
+                    datetime={post.data.pubDate.toISOString()}
+                    class="text-sm text-[var(--color-ink-soft)]"
+                  >
+                    {formatDate(post.data.pubDate)}
+                  </time>
+                </div>
+                <h2 class="text-xl font-display font-bold tracking-tight text-[var(--color-ink)] mb-2 group-hover:text-[var(--color-dawn)] transition-colors">
+                  {post.data.title}
+                </h2>
+                <p class="text-sm text-[var(--color-ink-soft)] leading-relaxed line-clamp-2">
+                  {post.data.description}
+                </p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .category-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    background: color-mix(in oklab, var(--color-dawn) 15%, transparent);
+    color: color-mix(in oklab, var(--color-dawn) 80%, var(--color-ink));
+  }
+</style>

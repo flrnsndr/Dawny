@@ -75,6 +75,7 @@ const appleTouchIcon = await getImage({ src: appleTouchIconSrc, width: 180, heig
     <meta name="generator" content={Astro.generator} />
     <SchemaOrg description={pageDescription} lang={lang} />
     <PostHog />
+    <slot name="head" />
   </head>
   <body class={bodyClass}>
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-[var(--color-night)] focus:px-4 focus:py-2 focus:text-[var(--color-paper)]">
