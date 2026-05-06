@@ -14,7 +14,7 @@
     "headline": ["Eine To Do App, die", "deine Aufgaben löscht.", "Absichtlich."],
     "sub": ["Was gestern offen blieb, blockiert heute nicht.", "Du entscheidest jeden Morgen neu, was wirklich zählt."],
     "ctaPrimary": "TestFlight-Beta beitreten",
-    "ctaSecondary": "Manifest lesen"
+    "ctaSecondary": "Artikel lesen"
   },
   "manifesto": {
     "quote": "Warum zeigt dir deine App noch, was gestern nicht abgehakt wurde?",
