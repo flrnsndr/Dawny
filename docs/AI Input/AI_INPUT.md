@@ -18,7 +18,7 @@ Last source-code review for factual product state: April 27, 2026. Re-verify bef
 | One-liner | "Dawny turns unfinished tasks into a clear priority signal." |
 | Platform | iOS 26.2+, native SwiftUI. Designed and tested primarily for iPhone; do not position as an iPad-optimized product unless separately verified. |
 | Distribution | Public Beta via TestFlight |
-| TestFlight link | https://testflight.apple.com/join/h9JSWasd |
+| TestFlight link | https://testflight.apple.com/join/758Xfan6 |
 | App Store | Not yet live |
 | Pricing | Free during beta. No pricing commitment for post-launch. |
 | Developer | Florian Schneider, Karlsruhe, Germany |
@@ -283,7 +283,7 @@ For the app, zero developer-side task-data collection is not a setting or a plan
 ## 7. CURRENT STATUS & DISTRIBUTION
 
 - **Stage:** Public beta
-- **Access:** TestFlight — https://testflight.apple.com/join/h9JSWasd
+- **Access:** TestFlight — https://testflight.apple.com/join/758Xfan6
 - **App Store:** Not yet live
 - **Feedback:** TestFlight beta testers directly shape the product
 - **Pricing post-launch:** Not publicly defined. Marketing must not make pricing commitments in either direction.
@@ -319,7 +319,7 @@ For rapid orientation when generating marketing copy:
 | Who is it for? | People overwhelmed by their own task systems; minimalists; dynamic workers; neurodivergent-friendly |
 | What makes it different? | Zero-Overdue by design, 3 AM Reset, Make It Count archiving, recoverable Archive, radical reduction |
 | What does it NOT do? | No due dates, no subtasks, no team features, no cross-platform, no iPad-optimized promise |
-| How do I get it? | TestFlight beta: https://testflight.apple.com/join/h9JSWasd |
+| How do I get it? | TestFlight beta: https://testflight.apple.com/join/758Xfan6 |
 | Who made it? | Florian Schneider, indie developer, Karlsruhe, Germany |
 | What should the tone be? | Calm, confident, honest, anti-hustle, slightly poetic |
 | What phrases are established? | "Start fresh.", "No overdue.", "Make it count.", "The 3 AM Reset", "Just clarity." |

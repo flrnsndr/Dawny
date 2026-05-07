@@ -162,4 +162,4 @@ The five-step framework in this guide (capture, choose, protect, reset, review) 
 
 The relationship between you and your task list should not feel adversarial. It should feel like a tool that helps you make good decisions — one that resets cleanly when the day is done and starts fresh when the next one begins.
 
-If you want to try a task app built around this philosophy, [Dawny](https://testflight.apple.com/join/h9JSWasd) is free to test on TestFlight.
+If you want to try a task app built around this philosophy, [Dawny](https://testflight.apple.com/join/758Xfan6) is free to test on TestFlight.

@@ -129,4 +129,4 @@ The research on decision fatigue and the psychology of incomplete tasks both poi
 
 The final piece is what happens to the tasks you don't finish. A system that turns them red and calls them overdue is working against you. A system that returns them to your backlog, quietly, without accusation. Lets you choose again tomorrow with fresh eyes. That's not lowering the bar. That's being honest about the fact that priorities change and days are finite.
 
-If you want to try a task app built around this philosophy, [Dawny](https://testflight.apple.com/join/h9JSWasd) is free to test on TestFlight.
+If you want to try a task app built around this philosophy, [Dawny](https://testflight.apple.com/join/758Xfan6) is free to test on TestFlight.

@@ -150,4 +150,4 @@ Dawny is not trying to out-feature Todoist. It is trying to do one thing differe
 
 It is a beta, it is iOS-only, and it has fewer features than almost every other app in this category. But for the right person, that is exactly the point.
 
-If you want to try a task app built around this philosophy, [Dawny](https://testflight.apple.com/join/h9JSWasd) is free to test on TestFlight.
+If you want to try a task app built around this philosophy, [Dawny](https://testflight.apple.com/join/758Xfan6) is free to test on TestFlight.
