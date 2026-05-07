@@ -16,7 +16,7 @@
 </p>
 
 <p align="center">
-  <a href="https://testflight.apple.com/join/h9JSWasd">
+  <a href="https://testflight.apple.com/join/758Xfan6">
     <img alt="Join the TestFlight Beta" src="https://img.shields.io/badge/TestFlight-Join%20the%20Beta-000000?style=for-the-badge&logo=apple">
   </a>
 </p>
@@ -35,7 +35,7 @@ The codebase is Swift 6 with SwiftUI and SwiftData, zero third-party dependencie
 
 ## Getting Dawny
 
-Install via the [TestFlight beta](https://testflight.apple.com/join/h9JSWasd). Dawny will be available on the App Store soon. Any feedback before the 1.0 release is much appreciated.
+Install via the [TestFlight beta](https://testflight.apple.com/join/758Xfan6). Dawny will be available on the App Store soon. Any feedback before the 1.0 release is much appreciated.
 
 ---
 

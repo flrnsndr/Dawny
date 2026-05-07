@@ -142,4 +142,4 @@ The fix is architectural. A separate backlog for everything. A small daily list 
 
 When your task system stops demanding constant re-evaluation and starts reflecting deliberate commitments, the list stops being something you avoid and starts being something you actually use. That's not a small thing. The difference between a list you open every morning and one you haven't touched in a week is, more often than not, a design problem with a structural solution.
 
-If you want to try a task app built around this philosophy, [Dawny](https://testflight.apple.com/join/h9JSWasd) is free to test on TestFlight.
+If you want to try a task app built around this philosophy, [Dawny](https://testflight.apple.com/join/758Xfan6) is free to test on TestFlight.

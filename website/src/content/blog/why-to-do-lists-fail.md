@@ -122,4 +122,4 @@ Decision fatigue, the guilt spiral of the Zeigarnik effect, infinite accumulatio
 
 A system worth using looks different, a safe backlog for everything, a small daily list you choose deliberately, and automatic resets that prevent the guilt from building. It's not about being more productive. It's about removing the friction that makes you avoid the list entirely.
 
-If you want to try a task app built around this philosophy, [Dawny](https://testflight.apple.com/join/h9JSWasd) is free to test on TestFlight.
+If you want to try a task app built around this philosophy, [Dawny](https://testflight.apple.com/join/758Xfan6) is free to test on TestFlight.

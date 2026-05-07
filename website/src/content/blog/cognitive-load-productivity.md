@@ -118,4 +118,4 @@ The productivity tools that feel most powerful. The ones with the most features,
 
 The alternative isn't about being minimalist for aesthetic reasons. It's about designing your system so that it demands as little as possible from you, and gives you back the mental bandwidth to do your best work. That means shorter daily lists, automatic cleanup of undone tasks, and a clean separation between your daily focus and everything else waiting in the wings. Simpler systems win not because they're simpler, but because they respect the limits of human attention.
 
-If you want to try a task app built around this philosophy, [Dawny](https://testflight.apple.com/join/h9JSWasd) is free to test on TestFlight.
+If you want to try a task app built around this philosophy, [Dawny](https://testflight.apple.com/join/758Xfan6) is free to test on TestFlight.
