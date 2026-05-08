@@ -105,7 +105,7 @@ final class BacklogViewModelPlacementTests: XCTestCase {
         let tasks = try context.fetch(FetchDescriptor<Task>())
         let archived = tasks.filter { $0.status == .archived }
 
-        XCTAssertEqual(archived.count, 16)
+        XCTAssertEqual(archived.count, 18)
         XCTAssertTrue(archived.allSatisfy { !$0.isCompleted })
         XCTAssertTrue(archived.allSatisfy { $0.archivedAt != nil })
     }

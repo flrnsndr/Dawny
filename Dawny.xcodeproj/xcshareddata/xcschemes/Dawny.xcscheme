@@ -28,16 +28,28 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
-      shouldAutocreateTestPlan = "YES">
+      shouldAutocreateTestPlan = "YES"
+      maximumParallelSimulatorCount = "1">
       <Testables>
          <TestableReference
             skipped = "NO"
-            parallelizable = "YES">
+            parallelizable = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5C9C9ECB2F0180DB0092AD03"
+               BlueprintIdentifier = "D78530922FAD3D7E00B088D7"
                BuildableName = "DawnyTests.xctest"
                BlueprintName = "DawnyTests"
+               ReferencedContainer = "container:Dawny.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D769C0012FAD439D00BFA1D1"
+               BuildableName = "DawnyUITests.xctest"
+               BlueprintName = "DawnyUITests"
                ReferencedContainer = "container:Dawny.xcodeproj">
             </BuildableReference>
          </TestableReference>
