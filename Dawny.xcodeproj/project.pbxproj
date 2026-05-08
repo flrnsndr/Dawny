@@ -6,8 +6,27 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		D769C0082FAD439E00BFA1D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5C9C9EB72F0180D90092AD03 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5C9C9EBE2F0180D90092AD03;
+			remoteInfo = Dawny;
+		};
+		D78530972FAD3D7E00B088D7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5C9C9EB72F0180D90092AD03 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5C9C9EBE2F0180D90092AD03;
+			remoteInfo = Dawny;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		5C9C9EBF2F0180D90092AD03 /* Dawny.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dawny.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D769C0022FAD439D00BFA1D1 /* DawnyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DawnyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D78530932FAD3D7E00B088D7 /* DawnyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DawnyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D79A54162F9D5D1100404706 /* Dawny.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dawny.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -17,7 +36,12 @@
 			path = App;
 			sourceTree = "<group>";
 		};
-		5C9C9ECF2F0180DB0092AD03 /* DawnyTests */ = {
+		D769C0032FAD439E00BFA1D1 /* DawnyUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = DawnyUITests;
+			sourceTree = "<group>";
+		};
+		D78530942FAD3D7E00B088D7 /* DawnyTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = DawnyTests;
 			sourceTree = "<group>";
@@ -32,6 +56,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D769BFFF2FAD439D00BFA1D1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D78530902FAD3D7E00B088D7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -40,7 +78,8 @@
 			children = (
 				D79A54162F9D5D1100404706 /* Dawny.entitlements */,
 				5C9C9EC12F0180D90092AD03 /* App */,
-				5C9C9ECF2F0180DB0092AD03 /* DawnyTests */,
+				D78530942FAD3D7E00B088D7 /* DawnyTests */,
+				D769C0032FAD439E00BFA1D1 /* DawnyUITests */,
 				5C9C9EC02F0180D90092AD03 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -49,6 +88,8 @@
 			isa = PBXGroup;
 			children = (
 				5C9C9EBF2F0180D90092AD03 /* Dawny.app */,
+				D78530932FAD3D7E00B088D7 /* DawnyTests.xctest */,
+				D769C0022FAD439D00BFA1D1 /* DawnyUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -78,6 +119,52 @@
 			productReference = 5C9C9EBF2F0180D90092AD03 /* Dawny.app */;
 			productType = "com.apple.product-type.application";
 		};
+		D769C0012FAD439D00BFA1D1 /* DawnyUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D769C00C2FAD439E00BFA1D1 /* Build configuration list for PBXNativeTarget "DawnyUITests" */;
+			buildPhases = (
+				D769BFFE2FAD439D00BFA1D1 /* Sources */,
+				D769BFFF2FAD439D00BFA1D1 /* Frameworks */,
+				D769C0002FAD439D00BFA1D1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D769C0092FAD439E00BFA1D1 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				D769C0032FAD439E00BFA1D1 /* DawnyUITests */,
+			);
+			name = DawnyUITests;
+			packageProductDependencies = (
+			);
+			productName = DawnyUITests;
+			productReference = D769C0022FAD439D00BFA1D1 /* DawnyUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		D78530922FAD3D7E00B088D7 /* DawnyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D785309B2FAD3D7E00B088D7 /* Build configuration list for PBXNativeTarget "DawnyTests" */;
+			buildPhases = (
+				D785308F2FAD3D7E00B088D7 /* Sources */,
+				D78530902FAD3D7E00B088D7 /* Frameworks */,
+				D78530912FAD3D7E00B088D7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D78530982FAD3D7E00B088D7 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				D78530942FAD3D7E00B088D7 /* DawnyTests */,
+			);
+			name = DawnyTests;
+			packageProductDependencies = (
+			);
+			productName = DawnyTests;
+			productReference = D78530932FAD3D7E00B088D7 /* DawnyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -85,11 +172,19 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2620;
+				LastSwiftUpdateCheck = 2640;
 				LastUpgradeCheck = 2640;
 				TargetAttributes = {
 					5C9C9EBE2F0180D90092AD03 = {
 						CreatedOnToolsVersion = 26.2;
+					};
+					D769C0012FAD439D00BFA1D1 = {
+						CreatedOnToolsVersion = 26.4.1;
+						TestTargetID = 5C9C9EBE2F0180D90092AD03;
+					};
+					D78530922FAD3D7E00B088D7 = {
+						CreatedOnToolsVersion = 26.4.1;
+						TestTargetID = 5C9C9EBE2F0180D90092AD03;
 					};
 				};
 			};
@@ -108,12 +203,28 @@
 			projectRoot = "";
 			targets = (
 				5C9C9EBE2F0180D90092AD03 /* Dawny */,
+				D78530922FAD3D7E00B088D7 /* DawnyTests */,
+				D769C0012FAD439D00BFA1D1 /* DawnyUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		5C9C9EBD2F0180D90092AD03 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D769C0002FAD439D00BFA1D1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D78530912FAD3D7E00B088D7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -130,7 +241,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D769BFFE2FAD439D00BFA1D1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D785308F2FAD3D7E00B088D7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D769C0092FAD439E00BFA1D1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5C9C9EBE2F0180D90092AD03 /* Dawny */;
+			targetProxy = D769C0082FAD439E00BFA1D1 /* PBXContainerItemProxy */;
+		};
+		D78530982FAD3D7E00B088D7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5C9C9EBE2F0180D90092AD03 /* Dawny */;
+			targetProxy = D78530972FAD3D7E00B088D7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		5C9C9EDE2F0180DB0092AD03 /* Debug */ = {
@@ -346,6 +484,92 @@
 			};
 			name = Release;
 		};
+		D769C00A2FAD439E00BFA1D1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H29R5S9CNB;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Dawny.DawnyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Dawny;
+			};
+			name = Debug;
+		};
+		D769C00B2FAD439E00BFA1D1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H29R5S9CNB;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Dawny.DawnyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Dawny;
+			};
+			name = Release;
+		};
+		D78530992FAD3D7E00B088D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H29R5S9CNB;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Dawny.DawnyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Dawny.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Dawny";
+			};
+			name = Debug;
+		};
+		D785309A2FAD3D7E00B088D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H29R5S9CNB;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Dawny.DawnyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Dawny.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Dawny";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -363,6 +587,24 @@
 			buildConfigurations = (
 				5C9C9EE12F0180DB0092AD03 /* Debug */,
 				5C9C9EE22F0180DB0092AD03 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D769C00C2FAD439E00BFA1D1 /* Build configuration list for PBXNativeTarget "DawnyUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D769C00A2FAD439E00BFA1D1 /* Debug */,
+				D769C00B2FAD439E00BFA1D1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D785309B2FAD3D7E00B088D7 /* Build configuration list for PBXNativeTarget "DawnyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D78530992FAD3D7E00B088D7 /* Debug */,
+				D785309A2FAD3D7E00B088D7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
