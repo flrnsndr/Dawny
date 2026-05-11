@@ -1,0 +1,187 @@
+---
+import Base from "@/layouts/Base.astro";
+import { type Lang, getDict } from "@/i18n";
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  pubDate: Date;
+  slug: string;
+}
+
+const { lang, title, description, pubDate, slug } = Astro.props;
+const dict = getDict(lang);
+
+const canonicalPath = `/blog/${slug}/`;
+const formattedDate = pubDate.toLocaleDateString(lang === "de" ? "de-DE" : "en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<Base
+  lang={lang}
+  title={`${title} — Dawny`}
+  description={description}
+  canonicalPath={canonicalPath}
+  altCanonicalPath={canonicalPath}
+>
+  <article class="blog-article">
+    <div class="container-narrow">
+      <p class="blog-eyebrow">
+        <a href={`/${lang}/blog/`} class="blog-back">{dict.blog.backToBlog}</a>
+      </p>
+      <header class="blog-header">
+        <time datetime={pubDate.toISOString()} class="blog-date">
+          {dict.blog.publishedOn} {formattedDate}
+        </time>
+        <h1 class="blog-title">{title}</h1>
+        <p class="blog-description">{description}</p>
+      </header>
+      <div class="blog-prose">
+        <slot />
+      </div>
+    </div>
+  </article>
+</Base>
+
+<style is:global>
+  .blog-article {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    padding: 8rem 0 6rem;
+    min-height: 80vh;
+  }
+
+  .blog-eyebrow {
+    margin-bottom: 2rem;
+    font-size: 0.85rem;
+    color: var(--color-ink-soft);
+  }
+
+  .blog-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--color-ink-soft);
+    transition: color 200ms;
+  }
+
+  .blog-back:hover {
+    color: var(--color-ink);
+  }
+
+  .blog-header {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(14, 26, 46, 0.1);
+  }
+
+  .blog-date {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--color-ink-soft);
+    margin-bottom: 1rem;
+  }
+
+  .blog-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  .blog-description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--color-ink-soft);
+    max-width: 60ch;
+  }
+
+  .blog-prose {
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--color-ink-soft);
+  }
+
+  .blog-prose h1,
+  .blog-prose h2,
+  .blog-prose h3,
+  .blog-prose h4 {
+    color: var(--color-ink);
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.25;
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+
+  .blog-prose h2 {
+    font-size: 1.5rem;
+  }
+
+  .blog-prose h3 {
+    font-size: 1.2rem;
+  }
+
+  .blog-prose h4 {
+    font-size: 1.05rem;
+  }
+
+  .blog-prose p,
+  .blog-prose ul,
+  .blog-prose ol,
+  .blog-prose blockquote {
+    margin-bottom: 1.25rem;
+  }
+
+  .blog-prose ul,
+  .blog-prose ol {
+    padding-left: 1.5rem;
+  }
+
+  .blog-prose li {
+    margin-bottom: 0.5rem;
+  }
+
+  .blog-prose a {
+    color: var(--color-horizon);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  .blog-prose a:hover {
+    color: var(--color-dawn);
+  }
+
+  .blog-prose blockquote {
+    border-left: 3px solid var(--color-dawn);
+    padding: 0.75rem 0 0.75rem 1.25rem;
+    background: rgba(245, 176, 66, 0.06);
+    border-radius: 0 8px 8px 0;
+    color: var(--color-ink);
+    font-style: italic;
+  }
+
+  .blog-prose strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+
+  .blog-prose code {
+    background: rgba(14, 26, 46, 0.06);
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+
+  .blog-prose hr {
+    margin: 2.5rem 0;
+    border: 0;
+    border-top: 1px dashed rgba(14, 26, 46, 0.15);
+  }
+</style>

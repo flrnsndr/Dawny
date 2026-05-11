@@ -1,0 +1,137 @@
+---
+import { getCollection } from "astro:content";
+import Base from "@/layouts/Base.astro";
+import { getDict } from "@/i18n";
+
+const lang = "de" as const;
+const dict = getDict(lang);
+
+const posts = await getCollection("blog", ({ id }) => id.startsWith("de/"));
+posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<Base
+  lang={lang}
+  title={`${dict.blog.title} — Dawny`}
+  description={dict.blog.description}
+  canonicalPath="/blog/"
+  altCanonicalPath="/blog/"
+>
+  <section class="blog-index">
+    <div class="container-narrow">
+      <header class="blog-index-header">
+        <h1 class="blog-index-title">{dict.blog.title}</h1>
+        <p class="blog-index-description">{dict.blog.description}</p>
+      </header>
+
+      <ul class="blog-list" role="list">
+        {posts.map((post) => {
+          const slug = post.id.replace("de/", "").replace(".md", "");
+          const formattedDate = post.data.pubDate.toLocaleDateString("de-DE", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
+          return (
+            <li class="blog-card">
+              <a href={`/de/blog/${slug}/`} class="blog-card-link">
+                <time datetime={post.data.pubDate.toISOString()} class="blog-card-date">
+                  {formattedDate}
+                </time>
+                <h2 class="blog-card-title">{post.data.title}</h2>
+                <p class="blog-card-description">{post.data.description}</p>
+                <span class="blog-card-read">{dict.blog.readMore} →</span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .blog-index {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    padding: 8rem 0 6rem;
+    min-height: 80vh;
+  }
+
+  .blog-index-header {
+    margin-bottom: 3.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(14, 26, 46, 0.1);
+  }
+
+  .blog-index-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+
+  .blog-index-description {
+    font-size: 1.05rem;
+    color: var(--color-ink-soft);
+    max-width: 60ch;
+    line-height: 1.6;
+  }
+
+  .blog-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .blog-card {
+    border-bottom: 1px solid rgba(14, 26, 46, 0.08);
+  }
+
+  .blog-card-link {
+    display: block;
+    padding: 2rem 0;
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 150ms;
+  }
+
+  .blog-card-link:hover {
+    opacity: 0.75;
+  }
+
+  .blog-card-date {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--color-ink-soft);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.02em;
+  }
+
+  .blog-card-title {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.6rem;
+    color: var(--color-ink);
+  }
+
+  .blog-card-description {
+    font-size: 0.95rem;
+    color: var(--color-ink-soft);
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+    max-width: 65ch;
+  }
+
+  .blog-card-read {
+    font-size: 0.85rem;
+    color: var(--color-horizon);
+    font-weight: 500;
+  }
+</style>

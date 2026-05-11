@@ -11,8 +11,8 @@ const { lang } = Astro.props;
 const dict = getDict(lang);
 const altLang = alternateLang(lang);
 
-// Map equivalent paths between languages so the language toggle on legal
-// pages keeps the visitor on the equivalent page instead of 404'ing.
+// Map equivalent paths between languages for pages with different slugs per locale.
+// Blog posts share the same slug across locales — handled by URL string-replace below.
 const pathMap: Record<string, { en: string; de: string }> = {
   "": { en: "/en/", de: "/de/" },
   privacy: { en: "/en/privacy/", de: "/de/datenschutz/" },
@@ -22,7 +22,11 @@ const pathMap: Record<string, { en: string; de: string }> = {
 };
 
 const segment = (Astro.url.pathname.split("/")[2] ?? "").replace(/\/+$/, "");
-const altHref = pathMap[segment]?.[altLang] ?? `/${altLang}/`;
+// For blog routes, swap the locale prefix in the current URL (slugs are identical across locales).
+// For all other routes, use the static pathMap or fall back to the alternate home.
+const altHref = segment === "blog"
+  ? Astro.url.pathname.replace(`/${lang}/`, `/${altLang}/`)
+  : (pathMap[segment]?.[altLang] ?? `/${altLang}/`);
 ---
 
 <header class="absolute top-0 left-0 right-0 z-30 pt-6 sm:pt-8">
@@ -48,6 +52,13 @@ const altHref = pathMap[segment]?.[altLang] ?? `/${altLang}/`;
     </a>
 
     <nav class="flex items-center gap-2 sm:gap-3" aria-label={dict.nav.languageLabel}>
+      <a
+        href={`/${lang}/blog/`}
+        class="hidden sm:inline-flex text-xs sm:text-sm font-medium text-white/65 hover:text-white transition-colors px-3 py-2 rounded-full hover:bg-white/8"
+        data-ph-event="blog_nav_click"
+      >
+        {dict.blog.title}
+      </a>
       <a
         href={altHref}
         hreflang={altLang}
