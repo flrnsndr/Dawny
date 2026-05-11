@@ -52,7 +52,7 @@ posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 <style>
   .blog-index {
-    background: var(--color-paper);
+    background: linear-gradient(180deg, #0e1a2e 0%, #1a2a3e 25%, #8b5a2b 65%, #f5f5f0 100%);
     color: var(--color-ink);
     padding: 8rem 0 6rem;
     min-height: 80vh;
@@ -61,7 +61,7 @@ posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
   .blog-index-header {
     margin-bottom: 3.5rem;
     padding-bottom: 2rem;
-    border-bottom: 1px solid rgba(14, 26, 46, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   }
 
   .blog-index-title {
@@ -70,11 +70,12 @@ posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
     line-height: 1.1;
     letter-spacing: -0.02em;
     margin-bottom: 0.75rem;
+    color: white;
   }
 
   .blog-index-description {
     font-size: 1.05rem;
-    color: var(--color-ink-soft);
+    color: rgba(255, 255, 255, 0.85);
     max-width: 60ch;
     line-height: 1.6;
   }
@@ -89,19 +90,23 @@ posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
   }
 
   .blog-card {
-    border-bottom: 1px solid rgba(14, 26, 46, 0.08);
+    margin-bottom: 1.5rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 200ms, transform 200ms;
+  }
+
+  .blog-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
   }
 
   .blog-card-link {
     display: block;
-    padding: 2rem 0;
+    padding: 2rem;
     text-decoration: none;
     color: inherit;
-    transition: opacity 150ms;
-  }
-
-  .blog-card-link:hover {
-    opacity: 0.75;
   }
 
   .blog-card-date {
