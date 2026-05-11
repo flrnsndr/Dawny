@@ -82,11 +82,13 @@ const appleTouchIcon = await getImage({ src: appleTouchIconSrc, width: 180, heig
       {dict.nav.skipToContent}
     </a>
 
-    <Header lang={lang} />
+    <Header lang={lang} hideLanguageSelector={true} />
 
-    <main id="main">
-      <slot />
-    </main>
+    <div class="blog-gradient-bg">
+      <main id="main">
+        <slot />
+      </main>
+    </div>
 
     <Footer lang={lang} />
 
@@ -121,3 +123,19 @@ const appleTouchIcon = await getImage({ src: appleTouchIconSrc, width: 180, heig
     </script>
   </body>
 </html>
+
+<style is:global>
+  .blog-gradient-bg {
+    background:
+      radial-gradient(ellipse 120% 40vh at 50% 38%, rgba(245, 176, 66, 0.35) 0%, transparent 60%),
+      linear-gradient(180deg,
+        #050d20 0%,
+        #0b1733 10%,
+        #142547 20%,
+        #b87830 38%,
+        #f5c060 55%,
+        #fdf6e4 72%,
+        #f8fafc 100%
+      );
+  }
+</style>

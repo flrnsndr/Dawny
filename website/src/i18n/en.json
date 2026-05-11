@@ -14,7 +14,7 @@
     "headline": ["A task app that deletes", "yesterday's tasks.", "On purpose."],
     "sub": ["No more abandoned tasks dragging you down.", "Dawny sweeps away the digital baggage of yesterday, helping you focus on what matters now."],
     "ctaPrimary": "Join the TestFlight Beta",
-    "ctaSecondary": "Read the manifesto"
+    "ctaSecondary": "Read the articles"
   },
   "manifesto": {
     "quote": "Overdue tasks are a design flaw.",
