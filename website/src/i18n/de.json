@@ -122,5 +122,12 @@
   "legal": {
     "privacyTitle": "Datenschutzerklärung",
     "imprintTitle": "Impressum"
+  },
+  "blog": {
+    "title": "Blog",
+    "description": "Praktische Anleitungen zu Tagesplanung, Aufgabenmanagement und wie du Entscheidungsmüdigkeit überwindest. Vom Team hinter Dawny, der iOS-App mit täglichem Reset.",
+    "readMore": "Artikel lesen",
+    "backToBlog": "← Blog",
+    "publishedOn": "Veröffentlicht"
   }
 }

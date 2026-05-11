@@ -122,5 +122,12 @@
   "legal": {
     "privacyTitle": "Privacy Policy",
     "imprintTitle": "Imprint"
+  },
+  "blog": {
+    "title": "Blog",
+    "description": "Practical guides on daily planning, task management, and beating decision fatigue. From the team behind Dawny, the iOS task app built on a daily reset.",
+    "readMore": "Read article",
+    "backToBlog": "← Blog",
+    "publishedOn": "Published"
   }
 }

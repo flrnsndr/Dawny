@@ -3,10 +3,10 @@ import { getCollection } from "astro:content";
 import Base from "@/layouts/Base.astro";
 import { getDict } from "@/i18n";
 
-const lang = "en" as const;
+const lang = "de" as const;
 const dict = getDict(lang);
 
-const posts = await getCollection("blog", ({ id }) => id.startsWith("en/"));
+const posts = await getCollection("blog", ({ id }) => id.startsWith("de/"));
 posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
@@ -26,15 +26,15 @@ posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
       <ul class="blog-list" role="list">
         {posts.map((post) => {
-          const slug = post.id.replace("en/", "").replace(".md", "");
-          const formattedDate = post.data.pubDate.toLocaleDateString("en-US", {
+          const slug = post.id.replace("de/", "").replace(".md", "");
+          const formattedDate = post.data.pubDate.toLocaleDateString("de-DE", {
             year: "numeric",
             month: "long",
             day: "numeric",
           });
           return (
             <li class="blog-card">
-              <a href={`/en/blog/${slug}/`} class="blog-card-link">
+              <a href={`/de/blog/${slug}/`} class="blog-card-link">
                 <time datetime={post.data.pubDate.toISOString()} class="blog-card-date">
                   {formattedDate}
                 </time>

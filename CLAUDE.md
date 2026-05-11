@@ -68,6 +68,10 @@ Two active locales: **English (en)** and **German (de)**. All strings live in `A
 
 `/website/` is an Astro 5 + Tailwind CSS 4 site deployed to IONOS via GitHub Actions (`.github/workflows/deploy-website.yml`). It is fully independent from the iOS app. Deploy triggers on pushes to `main` affecting `website/**`.
 
+### Blogposts
+
+Blogposts are located in `website/dist/en/blog/` (English) and `website/dist/de/blog/` (German, being added). Each post has a subdirectory with `index.html`. When working on post content, load posts individually into context — never load all posts at once. Load only the specific post being edited. Posts should be loaded only when directly editing their content; use commit history or file listing for references.
+
 ## Further Documentation
 
 The following files exist but are excluded from auto-indexing. Read them explicitly when relevant.
