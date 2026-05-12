@@ -1352,6 +1352,276 @@
         }
       }
     },
+    "categoryEditor.autoArchive.after": {
+      "comment": "CategoryEditor · Auto-archive picker label · Preposition introducing the time duration.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nach"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "After"
+          }
+        }
+      }
+    },
+    "categoryEditor.autoArchive.daysFormat": {
+      "comment": "CategoryEditor · Auto-archive picker option and stepper label · printf format string, %d = number of days.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d Tage"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d days"
+          }
+        }
+      }
+    },
+    "categoryEditor.autoArchive.daysUnit": {
+      "comment": "CategoryEditor · Unit label next to the custom days text field.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tage"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "days"
+          }
+        }
+      }
+    },
+    "categoryEditor.autoArchive.disabledFooter": {
+      "comment": "CategoryEditor · Footer below auto-archive section when recurring is on · Plain sentence.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wiederkehrende Kategorien werden nie archiviert — Aufgaben kehren immer ins Backlog zurück."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recurring categories never archive — tasks always return to the backlog."
+          }
+        }
+      }
+    },
+    "categoryEditor.autoArchive.option.custom": {
+      "comment": "CategoryEditor · Auto-archive picker option · Lets the user enter a custom day count. Trailing ellipsis signals a sub-interaction.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eigene…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Custom…"
+          }
+        }
+      }
+    },
+    "categoryEditor.autoArchive.option.off": {
+      "comment": "CategoryEditor · Auto-archive picker option · Disables auto-archiving. Single word.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aus"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Off"
+          }
+        }
+      }
+    },
+    "categoryEditor.autoArchive.section": {
+      "comment": "CategoryEditor · Section header for auto-archive setting · Noun phrase.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aus Backlog automatisch archivieren"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Auto-archive from backlog"
+          }
+        }
+      }
+    },
+    "categoryEditor.button.add": {
+      "comment": "CategoryEditor · Confirmation toolbar button in add mode · Single verb.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hinzufügen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add"
+          }
+        }
+      }
+    },
+    "categoryEditor.button.save": {
+      "comment": "CategoryEditor · Confirmation toolbar button in edit mode · Single verb.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sichern"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save"
+          }
+        }
+      }
+    },
+    "categoryEditor.iconButton.accessibility": {
+      "comment": "CategoryEditor · VoiceOver label for the icon button · Imperative phrase.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Symbol wählen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose icon"
+          }
+        }
+      }
+    },
+    "categoryEditor.namePlaceholder": {
+      "comment": "CategoryEditor · Name text field placeholder · Noun phrase.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kategoriename"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Category name"
+          }
+        }
+      }
+    },
+    "categoryEditor.recurring.footer": {
+      "comment": "CategoryEditor · Footer below the recurring toggle · One plain sentence explaining the effect.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aufgaben erscheinen direkt nach dem Erledigen oder Archivieren wieder im Backlog."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tasks reappear in the backlog right after you complete or archive them."
+          }
+        }
+      }
+    },
+    "categoryEditor.recurring.title": {
+      "comment": "CategoryEditor · Toggle label for the recurring setting · Noun phrase.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wiederkehrende Aufgaben"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recurring tasks"
+          }
+        }
+      }
+    },
+    "categoryEditor.title.add": {
+      "comment": "CategoryEditor · Sheet navigation title in add mode · Noun phrase.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neue Kategorie"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New Category"
+          }
+        }
+      }
+    },
+    "categoryEditor.title.edit": {
+      "comment": "CategoryEditor · Sheet navigation title in edit mode · Noun phrase.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kategorie bearbeiten"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit Category"
+          }
+        }
+      }
+    },
     "common.delete": {
       "comment": "Common · Destructive button · Single verb.",
       "extractionState": "manual",
