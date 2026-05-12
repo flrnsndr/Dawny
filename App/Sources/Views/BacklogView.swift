@@ -26,12 +26,10 @@ struct BacklogView: View {
 
     // MARK: - Category Editing State
 
-    /// ID der Kategorie, die gerade per Inline-TextField umbenannt wird.
-    @State private var editingCategoryID: UUID?
     /// Kategorie, für die das Aktionsmenü (Long-Press) offen ist.
     @State private var actionsCategory: Category?
-    /// Kategorie, für die der Symbol-Picker geöffnet ist.
-    @State private var iconPickerCategory: Category?
+    /// Steuert den Add/Edit-Sheet. nil = geschlossen.
+    @State private var editorTarget: CategoryEditorTarget?
     /// Kategorie, die gerade gelöscht werden soll (Confirmation Dialog).
     @State private var pendingDeleteCategory: Category?
 
@@ -53,22 +51,36 @@ struct BacklogView: View {
                 }
             }
             .toolbar(.hidden, for: .navigationBar)
-            .sheet(item: $iconPickerCategory) { category in
-                CategorySymbolPicker(currentSymbol: category.displayIconName) { newSymbol in
-                    if viewModel.updateCategoryIcon(category, to: newSymbol) {
+            .sheet(item: $editorTarget) { target in
+                switch target {
+                case .add:
+                    CategoryEditorView(mode: .add { name, icon, recurring in
+                        if let created = viewModel.createCategory(name: name, isRecurring: recurring) {
+                            if let icon { _ = viewModel.updateCategoryIcon(created, to: icon) }
+                            expandedCategories.insert(created.id)
+                        }
+                    })
+                case .edit(let category):
+                    CategoryEditorView(mode: .edit(category) { name, icon, recurring in
+                        if name != category.displayName {
+                            _ = viewModel.renameCategory(category, to: name)
+                        }
+                        if icon != category.displayIconName {
+                            _ = viewModel.updateCategoryIcon(category, to: icon)
+                        }
+                        if recurring != category.isRecurring {
+                            _ = viewModel.toggleRecurring(category)
+                        }
                         HapticFeedback.success()
-                    }
+                    })
                 }
             }
             .modifier(
                 CategoryActionMenu(
                     actionsCategory: $actionsCategory,
-                    onEdit: { category in beginRenaming(category) },
+                    onEdit: { category in editorTarget = .edit(category) },
                     onDelete: { category in requestDelete(category) },
-                    onReorder: { category in activateSortMode(startingWith: category) },
-                    onToggleRecurring: { category in
-                        _ = viewModel.toggleRecurring(category)
-                    }
+                    onReorder: { category in activateSortMode(startingWith: category) }
                 )
             )
             .modifier(
@@ -156,7 +168,6 @@ struct BacklogView: View {
             ForEach(sortedCategories, id: \.id) { category in
                 let tasks = grouped[category.id] ?? []
                 let isExpanded = expandedCategories.contains(category.id)
-                let isEditingThis = editingCategoryID == category.id
 
                 // Alle Kategorien; leere sind standardmäßig aufgeklappt, sobald der Backlog leer ist
                 Section {
@@ -179,20 +190,13 @@ struct BacklogView: View {
                         )
                     }
                 } header: {
-                    categoryHeader(
-                        for: category,
-                        taskCount: tasks.count,
-                        isExpanded: isExpanded,
-                        isEditingName: isEditingThis
-                    )
+                    categoryHeader(for: category, taskCount: tasks.count, isExpanded: isExpanded)
                 }
             }
 
             Section {
-                AddCategoryRow { name, isRecurring in
-                    if let created = viewModel.createCategory(name: name, isRecurring: isRecurring) {
-                        expandedCategories.insert(created.id)
-                    }
+                AddCategoryRow {
+                    editorTarget = .add
                 }
             }
         }
@@ -289,38 +293,18 @@ struct BacklogView: View {
     }
 
     @ViewBuilder
-    private func categoryHeader(
-        for category: Category,
-        taskCount: Int,
-        isExpanded: Bool,
-        isEditingName: Bool
-    ) -> some View {
-        let header = CategoryHeaderView(
+    private func categoryHeader(for category: Category, taskCount: Int, isExpanded: Bool) -> some View {
+        CategoryHeaderView(
             category: category,
             taskCount: taskCount,
             isExpanded: isExpanded,
-            isEditingName: isEditingName,
-            isIconPickerOpen: isEditingName && iconPickerCategory?.id == category.id,
             onToggle: { toggleCategory(category.id) },
-            onLongPress: { actionsCategory = category },
-            onCommitRename: { newName in commitRename(category, to: newName) },
-            onCancelRename: { editingCategoryID = nil },
-            onIconTap: { iconPickerCategory = category }
+            onLongPress: { actionsCategory = category }
         )
-
-        // Drop-Target nur deaktivieren, wenn diese Zeile gerade editiert wird –
-        // damit das TextField den Tap exklusiv bekommt und keine Tasks
-        // versehentlich auf den Header gezogen werden.
-        let configured = header
-            .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
-            .listRowSeparator(.hidden)
-
-        if isEditingName {
-            configured
-        } else {
-            configured.dropDestination(for: BacklogTaskTransfer.self) { items, _ in
-                return handleCategoryHeaderDrop(items, targetCategory: category)
-            }
+        .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
+        .listRowSeparator(.hidden)
+        .dropDestination(for: BacklogTaskTransfer.self) { items, _ in
+            return handleCategoryHeaderDrop(items, targetCategory: category)
         }
     }
     
@@ -515,8 +499,7 @@ struct BacklogView: View {
     private func activateSortMode(startingWith _: Category) {
         guard !isSortingCategories else { return }
         actionsCategory = nil
-        editingCategoryID = nil
-        iconPickerCategory = nil
+        editorTarget = nil
         focusedTaskID = nil
         expandedCategoriesBeforeSort = expandedCategories
         withAnimation(.easeInOut(duration: 0.2)) {
@@ -535,34 +518,8 @@ struct BacklogView: View {
         HapticFeedback.light()
     }
 
-    private func beginRenaming(_ category: Category) {
-        guard category.canRename else { return }
-        // Kategorie ausklappen, damit Tastatur das Feld nicht verdeckt
-        // und der visuelle Kontext klar ist.
-        if !expandedCategories.contains(category.id) {
-            withAnimation(.easeInOut(duration: 0.2)) {
-                _ = expandedCategories.insert(category.id)
-            }
-        }
-        editingCategoryID = category.id
-    }
-
-    private func commitRename(_ category: Category, to newName: String) {
-        let success = viewModel.renameCategory(category, to: newName)
-        editingCategoryID = nil
-        if success {
-            HapticFeedback.success()
-        } else {
-            HapticFeedback.error()
-        }
-    }
-
     private func requestDelete(_ category: Category) {
         guard category.canDelete else { return }
-        // Falls die Zeile gerade editiert wird, Edit beenden, bevor der Dialog kommt.
-        if editingCategoryID == category.id {
-            editingCategoryID = nil
-        }
         HapticFeedback.warning()
         pendingDeleteCategory = category
     }
@@ -597,7 +554,6 @@ private struct CategoryActionMenu: ViewModifier {
     let onEdit: (Category) -> Void
     let onDelete: (Category) -> Void
     let onReorder: (Category) -> Void
-    let onToggleRecurring: (Category) -> Void
 
     func body(content: Content) -> some View {
         content.confirmationDialog(
@@ -606,7 +562,7 @@ private struct CategoryActionMenu: ViewModifier {
             titleVisibility: .visible,
             presenting: actionsCategory
         ) { category in
-            if category.canRename || category.canChangeIcon {
+            if category.hasAnyEditCapability {
                 Button(
                     String(
                         localized: "category.action.edit",
@@ -623,27 +579,6 @@ private struct CategoryActionMenu: ViewModifier {
                 )
             ) {
                 onReorder(category)
-            }
-            if category.canToggleRecurring {
-                Button {
-                    onToggleRecurring(category)
-                } label: {
-                    if category.isRecurring {
-                        Text(
-                            String(
-                                localized: "category.action.unmakeRecurring",
-                                defaultValue: "Remove recurring"
-                            )
-                        )
-                    } else {
-                        Text(
-                            String(
-                                localized: "category.action.makeRecurring",
-                                defaultValue: "Mark as recurring"
-                            )
-                        )
-                    }
-                }
             }
             if category.canDelete {
                 Button(
@@ -774,5 +709,19 @@ private struct CategoryDeleteConfirmation: ViewModifier {
                 if !newValue { pendingCategory = nil }
             }
         )
+    }
+}
+
+// MARK: - CategoryEditorTarget
+
+private enum CategoryEditorTarget: Identifiable {
+    case add
+    case edit(Category)
+
+    var id: String {
+        switch self {
+        case .add: return "add"
+        case .edit(let category): return "edit-\(category.id)"
+        }
     }
 }
