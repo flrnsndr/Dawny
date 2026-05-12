@@ -72,7 +72,7 @@ final class CategoryService {
     }
     
     /// Initialisiert die Standard-Kategorien beim ersten App-Start und
-    /// legt bei Bedarf die Standard-„Wiederkehrende Aufgaben“-Kategorie an (Idempotent / Migration).
+    /// legt bei Bedarf die Standard-„Wiederkehrende Aufgaben"-Kategorie an (Idempotent / Migration).
     func initializeDefaultCategories() {
         let descriptor = FetchDescriptor<Category>()
         do {
@@ -84,13 +84,17 @@ final class CategoryService {
                     let category = Category(
                         categoryType: categoryType,
                         orderIndex: categoryType.defaultOrderIndex,
-                        isUncategorized: categoryType == .uncategorized
+                        isUncategorized: categoryType == .uncategorized,
+                        autoArchiveDays: categoryType.defaultAutoArchiveDays
                     )
                     modelContext.insert(category)
                 }
                 try modelContext.save()
                 allCategories = try modelContext.fetch(descriptor)
             }
+
+            try migrateAutoArchiveDefaultsIfNeeded(allCategories: allCategories)
+            try migrateEnteredBacklogAtIfNeeded()
 
             if !allCategories.contains(where: { $0.isRecurring }) {
                 let defaultName = String(
@@ -189,7 +193,7 @@ final class CategoryService {
     private static let recurringOrderMigratedKey = "DawnyMigratedRecurringDefaultBeforeUncategorizedV1"
     private static let recurringOrderBeforeSomedayMigratedKey = "DawnyMigratedRecurringDefaultBeforeSomedayV2"
 
-    /// Einmal: Standard-„Wiederkehrende Aufgaben“ (falls noch unter Unkategorisiert) vorschieben. Danach bleibt die manuelle Sortierung.
+    /// Einmal: Standard-„Wiederkehrende Aufgaben" (falls noch unter Unkategorisiert) vorschieben. Danach bleibt die manuelle Sortierung.
     private func repositionDefaultRecurringBeforeUncategorizedIfNeeded() throws {
         guard !UserDefaults.standard.bool(forKey: Self.recurringOrderMigratedKey) else { return }
         defer { UserDefaults.standard.set(true, forKey: Self.recurringOrderMigratedKey) }
@@ -216,7 +220,7 @@ final class CategoryService {
         rec.orderIndex = target
     }
 
-    /// Einmal: Standard-„Wiederkehrende Aufgaben“ direkt vor „Someday“ schieben.
+    /// Einmal: Standard-„Wiederkehrende Aufgaben" direkt vor „Someday" schieben.
     private func repositionDefaultRecurringBeforeSomedayIfNeeded() throws {
         guard !UserDefaults.standard.bool(forKey: Self.recurringOrderBeforeSomedayMigratedKey) else { return }
         defer { UserDefaults.standard.set(true, forKey: Self.recurringOrderBeforeSomedayMigratedKey) }
@@ -279,9 +283,10 @@ final class CategoryService {
         }
     }
     
-    /// Legt eine neue benutzerdefinierte Kategorie an (erscheint nach bestehenden Einträgen, typisch unter „Unkategorisiert“).
+    /// Legt eine neue benutzerdefinierte Kategorie an (erscheint nach bestehenden Einträgen, typisch unter „Unkategorisiert").
     /// - Parameter isRecurring: Wenn `true`, passendes Default-Symbol und `isRecurring` auf dem Modell.
-    func createCustom(name: String, isRecurring: Bool = false) throws -> Category {
+    /// - Parameter autoArchiveDays: Auto-Tidy-Schwellenwert. Wird bei `isRecurring == true` ignoriert (nil).
+    func createCustom(name: String, isRecurring: Bool = false, autoArchiveDays: Int? = 365) throws -> Category {
         let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else {
             throw CategoryEditError.nameEmpty
@@ -303,20 +308,33 @@ final class CategoryService {
             isUncategorized: false,
             isNameCustomized: true,
             isIconCustomized: true,
-            isRecurring: isRecurring
+            isRecurring: isRecurring,
+            autoArchiveDays: isRecurring ? nil : autoArchiveDays
         )
         modelContext.insert(category)
         try save()
         return category
     }
 
-    /// Setzt die Eigenschaft „wiederkehrend“ auf einer Kategorie.
+    /// Setzt die Eigenschaft „wiederkehrend" auf einer Kategorie.
+    /// Setzt bei Aktivierung gleichzeitig `autoArchiveDays = nil` (Recurring-Invariante).
     func setRecurring(_ category: Category, to newValue: Bool) throws {
         guard category.canToggleRecurring else {
             throw CategoryEditError.protectedFromRecurring
         }
         if category.isRecurring == newValue { return }
         category.isRecurring = newValue
+        if newValue { category.autoArchiveDays = nil }
+        try save()
+    }
+
+    /// Setzt den Auto-Tidy-Schwellenwert (Tage im Backlog bis zur Archivierung).
+    /// Recurring-Kategorien dürfen keinen Wert != nil erhalten.
+    func setAutoArchiveDays(_ category: Category, to days: Int?) throws {
+        if category.isRecurring && days != nil {
+            throw CategoryEditError.protectedFromRecurring
+        }
+        category.autoArchiveDays = days
         try save()
     }
 
@@ -426,6 +444,40 @@ final class CategoryService {
 
         modelContext.delete(category)
         try save()
+    }
+
+    // MARK: - Auto-Tidy Migrations
+
+    private static let autoArchiveDefaultsMigratedKey = "DawnyMigratedAutoArchiveDefaultsV1"
+    private static let enteredBacklogAtMigratedKey = "DawnyBackfilledEnteredBacklogAtV1"
+
+    /// Einmal: bestehende Standard-Kategorien mit `defaultAutoArchiveDays` befüllen.
+    private func migrateAutoArchiveDefaultsIfNeeded(allCategories: [Category]) throws {
+        guard !UserDefaults.standard.bool(forKey: Self.autoArchiveDefaultsMigratedKey) else { return }
+        defer { UserDefaults.standard.set(true, forKey: Self.autoArchiveDefaultsMigratedKey) }
+
+        for category in allCategories {
+            if category.isRecurring {
+                category.autoArchiveDays = nil
+                continue
+            }
+            guard category.autoArchiveDays == nil else { continue }
+            category.autoArchiveDays = category.categoryType.defaultAutoArchiveDays
+        }
+        try modelContext.save()
+    }
+
+    /// Einmal: bestehende Backlog-Tasks mit `enteredBacklogAt = Date()` befüllen (sanfter Start).
+    private func migrateEnteredBacklogAtIfNeeded() throws {
+        guard !UserDefaults.standard.bool(forKey: Self.enteredBacklogAtMigratedKey) else { return }
+        defer { UserDefaults.standard.set(true, forKey: Self.enteredBacklogAtMigratedKey) }
+
+        let all = try modelContext.fetch(FetchDescriptor<Task>())
+        let now = Date()
+        for task in all where task.status == .inBacklog && task.enteredBacklogAt == nil {
+            task.enteredBacklogAt = now
+        }
+        try modelContext.save()
     }
 
     // MARK: - Private Helpers

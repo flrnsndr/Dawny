@@ -103,6 +103,7 @@ final class ArchiveViewModel {
         task.status = .inBacklog
         task.sortPriority = Date()
         task.modifiedAt = Date()
+        task.enteredBacklogAt = Date()
         ensureCategoryExists(for: task)
         saveAndReload()
     }
@@ -120,6 +121,7 @@ final class ArchiveViewModel {
         task.status = .dailyFocus
         task.scheduledDate = Date()
         task.modifiedAt = Date()
+        task.enteredBacklogAt = nil
         ensureCategoryExists(for: task)
         saveAndReload()
     }

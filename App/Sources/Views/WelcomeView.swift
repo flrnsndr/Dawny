@@ -66,6 +66,18 @@ struct WelcomeView: View {
             )
         ),
         WelcomePage(
+            icon: "wind",
+            iconColor: .teal,
+            title: LocalizedStringResource(
+                "welcome.autoTidy.title",
+                defaultValue: "Your backlog stays light"
+            ),
+            body: LocalizedStringResource(
+                "welcome.autoTidy.body",
+                defaultValue: "Tasks that sit in your backlog for too long quietly move to the Archive. You decide how long each category should hold on — and the timer resets every time you pull a task into Today."
+            )
+        ),
+        WelcomePage(
             icon: "mic.fill",
             iconColor: .purple,
             title: LocalizedStringResource(
@@ -74,7 +86,7 @@ struct WelcomeView: View {
             ),
             body: LocalizedStringResource(
                 "welcome.siri.body",
-                defaultValue: "You can use Siri with Dawny — for example:\n\n“New task in Dawny”\n“Add task to today in Dawny”\n\nMore commands and Shortcuts are available."
+                defaultValue: "You can use Siri with Dawny — for example:\n\n\u{201C}New task in Dawny\u{201D}\n\u{201C}Add task to today in Dawny\u{201D}\n\nMore commands and Shortcuts are available."
             )
         ),
         WelcomePage(

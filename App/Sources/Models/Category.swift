@@ -42,9 +42,13 @@ final class Category {
     /// Solange `false`, wird `categoryType.iconName` als Default verwendet.
     var isIconCustomized: Bool = false
 
-    /// Wenn true, verhalten sich Tasks in dieser Kategorie „wiederkehrend“
+    /// Wenn true, verhalten sich Tasks in dieser Kategorie „wiederkehrend”
     /// (siehe Heute-Backlog-Clone-Logik).
     var isRecurring: Bool = false
+
+    /// Auto-Tidy: Anzahl Tage im Backlog, nach denen Tasks automatisch archiviert werden.
+    /// nil = deaktiviert. Recurring-Kategorien ignorieren diesen Wert.
+    var autoArchiveDays: Int? = nil
 
     /// Erstellungsdatum
     var createdAt: Date
@@ -67,6 +71,7 @@ final class Category {
         isNameCustomized: Bool = false,
         isIconCustomized: Bool = false,
         isRecurring: Bool = false,
+        autoArchiveDays: Int? = nil,
         createdAt: Date = Date(),
         tasks: [Task] = []
     ) {
@@ -79,6 +84,7 @@ final class Category {
         self.isNameCustomized = isNameCustomized
         self.isIconCustomized = isIconCustomized
         self.isRecurring = isRecurring
+        self.autoArchiveDays = autoArchiveDays
         self.createdAt = createdAt
         self.tasks = tasks
     }

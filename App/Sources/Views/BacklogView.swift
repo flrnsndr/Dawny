@@ -54,14 +54,14 @@ struct BacklogView: View {
             .sheet(item: $editorTarget) { target in
                 switch target {
                 case .add:
-                    CategoryEditorView(mode: .add { name, icon, recurring in
-                        if let created = viewModel.createCategory(name: name, isRecurring: recurring) {
+                    CategoryEditorView(mode: .add { name, icon, recurring, days in
+                        if let created = viewModel.createCategory(name: name, isRecurring: recurring, autoArchiveDays: days) {
                             if let icon { _ = viewModel.updateCategoryIcon(created, to: icon) }
                             expandedCategories.insert(created.id)
                         }
                     })
                 case .edit(let category):
-                    CategoryEditorView(mode: .edit(category) { name, icon, recurring in
+                    CategoryEditorView(mode: .edit(category) { name, icon, recurring, days in
                         if name != category.displayName {
                             _ = viewModel.renameCategory(category, to: name)
                         }
@@ -70,6 +70,9 @@ struct BacklogView: View {
                         }
                         if recurring != category.isRecurring {
                             _ = viewModel.toggleRecurring(category)
+                        }
+                        if days != category.autoArchiveDays {
+                            _ = viewModel.setAutoArchiveDays(category, to: days)
                         }
                         HapticFeedback.success()
                     })

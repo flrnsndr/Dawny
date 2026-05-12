@@ -64,6 +64,10 @@ final class Task {
     /// Zeitpunkt der manuellen Erledigung (nil wenn nicht oder noch nicht erledigt)
     var completedAt: Date? = nil
 
+    /// Auto-Tidy: Zeitpunkt, seit dem der Task ununterbrochen im Backlog liegt.
+    /// Wird beim Eingang ins Backlog gesetzt und beim Verschieben in Daily/Scheduled/Archive genillt.
+    var enteredBacklogAt: Date? = nil
+
     // MARK: - Relationships
     
     /// Referenz zum Parent-Backlog
@@ -102,6 +106,7 @@ final class Task {
         self.isCompleted = isCompleted
         self.recurringCloneID = recurringCloneID
         self.category = category
+        self.enteredBacklogAt = (status == .inBacklog) ? Date() : nil
     }
     
     // MARK: - Computed Properties
@@ -150,14 +155,16 @@ final class Task {
         scheduledDate = nil
         sortPriority = Date() // Move to top
         modifiedAt = Date()
+        enteredBacklogAt = Date()
     }
 
-    /// Archiviert den Task nach wiederholtem Nicht-Erledigen (Make it count).
+    /// Archiviert den Task nach wiederholtem Nicht-Erledigen (Make it count) oder Auto-Tidy.
     func archive() {
         status = .archived
         archivedAt = Date()
         scheduledDate = nil
         modifiedAt = Date()
+        enteredBacklogAt = nil
     }
 
     /// Unarchiviert den Task zurück ins Backlog. Setzt resetCount auf 0.
@@ -167,6 +174,7 @@ final class Task {
         resetCount = 0
         sortPriority = Date()
         modifiedAt = Date()
+        enteredBacklogAt = Date()
     }
 
     /// Unarchiviert den Task direkt in den Daily Focus. Setzt resetCount auf 0.
@@ -176,20 +184,23 @@ final class Task {
         archivedAt = nil
         resetCount = 0
         modifiedAt = Date()
+        enteredBacklogAt = nil
     }
-    
+
     /// Verschiebt den Task in Daily Focus
     func moveToDailyFocus(date: Date) {
         status = .dailyFocus
         scheduledDate = date
         modifiedAt = Date()
+        enteredBacklogAt = nil
     }
-    
-    /// Plant den Task für ein zukünftiges Datum
+
+    /// Plant den Task für ein zukünftiges Datum (nur via SyncEngine, keine User-UI)
     func scheduleFor(date: Date) {
         status = .scheduled
         scheduledDate = date
         modifiedAt = Date()
+        enteredBacklogAt = nil
     }
     
     /// Entfernt die Kalender-Verknüpfung
