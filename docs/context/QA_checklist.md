@@ -48,13 +48,36 @@ _Hintergrund: System-Permissions sind dynamisch. User ändern gerne mittendrin i
 - [ ] **Kategorien (falls in V1 aktiv):** Neue Kategorie anlegen, Task zuweisen, Kategorie löschen.
   - _Erwartet:_ Task verliert Zuweisung, aber App stürzt nicht durch fehlende Referenzen (Cascade Deletion Rules) ab.
 
-## 5. UI, Design & Accessibility
+## 5. Archive-Feature (Getrennte Sektionen)
+
+- [ ] **Task erledigen → Erledigt-Sektion:** Task in "Today" abhaken.
+  - _Erwartet:_ Task erscheint in Archive-Tab unter "Erledigt"-Sektion mit aktuellem Datum. "Archiviert"-Sektion bleibt von manuell erledigten Tasks unberührt.
+
+- [ ] **Erledigt-Sektion default eingeklappt:** Archive-Tab öffnen.
+  - _Erwartet:_ "Archiviert"-Sektion ist ausgeklappt und angezeigt. "Erledigt"-Sektion ist eingeklappt (nur Chevron sichtbar).
+
+- [ ] **Tap auf Icon → ConfirmationDialog:** In einer der beiden Sektionen auf das Icon (Archiv oder Checkmark) tippen.
+  - _Erwartet:_ Dialog öffnet sich mit 4 Optionen: "Backlog", "Today", "Delete", "Abbrechen". Dialog ist scrollbar wenn Text zu lang.
+
+- [ ] **Dialog-Aktion "Backlog":** Task aus Dialog ins Backlog verschieben.
+  - _Erwartet:_ Task verschwindet aus Archive. Status wird auf `.inBacklog` gesetzt. Swipe-Actions (besteht aus 1-2 Actions) funktionieren unverändert.
+
+- [ ] **Dialog-Aktion "Today":** Task aus Dialog zu Daily Focus verschieben.
+  - _Erwartet:_ Task verschwindet aus Archive. Status wird auf `.dailyFocus` gesetzt.
+
+- [ ] **Erledigt-Sektion: 30-Tage-Cutoff:** Task vor >30 Tagen erledigen (oder Systemdatum manipulieren). Zurück zu Archive.
+  - _Erwartet:_ Alte Tasks erscheinen NICHT in "Erledigt". Sie können manuell in Backlog/Today verschoben werden (nicht möglich aus UI, da nicht sichtbar) oder bleiben in der Datenbank ohne Anzeige.
+
+- [ ] **Abschnitte-Collapse-State flüchtig:** "Erledigt" ausgeklappt. Zu einem anderen Tab wechseln. Zurück zu Archive.
+  - _Erwartet:_ "Erledigt"-Sektion ist wieder eingeklappt (Default-State).
+
+## 6. UI, Design & Accessibility
 
 - [ ] **Dark Mode Check:** Gerät in den Dark Mode schalten. Alle Views durchklicken.
-  - _Erwartet:_ Keine schwarzen Texte auf dunkelgrauem Grund. Alle Kontraste (besonders Custom Views und leere States) sind gut lesbar.
+  - _Erwartet:_ Keine schwarzen Texte auf dunkelgrauem Grund. Alle Kontraste (besonders Custom Views und leere States) sind gut lesbar. Archive-Icons und Badges sind in Dark Mode lesbar.
 
 - [ ] **Dynamic Type (Große Schrift):** In den iOS-Einstellungen (Bedienungshilfen) die Schriftgröße auf Maximum stellen.
-  - _Erwartet:_ Keine überlappenden Texte, unlesbaren Buttons oder abgeschnittenen Task-Titel. Die UI bricht sauber um.
+  - _Erwartet:_ Keine überlappenden Texte, unlesbaren Buttons oder abgeschnittenen Task-Titel. Die UI bricht sauber um. Section-Header und Badges passen sich an.
 
 ---
 

@@ -350,6 +350,96 @@
         }
       }
     },
+    "archive.dialog.delete": {
+      "comment": "Archive tab · ConfirmationDialog · Destructive button to permanently delete the task.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Löschen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
+          }
+        }
+      }
+    },
+    "archive.dialog.move_backlog": {
+      "comment": "Archive tab · ConfirmationDialog · Moves task back to Backlog.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In Backlog verschieben"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move to Backlog"
+          }
+        }
+      }
+    },
+    "archive.dialog.move_today": {
+      "comment": "Archive tab · ConfirmationDialog · Moves task directly to Today.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Für heute übernehmen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move to Today"
+          }
+        }
+      }
+    },
+    "archive.section.archive.title": {
+      "comment": "Archive tab · Collapsible section header title for auto-archived tasks.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Archiviert"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Archived"
+          }
+        }
+      }
+    },
+    "archive.section.completed.title": {
+      "comment": "Archive tab · Collapsible section header title for manually completed tasks (last 30 days).",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erledigt"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Completed"
+          }
+        }
+      }
+    },
     "archive.section.header": {
       "comment": "Archive tab · Section header below the tab title.",
       "extractionState": "manual",
