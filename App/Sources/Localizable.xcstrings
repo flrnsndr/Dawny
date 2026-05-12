@@ -3662,6 +3662,60 @@
         }
       }
     },
+    "debug.reset.now": {
+      "comment": "Settings · Debug action · Triggers the reset engine immediately without waiting for the scheduled reset hour.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset jetzt ausführen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perform Reset Now"
+          }
+        }
+      }
+    },
+    "debug.markincomplete.reset": {
+      "comment": "Settings · Debug action · Marks all Today tasks as incomplete, then triggers the reset engine.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Heute auf offen + Reset"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mark Today Incomplete + Reset"
+          }
+        }
+      }
+    },
+    "debug.reset.welcome": {
+      "comment": "Settings · Debug action · Resets the hasSeenWelcome flag and re-shows the onboarding welcome screen.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome zurücksetzen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset Welcome"
+          }
+        }
+      }
+    },
     "quickadd.notes.section": {
       "comment": "QuickAdd · Section header for the optional notes field · Noun phrase.",
       "extractionState": "manual",

@@ -45,6 +45,55 @@ struct ContentView: View {
         return nil
         #endif
     }
+
+    private var performResetAction: (() -> Void)? {
+        #if DEBUG
+        return {
+            _Concurrency.Task {
+                await resetEngine?.performReset()
+                backlogViewModel?.loadBacklogs()
+                dailyFocusViewModel?.loadDailyTasks()
+                archiveViewModel?.loadAll()
+            }
+        }
+        #else
+        return nil
+        #endif
+    }
+
+    private var markIncompleteAndResetAction: (() -> Void)? {
+        #if DEBUG
+        return {
+            _Concurrency.Task {
+                let descriptor = FetchDescriptor<Task>()
+                if let allTasks = try? modelContext.fetch(descriptor) {
+                    for task in allTasks where task.status == .dailyFocus {
+                        task.isCompleted = false
+                    }
+                    try? modelContext.save()
+                }
+                await resetEngine?.performReset()
+                backlogViewModel?.loadBacklogs()
+                dailyFocusViewModel?.loadDailyTasks()
+                archiveViewModel?.loadAll()
+            }
+        }
+        #else
+        return nil
+        #endif
+    }
+
+    private var resetWelcomeAction: (() -> Void)? {
+        #if DEBUG
+        return {
+            AppSettings.shared.hasSeenWelcome = false
+            showingSettings = false
+            showWelcome = true
+        }
+        #else
+        return nil
+        #endif
+    }
     
     enum Tab: Int {
         case backlog = 0
@@ -108,6 +157,9 @@ struct ContentView: View {
             SettingsView(
                 onRequestAddTestItems: addTestItemsAction,
                 onRequestDeleteAll: clearAllAction,
+                onRequestPerformReset: performResetAction,
+                onRequestMarkIncompleteAndReset: markIncompleteAndResetAction,
+                onRequestResetWelcome: resetWelcomeAction,
                 onRequestShowWelcome: {
                     showingSettings = false
                     showWelcome = true
