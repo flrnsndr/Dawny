@@ -48,7 +48,9 @@ Der Nutzer entscheidet jeden Tag aktiv, welche Tasks er in den "Daily Focus" ver
 
 - Today (Daily Focus): Tasks für den heutigen Tag
 
-- Archiv: Abgelaufene, archivierte oder erledigte Tasks
+- Archiv: Zwei Sektionen:
+  - **Archiviert**: Automatisch archivierte Tasks (via ResetEngine/Make-It-Count)
+  - **Erledigt**: Manuell erledigte Tasks aus den letzten 30 Tagen. Beide Sektionen sind kollabierbar, die Erledigt-Sektion ist standardmäßig eingeklappt.
 
 ### 2. Konfigurierbarer Reset ("Make it Count")
 

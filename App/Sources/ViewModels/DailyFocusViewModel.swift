@@ -168,6 +168,7 @@ final class DailyFocusViewModel {
 
         task.recurringCloneID = nil
         task.isCompleted = false
+        task.completedAt = nil
         task.status = .dailyFocus
         task.modifiedAt = Date()
 

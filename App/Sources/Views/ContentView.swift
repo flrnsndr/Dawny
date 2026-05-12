@@ -191,7 +191,7 @@ struct ContentView: View {
             withTransaction(transaction) {
                 selectedTab = .archive
                 settings.hasNewArchivedTasks = false
-                archiveViewModel?.loadArchivedTasks()
+                archiveViewModel?.loadAll()
             }
         } label: {
             ZStack(alignment: .topTrailing) {
@@ -268,7 +268,7 @@ struct ContentView: View {
         backlogVM.loadBacklogs()
         backlogVM.loadCategories()
         dailyFocusViewModel?.loadDailyTasks()
-        archiveViewModel?.loadArchivedTasks()
+        archiveViewModel?.loadAll()
         #endif
     }
 

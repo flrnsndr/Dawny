@@ -90,6 +90,7 @@ The application leverages SwiftUI's environment for Dependency Injection (DI). T
 - **Environment Injection:** Services are injected into the SwiftUI hierarchy using custom `EnvironmentKey`s (`\.resetEngine`, `\.syncEngine`) defined at the bottom of `DawnyApp.swift`.
 - **Settings Singleton:** `AppSettings.shared` is accessed directly throughout the codebase — in services, ViewModels, and Views — rather than being injected via Environment. It is an `@Observable` class, so SwiftUI views that read its properties re-render automatically.
 - **ViewModel Lifecycle:** ViewModels (`BacklogViewModel`, `DailyFocusViewModel`, `ArchiveViewModel`) are `@State` optional properties on `ContentView`, initialized lazily in `initializeViewModels()` which is called from `.onAppear`. Because they are `@State`, they survive view re-renders. The pattern is safe for the current architecture since `ContentView` is the permanent root view, but if `ContentView` were ever to disappear and reappear (e.g., due to a deep scene reconstruction), ViewModels would be re-created. Moving initialization to a stable coordinator above `ContentView` would be more robust.
+- **ArchiveView two-section layout:** `ArchiveView` displays two collapsible sections: (1) "Archiviert" (auto-archived tasks, default expanded, icon: `archivebox`), and (2) "Erledigt" (manually completed tasks from last 30 days, default collapsed, icon: `checkmark.circle.fill`). Each section header includes a task count badge. Tapping an icon opens a `ConfirmationDialog` with actions: move to Backlog, move to Daily Focus, delete, or cancel. The "Erledigt" section filters tasks with `status == .completed && completedAt >= Date().addingTimeInterval(-30*86400)`, sorted by `completedAt` descending. Collapse state is stored in `@State`, not persisted.
 
 ---
 
@@ -124,6 +125,7 @@ The schema is registered in `DawnyApp.init()` with `isStoredInMemoryOnly: false`
 | `isCompleted` | `Bool` | |
 | `recurringCloneID` | `UUID?` | Links a recurring task to the fresh Backlog clone created when it is completed in Daily Focus |
 | `resetCount` | `Int` | Incremented each time the task is in Daily Focus and not completed at reset. Reset to 0 on manual move-to-backlog and on unarchive. |
+| `completedAt` | `Date?` | Timestamp set by `complete()`; used to group completed tasks in ArchiveView by completion date. Nil when not completed. |
 | `archivedAt` | `Date?` | Timestamp set by `archive()`; nil when not archived |
 
 **Relationships:**

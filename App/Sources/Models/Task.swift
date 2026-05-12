@@ -61,6 +61,9 @@ final class Task {
     /// Zeitpunkt der Archivierung (nil wenn nicht archiviert)
     var archivedAt: Date? = nil
 
+    /// Zeitpunkt der manuellen Erledigung (nil wenn nicht oder noch nicht erledigt)
+    var completedAt: Date? = nil
+
     // MARK: - Relationships
     
     /// Referenz zum Parent-Backlog
@@ -135,6 +138,7 @@ final class Task {
     func complete() {
         isCompleted = true
         status = .completed
+        completedAt = Date()
         modifiedAt = Date()
     }
     
