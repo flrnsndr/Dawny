@@ -1460,20 +1460,38 @@
         }
       }
     },
-    "categoryEditor.autoArchive.section": {
-      "comment": "CategoryEditor · Section header for auto-archive setting · Noun phrase.",
+    "categoryEditor.autoArchive.enabledFooter": {
+      "comment": "CategoryEditor · Footer below auto-archive section when auto-tidy is active · Two-sentence explanation.",
       "extractionState": "manual",
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Aus Backlog automatisch archivieren"
+            "value": "Nach so vielen Tagen im Backlog wandern Aufgaben ins Archiv. Der Zähler startet jedes Mal neu, wenn du eine Aufgabe in Heute ziehst."
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Auto-archive from backlog"
+            "value": "After this many days in the backlog, tasks move to the Archive. The countdown resets every time you pull a task into Today."
+          }
+        }
+      }
+    },
+    "categoryEditor.autoArchive.section": {
+      "comment": "CategoryEditor · Section header for auto-tidy setting · Feature name, short noun phrase.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aufräumen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Auto-Tidy"
           }
         }
       }
@@ -5596,6 +5614,42 @@
           "stringUnit": {
             "state": "translated",
             "value": "You can use Siri with Dawny — for example:\n\n“New task in Dawny”\n“Add task to today in Dawny”\n\nMore commands and Shortcuts are available."
+          }
+        }
+      }
+    },
+    "welcome.autoTidy.body": {
+      "comment": "Welcome · Onboarding Auto-Tidy page body · Two sentences explaining backlog aging and timer reset.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aufgaben, die zu lange im Backlog liegen, räumt Dawny still ins Archiv. Du entscheidest pro Kategorie, wie lange sie bleiben dürfen — und der Zähler startet jedes Mal neu, wenn du eine Aufgabe in Heute ziehst."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tasks that sit in your backlog for too long quietly move to the Archive. You decide how long each category should hold on — and the timer resets every time you pull a task into Today."
+          }
+        }
+      }
+    },
+    "welcome.autoTidy.title": {
+      "comment": "Welcome · Onboarding Auto-Tidy page title · Short, calming headline.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dein Backlog bleibt leicht"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your backlog stays light"
           }
         }
       }

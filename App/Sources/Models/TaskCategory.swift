@@ -144,6 +144,20 @@ enum TaskCategory: String, Codable, CaseIterable {
         }
     }
     
+    /// Auto-Tidy: Standard-Wert für `autoArchiveDays` pro Kategorie-Typ.
+    /// nil = nie automatisch archivieren.
+    var defaultAutoArchiveDays: Int? {
+        switch self {
+        case .quick: 7
+        case .nextFewDays: 21
+        case .nextFewWeeks: 60
+        case .nextFewMonths: 365
+        case .someday: nil
+        case .uncategorized: 365
+        case .custom: 365
+        }
+    }
+
     /// Standard-Reihenfolge-Index (für initiale Sortierung)
     var defaultOrderIndex: Int {
         switch self {

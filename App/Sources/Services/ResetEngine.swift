@@ -61,21 +61,28 @@ final class ResetEngine {
     /// Führt den Reset durch (hauptsächlich für Tests und manuellen Aufruf)
     func performReset(referenceDate: Date = Date()) async {
         print("🔄 Performing Reset at \(referenceDate)")
-        
+
+        // Auto-Tidy: abgelaufene Backlog-Tasks zuerst archivieren
+        let staleCount = archiveStaleBacklogTasks(referenceDate: referenceDate)
+        var hasArchivedAnyTask = staleCount > 0
+        if staleCount > 0 {
+            print("🧹 Auto-Tidy archived \(staleCount) stale backlog task(s)")
+        }
+
         // Fetch alle Tasks die resettet werden müssen
         let tasksToReset = fetchTasksNeedingReset()
-        
+
         guard !tasksToReset.isEmpty else {
             print("✅ No tasks need reset")
+            if hasArchivedAnyTask { AppSettings.shared.hasNewArchivedTasks = true }
             saveLastResetDate(referenceDate)
             return
         }
-        
+
         print("📋 Resetting \(tasksToReset.count) task(s)")
 
         let threshold = AppSettings.shared.makeItCountThreshold
-        var hasArchivedAnyTask = false
-        
+
         // Reset jeden Task
         for (index, task) in tasksToReset.enumerated() {
             // Entferne aus Kalender falls synchronisiert
@@ -186,6 +193,32 @@ final class ResetEngine {
         return resetToday
     }
     
+    /// Auto-Tidy: Archiviert Backlog-Tasks, die die Lebensdauer ihrer Kategorie überschritten haben.
+    /// Gibt die Anzahl archivierter Tasks zurück.
+    private func archiveStaleBacklogTasks(referenceDate: Date) -> Int {
+        let descriptor = FetchDescriptor<Task>()
+        guard let all = try? modelContext.fetch(descriptor) else { return 0 }
+        var count = 0
+        for task in all {
+            guard
+                task.status == .inBacklog,
+                !task.isCompleted,
+                let category = task.category,
+                category.isRecurring == false,
+                let days = category.autoArchiveDays,
+                let enteredAt = task.enteredBacklogAt
+            else { continue }
+            let cutoff = timeProvider.calendar.date(
+                byAdding: .day, value: days, to: enteredAt
+            ) ?? enteredAt
+            if cutoff <= referenceDate {
+                task.archive()
+                count += 1
+            }
+        }
+        return count
+    }
+
     /// Holt alle Tasks die resettet werden müssen
     private func fetchTasksNeedingReset() -> [Task] {
         let descriptor = FetchDescriptor<Task>(

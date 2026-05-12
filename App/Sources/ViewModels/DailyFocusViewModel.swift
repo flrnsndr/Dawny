@@ -171,6 +171,7 @@ final class DailyFocusViewModel {
         task.completedAt = nil
         task.status = .dailyFocus
         task.modifiedAt = Date()
+        task.enteredBacklogAt = nil
 
         let needsCalendarSync = task.isSyncedToCalendar
 

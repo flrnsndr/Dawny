@@ -16,10 +16,10 @@ struct CategoryEditorView: View {
     // MARK: - Mode
 
     enum Mode {
-        /// Creating a new category. Callback receives name, optional icon override, and recurring flag.
-        case add(onCreate: (String, String?, Bool) -> Void)
+        /// Creating a new category. Callback receives name, optional icon override, recurring flag, and auto-archive days.
+        case add(onCreate: (String, String?, Bool, Int?) -> Void)
         /// Editing an existing category. Callback receives the (possibly unchanged) values.
-        case edit(Category, onSave: (String, String, Bool) -> Void)
+        case edit(Category, onSave: (String, String, Bool, Int?) -> Void)
     }
 
     // MARK: - Properties
@@ -47,10 +47,17 @@ struct CategoryEditorView: View {
             _name = State(initialValue: "")
             _pickedIconName = State(initialValue: nil)
             _isRecurring = State(initialValue: false)
+            _autoArchive = State(initialValue: .days365)
+            _autoArchiveCustomDays = State(initialValue: 365)
+            _autoArchiveCustomText = State(initialValue: "365")
         case .edit(let category, _):
             _name = State(initialValue: category.displayName)
             _pickedIconName = State(initialValue: category.displayIconName)
             _isRecurring = State(initialValue: category.isRecurring)
+            let (option, customDays) = AutoArchiveOption.from(days: category.autoArchiveDays)
+            _autoArchive = State(initialValue: option)
+            _autoArchiveCustomDays = State(initialValue: customDays)
+            _autoArchiveCustomText = State(initialValue: "\(customDays)")
         }
     }
 
@@ -71,6 +78,10 @@ struct CategoryEditorView: View {
 
     private var isValid: Bool {
         !trimmedName.isEmpty && trimmedName.count <= CategoryService.maxNameLength
+    }
+
+    private var selectedAutoArchiveDays: Int? {
+        isRecurring ? nil : autoArchive.days(customDays: autoArchiveCustomDays)
     }
 
     // MARK: - Body
@@ -115,6 +126,9 @@ struct CategoryEditorView: View {
                 DispatchQueue.main.async {
                     isNameFocused = true
                 }
+            }
+            .onChange(of: isRecurring) { _, newValue in
+                if newValue { autoArchive = .off }
             }
         }
     }
@@ -179,10 +193,9 @@ struct CategoryEditorView: View {
             ) {
                 Text(String(localized: "categoryEditor.autoArchive.option.off", defaultValue: "Off"))
                     .tag(AutoArchiveOption.off)
-                Text(daysLabel(3)).tag(AutoArchiveOption.days3)
                 Text(daysLabel(7)).tag(AutoArchiveOption.days7)
-                Text(daysLabel(14)).tag(AutoArchiveOption.days14)
                 Text(daysLabel(30)).tag(AutoArchiveOption.days30)
+                Text(daysLabel(90)).tag(AutoArchiveOption.days90)
                 Text(daysLabel(365)).tag(AutoArchiveOption.days365)
                 Text(
                     String(localized: "categoryEditor.autoArchive.option.custom", defaultValue: "Custom…")
@@ -207,13 +220,20 @@ struct CategoryEditorView: View {
                 }
             }
         } header: {
-            Text(String(localized: "categoryEditor.autoArchive.section", defaultValue: "Auto-archive from backlog"))
+            Text(String(localized: "categoryEditor.autoArchive.section", defaultValue: "Auto-Tidy"))
         } footer: {
             if isRecurring {
                 Text(
                     String(
                         localized: "categoryEditor.autoArchive.disabledFooter",
                         defaultValue: "Recurring categories never archive — tasks always return to the backlog."
+                    )
+                )
+            } else if autoArchive != .off {
+                Text(
+                    String(
+                        localized: "categoryEditor.autoArchive.enabledFooter",
+                        defaultValue: "After this many days in the backlog, tasks move to the Archive. The countdown resets every time you pull a task into Today."
                     )
                 )
             }
@@ -230,9 +250,9 @@ struct CategoryEditorView: View {
         }
         switch mode {
         case .add(let onCreate):
-            onCreate(trimmedName, pickedIconName, isRecurring)
+            onCreate(trimmedName, pickedIconName, isRecurring, selectedAutoArchiveDays)
         case .edit(_, let onSave):
-            onSave(trimmedName, displayIconName, isRecurring)
+            onSave(trimmedName, displayIconName, isRecurring, selectedAutoArchiveDays)
         }
         dismiss()
     }
@@ -246,14 +266,38 @@ struct CategoryEditorView: View {
 // MARK: - AutoArchiveOption
 
 private enum AutoArchiveOption: Hashable {
-    case off, days3, days7, days14, days30, days365, custom
+    case off, days7, days30, days90, days365, custom
+
+    func days(customDays: Int) -> Int? {
+        switch self {
+        case .off: nil
+        case .days7: 7
+        case .days30: 30
+        case .days90: 90
+        case .days365: 365
+        case .custom: customDays
+        }
+    }
+
+    static func from(days: Int?) -> (AutoArchiveOption, Int) {
+        switch days {
+        case nil: return (.off, 7)
+        case 7: return (.days7, 7)
+        case 30: return (.days30, 30)
+        case 90: return (.days90, 90)
+        case 365: return (.days365, 365)
+        default:
+            let clamped = max(1, min(days ?? 7, 365))
+            return (.custom, clamped)
+        }
+    }
 }
 
 // MARK: - Preview
 
 #Preview("Add") {
-    CategoryEditorView(mode: .add { name, icon, recurring in
-        print("Add: \(name), icon: \(icon ?? "default"), recurring: \(recurring)")
+    CategoryEditorView(mode: .add { name, icon, recurring, days in
+        print("Add: \(name), icon: \(icon ?? "default"), recurring: \(recurring), days: \(String(describing: days))")
     })
 }
 
@@ -264,9 +308,10 @@ private enum AutoArchiveOption: Hashable {
             name: "Work",
             iconName: "briefcase.fill",
             isNameCustomized: true,
-            isIconCustomized: true
+            isIconCustomized: true,
+            autoArchiveDays: 21
         )
-    ) { name, icon, recurring in
-        print("Save: \(name), icon: \(icon), recurring: \(recurring)")
+    ) { name, icon, recurring, days in
+        print("Save: \(name), icon: \(icon), recurring: \(recurring), days: \(String(describing: days))")
     })
 }

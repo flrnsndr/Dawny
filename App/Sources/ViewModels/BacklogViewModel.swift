@@ -545,9 +545,9 @@ final class BacklogViewModel {
 
     /// Legt eine neue benutzerdefinierte Kategorie an.
     @discardableResult
-    func createCategory(name: String, isRecurring: Bool = false) -> Category? {
+    func createCategory(name: String, isRecurring: Bool = false, autoArchiveDays: Int? = 365) -> Category? {
         do {
-            let category = try categoryService.createCustom(name: name, isRecurring: isRecurring)
+            let category = try categoryService.createCustom(name: name, isRecurring: isRecurring, autoArchiveDays: autoArchiveDays)
             loadCategories()
             HapticFeedback.success()
             return category
@@ -557,6 +557,21 @@ final class BacklogViewModel {
         } catch {
             errorMessage = error.localizedDescription
             return nil
+        }
+    }
+
+    /// Setzt den Auto-Tidy-Schwellenwert einer Kategorie.
+    @discardableResult
+    func setAutoArchiveDays(_ category: Category, to days: Int?) -> Bool {
+        do {
+            try categoryService.setAutoArchiveDays(category, to: days)
+            return true
+        } catch let error as CategoryEditError {
+            errorMessage = error.errorDescription
+            return false
+        } catch {
+            errorMessage = error.localizedDescription
+            return false
         }
     }
 
