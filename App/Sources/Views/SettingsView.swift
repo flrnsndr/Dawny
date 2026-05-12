@@ -21,6 +21,9 @@ struct SettingsView: View {
     
     let onRequestAddTestItems: (() -> Void)?
     let onRequestDeleteAll: (() -> Void)?
+    let onRequestPerformReset: (() -> Void)?
+    let onRequestMarkIncompleteAndReset: (() -> Void)?
+    let onRequestResetWelcome: (() -> Void)?
     let onRequestShowWelcome: (() -> Void)?
 
     @State private var resetTime: Date
@@ -31,11 +34,17 @@ struct SettingsView: View {
         settings: AppSettings = .shared,
         onRequestAddTestItems: (() -> Void)? = nil,
         onRequestDeleteAll: (() -> Void)? = nil,
+        onRequestPerformReset: (() -> Void)? = nil,
+        onRequestMarkIncompleteAndReset: (() -> Void)? = nil,
+        onRequestResetWelcome: (() -> Void)? = nil,
         onRequestShowWelcome: (() -> Void)? = nil
     ) {
         self.settings = settings
         self.onRequestAddTestItems = onRequestAddTestItems
         self.onRequestDeleteAll = onRequestDeleteAll
+        self.onRequestPerformReset = onRequestPerformReset
+        self.onRequestMarkIncompleteAndReset = onRequestMarkIncompleteAndReset
+        self.onRequestResetWelcome = onRequestResetWelcome
         self.onRequestShowWelcome = onRequestShowWelcome
         
         // Initialisiere resetTime basierend auf resetHour
@@ -98,7 +107,12 @@ struct SettingsView: View {
 
     @ViewBuilder
     private var debugSection: some View {
-        if onRequestAddTestItems != nil || onRequestDeleteAll != nil {
+        let hasAnyDebugAction = onRequestAddTestItems != nil
+            || onRequestDeleteAll != nil
+            || onRequestPerformReset != nil
+            || onRequestMarkIncompleteAndReset != nil
+            || onRequestResetWelcome != nil
+        if hasAnyDebugAction {
             Section {
                 if let onRequestAddTestItems {
                     Button {
@@ -108,6 +122,41 @@ struct SettingsView: View {
                         Label(
                             String(localized: "quickadd.addtestitems", defaultValue: "Add Test Items"),
                             systemImage: "wand.and.stars"
+                        )
+                    }
+                }
+
+                if let onRequestPerformReset {
+                    Button {
+                        onRequestPerformReset()
+                        dismiss()
+                    } label: {
+                        Label(
+                            String(localized: "debug.reset.now", defaultValue: "Perform Reset Now"),
+                            systemImage: "arrow.clockwise"
+                        )
+                    }
+                }
+
+                if let onRequestMarkIncompleteAndReset {
+                    Button {
+                        onRequestMarkIncompleteAndReset()
+                        dismiss()
+                    } label: {
+                        Label(
+                            String(localized: "debug.markincomplete.reset", defaultValue: "Mark Today Incomplete + Reset"),
+                            systemImage: "arrow.triangle.2.circlepath"
+                        )
+                    }
+                }
+
+                if let onRequestResetWelcome {
+                    Button {
+                        onRequestResetWelcome()
+                    } label: {
+                        Label(
+                            String(localized: "debug.reset.welcome", defaultValue: "Reset Welcome"),
+                            systemImage: "sparkles"
                         )
                     }
                 }
