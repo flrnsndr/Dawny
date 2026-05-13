@@ -33,15 +33,17 @@ const formattedDate = pubDate.toLocaleDateString(lang === "de" ? "de-DE" : "en-U
       <p class="blog-eyebrow">
         <a href={`/${lang}/blog/`} class="blog-back">{dict.blog.backToBlog}</a>
       </p>
-      <header class="blog-header">
-        <time datetime={pubDate.toISOString()} class="blog-date">
-          {dict.blog.publishedOn} {formattedDate}
-        </time>
-        <h1 class="blog-title">{title}</h1>
-        <p class="blog-description">{description}</p>
-      </header>
-      <div class="blog-prose">
-        <slot />
+      <div class="blog-card">
+        <header class="blog-header">
+          <time datetime={pubDate.toISOString()} class="blog-date">
+            {dict.blog.publishedOn} {formattedDate}
+          </time>
+          <h1 class="blog-title">{title}</h1>
+          <p class="blog-description">{description}</p>
+        </header>
+        <div class="blog-prose">
+          <slot />
+        </div>
       </div>
     </div>
   </article>
@@ -55,22 +57,33 @@ const formattedDate = pubDate.toLocaleDateString(lang === "de" ? "de-DE" : "en-U
     min-height: 80vh;
   }
 
+  .blog-article .container-narrow {
+    max-width: min(80%, 64rem);
+  }
+
   .blog-eyebrow {
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
     font-size: 0.85rem;
-    color: var(--color-ink-soft);
+    color: rgba(255, 255, 255, 0.75);
   }
 
   .blog-back {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    color: var(--color-ink-soft);
+    color: rgba(255, 255, 255, 0.75);
     transition: color 200ms;
   }
 
   .blog-back:hover {
-    color: var(--color-ink);
+    color: white;
+  }
+
+  .blog-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: clamp(1.75rem, 5vw, 3rem);
   }
 
   .blog-header {
