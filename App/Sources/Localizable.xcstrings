@@ -6019,6 +6019,204 @@
           }
         }
       }
+    },
+    "autoarchive.review.daily.title.hasItems": {
+      "comment": "Auto-Archive Review · Screen 1 · Headline when Daily tasks were archived.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zeit für einen frischen Start"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Time for a fresh start"
+          }
+        }
+      }
+    },
+    "autoarchive.review.daily.subtitle.hasItems": {
+      "comment": "Auto-Archive Review · Screen 1 · Subtitle when Daily tasks were archived.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diese Aufgaben haben wir für dich im Archiv in Sicherheit gebracht, damit du heute ohne Altlasten loslegen kannst."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "We've safely tucked these tasks away in the archive so you can start today free of clutter."
+          }
+        }
+      }
+    },
+    "autoarchive.review.daily.title.empty": {
+      "comment": "Auto-Archive Review · Screen 1 · Headline when no Daily tasks were archived.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alles sauber"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All clean"
+          }
+        }
+      }
+    },
+    "autoarchive.review.daily.subtitle.empty": {
+      "comment": "Auto-Archive Review · Screen 1 · Subtitle when no Daily tasks were archived.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aus deinem Daily musste nichts archiviert werden. Ein wunderbar leerer Tisch für heute."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing needed archiving from your Daily. A wonderfully clean slate for today."
+          }
+        }
+      }
+    },
+    "autoarchive.review.backlog.title.hasItems": {
+      "comment": "Auto-Archive Review · Screen 2 · Headline when Backlog tasks were archived.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Backlog durchgeatmet"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Backlog breathed out"
+          }
+        }
+      }
+    },
+    "autoarchive.review.backlog.subtitle.hasItems": {
+      "comment": "Auto-Archive Review · Screen 2 · Subtitle when Backlog tasks were archived.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Auch hier wurde automatisch Platz geschaffen. Folgende Items warten jetzt entspannt im Archiv auf dich."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Space has been made here too. These items are now resting in the archive."
+          }
+        }
+      }
+    },
+    "autoarchive.review.backlog.title.empty": {
+      "comment": "Auto-Archive Review · Screen 2 · Headline when no Backlog tasks were archived.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fokus bleibt bestehen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Focus stays put"
+          }
+        }
+      }
+    },
+    "autoarchive.review.backlog.subtitle.empty": {
+      "comment": "Auto-Archive Review · Screen 2 · Subtitle when no Backlog tasks were archived.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dein Backlog ist genau so geblieben, wie du es hinterlassen hast."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your backlog is exactly how you left it."
+          }
+        }
+      }
+    },
+    "autoarchive.review.cta.next": {
+      "comment": "Auto-Archive Review · CTA button · Advances from Screen 1 to Screen 2.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weiter"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continue"
+          }
+        }
+      }
+    },
+    "autoarchive.review.cta.freshStart": {
+      "comment": "Auto-Archive Review · CTA button · Dismisses overlay when no Backlog items need review.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Frisch starten"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fresh start"
+          }
+        }
+      }
+    },
+    "autoarchive.review.cta.go": {
+      "comment": "Auto-Archive Review · CTA button · Dismisses overlay from Screen 2.",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loslegen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Let's go"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

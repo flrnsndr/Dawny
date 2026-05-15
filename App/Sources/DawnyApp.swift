@@ -37,7 +37,11 @@ struct DawnyApp: App {
         }
         
         // Initialize Services
+        #if DEBUG
+        timeProvider = DebugTimeProvider()
+        #else
         timeProvider = SystemTimeProvider()
+        #endif
         calendarService = EventKitCalendarService()
         resetEngine = ResetEngine(
             timeProvider: timeProvider,

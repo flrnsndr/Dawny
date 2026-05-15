@@ -99,7 +99,7 @@ final class ResetEngine {
                 // Nicht-wiederkehrend: Zähler erhöhen, ggf. archivieren
                 task.resetCount += 1
                 if task.resetCount >= threshold {
-                    task.archive()
+                    task.archive(reason: .makeItCount)
                     hasArchivedAnyTask = true
                     print("📦 Archived task '\(task.title)' after \(task.resetCount) incomplete day(s) on Today")
                 } else {
@@ -113,7 +113,7 @@ final class ResetEngine {
         if hasArchivedAnyTask {
             AppSettings.shared.hasNewArchivedTasks = true
         }
-        
+
         // Save Context
         do {
             try modelContext.save()
@@ -121,10 +121,14 @@ final class ResetEngine {
         } catch {
             print("❌ Failed to save reset: \(error)")
         }
-        
+
         // Speichere Reset-Zeitpunkt und zähle Event für Review-Eligibility
         AppSettings.shared.totalResetEventCount += 1
         saveLastResetDate(referenceDate)
+
+        if hasArchivedAnyTask {
+            NotificationCenter.default.post(name: .dawnyDidAutoArchiveTasks, object: nil)
+        }
     }
     
     /// Registriert Background Task für automatischen Reset
@@ -212,7 +216,7 @@ final class ResetEngine {
                 byAdding: .day, value: days, to: enteredAt
             ) ?? enteredAt
             if cutoff <= referenceDate {
-                task.archive()
+                task.archive(reason: .autoTidy)
                 count += 1
             }
         }
@@ -259,6 +263,12 @@ final class ResetEngine {
         }
         #endif
     }
+}
+
+// MARK: - Notification Names
+
+extension Notification.Name {
+    static let dawnyDidAutoArchiveTasks = Notification.Name("dawnyDidAutoArchiveTasks")
 }
 
 // MARK: - Testing Helpers

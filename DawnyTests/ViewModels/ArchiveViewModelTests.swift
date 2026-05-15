@@ -40,7 +40,7 @@ final class ArchiveViewModelTests: XCTestCase {
         let backlog = TestModelContainer.createBacklog(in: context)
         let task = TestModelContainer.createTask(in: context, title: title, backlog: backlog)
         task.category = category
-        task.archive()
+        task.archive(reason: .manual)
         try? context.save()
         return task
     }
@@ -68,7 +68,7 @@ final class ArchiveViewModelTests: XCTestCase {
     func testLoadArchivedTasksReturnsOnlyArchivedTasks() throws {
         let backlog = TestModelContainer.createBacklog(in: context)
         let archived = TestModelContainer.createTask(in: context, title: "Archived", backlog: backlog)
-        archived.archive()
+        archived.archive(reason: .manual)
         _ = TestModelContainer.createTask(in: context, title: "Normal", status: .inBacklog, backlog: backlog)
         try context.save()
 

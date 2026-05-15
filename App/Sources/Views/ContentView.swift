@@ -24,6 +24,8 @@ struct ContentView: View {
     @State private var hasSetInitialTab = false
     @State private var showWelcome = false
     @State private var showingSettings = false
+    @State private var showAutoArchiveReview = false
+    @State private var autoArchiveReviewVM: AutoArchiveReviewViewModel?
     @Bindable private var settings: AppSettings = .shared
     #if DEBUG
     @State private var showingClearAllConfirm = false
@@ -90,6 +92,33 @@ struct ContentView: View {
             showingSettings = false
             showWelcome = true
         }
+        #else
+        return nil
+        #endif
+    }
+
+    private var advanceTimeBy24hAction: (() -> Void)? {
+        #if DEBUG
+        return {
+            DebugTimeProvider.advance()
+            _Concurrency.Task {
+                // Settings-Sheet braucht ~300 ms; warten bevor Notification das nächste Sheet triggert
+                try? await _Concurrency.Task.sleep(nanoseconds: 600_000_000)
+                // checkAndPerformResetIfNeeded nutzt timeProvider.currentDate (debug-verschobene Zeit)
+                await resetEngine?.checkAndPerformResetIfNeeded()
+                backlogViewModel?.loadBacklogs()
+                dailyFocusViewModel?.loadDailyTasks()
+                archiveViewModel?.loadAll()
+            }
+        }
+        #else
+        return nil
+        #endif
+    }
+
+    private var resetTimeOffsetAction: (() -> Void)? {
+        #if DEBUG
+        return { DebugTimeProvider.reset() }
         #else
         return nil
         #endif
@@ -163,8 +192,20 @@ struct ContentView: View {
                 onRequestShowWelcome: {
                     showingSettings = false
                     showWelcome = true
-                }
+                },
+                onRequestAdvanceTimeBy24h: advanceTimeBy24hAction,
+                onRequestResetTimeOffset: resetTimeOffsetAction
             )
+        }
+        .sheet(isPresented: $showAutoArchiveReview) {
+            if let vm = autoArchiveReviewVM {
+                AutoArchiveReviewView(viewModel: vm) {
+                    showAutoArchiveReview = false
+                }
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .dawnyDidAutoArchiveTasks)) { _ in
+            triggerAutoArchiveReviewIfNeeded()
         }
         #if DEBUG
         .alert(
@@ -344,8 +385,21 @@ struct ContentView: View {
         archiveViewModel = ArchiveViewModel(modelContext: modelContext)
     }
     
+    // MARK: - Auto-Archive Review
+
+    /// Lädt die Review-Queue und zeigt das Sheet, falls unreviewed Auto-Archive-Items existieren.
+    /// Nur wenn Welcome bereits gesehen wurde (kein Onboarding-Konflikt).
+    private func triggerAutoArchiveReviewIfNeeded() {
+        guard AppSettings.shared.hasSeenWelcome else { return }
+        let vm = AutoArchiveReviewViewModel(modelContext: modelContext)
+        vm.loadQueue()
+        guard vm.shouldPresent else { return }
+        autoArchiveReviewVM = vm
+        showAutoArchiveReview = true
+    }
+
     // MARK: - Tab Selection Logic
-    
+
     /// Prüft ob der Heute-Tab angezeigt werden soll
     /// - Returns: true wenn DailyFocus Tasks existieren
     private func shouldShowTodayTab() -> Bool {

@@ -25,6 +25,8 @@ struct SettingsView: View {
     let onRequestMarkIncompleteAndReset: (() -> Void)?
     let onRequestResetWelcome: (() -> Void)?
     let onRequestShowWelcome: (() -> Void)?
+    let onRequestAdvanceTimeBy24h: (() -> Void)?
+    let onRequestResetTimeOffset: (() -> Void)?
 
     @State private var resetTime: Date
     @State private var showingFeedbackMail = false
@@ -37,7 +39,9 @@ struct SettingsView: View {
         onRequestPerformReset: (() -> Void)? = nil,
         onRequestMarkIncompleteAndReset: (() -> Void)? = nil,
         onRequestResetWelcome: (() -> Void)? = nil,
-        onRequestShowWelcome: (() -> Void)? = nil
+        onRequestShowWelcome: (() -> Void)? = nil,
+        onRequestAdvanceTimeBy24h: (() -> Void)? = nil,
+        onRequestResetTimeOffset: (() -> Void)? = nil
     ) {
         self.settings = settings
         self.onRequestAddTestItems = onRequestAddTestItems
@@ -46,6 +50,8 @@ struct SettingsView: View {
         self.onRequestMarkIncompleteAndReset = onRequestMarkIncompleteAndReset
         self.onRequestResetWelcome = onRequestResetWelcome
         self.onRequestShowWelcome = onRequestShowWelcome
+        self.onRequestAdvanceTimeBy24h = onRequestAdvanceTimeBy24h
+        self.onRequestResetTimeOffset = onRequestResetTimeOffset
         
         // Initialisiere resetTime basierend auf resetHour
         let calendar = Calendar.current
@@ -112,8 +118,36 @@ struct SettingsView: View {
             || onRequestPerformReset != nil
             || onRequestMarkIncompleteAndReset != nil
             || onRequestResetWelcome != nil
+            || onRequestAdvanceTimeBy24h != nil
+            || onRequestResetTimeOffset != nil
         if hasAnyDebugAction {
             Section {
+                #if DEBUG
+                let offsetHours = Int(DebugTimeProvider.storedOffset / 3600)
+                if offsetHours != 0 {
+                    Label("Zeit: +\(offsetHours)h vorgerückt", systemImage: "clock.badge.exclamationmark")
+                        .foregroundStyle(.orange)
+                        .font(.caption)
+                }
+                #endif
+
+                if let onRequestAdvanceTimeBy24h {
+                    Button {
+                        onRequestAdvanceTimeBy24h()
+                        dismiss()
+                    } label: {
+                        Label("Zeit +24h & Reset", systemImage: "clock.arrow.circlepath")
+                    }
+                }
+
+                if let onRequestResetTimeOffset {
+                    Button {
+                        onRequestResetTimeOffset()
+                    } label: {
+                        Label("Zeit zurücksetzen", systemImage: "clock")
+                    }
+                }
+
                 if let onRequestAddTestItems {
                     Button {
                         onRequestAddTestItems()
