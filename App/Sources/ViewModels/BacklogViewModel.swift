@@ -732,7 +732,7 @@ final class BacklogViewModel {
             else { continue }
 
             task.isCompleted = false
-            task.archive()
+            task.archive(reason: .manual)
             if let archivedAt = Calendar.current.date(byAdding: .day, value: -item.daysAgo, to: Date()) {
                 task.archivedAt = archivedAt
                 task.modifiedAt = archivedAt

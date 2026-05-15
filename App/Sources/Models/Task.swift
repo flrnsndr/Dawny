@@ -12,6 +12,16 @@
 import Foundation
 import SwiftData
 
+// MARK: - ArchiveReason
+
+enum ArchiveReason: String, Codable {
+    case makeItCount  // dailyFocus → archived nach Make-It-Count-Threshold
+    case autoTidy     // backlog → archived nach Kategorie-Lifespan
+    case manual       // User hat selbst archiviert
+}
+
+// MARK: - Task
+
 @Model
 final class Task {
     // MARK: - Stored Properties
@@ -60,6 +70,13 @@ final class Task {
 
     /// Zeitpunkt der Archivierung (nil wenn nicht archiviert)
     var archivedAt: Date? = nil
+
+    /// Grund der Archivierung — nil wenn nicht archiviert
+    var archiveReason: ArchiveReason? = nil
+
+    /// True = User hat dieses archivierte Item bereits im Review-Overlay gesehen.
+    /// Default true, damit existierende Archive beim ersten Update nicht alle im Overlay auftauchen.
+    var archiveReviewed: Bool = true
 
     /// Zeitpunkt der manuellen Erledigung (nil wenn nicht oder noch nicht erledigt)
     var completedAt: Date? = nil
@@ -158,19 +175,23 @@ final class Task {
         enteredBacklogAt = Date()
     }
 
-    /// Archiviert den Task nach wiederholtem Nicht-Erledigen (Make it count) oder Auto-Tidy.
-    func archive() {
+    /// Archiviert den Task nach wiederholtem Nicht-Erledigen (Make it count), Auto-Tidy oder manuell.
+    func archive(reason: ArchiveReason) {
         status = .archived
         archivedAt = Date()
         scheduledDate = nil
         modifiedAt = Date()
         enteredBacklogAt = nil
+        archiveReason = reason
+        archiveReviewed = (reason == .manual)
     }
 
     /// Unarchiviert den Task zurück ins Backlog. Setzt resetCount auf 0.
     func unarchiveToBacklog() {
         status = .inBacklog
         archivedAt = nil
+        archiveReason = nil
+        archiveReviewed = true
         resetCount = 0
         sortPriority = Date()
         modifiedAt = Date()
@@ -182,6 +203,8 @@ final class Task {
         status = .dailyFocus
         scheduledDate = date
         archivedAt = nil
+        archiveReason = nil
+        archiveReviewed = true
         resetCount = 0
         modifiedAt = Date()
         enteredBacklogAt = nil
