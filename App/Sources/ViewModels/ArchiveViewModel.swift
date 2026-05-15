@@ -133,6 +133,21 @@ final class ArchiveViewModel {
         saveAndReload()
     }
 
+    // MARK: - Badge Clearing
+
+    /// Markiert alle archivierten Tasks als gesehen (archiveReviewed = true).
+    /// Wird aufgerufen wenn der Nutzer das Archiv verlässt.
+    func markAllArchiveReviewed() {
+        let descriptor = FetchDescriptor<Task>(
+            predicate: #Predicate { $0.archiveReviewed == false }
+        )
+        guard let unreviewed = try? modelContext.fetch(descriptor), !unreviewed.isEmpty else { return }
+        for task in unreviewed {
+            task.archiveReviewed = true
+        }
+        try? modelContext.save()
+    }
+
     // MARK: - Private Helpers
 
     private func task(withID id: UUID) -> Task? {
