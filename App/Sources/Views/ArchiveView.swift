@@ -269,9 +269,17 @@ private struct ArchivedTaskRowView: View {
                 HapticFeedback.light()
                 isActionDialogPresented = true
             } label: {
-                Image(systemName: "archivebox")
-                    .font(.subheadline)
-                    .foregroundStyle(.tertiary)
+                ZStack(alignment: .topTrailing) {
+                    Image(systemName: "archivebox")
+                        .font(.subheadline)
+                        .foregroundStyle(.tertiary)
+                    if !task.archiveReviewed {
+                        Circle()
+                            .fill(Color.orange)
+                            .frame(width: 7, height: 7)
+                            .offset(x: 3, y: -3)
+                    }
+                }
             }
             .buttonStyle(.plain)
 

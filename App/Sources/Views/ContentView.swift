@@ -48,43 +48,6 @@ struct ContentView: View {
         #endif
     }
 
-    private var performResetAction: (() -> Void)? {
-        #if DEBUG
-        return {
-            _Concurrency.Task {
-                await resetEngine?.performReset()
-                backlogViewModel?.loadBacklogs()
-                dailyFocusViewModel?.loadDailyTasks()
-                archiveViewModel?.loadAll()
-            }
-        }
-        #else
-        return nil
-        #endif
-    }
-
-    private var markIncompleteAndResetAction: (() -> Void)? {
-        #if DEBUG
-        return {
-            _Concurrency.Task {
-                let descriptor = FetchDescriptor<Task>()
-                if let allTasks = try? modelContext.fetch(descriptor) {
-                    for task in allTasks where task.status == .dailyFocus {
-                        task.isCompleted = false
-                    }
-                    try? modelContext.save()
-                }
-                await resetEngine?.performReset()
-                backlogViewModel?.loadBacklogs()
-                dailyFocusViewModel?.loadDailyTasks()
-                archiveViewModel?.loadAll()
-            }
-        }
-        #else
-        return nil
-        #endif
-    }
-
     private var resetWelcomeAction: (() -> Void)? {
         #if DEBUG
         return {
@@ -101,11 +64,14 @@ struct ContentView: View {
         #if DEBUG
         return {
             DebugTimeProvider.advance()
-            _Concurrency.Task {
+            // Snapshot der virtuellen Zeit direkt nach advance(), bevor der async-Hop passiert
+            let virtualNow = Date().addingTimeInterval(DebugTimeProvider.storedOffset)
+            _Concurrency.Task { @MainActor in
                 // Settings-Sheet braucht ~300 ms; warten bevor Notification das nächste Sheet triggert
                 try? await _Concurrency.Task.sleep(nanoseconds: 600_000_000)
-                // checkAndPerformResetIfNeeded nutzt timeProvider.currentDate (debug-verschobene Zeit)
-                await resetEngine?.checkAndPerformResetIfNeeded()
+                // performReset direkt aufrufen statt checkAndPerformResetIfNeeded,
+                // damit der Reset immer durchläuft unabhängig vom gespeicherten lastResetDate
+                await resetEngine?.performReset(referenceDate: virtualNow)
                 backlogViewModel?.loadBacklogs()
                 dailyFocusViewModel?.loadDailyTasks()
                 archiveViewModel?.loadAll()
@@ -186,8 +152,6 @@ struct ContentView: View {
             SettingsView(
                 onRequestAddTestItems: addTestItemsAction,
                 onRequestDeleteAll: clearAllAction,
-                onRequestPerformReset: performResetAction,
-                onRequestMarkIncompleteAndReset: markIncompleteAndResetAction,
                 onRequestResetWelcome: resetWelcomeAction,
                 onRequestShowWelcome: {
                     showingSettings = false
@@ -224,7 +188,7 @@ struct ContentView: View {
         #endif
         .onAppear {
             initializeViewModels()
-            
+
             if !hasSetInitialTab {
                 hasSetInitialTab = true
                 if shouldShowTodayTab() {
@@ -233,6 +197,12 @@ struct ContentView: View {
                 if !AppSettings.shared.hasSeenWelcome {
                     showWelcome = true
                 }
+            }
+        }
+        .onChange(of: selectedTab) { oldTab, newTab in
+            if oldTab == .archive && newTab != .archive {
+                settings.hasNewArchivedTasks = false
+                archiveViewModel?.markAllArchiveReviewed()
             }
         }
     }
@@ -283,7 +253,6 @@ struct ContentView: View {
             transaction.disablesAnimations = true
             withTransaction(transaction) {
                 selectedTab = .archive
-                settings.hasNewArchivedTasks = false
                 archiveViewModel?.loadAll()
             }
         } label: {
