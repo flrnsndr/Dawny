@@ -14,6 +14,9 @@ dist/
 DerivedData/
 .derivedData/
 
+# Generated App Store screenshots (run scripts/take-screenshots.sh to regenerate)
+screenshots/
+
 # Cursor and Claude IDEs
 .cursor/
 .claude/
@@ -58,3 +61,11 @@ pnpm-debug.log*
 
 # Persönliche Betriebsdokumente
 docs/RELEASE_RUNBOOK.md
+docs/context/AI_INPUT.md
+docs/context/QA_checklist.md
+docs/context/APP_STORE_CONNECT_CHECKLIST.md
+docs/context/PRIVACY.de.md
+docs/context/PRIVACY.en.md
+
+# AI-Tooling-Konfiguration
+CLAUDE.md
