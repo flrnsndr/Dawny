@@ -72,7 +72,7 @@ final class ArchiveViewModelTests: XCTestCase {
         _ = TestModelContainer.createTask(in: context, title: "Normal", status: .inBacklog, backlog: backlog)
         try context.save()
 
-        viewModel.loadArchivedTasks()
+        viewModel.loadAll()
 
         XCTAssertEqual(viewModel.archivedTasks.count, 1)
         XCTAssertEqual(viewModel.archivedTasks.first?.title, "Archived")
@@ -83,7 +83,7 @@ final class ArchiveViewModelTests: XCTestCase {
         _ = TestModelContainer.createTask(in: context, title: "Normal", status: .inBacklog, backlog: backlog)
         try context.save()
 
-        viewModel.loadArchivedTasks()
+        viewModel.loadAll()
 
         XCTAssertTrue(viewModel.isEmpty)
     }
@@ -127,7 +127,7 @@ final class ArchiveViewModelTests: XCTestCase {
 
     func testUnarchiveToBacklogRemovesFromArchivedList() throws {
         let task = makeArchivedTask()
-        viewModel.loadArchivedTasks()
+        viewModel.loadAll()
         XCTAssertEqual(viewModel.archivedTasks.count, 1)
 
         viewModel.unarchiveToBacklog(taskID: task.id)
@@ -200,12 +200,12 @@ final class ArchiveViewModelTests: XCTestCase {
 
     func testDeleteTaskPermanentlyDeletesTask() throws {
         let task = makeArchivedTask()
-        viewModel.loadArchivedTasks()
+        viewModel.loadAll()
         XCTAssertEqual(viewModel.archivedTasks.count, 1)
 
         viewModel.deleteTask(taskID: task.id)
 
-        viewModel.loadArchivedTasks()
+        viewModel.loadAll()
         XCTAssertEqual(viewModel.archivedTasks.count, 0)
 
         let all = try context.fetch(FetchDescriptor<Task>())
