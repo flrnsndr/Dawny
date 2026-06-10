@@ -94,7 +94,15 @@ final class DawnyUITests: XCTestCase {
     override func setUpWithError() throws {
         continueAfterFailure = false
         app = XCUIApplication()
-        app.launchArguments = ["--uitesting"]
+        // Sprache deterministisch auf Englisch zwingen. launchEnvironment allein
+        // genügt nicht — die System-Sprache (hier: Deutsch) setzt sich sonst durch.
+        // Erst die `-AppleLanguages`/`-AppleLocale` launchArguments schreiben den
+        // Override beim Start in UserDefaults (gleicher Ansatz wie ScreenshotTests).
+        app.launchArguments = [
+            "--uitesting",
+            "-AppleLanguages", "(en)",
+            "-AppleLocale", "en_US"
+        ]
         app.launchEnvironment["AppleLanguages"] = "(en)"
         app.launchEnvironment["AppleLocale"] = "en_US"
         app.launch()
@@ -208,12 +216,15 @@ final class DawnyUITests: XCTestCase {
 
         let showWelcomeButton = app.buttons["SettingsShowWelcomeButton"]
         if !showWelcomeButton.waitForExistence(timeout: 2) {
-            // Falls nicht direkt sichtbar: innerhalb des Sheets nach unten scrollen.
-            // swipeUp auf scrollViews innerhalb des Sheets (nicht auf `app` — das könnte das Sheet schließen).
-            let sheetScroll = app.scrollViews.firstMatch
+            // Das Settings-`Form` wird von einer UICollectionView getragen, nicht von
+            // einem `scrollView` — ein swipeUp auf `app.scrollViews` scrollt deshalb
+            // nichts. Stattdessen per Koordinaten innerhalb des Sheets nach oben
+            // ziehen (Inhalt hoch scrollen schließt das Sheet nicht).
             for _ in 0..<10 {
                 if showWelcomeButton.exists && showWelcomeButton.isHittable { break }
-                if sheetScroll.exists { sheetScroll.swipeUp() } else { break }
+                let start = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.8))
+                let end = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.2))
+                start.press(forDuration: 0.05, thenDragTo: end)
             }
         }
         XCTAssertTrue(showWelcomeButton.waitForExistence(timeout: 3), "Show-Welcome-Button im Settings-Sheet nicht gefunden.")
