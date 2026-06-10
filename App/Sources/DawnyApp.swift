@@ -54,7 +54,13 @@ struct DawnyApp: App {
         
         // Cross-reference for reset engine
         resetEngine.syncEngine = syncEngine
-        
+
+        #if DEBUG
+        if ScreenshotSeeder.isActive {
+            ScreenshotSeeder.prepareForLaunch()
+        }
+        #endif
+
         // Siri Shortcuts registrieren
         DawnyShortcuts.updateAppShortcutParameters()
     }
@@ -108,7 +114,13 @@ struct DawnyApp: App {
         // 5. Initialize Categories
         let categoryService = CategoryService(modelContext: modelContainer.mainContext)
         categoryService.initializeDefaultCategories()
-        
+
+        #if DEBUG
+        if ScreenshotSeeder.isActive {
+            ScreenshotSeeder.seed(into: modelContainer.mainContext)
+        }
+        #endif
+
         // 6. Reindex entities for Spotlight / Apple Intelligence
         await EntityIndexer.reindexAll()
         
