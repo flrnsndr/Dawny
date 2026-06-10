@@ -4587,13 +4587,13 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Willkommensnachricht erneut anzeigen"
+            "value": "Tutorial erneut anzeigen"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Show welcome message again"
+            "value": "Show tutorial again"
           }
         }
       }
