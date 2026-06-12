@@ -128,10 +128,16 @@ final class SyncEngine {
     /// Synchronisiert alle Daily Focus Tasks
     func syncAllDailyFocusTasks() async {
         let tasks = fetchDailyFocusTasks()
-        
+
         for task in tasks {
             await syncTaskToCalendar(task)
         }
+    }
+
+    /// Expliziter Calendar → App Sync (z. B. beim Wechsel in den Vordergrund).
+    /// Nutzt dieselben `syncInProgress`/Debounce-Guards wie der Observer-Pfad.
+    func syncNow() async {
+        await syncFromCalendar()
     }
     
     // MARK: - Private Methods
@@ -166,38 +172,53 @@ final class SyncEngine {
         lastSyncDate = Date()
         
         let tasks = fetchDailyFocusTasks()
-        
+
+        // Sammelt, ob der Sync tatsächlich Daten verändert hat – nur dann wird
+        // anschließend ein UI-Refresh-Signal gepostet (verhindert Refresh-Stürme).
+        var didChange = false
+
         for task in tasks {
             guard let reminderID = task.externalReminderID else {
                 continue
             }
-            
+
             do {
                 guard let calendarReminder = try await calendarService.fetchReminder(id: reminderID) else {
                     // Reminder wurde im Kalender gelöscht
                     await handleReminderDeleted(task: task)
+                    didChange = true
                     continue
                 }
-                
+
                 // Prüfe auf Änderungen und löse Konflikte
-                await resolveConflicts(task: task, calendarReminder: calendarReminder)
-                
+                if await resolveConflicts(task: task, calendarReminder: calendarReminder) {
+                    didChange = true
+                }
+
             } catch {
                 print("❌ Failed to fetch reminder \(reminderID): \(error)")
             }
         }
-        
+
         // Save Context
         do {
             try modelContext.save()
         } catch {
             print("❌ Failed to save sync changes: \(error)")
         }
+
+        // UI benachrichtigen, damit die ViewModels (DailyFocus/Backlog/Archive)
+        // ihre Snapshot-Listen neu laden. Nur bei echter Änderung.
+        if didChange {
+            NotificationCenter.default.post(name: .dawnyDidSyncFromCalendar, object: nil)
+        }
     }
     
     /// Löst Konflikte zwischen App und Kalender
     /// Strategie: Last-Write-Wins basierend auf Timestamps
-    private func resolveConflicts(task: Task, calendarReminder: CalendarReminder) async {
+    /// - Returns: `true`, wenn der Task durch den Kalender verändert wurde.
+    @discardableResult
+    private func resolveConflicts(task: Task, calendarReminder: CalendarReminder) async -> Bool {
         var hasChanges = false
         
         // Vergleiche Timestamps
@@ -256,8 +277,10 @@ final class SyncEngine {
         if hasChanges {
             task.modifiedAt = Date()
         }
+
+        return hasChanges
     }
-    
+
     /// Handler wenn Reminder im Kalender gelöscht wurde
     private func handleReminderDeleted(task: Task) async {
         // MVP: Automatisch aus DailyFocus entfernen
@@ -279,6 +302,14 @@ final class SyncEngine {
             return []
         }
     }
+}
+
+// MARK: - Notification Names
+
+extension Notification.Name {
+    /// Gepostet, nachdem ein Calendar → App Sync tatsächlich Daten verändert hat.
+    /// `ContentView` lauscht darauf und lädt die ViewModel-Listen neu.
+    static let dawnyDidSyncFromCalendar = Notification.Name("dawnyDidSyncFromCalendar")
 }
 
 // MARK: - NotificationCenter Extension
