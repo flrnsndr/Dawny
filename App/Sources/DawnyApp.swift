@@ -131,9 +131,12 @@ struct DawnyApp: App {
     private func handleScenePhaseChange(from oldPhase: ScenePhase, to newPhase: ScenePhase) {
         switch newPhase {
         case .active:
-            // App wurde aktiv - prüfe ob Reset nötig
+            // App wurde aktiv - prüfe ob Reset nötig, dann Reminders-Änderungen
+            // einholen (z. B. im Hintergrund abgehakte Tasks). Beide Pfade posten
+            // bei echter Änderung eine Notification, auf die ContentView neu lädt.
             _Concurrency.Task {
                 await resetEngine.checkAndPerformResetIfNeeded()
+                await syncEngine.syncNow()
             }
             
         case .background:

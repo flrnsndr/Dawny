@@ -74,7 +74,11 @@ final class ResetEngine {
 
         guard !tasksToReset.isEmpty else {
             print("✅ No tasks need reset")
-            if hasArchivedAnyTask { AppSettings.shared.hasNewArchivedTasks = true }
+            if hasArchivedAnyTask {
+                AppSettings.shared.hasNewArchivedTasks = true
+                // Auto-Tidy hat Backlog-Tasks verändert → UI neu laden lassen.
+                NotificationCenter.default.post(name: .dawnyDidReset, object: nil)
+            }
             saveLastResetDate(referenceDate)
             return
         }
@@ -125,6 +129,10 @@ final class ResetEngine {
         // Speichere Reset-Zeitpunkt und zähle Event für Review-Eligibility
         AppSettings.shared.totalResetEventCount += 1
         saveLastResetDate(referenceDate)
+
+        // Der Reset hat Tasks verändert (Recurring → Backlog, resetCount, Archiv)
+        // → UI-Listen neu laden lassen.
+        NotificationCenter.default.post(name: .dawnyDidReset, object: nil)
 
         if hasArchivedAnyTask {
             NotificationCenter.default.post(name: .dawnyDidAutoArchiveTasks, object: nil)
@@ -269,6 +277,8 @@ final class ResetEngine {
 
 extension Notification.Name {
     static let dawnyDidAutoArchiveTasks = Notification.Name("dawnyDidAutoArchiveTasks")
+    /// Gepostet, nachdem ein Reset Tasks verändert hat. `ContentView` lädt darauf die ViewModel-Listen neu.
+    static let dawnyDidReset = Notification.Name("dawnyDidReset")
 }
 
 // MARK: - Testing Helpers

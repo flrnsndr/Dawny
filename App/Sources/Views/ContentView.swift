@@ -171,6 +171,12 @@ struct ContentView: View {
         .onReceive(NotificationCenter.default.publisher(for: .dawnyDidAutoArchiveTasks)) { _ in
             triggerAutoArchiveReviewIfNeeded()
         }
+        .onReceive(NotificationCenter.default.publisher(for: .dawnyDidSyncFromCalendar)) { _ in
+            reloadAllViewModels()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .dawnyDidReset)) { _ in
+            reloadAllViewModels()
+        }
         #if DEBUG
         .alert(
             String(localized: "quickadd.deleteall", defaultValue: "Delete All Tasks"),
@@ -204,7 +210,33 @@ struct ContentView: View {
                 settings.hasNewArchivedTasks = false
                 archiveViewModel?.markAllArchiveReviewed()
             }
+            // Beim Tab-Wechsel die Zielansicht frisch laden (die Pager-Seiten bleiben
+            // alle gemountet, daher feuert ihr onAppear nur einmal beim Start).
+            // selectedTab ändert sich nur am Gestenende/Button-Tap, nicht pro Drag-Frame.
+            loadViewModel(for: newTab)
         }
+    }
+
+    /// Lädt das ViewModel der angegebenen Seite neu.
+    private func loadViewModel(for tab: Tab) {
+        switch tab {
+        case .backlog:
+            backlogViewModel?.loadBacklogs()
+            backlogViewModel?.loadCategories()
+        case .today:
+            dailyFocusViewModel?.loadDailyTasks()
+        case .archive:
+            archiveViewModel?.loadAll()
+        }
+    }
+
+    /// Lädt alle ViewModel-Listen neu. Reaktion auf Reset-/Sync-Notifications,
+    /// damit extern (Reminders) oder durch den Reset geänderte Daten überall sichtbar werden.
+    private func reloadAllViewModels() {
+        dailyFocusViewModel?.loadDailyTasks()
+        backlogViewModel?.loadBacklogs()
+        backlogViewModel?.loadCategories()
+        archiveViewModel?.loadAll()
     }
 
     private var tabSwitcher: some View {
@@ -252,8 +284,8 @@ struct ContentView: View {
             var transaction = Transaction()
             transaction.disablesAnimations = true
             withTransaction(transaction) {
+                // loadAll() läuft zentral über onChange(of: selectedTab) → loadViewModel(for:)
                 selectedTab = .archive
-                archiveViewModel?.loadAll()
             }
         } label: {
             ZStack(alignment: .topTrailing) {

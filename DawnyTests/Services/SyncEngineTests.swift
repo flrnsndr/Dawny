@@ -168,20 +168,66 @@ final class SyncEngineTests: XCTestCase {
     func testSyncAllRespectsCalendarSyncEnabled() async throws {
         // Deaktiviere Kalender-Sync
         AppSettings.shared.calendarSyncEnabled = false
-        
+
         let backlog = TestModelContainer.createBacklog(in: context)
         let task1 = TestModelContainer.createTask(in: context, title: "Task 1", status: .dailyFocus, backlog: backlog)
         let task2 = TestModelContainer.createTask(in: context, title: "Task 2", status: .dailyFocus, backlog: backlog)
-        
+
         task1.scheduledDate = Date()
         task2.scheduledDate = Date()
-        
+
         // Versuche alle zu synchronisieren
         await syncEngine.syncAllDailyFocusTasks()
-        
+
         // Sollte nicht synchronisiert werden
         XCTAssertEqual(calendarService.createCallCount, 0)
         XCTAssertNil(task1.externalReminderID)
         XCTAssertNil(task2.externalReminderID)
+    }
+
+    // MARK: - UI Refresh Notification Tests
+
+    /// Wird in Reminders eine verknüpfte Aufgabe abgehakt, muss `syncNow()` ein
+    /// `.dawnyDidSyncFromCalendar`-Signal posten, damit die ViewModels neu laden.
+    func testSyncFromCalendarPostsNotificationWhenReminderChanged() async throws {
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let task = TestModelContainer.createTask(in: context, title: "Test", status: .dailyFocus, backlog: backlog)
+        task.scheduledDate = Date()
+
+        await syncEngine.syncTaskToCalendar(task)
+        let reminderID = try XCTUnwrap(task.externalReminderID)
+
+        // Simuliere "in Reminders abgehakt": Reminder ist completed und neuer als der Task.
+        task.modifiedAt = Date(timeIntervalSinceNow: -60)
+        let existing = try XCTUnwrap(calendarService.reminders[reminderID])
+        calendarService.reminders[reminderID] = CalendarReminder(
+            id: existing.id,
+            title: existing.title,
+            notes: existing.notes,
+            isCompleted: true,
+            dueDate: existing.dueDate,
+            modificationDate: Date(timeIntervalSinceNow: 60)
+        )
+
+        let expectation = XCTNSNotificationExpectation(name: .dawnyDidSyncFromCalendar)
+        await syncEngine.syncNow()
+        await fulfillment(of: [expectation], timeout: 1.0)
+
+        XCTAssertTrue(task.isCompleted)
+    }
+
+    /// Ohne tatsächliche Änderung im Kalender darf kein Refresh-Signal gepostet werden
+    /// (verhindert unnötige Reloads / Refresh-Stürme).
+    func testSyncFromCalendarDoesNotPostNotificationWhenNothingChanged() async throws {
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let task = TestModelContainer.createTask(in: context, title: "Test", status: .dailyFocus, backlog: backlog)
+        task.scheduledDate = Date()
+
+        await syncEngine.syncTaskToCalendar(task)
+
+        let expectation = XCTNSNotificationExpectation(name: .dawnyDidSyncFromCalendar)
+        expectation.isInverted = true
+        await syncEngine.syncNow()
+        await fulfillment(of: [expectation], timeout: 0.5)
     }
 }
