@@ -120,12 +120,12 @@ Die Lösung ist architektonisch. Ein separates Backlog für alles. Eine kleine t
 
 Wenn dein Aufgabensystem nicht mehr ständige Neubewertung verlangt und stattdessen bewusste Verpflichtungen widerspiegelt, wird die Liste aufgehört, etwas zu sein, das du vermeidest, und fängst an, etwas zu sein, das du wirklich nutzt. Das ist nicht nichts. Der Unterschied zwischen einer Liste, die du jeden Morgen öffnest, und einer, die du eine Woche lang nicht angefasst hast, ist oft ein Design-Problem mit einer strukturellen Lösung.
 
-Wenn du eine Task-App testen möchtest, die auf dieser Philosophie aufgebaut ist, ist Dawny kostenlos auf TestFlight verfügbar — ohne Verpflichtung.
+Wenn du eine Task-App testen möchtest, die auf dieser Philosophie aufgebaut ist, ist Dawny im App Store verfügbar.
 
 Der Entwickler hinter Dawny hat ADHS und hat die App nach Jahren gebaut, in denen er jede verfügbare Produktivitäts-App versucht — und aufgegeben — hat.
 
 Möchtest du eine Task-App testen, die auf dieser Philosophie aufgebaut ist?
 
-Dawny ist kostenlos auf TestFlight verfügbar — ohne Verpflichtung.
+Dawny ist im App Store verfügbar — kostenloser Download.
 
-Probiere Dawny kostenlos auf TestFlight
+Lade Dawny im App Store

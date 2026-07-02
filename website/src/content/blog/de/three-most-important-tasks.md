@@ -112,12 +112,12 @@ Die Forschung über Entscheidungsfatigue und die Psychologie unvollendeter Aufga
 
 Das letzte Stück ist das, was mit den Aufgaben passiert, die du nicht fertigmachst. Ein System, das sie rot macht und sie überfällig nennt, funktioniert gegen dich. Ein System, das sie leise in dein Backlog zurückbringt, ohne Anklage. Das dir erlaubt, morgen mit frischen Augen erneut zu wählen. Das heißt nicht, die Latte senken. Das ist ehrlich gegenüber der Tatsache, dass sich Prioritäten ändern und Tage endlich sind.
 
-Wenn du eine Aufgaben-App testen möchtest, die um diese Philosophie herum gebaut ist, ist Dawny kostenlos auf TestFlight verfügbar.
+Wenn du eine Aufgaben-App testen möchtest, die um diese Philosophie herum gebaut ist, ist Dawny im App Store verfügbar.
 
 Der Entwickler hinter Dawny hat ADHS und hat die App nach Jahren des Versuchens — und Aufgebens — jeder Produktivitäts-App auf dem Markt entwickelt.
 
 Möchtest du eine Aufgaben-App testen, die um diese Philosophie herum gebaut ist?
 
-Dawny ist kostenlos auf TestFlight verfügbar — keine Verpflichtung nötig.
+Dawny ist im App Store verfügbar — kostenloser Download.
 
-Probiere Dawny kostenlos auf TestFlight
+Lade Dawny im App Store

@@ -100,12 +100,12 @@ Decision fatigue, the guilt spiral of the Zeigarnik effect, infinite accumulatio
 
 A system worth using looks different, a safe backlog for everything, a small daily list you choose deliberately, and automatic resets that prevent the guilt from building. It’s not about being more productive. It’s about removing the friction that makes you avoid the list entirely.
 
-If you want to try a task app built around this philosophy, Dawny is free to test on TestFlight.
+If you want to try a task app built around this philosophy, Dawny is available on the App Store.
     
 The developer behind Dawny has ADHD and built the app after years of trying — and abandoning — every productivity app on the market.
   
 Want to try a task app built around this philosophy?
  
-Dawny is free to test on TestFlight — no commitment required.
+Dawny is available on the App Store — free to download.
  
-Try Dawny free on TestFlight
+Download Dawny on the App Store

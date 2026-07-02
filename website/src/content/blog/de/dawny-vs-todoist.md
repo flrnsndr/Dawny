@@ -52,7 +52,7 @@ Beta-Tester beschreiben die Verschiebung deutlich:
 
 > „Seit ich Dawny benutze, habe ich keine Angst mehr, meine Aufgabenliste anzuschauen. Denn die Aufgaben, die ich ohnehin nicht erledige, werden einfach nicht mehr angezeigt." *Dawny Beta-Tester*
 
-**Ein Wort zur Transparenz:** Dawny ist derzeit eine iOS-App in öffentlicher Beta auf TestFlight. Sie hat deutlich weniger Funktionen als Todoist. Keine Unteraufgaben, keine Labels, keine Integrationen, kein Web-Zugriff, keine Team-Funktionen. Wenn dir diese Dinge wichtig sind, ist Todoist derzeit die bessere Wahl.
+**Ein Wort zur Transparenz:** Dawny ist eine iOS-App. Sie hat deutlich weniger Funktionen als Todoist. Keine Unteraufgaben, keine Labels, keine Integrationen, kein Web-Zugriff, keine Team-Funktionen. Wenn dir diese Dinge wichtig sind, ist Todoist derzeit die bessere Wahl.
 
 ## Wer sollte Todoist verwenden
 
@@ -114,7 +114,7 @@ Derzeit nicht. Dawny hat in seiner Beta kein Import-Feature. Du müsstest Aufgab
 
 ### Ist Dawny kostenlos?
 
-Ja. Dawny ist derzeit kostenlos während seiner öffentlichen Beta auf TestFlight zu nutzen. Es ist kein Abonnement erforderlich, um an der Beta teilzunehmen.
+Ja. Dawny ist im App Store kostenlos erhältlich. Es ist kein Abonnement erforderlich.
 
 ## Fazit
 
@@ -126,12 +126,12 @@ Dawny versucht nicht, Todoist in Features zu übertrumpfen. Es versucht, eine Sa
 
 Es ist eine Beta, es ist nur iOS verfügbar, und es hat weniger Funktionen als fast jede andere App in dieser Kategorie. Aber für die richtige Person ist das genau der Punkt.
 
-Wenn du eine Aufgaben-App ausprobieren möchtest, die auf dieser Philosophie aufgebaut ist, ist Dawny kostenlos auf TestFlight testbar.
+Wenn du eine Aufgaben-App ausprobieren möchtest, die auf dieser Philosophie aufgebaut ist, ist Dawny im App Store verfügbar.
 
 Der Entwickler hinter Dawny hat ADHS und hat die App nach Jahren des Ausprobierens — und Aufgebens — jeder Produktivitäts-App auf dem Markt gebaut.
 
 Möchtest du eine Aufgaben-App ausprobieren, die auf dieser Philosophie aufgebaut ist?
 
-Dawny ist kostenlos auf TestFlight testbar — ohne Verpflichtung.
+Dawny ist im App Store verfügbar — kostenloser Download.
 
-Probiere Dawny kostenlos auf TestFlight aus
+Lade Dawny im App Store

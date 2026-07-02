@@ -100,12 +100,12 @@ Entscheidungsmüdigkeit, die Schuldgefühl-Spirale des Zeigarnik-Effekts, unendl
 
 Ein System, das es wert ist zu nutzen, sieht anders aus: ein sicherer Backlog für alles, eine kleine Tagesliste, die du bewusst wählst, und automatische Resets, die verhindern, dass sich Schuldgefühle aufbauen. Es geht nicht darum, produktiver zu sein. Es geht darum, die Reibung zu entfernen, die dich dazu bringt, die Liste komplett zu ignorieren.
 
-Wenn du eine Task-App testen möchtest, die auf dieser Philosophie aufgebaut ist, ist Dawny kostenlos auf TestFlight verfügbar.
+Wenn du eine Task-App testen möchtest, die auf dieser Philosophie aufgebaut ist, ist Dawny im App Store verfügbar.
 
 Der Entwickler hinter Dawny hat ADHS und hat die App nach Jahren des Versuchens — und Aufgebens — von jeder Produktivitäts-App auf dem Markt entwickelt.
 
 Möchtest du eine Task-App testen, die auf dieser Philosophie aufgebaut ist?
 
-Dawny ist kostenlos auf TestFlight verfügbar — keine Verpflichtung erforderlich.
+Dawny ist im App Store verfügbar — kostenloser Download.
 
-Dawny kostenlos auf TestFlight testen
+Dawny im App Store laden

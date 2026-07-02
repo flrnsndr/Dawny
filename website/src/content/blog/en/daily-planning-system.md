@@ -158,12 +158,12 @@ The five-step framework in this guide (capture, choose, protect, reset, review) 
 
 The relationship between you and your task list should not feel adversarial. It should feel like a tool that helps you make good decisions — one that resets cleanly when the day is done and starts fresh when the next one begins.
 
-If you want to try a task app built around this philosophy, Dawny is free to test on TestFlight.
+If you want to try a task app built around this philosophy, Dawny is available on the App Store.
     
 The developer behind Dawny has ADHD and built the app after years of trying — and abandoning — every productivity app on the market.
   
 Want to try a task app built around this philosophy?
  
-Dawny is free to test on TestFlight — no commitment required.
+Dawny is available on the App Store — free to download.
  
-Try Dawny free on TestFlight
+Download Dawny on the App Store

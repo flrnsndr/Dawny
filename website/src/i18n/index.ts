@@ -32,6 +32,6 @@ export function alternateLang(lang: Lang): Lang {
   return lang === "en" ? "de" : "en";
 }
 
-export const TESTFLIGHT_URL = "https://testflight.apple.com/join/758Xfan6";
+export const APP_STORE_URL = "https://apps.apple.com/app/id6762262959";
 export const GITHUB_URL = "https://github.com/flrnsndr/Dawny";
 export const CONTACT_EMAIL = "info@dawnyapp.com";

@@ -112,12 +112,12 @@ Separating your tasks into a backlog and a daily focus list changes the emotiona
 
 The two-list system isn’t a new idea. But it remains one of the most effective structures available, precisely because it matches how humans actually make decisions, one day at a time, with a reasonable number of choices, in a context where they don’t feel guilty for what they didn’t do yesterday.
 
-If you want to try a task app built around this philosophy, Dawny is free to test on TestFlight.
+If you want to try a task app built around this philosophy, Dawny is available on the App Store.
     
 The developer behind Dawny has ADHD and built the app after years of trying — and abandoning — every productivity app on the market.
   
 Want to try a task app built around this philosophy?
  
-Dawny is free to test on TestFlight — no commitment required.
+Dawny is available on the App Store — free to download.
  
-Try Dawny free on TestFlight
+Download Dawny on the App Store

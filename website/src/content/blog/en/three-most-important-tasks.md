@@ -112,12 +112,12 @@ The research on decision fatigue and the psychology of incomplete tasks both poi
 
 The final piece is what happens to the tasks you don’t finish. A system that turns them red and calls them overdue is working against you. A system that returns them to your backlog, quietly, without accusation. Lets you choose again tomorrow with fresh eyes. That’s not lowering the bar. That’s being honest about the fact that priorities change and days are finite.
 
-If you want to try a task app built around this philosophy, Dawny is free to test on TestFlight.
+If you want to try a task app built around this philosophy, Dawny is available on the App Store.
     
 The developer behind Dawny has ADHD and built the app after years of trying — and abandoning — every productivity app on the market.
   
 Want to try a task app built around this philosophy?
  
-Dawny is free to test on TestFlight — no commitment required.
+Dawny is available on the App Store — free to download.
  
-Try Dawny free on TestFlight
+Download Dawny on the App Store

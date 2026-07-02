@@ -112,12 +112,12 @@ Das Trennen deiner Aufgaben in einen Backlog und eine Daily-Focus-Liste ändert 
 
 Das Zwei-Listen-System ist keine neue Idee. Aber es bleibt eine der effektivsten verfügbaren Strukturen, genau weil sie passt, wie Menschen tatsächlich Entscheidungen treffen: einen Tag nach dem anderen, mit einer vernünftigen Anzahl von Wahlmöglichkeiten, in einem Kontext, in dem sie sich nicht schuldig über das fühlen, was sie gestern nicht getan haben.
 
-Wenn du eine Task-App ausprobieren möchtest, die auf dieser Philosophie basiert, kannst du Dawny kostenlos auf TestFlight testen.
+Wenn du eine Task-App ausprobieren möchtest, die auf dieser Philosophie basiert, kannst du Dawny im App Store laden.
 
 Der Entwickler hinter Dawny hat ADHS und hat die App nach Jahren gebaut, in denen er alle Produktivitäts-Apps auf dem Markt ausprobiert und aufgegeben hat.
 
 Möchtest du eine Task-App ausprobieren, die auf dieser Philosophie basiert?
 
-Dawny ist kostenlos auf TestFlight zum Testen verfügbar — keine Verpflichtung erforderlich.
+Dawny ist im App Store verfügbar — kostenloser Download.
 
-Dawny kostenlos auf TestFlight ausprobieren
+Dawny im App Store laden
