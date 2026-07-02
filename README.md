@@ -6,18 +6,14 @@
 </p>
 
 <p align="center">
-  <img alt="Platform" src="https://img.shields.io/badge/platform-iOS%2026.2%2B-blue">
+  <img alt="Platform" src="https://img.shields.io/badge/platform-iOS-blue">
   <img alt="Swift" src="https://img.shields.io/badge/Swift-6-orange">
-  <img alt="UI" src="https://img.shields.io/badge/UI-SwiftUI-0A84FF">
-  <img alt="Persistence" src="https://img.shields.io/badge/Data-SwiftData-34C759">
-  <img alt="Dependencies" src="https://img.shields.io/badge/dependencies-zero-brightgreen">
-  <img alt="Status" src="https://img.shields.io/badge/status-beta-yellow">
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-lightgrey"></a>
 </p>
 
 <p align="center">
-  <a href="https://testflight.apple.com/join/758Xfan6">
-    <img alt="Join the TestFlight Beta" src="https://img.shields.io/badge/TestFlight-Join%20the%20Beta-000000?style=for-the-badge&logo=apple">
+  <a href="https://apps.apple.com/app/id6762262959">
+    <img alt="Download on the App Store" src="https://img.shields.io/badge/Download%20on%20the-App%20Store-000000?style=for-the-badge&logo=apple&logoColor=white">
   </a>
 </p>
 
@@ -35,7 +31,7 @@ The codebase is Swift 6 with SwiftUI and SwiftData, zero third-party dependencie
 
 ## Getting Dawny
 
-Install via the [TestFlight beta](https://testflight.apple.com/join/758Xfan6). Dawny will be available on the App Store soon. Any feedback before the 1.0 release is much appreciated.
+Dawny is available as a free download on the [App Store](https://apps.apple.com/app/id6762262959).
 
 ---
 

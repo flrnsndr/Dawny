@@ -48,7 +48,7 @@ website/
 │   ├── robots.txt
 │   └── .htaccess               # Apache config for IONOS
 ├── scripts/
-│   ├── generate-qr.mjs         # builds the TestFlight QR
+│   ├── generate-qr.mjs         # builds the App Store QR
 │   ├── generate-og.mjs         # builds the OpenGraph card
 │   └── deploy-ionos.mjs        # FTPS deploy script
 └── astro.config.mjs
@@ -69,7 +69,7 @@ matching dictionary based on the route's language prefix.
 `npm run dev` and `npm run build` both run `scripts/generate-qr.mjs` and
 `scripts/generate-og.mjs` first:
 
-- **QR code** points to the TestFlight invite (`/public/assets/qr-testflight.svg`).
+- **QR code** points to the App Store listing (`/public/assets/qr-appstore.svg`).
   Edit the URL inside `scripts/generate-qr.mjs` if it ever changes.
 - **OG image** is rendered from an inline SVG via `sharp` to
   `/public/og-image.png` (1200×630).
@@ -117,8 +117,7 @@ Add these repository secrets in **Settings → Secrets and variables → Actions
 
 ## Next steps (post-launch)
 
-- Drop in real App Store badges once Dawny exits TestFlight.
-- Add an FAQ page when 5+ recurring questions emerge from beta feedback.
+- Add an FAQ page when 5+ recurring questions emerge from user feedback.
 - Consider a press kit page with high-res logos & screenshots once requested.
 
 ## License
