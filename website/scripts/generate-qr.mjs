@@ -6,8 +6,8 @@ import QRCode from "qrcode";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = resolve(__dirname, "..");
-const outputPath = resolve(projectRoot, "public/assets/qr-testflight.svg");
-const url = "https://testflight.apple.com/join/h9JSWasd";
+const outputPath = resolve(projectRoot, "public/assets/qr-appstore.svg");
+const url = "https://apps.apple.com/app/id6762262959";
 
 const svg = await QRCode.toString(url, {
   type: "svg",
@@ -23,7 +23,7 @@ const svg = await QRCode.toString(url, {
 const cleaned = svg
   .replace(/<\?xml[^>]*\?>\n?/, "")
   .replace(/<!DOCTYPE[^>]*>\n?/, "")
-  .replace(/shape-rendering="crispEdges"/, 'shape-rendering="crispEdges" role="img" aria-label="TestFlight QR code"');
+  .replace(/shape-rendering="crispEdges"/, 'shape-rendering="crispEdges" role="img" aria-label="App Store QR code"');
 
 mkdirSync(dirname(outputPath), { recursive: true });
 writeFileSync(outputPath, cleaned, "utf8");

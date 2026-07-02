@@ -114,12 +114,12 @@ Die Produktivitäts-Tools, die sich am mächtigsten anfühlen — diejenigen mit
 
 Die Alternative ist nicht, aus ästhetischen Gründen minimalistisch zu sein. Es geht darum, dein System so zu gestalten, dass es so wenig wie möglich von dir verlangt und dir die mentale Bandbreite zurückgibt, um deine beste Arbeit zu leisten. Das bedeutet kürzere Tages-Listen, automatische Bereinigung ungetaner Aufgaben und eine saubere Trennung zwischen deinem Daily Focus und allem anderen, das in den Flügeln wartet. Einfachere Systeme gewinnen nicht, weil sie einfacher sind, sondern weil sie die Grenzen menschlicher Aufmerksamkeit respektieren.
 
-Wenn du eine Task-App testen möchtest, die auf dieser Philosophie aufgebaut ist, kannst du Dawny kostenlos auf TestFlight ausprobieren.
+Wenn du eine Task-App testen möchtest, die auf dieser Philosophie aufgebaut ist, kannst du Dawny im App Store laden.
 
 Der Entwickler hinter Dawny hat ADHD und hat die App nach Jahren des Versuchens — und Aufgebens — jeder Produktivitäts-App auf dem Markt gebaut.
 
 Möchtest du eine Task-App testen, die auf dieser Philosophie aufgebaut ist?
 
-Dawny ist kostenlos auf TestFlight zum Testen — keine Verpflichtung erforderlich.
+Dawny ist im App Store verfügbar — kostenloser Download.
 
-Probiere Dawny kostenlos auf TestFlight
+Lade Dawny im App Store

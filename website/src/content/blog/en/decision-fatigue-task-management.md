@@ -120,12 +120,12 @@ The fix is architectural. A separate backlog for everything. A small daily list 
 
 When your task system stops demanding constant re-evaluation and starts reflecting deliberate commitments, the list stops being something you avoid and starts being something you actually use. That’s not a small thing. The difference between a list you open every morning and one you haven’t touched in a week is, more often than not, a design problem with a structural solution.
 
-If you want to try a task app built around this philosophy, Dawny is free to test on TestFlight.
+If you want to try a task app built around this philosophy, Dawny is available on the App Store.
     
 The developer behind Dawny has ADHD and built the app after years of trying — and abandoning — every productivity app on the market.
   
 Want to try a task app built around this philosophy?
  
-Dawny is free to test on TestFlight — no commitment required.
+Dawny is available on the App Store — free to download.
  
-Try Dawny free on TestFlight
+Download Dawny on the App Store

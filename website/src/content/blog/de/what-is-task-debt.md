@@ -106,12 +106,12 @@ Aufgaben-Schuld ist real, sie ist häufig und sie ist kein Charakterfehler. Sie 
 
 Die Lösung ist nicht ein aggressiveres System mit härteren Fristen und mehr roten Indikatoren. Es ist ein System, das unvollendete Aufgaben nicht als Fehlschläge behandelt, sondern als unentschiedene Wahlmöglichkeiten. Eines, das täglich zurückgesetzt wird, deine aktive Liste klein hält und Muster über die Zeit hinweg für dich offenbaren lässt, anstatt dich zu zwingen, alles manuell zu verwalten. Diese Verschiebung, von Schuld zu Reset, ändert die ganze Beziehung zu deiner Aufgabenliste.
 
-Wenn du eine Task-App testen möchtest, die auf dieser Philosophie aufbaut, ist Dawny kostenlos auf TestFlight verfügbar.
+Wenn du eine Task-App testen möchtest, die auf dieser Philosophie aufbaut, ist Dawny im App Store verfügbar.
     
 Der Entwickler hinter Dawny hat ADHS und hat die App nach Jahren des Ausprobierens — und Aufgebens — jeder Produktivitäts-App auf dem Markt entwickelt.
   
 Möchtest du eine Task-App testen, die auf dieser Philosophie aufbaut?
  
-Dawny ist kostenlos auf TestFlight verfügbar — ohne Bindung.
+Dawny ist im App Store verfügbar — kostenloser Download.
  
-Probiere Dawny kostenlos auf TestFlight
+Lade Dawny im App Store

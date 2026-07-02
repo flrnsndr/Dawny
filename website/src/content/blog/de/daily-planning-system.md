@@ -158,12 +158,12 @@ Das Fünf-Schritte-Framework in diesem Leitfaden (Erfassung, Auswahl, Schutz, Re
 
 Die Beziehung zwischen dir und deiner Task-Liste sollte sich nicht wie ein Gegensatz anfühlen. Sie sollte sich wie ein Tool anfühlen, das dir hilft, gute Entscheidungen zu treffen – eines das sauber reset wenn der Tag vorbei ist und frisch startet wenn der nächste beginnt.
 
-Wenn du eine Task-App testen möchtest, die auf dieser Philosophie gebaut ist, ist Dawny kostenlos auf TestFlight verfügbar.
+Wenn du eine Task-App testen möchtest, die auf dieser Philosophie gebaut ist, ist Dawny im App Store verfügbar.
     
 Der Entwickler hinter Dawny hat ADHD und baute die App nach Jahren des Versuchens – und Aufgebens – jeder Produktivitäts-App auf dem Markt.
   
 Möchtest du eine Task-App testen, die auf dieser Philosophie gebaut ist?
  
-Dawny ist kostenlos auf TestFlight verfügbar – keine Verpflichtung notwendig.
+Dawny ist im App Store verfügbar – kostenloser Download.
  
-Testen Dawny kostenlos auf TestFlight
+Lade Dawny im App Store

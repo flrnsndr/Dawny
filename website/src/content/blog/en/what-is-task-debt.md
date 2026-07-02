@@ -106,12 +106,12 @@ Task debt is real, it’s common, and it’s not a character flaw. It’s what h
 
 The solution isn’t a more aggressive system with harder deadlines and more red indicators. It’s a system that treats unfinished tasks not as failures, but as undecided choices. One that resets daily, keeps your active list small, and lets patterns reveal themselves over time rather than forcing you to maintain everything manually. That shift, from debt to reset, changes the entire relationship with your task list.
 
-If you want to try a task app built around this philosophy, Dawny is free to test on TestFlight.
+If you want to try a task app built around this philosophy, Dawny is available on the App Store.
     
 The developer behind Dawny has ADHD and built the app after years of trying — and abandoning — every productivity app on the market.
   
 Want to try a task app built around this philosophy?
  
-Dawny is free to test on TestFlight — no commitment required.
+Dawny is available on the App Store — free to download.
  
-Try Dawny free on TestFlight
+Download Dawny on the App Store

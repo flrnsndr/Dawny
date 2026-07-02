@@ -7,13 +7,13 @@
   "nav": {
     "skipToContent": "Skip to content",
     "languageLabel": "Language",
-    "testflight": "TestFlight"
+    "appStore": "App Store"
   },
   "hero": {
-    "eyebrow": "iOS · TestFlight Beta",
+    "eyebrow": "For people who hate to-do lists",
     "headline": ["A task app that deletes", "yesterday's tasks.", "On purpose."],
     "sub": ["No more abandoned tasks dragging you down.", "Dawny sweeps away the digital baggage of yesterday, helping you focus on what matters now."],
-    "ctaPrimary": "Join the TestFlight Beta",
+    "ctaPrimary": "Download on the App Store",
     "ctaSecondary": "Read the articles"
   },
   "manifesto": {
@@ -100,14 +100,14 @@
     }
   },
   "finalCta": {
-    "eyebrow": "Beta",
+    "eyebrow": "Available now",
     "title": {
       "line1": "Start fresh.",
       "line2": "Every day."
     },
-    "body": "Dawny is currently in TestFlight. Your feedback directly shapes the product.",
-    "cta": "Join the TestFlight Beta",
-    "qrAlt": "Scan to open TestFlight on iOS"
+    "body": "Dawny is out now on the App Store. Free to download — start with a clean slate today.",
+    "cta": "Download on the App Store",
+    "qrAlt": "Scan to open Dawny in the App Store"
   },
   "footer": {
     "tagline": "A task app that deletes yesterday's tasks. On purpose.",

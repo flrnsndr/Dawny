@@ -74,7 +74,7 @@ Beta testers describe the shift clearly,
 
 > "Since using Dawny, I'm no longer afraid to look at my task list. Because the tasks I won't complete anyway simply don't show up anymore.", *Dawny beta tester*
 
-**A note on transparency,** Dawny is currently an iOS-only app in public beta on TestFlight. It has significantly fewer features than Todoist. No subtasks, no labels, no integrations, no web access, no team features. If those things matter to you, Todoist is the better choice right now.
+**A note on transparency,** Dawny is an iOS-only app. It has significantly fewer features than Todoist. No subtasks, no labels, no integrations, no web access, no team features. If those things matter to you, Todoist is the better choice right now.
 
 ---
 
@@ -136,7 +136,7 @@ Not currently. Dawny does not have an import feature in its beta. You would need
 
 ### Is Dawny free?
 
-Yes. Dawny is currently free to use during its public beta on TestFlight. There is no subscription required to join the beta.
+Yes. Dawny is free to download on the App Store. There is no subscription required.
 
 ---
 
@@ -150,4 +150,4 @@ Dawny is not trying to out-feature Todoist. It is trying to do one thing differe
 
 It is a beta, it is iOS-only, and it has fewer features than almost every other app in this category. But for the right person, that is exactly the point.
 
-If you want to try a task app built around this philosophy, [Dawny](https://testflight.apple.com/join/758Xfan6) is free to test on TestFlight.
+If you want to try a task app built around this philosophy, [Dawny](https://apps.apple.com/app/id6762262959) is available on the App Store.

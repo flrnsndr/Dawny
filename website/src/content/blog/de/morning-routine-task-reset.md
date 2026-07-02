@@ -126,12 +126,12 @@ Diese Entscheidung dauert fünf Minuten. Es erfordert das Wählen von 2–3 Aufg
 
 Die Reset-Philosophie — wo unvollendete Aufgaben über Nacht ins Backlog zurückkehren, anstatt als überfällige Elemente zu akkumulieren — macht die Morgen-Entscheidung wirklich sauber. Du wählst nicht, welche Fehler zu retten. Du wählst, welche von Heute's Gelegenheiten. Diese Verschiebung des Rahmens ist klein aber tiefgreifend. Wenn du erleben möchtest, wie sich das in der Praxis anfühlt, ist der Artikel über das Wählen deiner drei wichtigsten Aufgaben ein nützlicher nächster Schritt.
 
-Wenn du eine Aufgaben-App ausprobieren möchtest, die um diese Philosophie herum gebaut ist, ist Dawny frei zu testen auf TestFlight.
+Wenn du eine Aufgaben-App ausprobieren möchtest, die um diese Philosophie herum gebaut ist, ist Dawny im App Store verfügbar.
 
 Der Entwickler hinter Dawny hat ADHS und hat die App nach Jahren des Versuchens — und des Aufgebens — aller Produktivitäts-Apps auf dem Markt gebaut.
 
 Möchtest du eine Aufgaben-App ausprobieren, die um diese Philosophie herum gebaut ist?
 
-Dawny ist frei zu testen auf TestFlight — keine Verpflichtung erforderlich.
+Dawny ist im App Store verfügbar — kostenloser Download.
 
-Probiere Dawny kostenlos auf TestFlight
+Lade Dawny im App Store

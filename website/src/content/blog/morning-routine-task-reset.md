@@ -132,4 +132,4 @@ That decision takes five minutes. It requires choosing 2–3 tasks from a clear,
 
 The reset philosophy. Where unfinished tasks return to the backlog overnight rather than accumulating as overdue items. Makes the morning decision genuinely clean. You're not choosing which failures to rescue. You're choosing what today's opportunities are. That shift in framing is small but profound. If you want to experience what that feels like in practice, the article on choosing your [three most important tasks](/en/blog/three-most-important-tasks/) is a useful next step.
 
-If you want to try a task app built around this philosophy, [Dawny](https://testflight.apple.com/join/758Xfan6) is free to test on TestFlight.
+If you want to try a task app built around this philosophy, [Dawny](https://apps.apple.com/app/id6762262959) is available on the App Store.

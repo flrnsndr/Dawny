@@ -125,12 +125,12 @@ The most common mistake in productivity app design for ADHD brains isn’t a mis
 
 The developer behind Dawny built the app because he had ADHD and kept hitting this exact wall. Not to build a productivity product. To stop dreading his own task list. The result isn’t an app with ADHD features. It’s an app where the usual sources of friction have been removed. Tasks reset instead of becoming overdue. The daily view is intentionally small. Nothing punishes you for being human.
 
-If you want to try a task app built around this philosophy, Dawny is free to test on TestFlight.
+If you want to try a task app built around this philosophy, Dawny is available on the App Store.
     
 The developer behind Dawny has ADHD and built the app after years of trying — and abandoning — every productivity app on the market.
   
 Want to try a task app built around this philosophy?
  
-Dawny is free to test on TestFlight — no commitment required.
+Dawny is available on the App Store — free to download.
  
-Try Dawny free on TestFlight
+Download Dawny on the App Store

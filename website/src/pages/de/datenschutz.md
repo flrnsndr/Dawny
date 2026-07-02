@@ -72,7 +72,7 @@ Dawny tracked nicht und ruft daher den **App-Tracking-Transparenz-Dialog (ATT)**
 
 ## 6. Apple als Plattform
 
-Dawny läuft auf iOS und nutzt Apple-Dienste (App Store, TestFlight, iCloud, Siri, Reminders, Calendar). Für die Datenverarbeitung durch Apple gilt [Apples Datenschutzrichtlinie](https://www.apple.com/legal/privacy/de-ww/), auf die der Entwickler keinen Einfluss hat.
+Dawny läuft auf iOS und nutzt Apple-Dienste (App Store, iCloud, Siri, Reminders, Calendar). Für die Datenverarbeitung durch Apple gilt [Apples Datenschutzrichtlinie](https://www.apple.com/legal/privacy/de-ww/), auf die der Entwickler keinen Einfluss hat.
 
 ## 7. Deine Rechte
 
@@ -107,7 +107,7 @@ Zur Reichweiten- und Conversion-Messung setzt diese Webseite **PostHog** ein –
 
 **Wie es funktioniert:** Beim Seitenaufruf werden IP-Adresse und User-Agent an PostHog-Server in Frankfurt übertragen. PostHog erzeugt daraus einen **irreversiblen Hash** (`Hash aus Team-ID + Tages-Salt + IP + User-Agent + Hostname`). Der Tages-Salt rotiert täglich und wird nach Verarbeitung gelöscht. Aus dem Hash lassen sich keine personenbezogenen Daten zurückgewinnen.
 
-**Erfasste Informationen:** Seitenaufrufe, ungefähre Verweildauer, Scroll-Tiefe, Gerätetyp, Browser, Betriebssystem, ungefähre geographische Region (aus IP abgeleitet, nicht gespeichert), Referrer und UTM-Parameter sowie explizit gemessene Klicks auf Download-/TestFlight-Buttons.
+**Erfasste Informationen:** Seitenaufrufe, ungefähre Verweildauer, Scroll-Tiefe, Gerätetyp, Browser, Betriebssystem, ungefähre geographische Region (aus IP abgeleitet, nicht gespeichert), Referrer und UTM-Parameter sowie explizit gemessene Klicks auf App-Store-Download-Buttons.
 
 **Rechtsgrundlage:** Berechtigtes Interesse an der Reichweitenmessung und Verbesserung der Webseite (Art. 6 Abs. 1 lit. f DSGVO). Da keine Informationen auf deinem Endgerät gespeichert werden, ist keine Einwilligung nach § 25 TDDDG erforderlich.
 

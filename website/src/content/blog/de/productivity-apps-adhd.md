@@ -125,12 +125,12 @@ Der häufigste Fehler im Produktivitäts-App-Design für ADHS-Gehirne ist nicht 
 
 Der Entwickler hinter Dawny hat die App gebaut, weil er ADHS hat und immer wieder auf diese gleiche Mauer stößt. Nicht um ein Produktivitätsprodukt zu bauen. Um aufzuhören, seine eigene Aufgabenliste zu fürchten. Das Resultat ist nicht eine App mit ADHS-Funktionen. Es ist eine App, bei der die üblichen Quellen von Reibung entfernt wurden. Aufgaben setzen sich zurück, statt überfällig zu werden. Die tägliche Ansicht ist bewusst klein. Nichts bestraft dich dafür, menschlich zu sein.
 
-Wenn du eine Task-App probieren möchtest, die um diese Philosophie gebaut ist, ist Dawny kostenlos auf TestFlight zu testen.
+Wenn du eine Task-App probieren möchtest, die um diese Philosophie gebaut ist, ist Dawny im App Store verfügbar.
     
 Der Entwickler hinter Dawny hat ADHS und hat die App nach Jahren des Ausprobierens — und Aufgebens — jeder Produktivitäts-App auf dem Markt gebaut.
   
 Möchtest du eine Task-App probieren, die um diese Philosophie gebaut ist?
  
-Dawny ist kostenlos auf TestFlight zu testen — keine Verpflichtung notwendig.
+Dawny ist im App Store verfügbar — kostenloser Download.
  
-Probiere Dawny kostenlos auf TestFlight
+Lade Dawny im App Store

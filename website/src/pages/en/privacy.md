@@ -72,7 +72,7 @@ Dawny does not track and therefore does not present the **App Tracking Transpare
 
 ## 6. Apple as the platform
 
-Dawny runs on iOS and uses Apple services (App Store, TestFlight, iCloud, Siri, Reminders, Calendar). For data processing by Apple, [Apple's Privacy Policy](https://www.apple.com/legal/privacy/en-ww/) applies, over which the developer has no control.
+Dawny runs on iOS and uses Apple services (App Store, iCloud, Siri, Reminders, Calendar). For data processing by Apple, [Apple's Privacy Policy](https://www.apple.com/legal/privacy/en-ww/) applies, over which the developer has no control.
 
 ## 7. Your rights
 
@@ -107,7 +107,7 @@ For audience measurement and conversion tracking, this website uses **PostHog** 
 
 **How it works:** When you visit a page, your IP address and user agent are sent to PostHog servers in Frankfurt. PostHog generates an **irreversible hash** (`hash of team ID + daily salt + IP + user agent + hostname`). The daily salt rotates every day and is deleted after processing. No personal data can be derived from the hash.
 
-**Information collected:** Page views, approximate time on page, scroll depth, device type, browser, operating system, approximate geographic region (derived from IP, not stored), referrer and UTM parameters, and explicitly measured clicks on Download/TestFlight buttons.
+**Information collected:** Page views, approximate time on page, scroll depth, device type, browser, operating system, approximate geographic region (derived from IP, not stored), referrer and UTM parameters, and explicitly measured clicks on App Store download buttons.
 
 **Legal basis:** Legitimate interest in audience measurement and website improvement (Art. 6(1)(f) GDPR). Since no information is stored on your device, consent under the ePrivacy Directive is not required.
 

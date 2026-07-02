@@ -7,13 +7,13 @@
   "nav": {
     "skipToContent": "Zum Inhalt springen",
     "languageLabel": "Sprache",
-    "testflight": "TestFlight"
+    "appStore": "App Store"
   },
   "hero": {
-    "eyebrow": "iOS · TestFlight Beta",
+    "eyebrow": "Für alle, die To-do-Listen hassen",
     "headline": ["Eine To Do App, die", "deine Aufgaben löscht.", "Absichtlich."],
     "sub": ["Was gestern offen blieb, blockiert heute nicht.", "Du entscheidest jeden Morgen neu, was wirklich zählt."],
-    "ctaPrimary": "TestFlight-Beta beitreten",
+    "ctaPrimary": "Laden im App Store",
     "ctaSecondary": "Artikel lesen"
   },
   "manifesto": {
@@ -100,14 +100,14 @@
     }
   },
   "finalCta": {
-    "eyebrow": "Beta",
+    "eyebrow": "Jetzt verfügbar",
     "title": {
       "line1": "Frisch starten.",
       "line2": "Jeden Tag."
     },
-    "body": "Dawny ist aktuell in der TestFlight-Beta. Dein Feedback formt das Produkt direkt mit.",
-    "cta": "TestFlight-Beta beitreten",
-    "qrAlt": "QR-Code scannen, um TestFlight auf iOS zu öffnen"
+    "body": "Dawny ist jetzt im App Store. Kostenloser Download — starte heute mit einer leeren Liste.",
+    "cta": "Laden im App Store",
+    "qrAlt": "QR-Code scannen, um Dawny im App Store zu öffnen"
   },
   "footer": {
     "tagline": "Eine To Do App, die Aufgaben von gestern löscht. Absichtlich.",
