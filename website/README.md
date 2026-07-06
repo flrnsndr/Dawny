@@ -122,5 +122,5 @@ Add these repository secrets in **Settings → Secrets and variables → Actions
 
 ## License
 
-Source under the same PolyForm Noncommercial 1.0.0 license as the parent
-repo. The Dawny name and logo remain trademarks of Florian Schneider.
+Source under the same MIT License as the parent repo. The Dawny name and
+logo remain trademarks of Florian Schneider.

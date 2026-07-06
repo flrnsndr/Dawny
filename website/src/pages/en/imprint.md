@@ -41,4 +41,4 @@ Our offer contains links to external websites of third parties, on whose content
 
 ## Copyright
 
-The content and works created by the site operator on these pages are subject to German copyright law. The "Dawny" name, the Dawny logo, and the app icon are trademarks of Florian Schneider. The source code of the app is source-available under the PolyForm Noncommercial License 1.0.0.
+The content and works created by the site operator on these pages are subject to German copyright law. The "Dawny" name, the Dawny logo, and the app icon are trademarks of Florian Schneider. The source code of the app is open source under the MIT License.

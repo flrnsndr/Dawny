@@ -41,4 +41,4 @@ Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir
 
 ## Urheberrecht
 
-Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Marke „Dawny", das Dawny-Logo und das App-Icon sind Marken von Florian Schneider. Der Quellcode der App ist quelloffen unter der PolyForm Noncommercial License 1.0.0 verfügbar.
+Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Marke „Dawny", das Dawny-Logo und das App-Icon sind Marken von Florian Schneider. Der Quellcode der App ist Open Source unter der MIT-Lizenz verfügbar.

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
-# Adds a PolyForm Noncommercial 1.0.0 license header to every .swift file
-# in the project. Idempotent: skips files that already contain the header.
+# Adds an MIT license header to every .swift file in the project.
+# Idempotent: skips files that already contain the header.
 #
 # Usage:
 #   ./scripts/add-license-headers.sh         # dry-run, lists files that would change
@@ -16,9 +16,9 @@ if [[ "${1:-}" == "--write" ]]; then
   WRITE=1
 fi
 
-HEADER_MARKER="Licensed under PolyForm Noncommercial 1.0.0"
+HEADER_MARKER="Licensed under the MIT License"
 
-HEADER=$'// Dawny\n// Copyright (c) 2025-2026 Florian Schneider. All rights reserved.\n// Licensed under PolyForm Noncommercial 1.0.0 \xe2\x80\x94 see LICENSE in the repository root.\n\n'
+HEADER=$'// Dawny\n// Copyright (c) 2025-2026 Florian Schneider\n// Licensed under the MIT License \xe2\x80\x94 see LICENSE in the repository root.\n\n'
 
 DIRS=("App" "DawnyTests")
 
