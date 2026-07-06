@@ -8,7 +8,7 @@
 <p align="center">
   <img alt="Platform" src="https://img.shields.io/badge/platform-iOS-blue">
   <img alt="Swift" src="https://img.shields.io/badge/Swift-6-orange">
-  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-lightgrey"></a>
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-blue"></a>
 </p>
 
 <p align="center">
@@ -102,10 +102,6 @@ Dawny/
 
 ## License
 
-Dawny is **source-available, not open source**.
+The source code in this repository is licensed under the [MIT License](LICENSE).
 
-The source code in this repository is licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE). In short: you may read, study, modify, and use the code for personal, educational, research, hobby, and other noncommercial purposes. You may **not** use the code (in original or modified form) as part of any product or service that generates revenue, including paid apps, ad-supported apps, or apps with in-app purchases.
-
-The name "Dawny", the Dawny logo, and the app icon are **trademarks** of Florian Schneider and are not licensed under PolyForm. Forks must be renamed and rebranded. See [NOTICE](NOTICE) for details on trademarks, asset licensing, and contact info.
-
-For commercial licensing inquiries, write to **info@dawnyapp.com**.
+The name "Dawny", the Dawny logo, and the app icon are **trademarks** of Florian Schneider and are not licensed under MIT. Forks must be renamed and rebranded. See [NOTICE](NOTICE) for details on trademarks, asset licensing, and contact info.

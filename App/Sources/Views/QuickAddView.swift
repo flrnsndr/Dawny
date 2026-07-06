@@ -1,6 +1,6 @@
 // Dawny
-// Copyright (c) 2025-2026 Florian Schneider. All rights reserved.
-// Licensed under PolyForm Noncommercial 1.0.0 — see LICENSE in the repository root.
+// Copyright (c) 2025-2026 Florian Schneider
+// Licensed under the MIT License — see LICENSE in the repository root.
 
 //
 //  QuickAddView.swift
