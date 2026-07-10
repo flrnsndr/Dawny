@@ -273,7 +273,7 @@ private struct ArchivedTaskRowView: View {
                     Image(systemName: "archivebox")
                         .font(.subheadline)
                         .foregroundStyle(.tertiary)
-                    if !task.archiveReviewed {
+                    if task.isNewInArchive(since: AppSettings.shared.lastArchiveVisitDate) {
                         Circle()
                             .fill(Color.orange)
                             .frame(width: 7, height: 7)

@@ -208,6 +208,8 @@ struct ContentView: View {
         .onChange(of: selectedTab) { oldTab, newTab in
             if oldTab == .archive && newTab != .archive {
                 settings.hasNewArchivedTasks = false
+                // Watermark für die Row-Dots setzen: alles bis hierher gilt als gesehen.
+                settings.lastArchiveVisitDate = Date()
                 archiveViewModel?.markAllArchiveReviewed()
             }
             // Beim Tab-Wechsel die Zielansicht frisch laden (die Pager-Seiten bleiben

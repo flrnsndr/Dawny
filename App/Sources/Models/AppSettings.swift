@@ -26,6 +26,7 @@ final class AppSettings {
         static let hasSeenWelcome = "DawnyHasSeenWelcome"
         static let makeItCountThreshold = "DawnyMakeItCountThreshold"
         static let hasNewArchivedTasks = "DawnyHasNewArchivedTasks"
+        static let lastArchiveVisitDate = "DawnyLastArchiveVisitDate"
         static let appLaunchCount = "DawnyAppLaunchCount"
         static let totalResetEventCount = "DawnyTotalResetEventCount"
         static let lastReviewPromptDate = "DawnyLastReviewPromptDate"
@@ -82,6 +83,14 @@ final class AppSettings {
         }
     }
     
+    /// Zeitpunkt des letzten Archiv-Besuchs (Watermark für die Row-Dots im Archiv).
+    /// Tasks mit `archivedAt` nach diesem Zeitpunkt gelten als "neu" und zeigen einen Dot.
+    var lastArchiveVisitDate: Date {
+        didSet {
+            UserDefaults.standard.set(lastArchiveVisitDate, forKey: Keys.lastArchiveVisitDate)
+        }
+    }
+
     /// Anzahl der App-Starts (für Review-Prompt-Eligibility)
     var appLaunchCount: Int {
         didSet {
@@ -123,6 +132,16 @@ final class AppSettings {
         self.hasSeenWelcome = UserDefaults.standard.bool(forKey: Keys.hasSeenWelcome)
         self.makeItCountThreshold = UserDefaults.standard.object(forKey: Keys.makeItCountThreshold) as? Int ?? 1
         self.hasNewArchivedTasks = UserDefaults.standard.bool(forKey: Keys.hasNewArchivedTasks)
+        // Watermark einmalig mit "jetzt" seeden UND persistieren: Ohne Zurückschreiben
+        // würde jeder App-Start die Marke neu setzen und Dots aus früheren Sessions löschen.
+        // Bestandsnutzer: vor dem Update archivierte Tasks bekommen so keinen Dot-Sturm.
+        if let storedVisit = UserDefaults.standard.object(forKey: Keys.lastArchiveVisitDate) as? Date {
+            self.lastArchiveVisitDate = storedVisit
+        } else {
+            let now = Date()
+            self.lastArchiveVisitDate = now
+            UserDefaults.standard.set(now, forKey: Keys.lastArchiveVisitDate)
+        }
         self.appLaunchCount = UserDefaults.standard.object(forKey: Keys.appLaunchCount) as? Int ?? 0
         self.totalResetEventCount = UserDefaults.standard.object(forKey: Keys.totalResetEventCount) as? Int ?? 0
         self.lastReviewPromptDate = UserDefaults.standard.object(forKey: Keys.lastReviewPromptDate) as? Date

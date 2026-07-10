@@ -29,6 +29,8 @@ enum ScreenshotSeeder {
         AppSettings.shared.showCategories = true
         AppSettings.shared.showCompletedTasksInToday = true
         AppSettings.shared.hasNewArchivedTasks = false
+        // Watermark auf "jetzt" → die geseedeten (älteren) Archiv-Tasks zeigen keine Dots.
+        AppSettings.shared.lastArchiveVisitDate = Date()
     }
 
     /// Wipes existing tasks and seeds the deterministic content used in the App Store screenshots.
