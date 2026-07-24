@@ -24,10 +24,10 @@ final class CategoryServiceTests: XCTestCase {
     private var originalDefaultCategoryType: TaskCategory!
 
     override func setUp() async throws {
-        UserDefaults.standard.removeObject(
+        AppGroup.defaults.removeObject(
             forKey: "DawnyMigratedRecurringDefaultBeforeUncategorizedV1"
         )
-        UserDefaults.standard.removeObject(
+        AppGroup.defaults.removeObject(
             forKey: "DawnyMigratedRecurringDefaultBeforeSomedayV2"
         )
         container = try TestModelContainer.create()

@@ -13,8 +13,8 @@ final class IntentDataStoreTests: XCTestCase {
     var categoryService: CategoryService!
 
     override func setUp() async throws {
-        UserDefaults.standard.removeObject(forKey: "DawnyMigratedRecurringDefaultBeforeUncategorizedV1")
-        UserDefaults.standard.removeObject(forKey: "DawnyMigratedRecurringDefaultBeforeSomedayV2")
+        AppGroup.defaults.removeObject(forKey: "DawnyMigratedRecurringDefaultBeforeUncategorizedV1")
+        AppGroup.defaults.removeObject(forKey: "DawnyMigratedRecurringDefaultBeforeSomedayV2")
 
         container = try TestModelContainer.create()
         context = container.mainContext

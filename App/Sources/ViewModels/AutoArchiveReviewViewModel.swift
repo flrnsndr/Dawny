@@ -60,7 +60,7 @@ final class AutoArchiveReviewViewModel {
     func markAllReviewed() {
         for task in dailyArchivedTasks { task.archiveReviewed = true }
         for task in backlogArchivedTasks { task.archiveReviewed = true }
-        try? modelContext.save()
+        try? modelContext.saveAndRefreshWidgets()
         dailyArchivedTasks = []
         backlogArchivedTasks = []
         currentStep = 0

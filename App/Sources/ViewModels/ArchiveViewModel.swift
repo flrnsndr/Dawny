@@ -145,7 +145,7 @@ final class ArchiveViewModel {
         for task in unreviewed {
             task.archiveReviewed = true
         }
-        try? modelContext.save()
+        try? modelContext.saveAndRefreshWidgets()
     }
 
     // MARK: - Private Helpers
@@ -168,7 +168,7 @@ final class ArchiveViewModel {
 
     private func saveAndReload() {
         do {
-            try modelContext.save()
+            try modelContext.saveAndRefreshWidgets()
             loadAll()
         } catch {
             errorMessage = String(

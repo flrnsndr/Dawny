@@ -190,13 +190,15 @@ final class CategoryService {
         )
     }
 
-    private static let recurringOrderMigratedKey = "DawnyMigratedRecurringDefaultBeforeUncategorizedV1"
-    private static let recurringOrderBeforeSomedayMigratedKey = "DawnyMigratedRecurringDefaultBeforeSomedayV2"
+    // Nicht `private`: der `AppGroupMigrator` übernimmt diese Flags in die geteilte Suite,
+    // damit die einmaligen Migrationen nicht erneut (u. a. im Widget-Prozess) laufen.
+    static let recurringOrderMigratedKey = "DawnyMigratedRecurringDefaultBeforeUncategorizedV1"
+    static let recurringOrderBeforeSomedayMigratedKey = "DawnyMigratedRecurringDefaultBeforeSomedayV2"
 
     /// Einmal: Standard-„Wiederkehrende Aufgaben" (falls noch unter Unkategorisiert) vorschieben. Danach bleibt die manuelle Sortierung.
     private func repositionDefaultRecurringBeforeUncategorizedIfNeeded() throws {
-        guard !UserDefaults.standard.bool(forKey: Self.recurringOrderMigratedKey) else { return }
-        defer { UserDefaults.standard.set(true, forKey: Self.recurringOrderMigratedKey) }
+        guard !AppGroup.defaults.bool(forKey: Self.recurringOrderMigratedKey) else { return }
+        defer { AppGroup.defaults.set(true, forKey: Self.recurringOrderMigratedKey) }
 
         let descriptor = FetchDescriptor<Category>()
         let all = try modelContext.fetch(descriptor)
@@ -222,8 +224,8 @@ final class CategoryService {
 
     /// Einmal: Standard-„Wiederkehrende Aufgaben" direkt vor „Someday" schieben.
     private func repositionDefaultRecurringBeforeSomedayIfNeeded() throws {
-        guard !UserDefaults.standard.bool(forKey: Self.recurringOrderBeforeSomedayMigratedKey) else { return }
-        defer { UserDefaults.standard.set(true, forKey: Self.recurringOrderBeforeSomedayMigratedKey) }
+        guard !AppGroup.defaults.bool(forKey: Self.recurringOrderBeforeSomedayMigratedKey) else { return }
+        defer { AppGroup.defaults.set(true, forKey: Self.recurringOrderBeforeSomedayMigratedKey) }
 
         let descriptor = FetchDescriptor<Category>()
         let all = try modelContext.fetch(descriptor)
@@ -448,13 +450,19 @@ final class CategoryService {
 
     // MARK: - Auto-Tidy Migrations
 
-    private static let autoArchiveDefaultsMigratedKey = "DawnyMigratedAutoArchiveDefaultsV1"
-    private static let enteredBacklogAtMigratedKey = "DawnyBackfilledEnteredBacklogAtV1"
+    static let autoArchiveDefaultsMigratedKey = "DawnyMigratedAutoArchiveDefaultsV1"
+    static let enteredBacklogAtMigratedKey = "DawnyBackfilledEnteredBacklogAtV1"
+
+    /// Alle einmaligen Migrations-Flags — vom `AppGroupMigrator` in die geteilte Suite übernommen.
+    static let migrationFlagKeys: [String] = [
+        recurringOrderMigratedKey, recurringOrderBeforeSomedayMigratedKey,
+        autoArchiveDefaultsMigratedKey, enteredBacklogAtMigratedKey
+    ]
 
     /// Einmal: bestehende Standard-Kategorien mit `defaultAutoArchiveDays` befüllen.
     private func migrateAutoArchiveDefaultsIfNeeded(allCategories: [Category]) throws {
-        guard !UserDefaults.standard.bool(forKey: Self.autoArchiveDefaultsMigratedKey) else { return }
-        defer { UserDefaults.standard.set(true, forKey: Self.autoArchiveDefaultsMigratedKey) }
+        guard !AppGroup.defaults.bool(forKey: Self.autoArchiveDefaultsMigratedKey) else { return }
+        defer { AppGroup.defaults.set(true, forKey: Self.autoArchiveDefaultsMigratedKey) }
 
         for category in allCategories {
             if category.isRecurring {
@@ -469,8 +477,8 @@ final class CategoryService {
 
     /// Einmal: bestehende Backlog-Tasks mit `enteredBacklogAt = Date()` befüllen (sanfter Start).
     private func migrateEnteredBacklogAtIfNeeded() throws {
-        guard !UserDefaults.standard.bool(forKey: Self.enteredBacklogAtMigratedKey) else { return }
-        defer { UserDefaults.standard.set(true, forKey: Self.enteredBacklogAtMigratedKey) }
+        guard !AppGroup.defaults.bool(forKey: Self.enteredBacklogAtMigratedKey) else { return }
+        defer { AppGroup.defaults.set(true, forKey: Self.enteredBacklogAtMigratedKey) }
 
         let all = try modelContext.fetch(FetchDescriptor<Task>())
         let now = Date()

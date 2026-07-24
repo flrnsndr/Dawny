@@ -29,9 +29,9 @@ final class AppSettingsTests: XCTestCase {
     
     override func tearDown() async throws {
         // Bereinige UserDefaults nach jedem Test
-        UserDefaults.standard.removeObject(forKey: "DawnyResetHour")
-        UserDefaults.standard.removeObject(forKey: "DawnyCalendarSyncEnabled")
-        UserDefaults.standard.removeObject(forKey: "DawnyShowCompletedTasksInToday")
+        AppGroup.defaults.removeObject(forKey: "DawnyResetHour")
+        AppGroup.defaults.removeObject(forKey: "DawnyCalendarSyncEnabled")
+        AppGroup.defaults.removeObject(forKey: "DawnyShowCompletedTasksInToday")
         settings = nil
     }
     
@@ -47,9 +47,9 @@ final class AppSettingsTests: XCTestCase {
     
     func testLoadsFromUserDefaults() {
         // Setze Werte in UserDefaults
-        UserDefaults.standard.set(5, forKey: "DawnyResetHour")
-        UserDefaults.standard.set(false, forKey: "DawnyCalendarSyncEnabled")
-        UserDefaults.standard.set(false, forKey: "DawnyShowCompletedTasksInToday")
+        AppGroup.defaults.set(5, forKey: "DawnyResetHour")
+        AppGroup.defaults.set(false, forKey: "DawnyCalendarSyncEnabled")
+        AppGroup.defaults.set(false, forKey: "DawnyShowCompletedTasksInToday")
         
         // Erstelle neue Settings-Instanz
         let newSettings = AppSettings()
@@ -59,9 +59,9 @@ final class AppSettingsTests: XCTestCase {
         XCTAssertFalse(newSettings.showCompletedTasksInToday, "Sollte Wert aus UserDefaults laden")
         
         // Bereinige
-        UserDefaults.standard.removeObject(forKey: "DawnyResetHour")
-        UserDefaults.standard.removeObject(forKey: "DawnyCalendarSyncEnabled")
-        UserDefaults.standard.removeObject(forKey: "DawnyShowCompletedTasksInToday")
+        AppGroup.defaults.removeObject(forKey: "DawnyResetHour")
+        AppGroup.defaults.removeObject(forKey: "DawnyCalendarSyncEnabled")
+        AppGroup.defaults.removeObject(forKey: "DawnyShowCompletedTasksInToday")
     }
     
     // MARK: - Reset Hour Tests
@@ -70,7 +70,7 @@ final class AppSettingsTests: XCTestCase {
         settings.resetHour = 5
         
         // Prüfe dass Wert in UserDefaults gespeichert wurde
-        let savedValue = UserDefaults.standard.integer(forKey: "DawnyResetHour")
+        let savedValue = AppGroup.defaults.integer(forKey: "DawnyResetHour")
         XCTAssertEqual(savedValue, 5)
         
         // Prüfe dass Property aktualisiert wurde
@@ -94,7 +94,7 @@ final class AppSettingsTests: XCTestCase {
     func testCalendarSyncEnabledPersistence() {
         settings.calendarSyncEnabled = false
         
-        let savedValue = UserDefaults.standard.bool(forKey: "DawnyCalendarSyncEnabled")
+        let savedValue = AppGroup.defaults.bool(forKey: "DawnyCalendarSyncEnabled")
         XCTAssertFalse(savedValue)
         XCTAssertFalse(settings.calendarSyncEnabled)
     }
@@ -114,7 +114,7 @@ final class AppSettingsTests: XCTestCase {
     func testShowCompletedTasksInTodayPersistence() {
         settings.showCompletedTasksInToday = false
         
-        let savedValue = UserDefaults.standard.bool(forKey: "DawnyShowCompletedTasksInToday")
+        let savedValue = AppGroup.defaults.bool(forKey: "DawnyShowCompletedTasksInToday")
         XCTAssertFalse(savedValue)
         XCTAssertFalse(settings.showCompletedTasksInToday)
     }

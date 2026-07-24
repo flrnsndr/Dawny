@@ -211,11 +211,29 @@ struct ContentView: View {
                 // Watermark für die Row-Dots setzen: alles bis hierher gilt als gesehen.
                 settings.lastArchiveVisitDate = Date()
                 archiveViewModel?.markAllArchiveReviewed()
+                // Archiv-Widget: orange Punkte verschwinden lassen (Watermark ist vor).
+                WidgetRefresher.reload()
             }
             // Beim Tab-Wechsel die Zielansicht frisch laden (die Pager-Seiten bleiben
             // alle gemountet, daher feuert ihr onAppear nur einmal beim Start).
             // selectedTab ändert sich nur am Gestenende/Button-Tap, nicht pro Drag-Frame.
             loadViewModel(for: newTab)
+        }
+        .onOpenURL { url in
+            handleDeepLink(url)
+        }
+    }
+
+    /// Routet Widget-Deep-Links (`dawny://today` / `backlog` / `archive`) auf den passenden Tab.
+    private func handleDeepLink(_ url: URL) {
+        guard url.scheme == "dawny" else { return }
+        // Verhindert, dass die Initial-Tab-Logik in onAppear einen Deep-Link beim Kaltstart überschreibt.
+        hasSetInitialTab = true
+        switch url.host {
+        case "today": selectedTab = .today
+        case "backlog": selectedTab = .backlog
+        case "archive": selectedTab = .archive
+        default: break
         }
     }
 
@@ -239,6 +257,8 @@ struct ContentView: View {
         backlogViewModel?.loadBacklogs()
         backlogViewModel?.loadCategories()
         archiveViewModel?.loadAll()
+        // Extern (Reminders-Sync) geänderte Daten auch in den Widgets spiegeln.
+        WidgetRefresher.reload()
     }
 
     private var tabSwitcher: some View {

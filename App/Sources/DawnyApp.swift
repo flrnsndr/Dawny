@@ -29,6 +29,9 @@ struct DawnyApp: App {
     @State private var hasLaunchedBefore = false
     
     init() {
+        // Store + UserDefaults einmalig in die App Group migrieren, BEVOR der Container gebaut wird.
+        AppGroupMigrator.migrateIfNeeded()
+
         // Initialize ModelContainer
         do {
             modelContainer = try IntentDataStore.makeModelContainer()
