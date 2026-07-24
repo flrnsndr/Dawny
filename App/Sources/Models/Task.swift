@@ -74,8 +74,10 @@ final class Task {
     /// Grund der Archivierung — nil wenn nicht archiviert
     var archiveReason: ArchiveReason? = nil
 
-    /// True = User hat dieses archivierte Item bereits im Review-Overlay gesehen.
-    /// Default true, damit existierende Archive beim ersten Update nicht alle im Overlay auftauchen.
+    /// True = User hat dieses archivierte Item bereits im Auto-Archive-Review-Overlay gesehen.
+    /// Steuert ausschließlich die Overlay-Queue (nicht die Row-Dots im Archiv, siehe
+    /// `isNewInArchive(since:)`). Default true, damit existierende Archive beim ersten
+    /// Update nicht alle im Overlay auftauchen.
     var archiveReviewed: Bool = true
 
     /// Zeitpunkt der manuellen Erledigung (nil wenn nicht oder noch nicht erledigt)
@@ -184,6 +186,15 @@ final class Task {
         enteredBacklogAt = nil
         archiveReason = reason
         archiveReviewed = (reason == .manual)
+    }
+
+    /// True wenn der Task seit dem letzten Archiv-Besuch automatisch archiviert wurde
+    /// und deshalb im Archiv einen Row-Dot zeigt. Manuell archivierte Tasks
+    /// (`archiveReason == .manual`) und Altbestand ohne `archiveReason` zeigen nie einen Dot.
+    func isNewInArchive(since lastVisit: Date) -> Bool {
+        guard archiveReason == .makeItCount || archiveReason == .autoTidy,
+              let archivedAt else { return false }
+        return archivedAt > lastVisit
     }
 
     /// Unarchiviert den Task zurück ins Backlog. Setzt resetCount auf 0.

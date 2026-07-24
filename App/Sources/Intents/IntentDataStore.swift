@@ -41,14 +41,27 @@ enum IntentDataStore {
 
     static func makeModelContainer(isStoredInMemoryOnly: Bool = false) throws -> ModelContainer {
         let schema = Schema([Task.self, Backlog.self, Category.self])
-        let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: isStoredInMemoryOnly)
 
         if isStoredInMemoryOnly {
+            let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
             return try ModelContainer(for: schema, configurations: [config])
         }
 
         if let persistentContainer {
             return persistentContainer
+        }
+
+        let config: ModelConfiguration
+        if AppGroup.isMigrated, let storeURL = AppGroup.storeURL {
+            // Geteilter Store in der App Group (App + Widget lesen denselben Container).
+            config = ModelConfiguration(schema: schema, url: storeURL)
+        } else if AppGroup.isRunningInAppExtension {
+            // Das Widget darf niemals einen (verfrühten) lokalen oder Group-Store anlegen:
+            // die Migration läuft ausschließlich im App-Prozess. Bis dahin: keine Daten.
+            throw IntentDataStoreError.dataStoreUnavailable
+        } else {
+            // Vor der Migration (oder ohne App-Group-Entitlement): Legacy-Default-Store.
+            config = ModelConfiguration(schema: schema)
         }
 
         let container = try ModelContainer(for: schema, configurations: [config])
@@ -132,6 +145,7 @@ enum IntentDataStore {
 
         context.insert(task)
         try context.save()
+        WidgetRefresher.reload()
         let indexTarget = task
         _Concurrency.Task { await EntityIndexer.indexTask(indexTarget) }
         return task
@@ -150,6 +164,7 @@ enum IntentDataStore {
 
         task.moveToDailyFocus(date: Calendar.current.startOfDay(for: Date()))
         try context.save()
+        WidgetRefresher.reload()
         let indexTarget = task
         _Concurrency.Task { await EntityIndexer.indexTask(indexTarget) }
         return task
@@ -166,11 +181,75 @@ enum IntentDataStore {
             throw IntentDataStoreError.taskAlreadyCompleted
         }
 
-        task.complete()
+        applyCompletion(to: task, in: context)
         try context.save()
-        let taskID = task.id
-        _Concurrency.Task { await EntityIndexer.deindexTask(id: taskID) }
+        WidgetRefresher.reload()
+        let completedID = task.id
+        _Concurrency.Task { await EntityIndexer.deindexTask(id: completedID) }
         return task
+    }
+
+    /// Markiert einen erledigten Task wieder als offen (Heute). Löscht den
+    /// evtl. beim Abschließen erzeugten wiederkehrenden Backlog-Clone.
+    /// Spiegelt `DailyFocusViewModel.uncompleteTask` (ohne Kalender-Sync,
+    /// der läuft App-seitig weiter über `SyncEngine`).
+    @discardableResult
+    static func uncompleteTask(taskID: UUID, in context: ModelContext) throws -> Task {
+        guard let task = try task(withID: taskID, in: context) else {
+            throw IntentDataStoreError.taskNotFound
+        }
+        // Bereits offen → nichts zu tun (idempotent).
+        guard task.isCompleted || task.status == .completed else {
+            return task
+        }
+
+        if let cloneID = task.recurringCloneID, let clone = try Self.task(withID: cloneID, in: context) {
+            context.delete(clone)
+        }
+        task.recurringCloneID = nil
+        task.isCompleted = false
+        task.completedAt = nil
+        task.status = .dailyFocus
+        task.modifiedAt = Date()
+        task.enteredBacklogAt = nil
+
+        try context.save()
+        WidgetRefresher.reload()
+        let reopened = task
+        _Concurrency.Task { await EntityIndexer.indexTask(reopened) }
+        return task
+    }
+
+    /// Schließt einen Task ab und erzeugt für wiederkehrende Kategorien einen
+    /// neuen Backlog-Clone (damit die Aufgabe morgen wieder auftaucht).
+    /// Einzige Quelle dieser Logik — von App-ViewModel, Siri-Intent und Widget genutzt.
+    /// Speichert NICHT; der Aufrufer ruft `save()`.
+    @discardableResult
+    static func applyCompletion(to task: Task, in context: ModelContext) -> Task? {
+        let wasRecurring = task.isRecurring
+        task.complete()
+        guard wasRecurring else { return nil }
+
+        let clone = Task(
+            title: task.title,
+            notes: task.notes,
+            status: .inBacklog,
+            parentBacklogID: task.parentBacklogID,
+            sortPriority: Date(),
+            category: task.category
+        )
+        clone.backlog = task.backlog
+        if clone.backlog == nil {
+            let parentID = task.parentBacklogID
+            var descriptor = FetchDescriptor<Backlog>(predicate: #Predicate<Backlog> { $0.id == parentID })
+            descriptor.fetchLimit = 1
+            if let backlog = try? context.fetch(descriptor).first {
+                clone.backlog = backlog
+            }
+        }
+        context.insert(clone)
+        task.recurringCloneID = clone.id
+        return clone
     }
 
     static func todayTasks(in context: ModelContext) throws -> [Task] {

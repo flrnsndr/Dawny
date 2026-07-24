@@ -80,6 +80,8 @@ final class ResetEngine {
                 NotificationCenter.default.post(name: .dawnyDidReset, object: nil)
             }
             saveLastResetDate(referenceDate)
+            // Widgets aus dem „Als-ob"-Zustand auf den echten Stand aktualisieren.
+            WidgetRefresher.reload()
             return
         }
 
@@ -94,23 +96,29 @@ final class ResetEngine {
                 await syncEngine?.removeTaskFromCalendar(task)
             }
 
-            if task.isRecurring {
-                // Wiederkehrende Tasks gehen immer zurück ins Backlog, nie ins Archiv
+            let outcome = ResetOutcomePlanner.outcome(
+                for: task.resetPlanInput,
+                referenceDate: referenceDate,
+                makeItCountThreshold: threshold,
+                calendar: timeProvider.calendar
+            )
+
+            switch outcome {
+            case .archive(let reason):
+                // Nicht-wiederkehrend über der Make-It-Count-Schwelle → archivieren.
+                task.resetCount += 1
+                task.archive(reason: reason)
+                hasArchivedAnyTask = true
+                print("📦 Archived task '\(task.title)' after \(task.resetCount) incomplete day(s) on Today")
+            case .returnToBacklog(let incrementsResetCount):
+                if incrementsResetCount {
+                    task.resetCount += 1
+                }
                 task.resetToBacklog()
                 let offset = TimeInterval(-index) * 0.001
                 task.sortPriority = referenceDate.addingTimeInterval(offset)
-            } else {
-                // Nicht-wiederkehrend: Zähler erhöhen, ggf. archivieren
-                task.resetCount += 1
-                if task.resetCount >= threshold {
-                    task.archive(reason: .makeItCount)
-                    hasArchivedAnyTask = true
-                    print("📦 Archived task '\(task.title)' after \(task.resetCount) incomplete day(s) on Today")
-                } else {
-                    task.resetToBacklog()
-                    let offset = TimeInterval(-index) * 0.001
-                    task.sortPriority = referenceDate.addingTimeInterval(offset)
-                }
+            case .none:
+                break
             }
         }
 
@@ -129,6 +137,9 @@ final class ResetEngine {
         // Speichere Reset-Zeitpunkt und zähle Event für Review-Eligibility
         AppSettings.shared.totalResetEventCount += 1
         saveLastResetDate(referenceDate)
+
+        // Widgets aus dem „Als-ob"-Zustand auf den echten Stand aktualisieren.
+        WidgetRefresher.reload()
 
         // Der Reset hat Tasks verändert (Recurring → Backlog, resetCount, Archiv)
         // → UI-Listen neu laden lassen.
@@ -164,45 +175,29 @@ final class ResetEngine {
     
     // MARK: - Private Methods
     
-    /// Holt das Datum des letzten Resets aus UserDefaults
+    /// Holt das Datum des letzten Resets aus UserDefaults (App Group, damit das Widget den Stand sieht)
     private func getLastResetDate() -> Date {
-        if let lastReset = UserDefaults.standard.object(forKey: userDefaultsKey) as? Date {
+        if let lastReset = AppGroup.defaults.object(forKey: userDefaultsKey) as? Date {
             return lastReset
         }
         // Wenn noch nie resettet wurde, verwende ein Datum weit in der Vergangenheit
         return Date(timeIntervalSince1970: 0)
     }
-    
-    /// Speichert das Datum des letzten Resets in UserDefaults
+
+    /// Speichert das Datum des letzten Resets in UserDefaults (App Group)
     private func saveLastResetDate(_ date: Date) {
-        UserDefaults.standard.set(date, forKey: userDefaultsKey)
+        AppGroup.defaults.set(date, forKey: userDefaultsKey)
     }
     
     /// Berechnet den Zeitpunkt des letzten Reset-Schwellwerts
     /// Beispiel: Wenn jetzt 10:00 Uhr ist und resetHour=3, dann ist der Threshold heute 03:00
     /// Wenn jetzt 02:00 Uhr ist, dann ist der Threshold gestern 03:00
     private func calculateLastResetThreshold(for date: Date) -> Date {
-        let calendar = timeProvider.calendar
-        
-        // Hole die aktuelle Stunde
-        let currentHour = calendar.component(.hour, from: date)
-        
-        // Erstelle ein Datum für heute um resetHour
-        var components = calendar.dateComponents([.year, .month, .day], from: date)
-        components.hour = resetHour
-        components.minute = 0
-        components.second = 0
-        
-        guard var resetToday = calendar.date(from: components) else {
-            return date
-        }
-        
-        // Wenn wir vor dem Reset-Zeitpunkt sind, verwende gestrigen Reset
-        if currentHour < resetHour {
-            resetToday = calendar.date(byAdding: .day, value: -1, to: resetToday) ?? resetToday
-        }
-        
-        return resetToday
+        ResetSchedule.lastThreshold(
+            before: date,
+            resetHour: resetHour,
+            calendar: timeProvider.calendar
+        )
     }
     
     /// Auto-Tidy: Archiviert Backlog-Tasks, die die Lebensdauer ihrer Kategorie überschritten haben.
@@ -210,20 +205,16 @@ final class ResetEngine {
     private func archiveStaleBacklogTasks(referenceDate: Date) -> Int {
         let descriptor = FetchDescriptor<Task>()
         guard let all = try? modelContext.fetch(descriptor) else { return 0 }
+        let threshold = AppSettings.shared.makeItCountThreshold
         var count = 0
         for task in all {
-            guard
-                task.status == .inBacklog,
-                !task.isCompleted,
-                let category = task.category,
-                category.isRecurring == false,
-                let days = category.autoArchiveDays,
-                let enteredAt = task.enteredBacklogAt
-            else { continue }
-            let cutoff = timeProvider.calendar.date(
-                byAdding: .day, value: days, to: enteredAt
-            ) ?? enteredAt
-            if cutoff <= referenceDate {
+            let outcome = ResetOutcomePlanner.outcome(
+                for: task.resetPlanInput,
+                referenceDate: referenceDate,
+                makeItCountThreshold: threshold,
+                calendar: timeProvider.calendar
+            )
+            if outcome == .archive(.autoTidy) {
                 task.archive(reason: .autoTidy)
                 count += 1
             }
@@ -291,6 +282,6 @@ extension ResetEngine {
     
     /// Löscht den letzten Reset-Zeitpunkt (nur für Tests)
     func clearLastResetDate() {
-        UserDefaults.standard.removeObject(forKey: userDefaultsKey)
+        AppGroup.defaults.removeObject(forKey: userDefaultsKey)
     }
 }

@@ -16,8 +16,9 @@ import Observation
 @Observable
 final class AppSettings {
     // MARK: - UserDefaults Keys
-    
-    private enum Keys {
+
+    /// Nicht `private`, damit der `AppGroupMigrator` die Werte in die geteilte Suite kopieren kann.
+    enum Keys {
         static let resetHour = "DawnyResetHour"
         static let calendarSyncEnabled = "DawnyCalendarSyncEnabled"
         static let showCompletedTasksInToday = "DawnyShowCompletedTasksInToday"
@@ -26,80 +27,96 @@ final class AppSettings {
         static let hasSeenWelcome = "DawnyHasSeenWelcome"
         static let makeItCountThreshold = "DawnyMakeItCountThreshold"
         static let hasNewArchivedTasks = "DawnyHasNewArchivedTasks"
+        static let lastArchiveVisitDate = "DawnyLastArchiveVisitDate"
         static let appLaunchCount = "DawnyAppLaunchCount"
         static let totalResetEventCount = "DawnyTotalResetEventCount"
         static let lastReviewPromptDate = "DawnyLastReviewPromptDate"
+
+        /// Alle Keys — vom `AppGroupMigrator` genutzt, um bestehende Werte in die App-Group-Suite zu übernehmen.
+        static let allKeys: [String] = [
+            resetHour, calendarSyncEnabled, showCompletedTasksInToday, showCategories,
+            defaultCategoryType, hasSeenWelcome, makeItCountThreshold, hasNewArchivedTasks,
+            lastArchiveVisitDate, appLaunchCount, totalResetEventCount, lastReviewPromptDate
+        ]
     }
-    
+
     // MARK: - Properties
     
     /// Reset-Zeit in Stunden (0-23)
     var resetHour: Int {
         didSet {
-            UserDefaults.standard.set(resetHour, forKey: Keys.resetHour)
+            AppGroup.defaults.set(resetHour, forKey: Keys.resetHour)
         }
     }
     
     /// Kalender-Synchronisation aktiviert
     var calendarSyncEnabled: Bool {
         didSet {
-            UserDefaults.standard.set(calendarSyncEnabled, forKey: Keys.calendarSyncEnabled)
+            AppGroup.defaults.set(calendarSyncEnabled, forKey: Keys.calendarSyncEnabled)
         }
     }
     
     /// Erledigte Tasks im Heute-Tab anzeigen
     var showCompletedTasksInToday: Bool {
         didSet {
-            UserDefaults.standard.set(showCompletedTasksInToday, forKey: Keys.showCompletedTasksInToday)
+            AppGroup.defaults.set(showCompletedTasksInToday, forKey: Keys.showCompletedTasksInToday)
         }
     }
     
     /// Kategorien im Backlog anzeigen
     var showCategories: Bool {
         didSet {
-            UserDefaults.standard.set(showCategories, forKey: Keys.showCategories)
+            AppGroup.defaults.set(showCategories, forKey: Keys.showCategories)
         }
     }
     
     /// Welcome Screen wurde bereits angezeigt
     var hasSeenWelcome: Bool {
         didSet {
-            UserDefaults.standard.set(hasSeenWelcome, forKey: Keys.hasSeenWelcome)
+            AppGroup.defaults.set(hasSeenWelcome, forKey: Keys.hasSeenWelcome)
         }
     }
 
     /// Anzahl der fehlgeschlagenen Resets, bevor ein Task archiviert wird (1–7, Standard: 1)
     var makeItCountThreshold: Int {
         didSet {
-            UserDefaults.standard.set(makeItCountThreshold, forKey: Keys.makeItCountThreshold)
+            AppGroup.defaults.set(makeItCountThreshold, forKey: Keys.makeItCountThreshold)
         }
     }
 
     /// Zeigt an ob beim letzten Reset neue Tasks ins Archiv verschoben wurden (Dot-Badge)
     var hasNewArchivedTasks: Bool {
         didSet {
-            UserDefaults.standard.set(hasNewArchivedTasks, forKey: Keys.hasNewArchivedTasks)
+            AppGroup.defaults.set(hasNewArchivedTasks, forKey: Keys.hasNewArchivedTasks)
         }
     }
     
+    /// Zeitpunkt des letzten Archiv-Besuchs (Watermark für die Row-Dots im Archiv).
+    /// Tasks mit `archivedAt` nach diesem Zeitpunkt gelten als "neu" und zeigen einen Dot.
+    var lastArchiveVisitDate: Date {
+        didSet {
+            AppGroup.defaults.set(lastArchiveVisitDate, forKey: Keys.lastArchiveVisitDate)
+        }
+    }
+
     /// Anzahl der App-Starts (für Review-Prompt-Eligibility)
     var appLaunchCount: Int {
         didSet {
-            UserDefaults.standard.set(appLaunchCount, forKey: Keys.appLaunchCount)
+            AppGroup.defaults.set(appLaunchCount, forKey: Keys.appLaunchCount)
         }
     }
 
     /// Anzahl abgeschlossener Reset-Events (für Review-Prompt-Eligibility)
     var totalResetEventCount: Int {
         didSet {
-            UserDefaults.standard.set(totalResetEventCount, forKey: Keys.totalResetEventCount)
+            AppGroup.defaults.set(totalResetEventCount, forKey: Keys.totalResetEventCount)
         }
     }
 
     /// Datum des letzten Review-Prompts (Rate-Limiting)
     var lastReviewPromptDate: Date? {
         didSet {
-            UserDefaults.standard.set(lastReviewPromptDate, forKey: Keys.lastReviewPromptDate)
+            AppGroup.defaults.set(lastReviewPromptDate, forKey: Keys.lastReviewPromptDate)
         }
     }
 
@@ -107,7 +124,7 @@ final class AppSettings {
     var defaultCategoryType: TaskCategory {
         didSet {
             if let encoded = try? JSONEncoder().encode(defaultCategoryType.rawValue) {
-                UserDefaults.standard.set(encoded, forKey: Keys.defaultCategoryType)
+                AppGroup.defaults.set(encoded, forKey: Keys.defaultCategoryType)
             }
         }
     }
@@ -116,19 +133,29 @@ final class AppSettings {
     
     init() {
         // Lade Werte aus UserDefaults oder verwende Defaults
-        self.resetHour = UserDefaults.standard.object(forKey: Keys.resetHour) as? Int ?? 3
-        self.calendarSyncEnabled = UserDefaults.standard.object(forKey: Keys.calendarSyncEnabled) as? Bool ?? true
-        self.showCompletedTasksInToday = UserDefaults.standard.object(forKey: Keys.showCompletedTasksInToday) as? Bool ?? true
-        self.showCategories = UserDefaults.standard.object(forKey: Keys.showCategories) as? Bool ?? true
-        self.hasSeenWelcome = UserDefaults.standard.bool(forKey: Keys.hasSeenWelcome)
-        self.makeItCountThreshold = UserDefaults.standard.object(forKey: Keys.makeItCountThreshold) as? Int ?? 1
-        self.hasNewArchivedTasks = UserDefaults.standard.bool(forKey: Keys.hasNewArchivedTasks)
-        self.appLaunchCount = UserDefaults.standard.object(forKey: Keys.appLaunchCount) as? Int ?? 0
-        self.totalResetEventCount = UserDefaults.standard.object(forKey: Keys.totalResetEventCount) as? Int ?? 0
-        self.lastReviewPromptDate = UserDefaults.standard.object(forKey: Keys.lastReviewPromptDate) as? Date
+        self.resetHour = AppGroup.defaults.object(forKey: Keys.resetHour) as? Int ?? 3
+        self.calendarSyncEnabled = AppGroup.defaults.object(forKey: Keys.calendarSyncEnabled) as? Bool ?? true
+        self.showCompletedTasksInToday = AppGroup.defaults.object(forKey: Keys.showCompletedTasksInToday) as? Bool ?? true
+        self.showCategories = AppGroup.defaults.object(forKey: Keys.showCategories) as? Bool ?? true
+        self.hasSeenWelcome = AppGroup.defaults.bool(forKey: Keys.hasSeenWelcome)
+        self.makeItCountThreshold = AppGroup.defaults.object(forKey: Keys.makeItCountThreshold) as? Int ?? 1
+        self.hasNewArchivedTasks = AppGroup.defaults.bool(forKey: Keys.hasNewArchivedTasks)
+        // Watermark einmalig mit "jetzt" seeden UND persistieren: Ohne Zurückschreiben
+        // würde jeder App-Start die Marke neu setzen und Dots aus früheren Sessions löschen.
+        // Bestandsnutzer: vor dem Update archivierte Tasks bekommen so keinen Dot-Sturm.
+        if let storedVisit = AppGroup.defaults.object(forKey: Keys.lastArchiveVisitDate) as? Date {
+            self.lastArchiveVisitDate = storedVisit
+        } else {
+            let now = Date()
+            self.lastArchiveVisitDate = now
+            AppGroup.defaults.set(now, forKey: Keys.lastArchiveVisitDate)
+        }
+        self.appLaunchCount = AppGroup.defaults.object(forKey: Keys.appLaunchCount) as? Int ?? 0
+        self.totalResetEventCount = AppGroup.defaults.object(forKey: Keys.totalResetEventCount) as? Int ?? 0
+        self.lastReviewPromptDate = AppGroup.defaults.object(forKey: Keys.lastReviewPromptDate) as? Date
         
         // Lade defaultCategoryType
-        if let data = UserDefaults.standard.data(forKey: Keys.defaultCategoryType),
+        if let data = AppGroup.defaults.data(forKey: Keys.defaultCategoryType),
            let rawValue = try? JSONDecoder().decode(String.self, from: data),
            let categoryType = TaskCategory(rawValue: rawValue) {
             self.defaultCategoryType = categoryType

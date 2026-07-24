@@ -84,7 +84,7 @@ final class BacklogViewModel {
         modelContext.insert(backlog)
         
         do {
-            try modelContext.save()
+            try modelContext.saveAndRefreshWidgets()
             backlogs.append(backlog)
             
             if currentBacklog == nil {
@@ -109,7 +109,7 @@ final class BacklogViewModel {
         modelContext.delete(backlog)
         
         do {
-            try modelContext.save()
+            try modelContext.saveAndRefreshWidgets()
             loadBacklogs()
         } catch {
             let format = String(
@@ -163,7 +163,7 @@ final class BacklogViewModel {
         }
         
         do {
-            try modelContext.save()
+            try modelContext.saveAndRefreshWidgets()
             return task
         } catch {
             let format = String(
@@ -216,7 +216,7 @@ final class BacklogViewModel {
             let others = allTasks.filter { $0.status == .dailyFocus && !$0.isCompleted && $0.id != task.id }
             let minPriority = others.map(\.sortPriority).min() ?? Date()
             task.sortPriority = minPriority.addingTimeInterval(-0.001)
-            try modelContext.save()
+            try modelContext.saveAndRefreshWidgets()
         } catch {
             let format = String(
                 localized: "error.backlog.sort_today_tasks",
@@ -236,7 +236,7 @@ final class BacklogViewModel {
         modelContext.delete(task)
         
         do {
-            try modelContext.save()
+            try modelContext.saveAndRefreshWidgets()
         } catch {
             let format = String(
                 localized: "error.backlog.delete_task",
@@ -277,7 +277,7 @@ final class BacklogViewModel {
                 modelContext.delete(task)
             }
 
-            try modelContext.save()
+            try modelContext.saveAndRefreshWidgets()
         } catch {
             let format = String(
                 localized: "error.backlog.delete_task",
@@ -297,7 +297,7 @@ final class BacklogViewModel {
         }
         
         do {
-            try modelContext.save()
+            try modelContext.saveAndRefreshWidgets()
         } catch {
             let format = String(
                 localized: "error.backlog.complete_task",
@@ -316,7 +316,7 @@ final class BacklogViewModel {
         await syncEngine.syncTaskToCalendar(task)
         
         do {
-            try modelContext.save()
+            try modelContext.saveAndRefreshWidgets()
             // Aktualisiere Backlog-Liste damit der Task verschwindet
             loadBacklogs()
         } catch {
@@ -340,7 +340,7 @@ final class BacklogViewModel {
         }
         
         do {
-            try modelContext.save()
+            try modelContext.saveAndRefreshWidgets()
         } catch {
             let format = String(
                 localized: "error.backlog.update_task",
@@ -360,7 +360,7 @@ final class BacklogViewModel {
         task.resetToBacklog()
         
         do {
-            try modelContext.save()
+            try modelContext.saveAndRefreshWidgets()
         } catch {
             let format = String(
                 localized: "error.backlog.move_to_backlog",
@@ -439,7 +439,7 @@ final class BacklogViewModel {
         task.modifiedAt = Date()
         
         do {
-            try modelContext.save()
+            try modelContext.saveAndRefreshWidgets()
         } catch {
             let format = String(
                 localized: "error.backlog.move_task_category",
@@ -598,7 +598,7 @@ final class BacklogViewModel {
         }
 
         do {
-            try modelContext.save()
+            try modelContext.saveAndRefreshWidgets()
             loadCategories()
             HapticFeedback.light()
         } catch {
@@ -635,7 +635,7 @@ final class BacklogViewModel {
         }
         
         do {
-            try modelContext.save()
+            try modelContext.saveAndRefreshWidgets()
             HapticFeedback.light()
         } catch {
             let format = String(
@@ -675,7 +675,7 @@ final class BacklogViewModel {
         }
         
         do {
-            try modelContext.save()
+            try modelContext.saveAndRefreshWidgets()
             HapticFeedback.light()
         } catch {
             let format = String(
@@ -740,7 +740,7 @@ final class BacklogViewModel {
         }
 
         do {
-            try modelContext.save()
+            try modelContext.saveAndRefreshWidgets()
         } catch {
             let format = String(
                 localized: "error.backlog.debug_today_test_tasks",

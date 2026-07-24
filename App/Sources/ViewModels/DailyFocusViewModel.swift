@@ -103,37 +103,16 @@ final class DailyFocusViewModel {
     /// `await`-Yield SwiftUI die Chance gibt, mit veralteten Referenzen zu rendern.
     func completeTask(taskID: UUID) async {
         guard let t = self.task(withID: taskID) else { return }
-        let wasRecurring = t.isRecurring
 
-        t.complete()
-
-        if wasRecurring {
-            let clone = Task(
-                title: t.title,
-                notes: t.notes,
-                status: .inBacklog,
-                parentBacklogID: t.parentBacklogID,
-                sortPriority: Date(),
-                category: t.category
-            )
-            clone.backlog = t.backlog
-            if clone.backlog == nil {
-                let parentID = t.parentBacklogID
-                var backlogDescriptor = FetchDescriptor<Backlog>(predicate: #Predicate<Backlog> { $0.id == parentID })
-                backlogDescriptor.fetchLimit = 1
-                if let backlog = try? modelContext.fetch(backlogDescriptor).first {
-                    clone.backlog = backlog
-                }
-            }
-            modelContext.insert(clone)
-            t.recurringCloneID = clone.id
-        }
+        // Abschluss + wiederkehrender Backlog-Clone laufen zentral über IntentDataStore,
+        // damit App, Siri und Widget identisch abschließen.
+        IntentDataStore.applyCompletion(to: t, in: modelContext)
 
         let needsCalendarSync = t.isSyncedToCalendar
         let taskID = t.id
 
         do {
-            try modelContext.save()
+            try modelContext.saveAndRefreshWidgets()
             loadDailyTasks()
         } catch {
             let format = String(
@@ -176,7 +155,7 @@ final class DailyFocusViewModel {
         let needsCalendarSync = task.isSyncedToCalendar
 
         do {
-            try modelContext.save()
+            try modelContext.saveAndRefreshWidgets()
             loadDailyTasks()
             HapticFeedback.success()
         } catch {
@@ -202,7 +181,7 @@ final class DailyFocusViewModel {
         task.resetToBacklog()
         
         do {
-            try modelContext.save()
+            try modelContext.saveAndRefreshWidgets()
             loadDailyTasks()
         } catch {
             let format = String(
@@ -227,7 +206,7 @@ final class DailyFocusViewModel {
         modelContext.delete(task)
         
         do {
-            try modelContext.save()
+            try modelContext.saveAndRefreshWidgets()
             loadDailyTasks()
         } catch {
             let format = String(
@@ -261,7 +240,7 @@ final class DailyFocusViewModel {
         }
         
         do {
-            try modelContext.save()
+            try modelContext.saveAndRefreshWidgets()
             let completed = dailyTasks.filter(\.isCompleted)
             dailyTasks = tasks + completed
             HapticFeedback.light()
@@ -285,7 +264,7 @@ final class DailyFocusViewModel {
         }
         
         do {
-            try modelContext.save()
+            try modelContext.saveAndRefreshWidgets()
         } catch {
             let format = String(
                 localized: "error.daily_focus.update_task",

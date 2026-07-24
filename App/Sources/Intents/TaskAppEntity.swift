@@ -46,6 +46,15 @@ struct TaskAppEntity: AppEntity, IndexedEntity, Identifiable {
         self.statusRawValue = task.status.rawValue
         self.categoryName = task.category?.displayName
     }
+
+    /// Leichtgewichtiger Initializer aus einem Wert-Snapshot (z. B. im Widget-Prozess),
+    /// wo kein `Task`-Objekt vorliegt. `perform()` der Intents nutzt nur `id`.
+    init(id: UUID, displayName: String, statusRawValue: String = TaskStatus.inBacklog.rawValue, categoryName: String? = nil) {
+        self.id = id
+        self.displayName = displayName
+        self.statusRawValue = statusRawValue
+        self.categoryName = categoryName
+    }
 }
 
 struct TaskEntityQuery: EntityQuery, EntityStringQuery {

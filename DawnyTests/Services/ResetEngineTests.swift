@@ -146,7 +146,7 @@ final class ResetEngineTests: XCTestCase {
         await resetEngine.performReset(referenceDate: currentDate)
         
         // LastResetDate sollte trotzdem gesetzt werden
-        let lastReset = UserDefaults.standard.object(forKey: "DawnyLastResetDate") as? Date
+        let lastReset = AppGroup.defaults.object(forKey: "DawnyLastResetDate") as? Date
         XCTAssertNotNil(lastReset)
     }
     
