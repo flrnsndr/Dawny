@@ -5,6 +5,7 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import PostHog from "@/components/PostHog.astro";
 import SchemaOrg from "@/components/SchemaOrg.astro";
+import type { ArticleMeta, BlogIndexMeta } from "@/components/SchemaOrg.astro";
 import { type Lang, getDict, alternateLang } from "@/i18n";
 import appleTouchIconSrc from "@/assets/icons/dawny-icon-light.png";
 
@@ -15,6 +16,8 @@ interface Props {
   canonicalPath?: string;
   altCanonicalPath?: string;
   bodyClass?: string;
+  article?: ArticleMeta;
+  blogIndex?: BlogIndexMeta;
 }
 
 const {
@@ -24,6 +27,8 @@ const {
   canonicalPath = "/",
   altCanonicalPath,
   bodyClass = "",
+  article,
+  blogIndex,
 } = Astro.props;
 
 const dict = getDict(lang);
@@ -55,10 +60,19 @@ const appleTouchIcon = await getImage({ src: appleTouchIconSrc, width: 180, heig
     <link rel="alternate" hreflang={altLang} href={altUrl} />
     <link rel="alternate" hreflang="x-default" href={xDefaultUrl} />
 
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${dict.blog.title} — Dawny`}
+      href={`/${lang}/rss.xml`}
+    />
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href={appleTouchIcon.src} />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={article ? "article" : "website"} />
+    {article && <meta property="article:published_time" content={article.datePublished.toISOString()} />}
+    {article && <meta property="article:author" content="Florian Schneider" />}
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
     <meta property="og:url" content={url} />
@@ -73,7 +87,15 @@ const appleTouchIcon = await getImage({ src: appleTouchIconSrc, width: 180, heig
     <meta name="twitter:image" content={ogImage} />
 
     <meta name="generator" content={Astro.generator} />
-    <SchemaOrg description={pageDescription} lang={lang} />
+    <SchemaOrg
+      lang={lang}
+      url={url}
+      title={pageTitle}
+      description={pageDescription}
+      image={ogImage}
+      article={article}
+      blogIndex={blogIndex}
+    />
     <PostHog />
     <slot name="head" />
   </head>

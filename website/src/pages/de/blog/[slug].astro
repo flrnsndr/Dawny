@@ -21,6 +21,7 @@ const slug = post.id.replace("de/", "").replace(".md", "");
   description={post.data.description}
   pubDate={post.data.pubDate}
   slug={slug}
+  body={post.body ?? ""}
 >
   <Content />
 </BlogPost>
