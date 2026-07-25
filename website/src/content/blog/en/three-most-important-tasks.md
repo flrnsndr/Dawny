@@ -14,7 +14,7 @@ This isn’t a time management failure. It’s a prioritization problem. Most ta
 
 The MIT method — short for Most Important Tasks — is a daily planning practice that asks you to identify, each morning, the three tasks that matter most to you today. Not the ten things you hope to get done. Not your full backlog. Three. You commit to those three before you open your inbox, before you check Slack, before the day has a chance to carry you somewhere else.
 
-The method is most widely credited to Leo Babauta, who popularized it through his Zen Habits article on limiting your daily tasks starting in the late 2000s. The core rule is straightforward: pick three MITs before you start working, write them down separately from your larger task list, and treat them as your non-negotiable commitments for the day. Everything else is optional. For additional perspectives on the three-task method, see this article on the rule of three and this guide to understanding the 3 most important tasks.
+The method is most widely credited to Leo Babauta, who popularized it through his [Zen Habits article on limiting your daily tasks](https://zenhabits.net/eliminate-all-but-the-absolute-essential-tasks/) starting in the late 2000s. The core rule is straightforward: pick three MITs before you start working, write them down separately from your larger task list, and treat them as your non-negotiable commitments for the day. Everything else is optional. For additional perspectives on the three-task method, see this article on [the rule of three](https://focusbox.io/glossary/rule-of-three) and this guide to [understanding the 3 most important tasks](https://b2blauncher.com/three-important-tasks/).
 
 ## Why Three — Not Five, Not One?
 
@@ -22,7 +22,7 @@ The number three is not arbitrary. It’s a cognitive sweet spot. And understand
 
 **Why “one” creates too much pressure.** A single daily priority is a worthy ideal for certain frameworks, but in practice it creates a binary outcome: you either had a good day or you didn’t, with no middle ground. One task also tends to be either too big (and never gets done) or too small (and doesn’t feel meaningful). The pressure of a single make-or-break commitment can cause avoidance on its own.
 
-**Why “five” often becomes “some of five.”** Research on decision fatigue — the documented phenomenon where the quality of decisions deteriorates after a long sequence of choices — suggests that longer lists don’t just fail to help: they actively hurt. Studies have shown that people make worse decisions later in the day as their cognitive resources deplete. The same principle applies to task lists: the longer the list, the more decisions you defer, and the less likely you are to act on any of it. Five items is enough to trigger the avoidance that comes with decision fatigue.
+**Why “five” often becomes “some of five.”** Research on decision fatigue — the documented phenomenon where the quality of decisions deteriorates after a long sequence of choices — suggests that longer lists don’t just fail to help: they actively hurt. Studies have shown that people make worse decisions later in the day as their cognitive resources deplete. The same principle applies to task lists: the longer the list, the more decisions you defer, and the less likely you are to act on any of it. Five items is enough to trigger the avoidance that comes with [decision fatigue](/en/blog/decision-fatigue-task-management/).
 
 **Why three is the Goldilocks number.** Three is small enough to actually hold in your head, large enough to represent a productive day, and structured enough to force genuine triage. When you have only three slots, you can’t include everything that feels vaguely important. You have to decide what actually matters. That constraint is the entire point.
 
@@ -30,7 +30,7 @@ The number three is not arbitrary. It’s a cognitive sweet spot. And understand
 
 The selection process matters as much as the number. Done poorly, MIT selection becomes another form of avoidance. You spend 30 minutes optimizing your list instead of working. Done well, it takes under five minutes and sets a clear direction for the entire day.
 
-**Step 1: Review your backlog briefly. But don’t get lost in it.** Scan your daily planning system or task list to remind yourself what’s waiting. This is a survey, not a deep dive. Give yourself a time cap: two minutes maximum.
+**Step 1: Review your backlog briefly. But don’t get lost in it.** Scan your [daily planning system](/en/blog/daily-planning-system/) or task list to remind yourself what’s waiting. This is a survey, not a deep dive. Give yourself a time cap: two minutes maximum.
 
 **Step 2: Ask one clarifying question.** “If I do nothing else today, what three things would make this day feel worthwhile?” This question filters out the noise. Urgency, guilt, and habit are powerful forces that pull you toward busy work. The question pulls you back toward what actually matters.
 
@@ -50,7 +50,7 @@ The tasks you never actually pick as MITs will eventually reveal themselves: the
 
 This is where most productivity advice breaks down. The MIT method tells you to pick three tasks. But almost nothing addresses what happens when one of them doesn’t get done. The standard answer is implicit: you feel bad, you carry it over, you add it to tomorrow’s list with a mental note of disappointment.
 
-That accumulation is exactly why your to-do list feels overwhelming. Unfinished commitments don’t just sit in your app. They sit in the back of your mind. The Zeigarnik effect, a well-studied psychological phenomenon, describes how unresolved tasks occupy working memory and create a persistent low-level cognitive load. Add enough of them and the list itself becomes something you avoid.
+That accumulation is exactly [why your to-do list feels overwhelming](/en/blog/why-to-do-lists-fail/). Unfinished commitments don’t just sit in your app. They sit in the back of your mind. The Zeigarnik effect, a well-studied psychological phenomenon, describes how unresolved tasks occupy working memory and create a persistent low-level cognitive load. Add enough of them and the list itself becomes something you avoid.
 
 A different model: what if an unfinished MIT simply returned to your backlog, without an overdue label, without a red badge, without guilt? It’s not a failed commitment. It’s an undecided task waiting for the right day. You choose again tomorrow whether it makes the MIT list. If it keeps being skipped, that tells you something important about how much you actually need to do it.
 

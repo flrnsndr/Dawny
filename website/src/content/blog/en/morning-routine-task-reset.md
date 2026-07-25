@@ -4,7 +4,7 @@ description: "A morning task reset takes 5 minutes and prevents the overwhelm th
 pubDate: 2026-05-10
 ---
 
-> **Quick Answer:** A morning routine for productivity doesn’t need to start at 5 AM. It needs one deliberate step: a task reset. In 5 minutes, you review yesterday’s unfinished work, choose 2–3 tasks that genuinely matter today, and give yourself permission to ignore everything else. That single decision — made before the first email — sets the direction for the entire day and cuts decision fatigue significantly.
+> **Quick Answer:** A morning routine for productivity doesn’t need to start at 5 AM. It needs one deliberate step: a task reset. In 5 minutes, you review yesterday’s unfinished work, choose 2–3 tasks that genuinely matter today, and give yourself permission to ignore everything else. That single decision — made before the first email — sets the direction for the entire day and cuts [decision fatigue](/en/blog/decision-fatigue-task-management/) significantly.
 
 Picture two versions of your morning. In the first, you open your task app and immediately feel the weight of yesterday — and the day before, and the week before that. Red items. Tasks that made sense two weeks ago. A list that has grown faster than you could act on it. You close the app without doing anything and tell yourself you’ll deal with it later.
 
@@ -14,7 +14,7 @@ The difference between those two mornings isn’t discipline or willpower. It’
 
 ## Why Your Morning Sets the Tone for the Whole Day
 
-The first hour after you wake up is the most cognitively valuable part of your day. Research on attention restoration theory, developed by environmental psychologists Rachel and Stephen Kaplan, describes how directed attention — the kind required for focused work and decision-making — is a depletable resource that recovers during rest. A systematic review of attention restoration theory shows that people who start the day with their directed attention intact perform significantly better on complex tasks than those who begin already depleted.
+The first hour after you wake up is the most cognitively valuable part of your day. Research on attention restoration theory, developed by environmental psychologists Rachel and Stephen Kaplan, describes how directed attention — the kind required for focused work and decision-making — is a depletable resource that recovers during rest. A [systematic review of attention restoration theory](https://www.ecehh.org/research/attention-restoration-theory-a-systematic-review/) shows that people who start the day with their directed attention intact perform significantly better on complex tasks than those who begin already depleted.
 
 Translate that to your morning: every decision you make before starting your most important work uses up part of that resource. Scrolling email, reacting to Slack notifications, or staring at a 60-item task list and trying to decide where to begin — all of it draws from the same finite pool. By the time you actually sit down to do the work that matters, you’ve already spent a significant portion of your best cognitive capacity.
 
@@ -48,7 +48,7 @@ This is the entire routine. It takes five minutes. You do it before opening emai
 
 The entire sequence, from opening the app to closing it again, takes about five minutes once you’ve made it a habit. The first few times might take longer while you get comfortable with the decisiveness the process requires. That discomfort is part of the reset working: you’re actually making a decision, not just shuffling items around.
 
-If you want a deeper look at the principles behind this kind of intentional daily structure, the daily planning system framework covers the full architecture behind it.
+If you want a deeper look at the principles behind this kind of intentional daily structure, the [daily planning system](/en/blog/daily-planning-system/) framework covers the full architecture behind it.
 
 ## The Power of the Automatic Overnight Reset
 
@@ -120,9 +120,9 @@ Consistency over perfection is the rule that matters most. Link the routine to a
 
 A morning task reset isn’t about waking up earlier, meditating, or optimizing your first hour into a productivity performance. It’s about one decision, made before you start reacting to everyone else, that answers a single question: what is today actually about?
 
-That decision takes five minutes. It requires choosing 2–3 tasks from a clear, manageable list, setting them as your Daily Focus, and then getting out of the planning mode and into the doing mode. The research on morning cognitive resources, decision fatigue, and attention restoration all point in the same direction: people who make clear daily priority decisions early perform better and experience less stress across the rest of the day.
+That decision takes five minutes. It requires choosing 2–3 tasks from a clear, manageable list, setting them as your Daily Focus, and then getting out of the planning mode and into the doing mode. The research on morning cognitive resources, [decision fatigue](/en/blog/decision-fatigue-task-management/), and attention restoration all point in the same direction: people who make clear daily priority decisions early perform better and experience less stress across the rest of the day.
 
-The reset philosophy, where unfinished tasks return to the backlog overnight rather than accumulating as overdue items, makes the morning decision genuinely clean. You’re not choosing which failures to rescue. You’re choosing what today’s opportunities are. That shift in framing is small but profound. If you want to experience what that feels like in practice, the article on choosing your three most important tasks is a useful next step.
+The reset philosophy, where unfinished tasks return to the backlog overnight rather than accumulating as overdue items, makes the morning decision genuinely clean. You’re not choosing which failures to rescue. You’re choosing what today’s opportunities are. That shift in framing is small but profound. If you want to experience what that feels like in practice, the article on choosing your [three most important tasks](/en/blog/three-most-important-tasks/) is a useful next step.
 
 If you want to try a task app built around this philosophy, Dawny is available on the App Store.
     

@@ -22,7 +22,7 @@ Entscheidungsmüdigkeit ist real und wissenschaftlich gut dokumentiert. Der Psyc
 
 Stell dir vor, was passiert, wenn du eine Aufgabenliste mit 40 Einträgen öffnest. Bevor du eine einzige Sache getan hast, muss dein Gehirn 40 Optionen scannen und 40 kleine Entscheidungen treffen: Ist das heute relevant? Ist das dringend? Sollte ich das jetzt tun oder später? Das ist eine riesige kognitive Belastung, bevor du ein einziges Wort geschrieben oder einen einzigen Anruf gemacht hast. Die meisten Menschen reagieren auf diese Belastung auf die einzige rationale Weise, die ihnen bleibt: Sie schließen die App.
 
-Eine schlanke Tagesliste, begrenzt auf deine drei wichtigsten Aufgaben, umgeht das ganz. Weniger Einträge bedeuten weniger Entscheidungen, und das bedeutet mehr Energie, um Dinge tatsächlich zu erledigen.
+Eine schlanke Tagesliste, begrenzt auf deine [drei wichtigsten Aufgaben](/de/blog/three-most-important-tasks/), umgeht das ganz. Weniger Einträge bedeuten weniger Entscheidungen, und das bedeutet mehr Energie, um Dinge tatsächlich zu erledigen.
 
 ## Grund 2: Unerledigte Aufgaben schaffen eine Schuldgefühl-Spirale
 
@@ -30,7 +30,7 @@ Es gibt ein psychologisches Phänomen namens Zeigarnik-Effekt: Dein Gehirn häng
 
 Ein überfälliger Eintrag ist ein leises Nagen im Hinterkopf. Fünf überfällige Aufgaben fühlen sich wie ein schlechter Tag an. Dreißig davon, rot, fett, sich anhäufend, fühlen sich wie ein Versagen an. An diesem Punkt löst die App selbst Angst aus, bevor du etwas falsch gemacht hast. Du öffnest sie nicht mehr, nicht weil du faul bist, sondern weil dein Nervensystem richtig gelernt hat, dass die App sich schlecht anfühlt.
 
-Das ist es, was Aufgabenschulden dich tatsächlich kosten. Es ist nicht nur die unerledigte Arbeit. Es ist das psychologische Gewicht, das du mit dir herumträgst, jedes Mal wenn du an die Liste denkst.
+Das ist es, was [Aufgabenschulden](/de/blog/what-is-task-debt/) dich tatsächlich kosten. Es ist nicht nur die unerledigte Arbeit. Es ist das psychologische Gewicht, das du mit dir herumträgst, jedes Mal wenn du an die Liste denkst.
 
 ## Grund 3: Digitale Listen haben kein natürliches Verfallsdatum
 

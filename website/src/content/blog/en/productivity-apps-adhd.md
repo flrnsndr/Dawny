@@ -54,9 +54,9 @@ Here’s the question that matters most when evaluating any task app: what does 
 
 If undone tasks become red overdue items, the app is punishing the exact patterns that ADHD makes common: task initiation failure, underestimating how long things take, getting absorbed in something else. Every day you open the app after a hard day is an encounter with a list of things you “failed” at.
 
-This is why standard to-do lists fail so many people: the design assumes that flagging failure is motivating, when for most people it simply triggers avoidance. The app becomes the thing you hide from, which is precisely the opposite of its purpose.
+This is [why standard to-do lists fail](/en/blog/why-to-do-lists-fail/) so many people: the design assumes that flagging failure is motivating, when for most people it simply triggers avoidance. The app becomes the thing you hide from, which is precisely the opposite of its purpose.
 
-An app that resets undone tasks without judgment, with no red labels, no broken streaks and no rescheduling prompts, is more forgiving of how ADHD actually works. Task debt doesn’t accumulate because the system is designed not to let it.
+An app that resets undone tasks without judgment, with no red labels, no broken streaks and no rescheduling prompts, is more forgiving of how ADHD actually works. [Task debt](/en/blog/what-is-task-debt/) doesn’t accumulate because the system is designed not to let it.
 
 Two people who’ve been testing Dawny put it plainly:
 
@@ -113,7 +113,7 @@ The most practical approach is separating capture from daily focus. Keep a backl
 
 ### What features should an ADHD productivity app have?
 
-The more useful question is: what features shouldn’t it have? Skip streaks, complex project hierarchies, overdue labels that pile up, and reminder systems that can’t be easily silenced. What’s actually useful: quick task capture with minimal required fields, a limited daily focus view separate from the full backlog, and a way to handle undone tasks that doesn’t create guilt. How Dawny compares to feature-rich alternatives illustrates how much of this comes down to design philosophy rather than feature count.
+The more useful question is: what features shouldn’t it have? Skip streaks, complex project hierarchies, overdue labels that pile up, and reminder systems that can’t be easily silenced. What’s actually useful: quick task capture with minimal required fields, a limited daily focus view separate from the full backlog, and a way to handle undone tasks that doesn’t create guilt. [How Dawny compares to feature-rich alternatives](/en/blog/dawny-vs-todoist/) illustrates how much of this comes down to design philosophy rather than feature count.
 
 ## Conclusion
 

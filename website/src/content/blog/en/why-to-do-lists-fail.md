@@ -22,7 +22,7 @@ Decision fatigue is real and well-documented. Psychologist Roy Baumeister’s re
 
 Now consider what happens when you open a to-do list with 40 items. Before you’ve done a single thing, your brain has to scan 40 options and make 40 micro-decisions: Is this relevant today? Is this urgent? Should I do this now or later? That’s an enormous cognitive load before you’ve typed a single word or made a single phone call. Most people respond to this load the only rational way they can: they close the app.
 
-A leaner daily list limited to your three most important tasks sidesteps this entirely. Fewer items means fewer decisions, which means more energy for actually doing things.
+A leaner [daily list limited to your three most important tasks](/en/blog/three-most-important-tasks/) sidesteps this entirely. Fewer items means fewer decisions, which means more energy for actually doing things.
 
 ## Reason 2: Undone Tasks Create a Guilt Spiral
 
@@ -30,7 +30,7 @@ There’s a psychological phenomenon called the Zeigarnik effect: your brain hol
 
 One overdue task is a mild nagging feeling. Five overdue tasks feel like a bad day. Thirty of them, red, bolded, accumulating, feel like failure. At that point, the app itself triggers anxiety before you’ve done anything wrong. You stop opening it not because you’re lazy, but because your nervous system has correctly learned that opening it feels bad.
 
-This is what task debt actually costs you. It’s not just the undone work. It’s the psychological weight you carry every time you think about the list.
+This is what [task debt](/en/blog/what-is-task-debt/) actually costs you. It’s not just the undone work. It’s the psychological weight you carry every time you think about the list.
 
 ## Reason 3: Digital Lists Have No Natural Expiration Date
 

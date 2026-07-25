@@ -32,7 +32,7 @@ Todoist ist wirklich ausgezeichnete Software. Es hat seinen Platz als einer der 
 
 Das Projektsystem ermöglicht dir, Arbeiten auf jeder Komplexitätsstufe zu organisieren — persönlich, beruflich oder teamweit. Unteraufgaben, Abschnitte und verschachtelte Projekte bedeuten, dass du fast jeden Arbeitsablauf abbilden kannst. Labels und Filter ermöglichen Power Usern, ihre Aufgabenliste auf dutzende verschiedene Arten zu filtern und genau das anzuzeigen, was gerade Aufmerksamkeit braucht.
 
-Die Integrationsbibliothek ist umfangreich. Todoist verbindet sich mit Google Calendar, Outlook, Slack, Zapier und dutzenden anderen Tools über offizielle Integrationen. Wenn deine Arbeit bereits in anderen Apps stattfindet, kann sich Todoist einfügen, ohne dass du deine Gewohnheiten ändern musst. Für eine unabhängige Bewertung siehe diese Forbes-Rezension zu Todoist.
+Die Integrationsbibliothek ist umfangreich. Todoist verbindet sich mit Google Calendar, Outlook, Slack, Zapier und dutzenden anderen Tools über [offizielle Integrationen](https://todoist.com/features). Wenn deine Arbeit bereits in anderen Apps stattfindet, kann sich Todoist einfügen, ohne dass du deine Gewohnheiten ändern musst. Für eine unabhängige Bewertung siehe diese [Forbes-Rezension zu Todoist](https://www.forbes.com/advisor/business/software/todoist-review/).
 
 Für Teams machen gemeinsame Projekte und Aufgabenzuweisung Todoist zu einem echten leichtgewichtigen Projektmanagement-Tool. Wenn du mehrere Personen managst oder Arbeiten regelmäßig weitergibst, zählt diese Fähigkeit.
 
@@ -44,7 +44,7 @@ Wenn ein Aufgabenmanager keine natürliche Grenze für die Anzahl der Einträge 
 
 Mehr Funktionen bedeuten auch mehr Entscheidungen. Bevor du einfach etwas *tun* kannst, musst du entscheiden: Zu welchem Projekt gehört das? Welche Priorität? Welches Label? Sollte ich ein Fälligkeitsdatum setzen? Der Aufwand für die Pflege eines perfekten Systems kann mehr kognitive Energie kosten als die Aufgaben selbst.
 
-Das ist das, was Forscher manchmal als Aufgabenschulden bezeichnen: das sich ansammelnde Gewicht von Dingen, die du tun wolltest, aber nicht getan hast. Todoist macht diese Schulden ständig sichtbar, wie die meisten traditionellen Aufgabenmanager. Für manche Nutzer ist diese Sichtbarkeit motivierend. Für andere ist sie lähmend.
+Das ist das, was Forscher manchmal als [Aufgabenschulden](/de/blog/what-is-task-debt/) bezeichnen: das sich ansammelnde Gewicht von Dingen, die du tun wolltest, aber nicht getan hast. Todoist macht diese Schulden ständig sichtbar, wie die meisten traditionellen Aufgabenmanager. Für manche Nutzer ist diese Sichtbarkeit motivierend. Für andere ist sie lähmend.
 
 ## Was Dawny anders macht
 
@@ -54,7 +54,7 @@ Die Kernmechanik ist einfach: Am Ende jeden Tages kehren alle Aufgaben, die du i
 
 Dein Backlog ist alles, was du irgendwann vielleicht tun möchtest. Dein Daily Focus ist die kleine Menge an Aufgaben, auf die du dich *heute* konzentrierst, bewusst klein gehalten. Jeden Morgen triffst du eine aktive, bewusste Entscheidung darüber, was wichtig ist. Aufgaben, die du immer wieder überspringst, werden automatisch durch die „Make It Count"-Mechanik archiviert. Keine Schuldgefühle erforderlich.
 
-Das ist das Gegenteil davon, warum die meisten To-Do-Listen scheitern: Dawny lässt deine Liste nicht zu einem Denkmal für deine vergangenen Absichten werden. Es erzwingt eine tägliche Neubewertung dessen, was jetzt tatsächlich wichtig ist.
+Das ist das Gegenteil davon, [warum die meisten To-Do-Listen scheitern](/de/blog/why-to-do-lists-fail/): Dawny lässt deine Liste nicht zu einem Denkmal für deine vergangenen Absichten werden. Es erzwingt eine tägliche Neubewertung dessen, was jetzt tatsächlich wichtig ist.
 
 Beta-Tester beschreiben die Verschiebung deutlich:
 

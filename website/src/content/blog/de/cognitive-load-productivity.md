@@ -10,7 +10,7 @@ Du hast das wahrscheinlich schon erlebt: Du öffnest eine Feature-reiche Task-Ap
 
 ## Was ist kognitive Last?
 
-Kognitive Last ist die gesamte mentale Anstrengung, die erforderlich ist, um Informationen zu verarbeiten und in jedem Moment Entscheidungen zu treffen. Das Konzept wurde vom Pädagogischen Psychologen John Sweller in seiner 1988 erschienenen Arbeit zur kognitiven Lasttheorie formalisiert, ursprünglich entwickelt, um zu erklären, warum manche Unterrichtsdesigns Schülern beim Lernen helfen und andere sie überfordern. Die Theorie ist seitdem grundlegend für Interface-Design, Softwareentwicklung und — zunehmend — für die Gestaltung von Produktivitätssystemen geworden. Für einen wissenschaftlicheren Überblick siehe diese systematische Übersicht zur kognitiven Lasttheorie.
+Kognitive Last ist die gesamte mentale Anstrengung, die erforderlich ist, um Informationen zu verarbeiten und in jedem Moment Entscheidungen zu treffen. Das Konzept wurde vom Pädagogischen Psychologen John Sweller in [seiner 1988 erschienenen Arbeit zur kognitiven Lasttheorie](https://nesslabs.com/productive-cognitive-load) formalisiert, ursprünglich entwickelt, um zu erklären, warum manche Unterrichtsdesigns Schülern beim Lernen helfen und andere sie überfordern. Die Theorie ist seitdem grundlegend für Interface-Design, Softwareentwicklung und — zunehmend — für die Gestaltung von Produktivitätssystemen geworden. Für einen wissenschaftlicheren Überblick siehe diese [systematische Übersicht zur kognitiven Lasttheorie](https://edtechbooks.org/encyclopedia/cognitive_load_theory).
 
 Sweller identifizierte drei Arten von kognitiver Last. **Intrinsische Last** ist die inhärente Komplexität der Aufgabe selbst — eine schwierige E-Mail schreiben, ein technisches Problem lösen, eine strategische Entscheidung treffen. Du kannst intrinsische Last nicht eliminieren; sie ist die eigentliche Arbeit. **Extrinsische Last** ist die Belastung, die vom System auferlegt wird, in dem du arbeitest — verwirrende Interfaces, unnötige Entscheidungen, unklare Strukturen. Das ist die Art, die du minimieren möchtest. **Relevante Last** ist die mentale Anstrengung, die in den Aufbau von Verständnis und Fähigkeiten fließt — die Last, die dir tatsächlich dabei hilft, dich im Laufe der Zeit zu verbessern.
 
@@ -30,11 +30,11 @@ Die meisten Task-Apps sind für die Erfassung von Aufgaben optimiert, nicht für
 
 ## Die kognitive Belastung durch überfällige Aufgaben
 
-Es gibt eine spezifische Art von kognitiver Belastung, die überfällige Aufgaben erzeugen — über die oben beschriebene allgemeine Belastung hinaus. Psychologen nennen es den Zeigarnik-Effekt: Unerledigte Aufgaben drängen sich immer wieder ins Bewusstsein. Dein Gehirn kehrt immer wieder zu unerledigten Dingen zurück, auch wenn du nominell etwas völlig anderes tust.
+Es gibt eine spezifische Art von kognitiver Belastung, die überfällige Aufgaben erzeugen — über die oben beschriebene allgemeine Belastung hinaus. Psychologen nennen es den [Zeigarnik-Effekt](https://www.psychologytoday.com/us/basics/zeigarnik-effect): Unerledigte Aufgaben drängen sich immer wieder ins Bewusstsein. Dein Gehirn kehrt immer wieder zu unerledigten Dingen zurück, auch wenn du nominell etwas völlig anderes tust.
 
 Eine überfällige Aufgabe erscheint nicht nur einmal auf deiner Liste. Sie taucht in deinen Gedanken während Meetings wieder auf, während Gesprächen, in den Momenten, bevor du einschläfst. Jedes Wiederauftauchen kostet ein Stück kognitive Kapazität, eine Unterbrechung dessen, was du eigentlich denken wolltest. Vervielfache das über zehn oder zwanzig überfällige Elemente, und du trägst den ganzen Tag über eine erhebliche Grundlast aufdringlicher Gedanken.
 
-Das ist es, was Aufgaben-Schuld wirklich kostet — nicht nur die Schuldgefühle, die roten Elemente zu sehen, sondern die anhaltende kognitive Belastung durch offene, ungelöste Punkte. Jede überfällige Aufgabe ist eine Mikro-Entscheidung, die dein Gehirn immer wieder aufmacht. Habe ich etwas vergessen? Sollte ich mich deswegen schlecht fühlen? Muss ich das immer noch tun? Ist es zu spät? Jede dieser Fragen verbraucht mentale Kapazität, die deiner eigentlichen Arbeit zugute kommen könnte.
+Das ist es, was [Aufgaben-Schuld](/de/blog/what-is-task-debt/) wirklich kostet — nicht nur die Schuldgefühle, die roten Elemente zu sehen, sondern die anhaltende kognitive Belastung durch offene, ungelöste Punkte. Jede überfällige Aufgabe ist eine Mikro-Entscheidung, die dein Gehirn immer wieder aufmacht. Habe ich etwas vergessen? Sollte ich mich deswegen schlecht fühlen? Muss ich das immer noch tun? Ist es zu spät? Jede dieser Fragen verbraucht mentale Kapazität, die deiner eigentlichen Arbeit zugute kommen könnte.
 
 ## Warum einfachere Systeme kognitive Last reduzieren
 
@@ -44,7 +44,7 @@ Eine kürzere tägliche Task-Liste reduziert kognitive Last auf konkrete, messba
 
 Die Daily-Focus-Liste funktioniert als das, was Kognitionswissenschaftler einen **kognitiven Container** nennen würden: eine Grenze, die den Bereich begrenzt, den dein Gehirn aktiv verarbeiten muss. Wenn eine Aufgabe nicht auf deiner heutigen Liste ist, muss dein Gehirn sie sich jetzt nicht ins Arbeitsgedächtnis holen. Sie existiert im Backlog, abrufbar, wenn du sie brauchst, aber außerhalb des aktiven Verarbeitungsbereichs deines aktuellen Tages. Das ist das gleiche Prinzip wie die progressive Offenlegung im Interface-Design — zeige Menschen nur das, was sie gerade brauchen, und lass sie mehr abrufen, wenn sie danach fragen.
 
-Ein gutes tägliches Planungssystem schafft diese Grenze bewusst. Die Entscheidung, was auf die heutige Liste kommt, wird einmal zu Beginn des Tages getroffen. Und dann musst du das vollständige Backlog nicht weiter ständig neu bewerten, während du versuchst zu arbeiten.
+Ein gutes [tägliches Planungssystem](/de/blog/daily-planning-system/) schafft diese Grenze bewusst. Die Entscheidung, was auf die heutige Liste kommt, wird einmal zu Beginn des Tages getroffen. Und dann musst du das vollständige Backlog nicht weiter ständig neu bewerten, während du versuchst zu arbeiten.
 
 ## Feature-Komplexität vs. Produktivität
 
@@ -54,7 +54,7 @@ Jede zusätzliche Funktion in einer Task-App erzeugt neue Entscheidungen. Nutze 
 
 Das ist Feature-Creep als Design-Problem, nicht nur als Software-Problem. Wenn Tooldesigner Features für Power-User hinzufügen, verschieben sie unwillkürlich die kognitive Belastung auf alle Nutzer, einschließlich derjenigen, die die erweiterten Features nie nutzen werden. Das Ergebnis ist eine App, die mehr von dir verlangt, nur um sie zu bedienen, und dir weniger Kapazität für die Arbeit lässt, die die App unterstützen soll.
 
-Eine Wahl zwischen Features zu treffen, ist selbst eine Entscheidung, und Entscheidungsmüdigkeit ist real. Je mehr kleine Entscheidungen du über dein System triffst, desto weniger Entscheidungskapazität hast du für deine eigentliche Arbeit. Einfachere Tools gewinnen — nicht, weil Einfachheit von Natur aus tugendhaft ist, sondern weil sie die kognitiven Ressourcen sparen, die wirklich zählen.
+Eine Wahl zwischen Features zu treffen, ist selbst eine Entscheidung, und [Entscheidungsmüdigkeit](/de/blog/decision-fatigue-task-management/) ist real. Je mehr kleine Entscheidungen du über dein System triffst, desto weniger Entscheidungskapazität hast du für deine eigentliche Arbeit. Einfachere Tools gewinnen — nicht, weil Einfachheit von Natur aus tugendhaft ist, sondern weil sie die kognitiven Ressourcen sparen, die wirklich zählen.
 
 ## Das Designprinzip hinter Apps mit niedriger kognitiver Last
 
