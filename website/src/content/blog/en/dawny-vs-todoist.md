@@ -12,7 +12,17 @@ If this sounds familiar, you are not alone — and you are not bad at productivi
 
 ## Quick Comparison: Dawny vs Todoist at a Glance
 
-FeatureTodoistDawnyDaily task limitNoneIntentionally smallOverdue tasksShown with red labelsReset to Backlog automaticallyPlatformsiOS, Android, Web, DesktopiOS only (currently)SubtasksYesNoLabels and filtersYesNoTeam collaborationYesNoIntegrations (calendar, Slack, etc.)YesNoPriceFree tier + paid plansFree (beta)Best forPower users, teams, complex projectsIndividuals who feel overwhelmed by their task app
+| Feature | Todoist | Dawny |
+| --- | --- | --- |
+| Daily task limit | None | Intentionally small |
+| Overdue tasks | Shown with red labels | Reset to Backlog automatically |
+| Platforms | iOS, Android, Web, Desktop | iOS only (currently) |
+| Subtasks | Yes | No |
+| Labels and filters | Yes | No |
+| Team collaboration | Yes | No |
+| Integrations (calendar, Slack, etc.) | Yes | No |
+| Price | Free tier + paid plans | Free |
+| Best for | Power users, teams, complex projects | Individuals who feel overwhelmed by their task app |
 
 This table alone might tell you everything you need to know. But the numbers and checkboxes miss the more important question: what does it *feel* like to use each app every day?
 
@@ -32,31 +42,31 @@ None of this is a criticism of Todoist. It is an observation about a pattern tha
 
 When a task manager has no natural limit on how many items you can add, lists grow. When lists grow faster than you complete tasks, overdue items accumulate. Todoist marks those items in red, because it is trying to help — but for users with ADHD, anxiety, or a tendency toward overwhelm, that red count becomes something to avoid rather than address.
 
-More features also means more decisions. Before you can just *do* something, you have to decide, which project does this belong to? What priority? Which label? Should I set a due date? The overhead of maintaining a perfect system can cost more cognitive energy than the tasks themselves.
+More features also means more decisions. Before you can just *do* something, you have to decide: which project does this belong to? What priority? Which label? Should I set a due date? The overhead of maintaining a perfect system can cost more cognitive energy than the tasks themselves.
 
-This is what researchers sometimes call task debt. The accumulating weight of things you meant to do but did not. Todoist, like most traditional task managers, surfaces that debt constantly. For some users, that visibility is motivating. For others, it is paralyzing.
+This is what researchers sometimes call task debt: the accumulating weight of things you meant to do but did not. Todoist, like most traditional task managers, surfaces that debt constantly. For some users, that visibility is motivating. For others, it is paralyzing.
 
 ## What Dawny Does Differently
 
-Dawny was built by an indie developer who has had ADHD his whole life. He tried every productivity app on the market, including Todoist. And hit the same wall every time. He built Dawny for his own brain, not to be more productive but to stop dreading his own task list.
+Dawny was built by an indie developer who has had ADHD his whole life. He tried every productivity app on the market, including Todoist, and hit the same wall every time. He built Dawny for his own brain, not to be more productive but to stop dreading his own task list.
 
-The core mechanic is simple, at the end of each day, any tasks you did not complete in your Daily Focus automatically return to your Backlog. They do not become overdue. They do not turn red. They simply wait, without judgment, until you choose them again.
+The core mechanic is simple: at the end of each day, any tasks you did not complete in your Daily Focus automatically return to your Backlog. They do not become overdue. They do not turn red. They simply wait, without judgment, until you choose them again.
 
-Your Backlog is everything you might want to do someday. Your Daily Focus is the small set of tasks you choose to focus on *today*. Intentionally kept small. Each morning you make an active, deliberate decision about what matters. Tasks that you keep skipping eventually get archived automatically through the “Make It Count” mechanic. No guilt required.
+Your Backlog is everything you might want to do someday. Your Daily Focus is the small set of tasks you choose to focus on *today*, intentionally kept small. Each morning you make an active, deliberate decision about what matters. Tasks that you keep skipping eventually get archived automatically through the “Make It Count” mechanic. No guilt required.
 
-This is the opposite of why most to-do lists fail, Dawny does not let your list become a monument to your past intentions. It forces a daily renegotiation with what actually matters now.
+This is the opposite of why most to-do lists fail: Dawny does not let your list become a monument to your past intentions. It forces a daily renegotiation with what actually matters now.
 
-Beta testers describe the shift clearly,
+Beta testers describe the shift clearly:
 
-> “I never thought the reduced approach was right for me. But after the first test, I simply didn’t stop using Dawny. My old to-do list app now sits unopened with all its never-completed tasks still in there.”, *Dawny beta tester*
+> “I never thought the reduced approach was right for me. But after the first test, I simply didn’t stop using Dawny. My old to-do list app now sits unopened with all its never-completed tasks still in there.” – *Dawny beta tester*
 
-> “Since using Dawny, I’m no longer afraid to look at my task list. Because the tasks I won’t complete anyway simply don’t show up anymore.”, *Dawny beta tester*
+> “Since using Dawny, I’m no longer afraid to look at my task list. Because the tasks I won’t complete anyway simply don’t show up anymore.” – *Dawny beta tester*
 
-**A note on transparency,** Dawny is an iOS-only app. It has significantly fewer features than Todoist. No subtasks, no labels, no integrations, no web access, no team features. If those things matter to you, Todoist is the better choice right now.
+**A note on transparency:** Dawny is an iOS-only app. It has significantly fewer features than Todoist. No subtasks, no labels, no integrations, no web access, no team features. If those things matter to you, Todoist is the better choice right now.
 
 ## Who Should Use Todoist
 
-Todoist is the right tool if,
+Todoist is the right tool if:
 
 - You manage complex projects with multiple moving parts or stakeholders
 
@@ -72,7 +82,7 @@ Todoist rewards users who have the capacity and preference to manage a complex s
 
 ## Who Should Try Dawny
 
-Dawny is worth trying if,
+Dawny is worth trying if:
 
 - You have abandoned multiple to-do apps because the list eventually became too overwhelming
 
@@ -84,13 +94,13 @@ Dawny is worth trying if,
 
 - You are an iPhone user looking for a simple daily focus tool with no learning curve
 
-Dawny does not try to replace Todoist for project management. It is designed for the daily question, *what am I actually doing today?*
+Dawny does not try to replace Todoist for project management. It is designed for the daily question: *what am I actually doing today?*
 
 ## The Philosophical Difference
 
 This is the heart of it. Todoist trusts the user to manage complexity. It gives you every tool you need and steps back. If you can handle the cognitive load of a large, detailed system, Todoist rewards that investment.
 
-Dawny removes complexity from the equation. It makes an opinionated bet, for certain people, the best task management is the kind that resets your slate every morning and refuses to let yesterday’s failures haunt today. The limits are not bugs, they are the product.
+Dawny removes complexity from the equation. It makes an opinionated bet: for certain people, the best task management is the kind that resets your slate every morning and refuses to let yesterday’s failures haunt today. The limits are not bugs. They are the product.
 
 Neither philosophy is wrong. The question is which one matches how your brain actually works, not how you wish it worked.
 
@@ -110,7 +120,7 @@ There is no universal answer, but many users with ADHD find that feature-rich ap
 
 ### Can I import my Todoist tasks to Dawny?
 
-Not currently. Dawny does not have an import feature in its beta. You would need to manually add tasks you want to carry over. Given Dawny’s philosophy of intentional daily selection, many users find that starting fresh, rather than importing an existing backlog, is actually the better experience.
+Not currently. Dawny does not have an import feature yet. You would need to manually add tasks you want to carry over. Given Dawny’s philosophy of intentional daily selection, many users find that starting fresh, rather than importing an existing backlog, is actually the better experience.
 
 ### Is Dawny free?
 
@@ -120,11 +130,11 @@ Yes. Dawny is free to download on the App Store. There is no subscription requir
 
 Todoist is a great app. If you are a power user who needs projects, integrations, team features, and full control over a complex task system, it deserves its reputation.
 
-But if you are someone who has tried apps like Todoist and walked away feeling worse. If the red overdue labels made you avoid your task manager instead of use it. The problem was never your work ethic. It was the mismatch between the tool and the way your brain processes pressure and choice.
+But if you are someone who has tried apps like Todoist and walked away feeling worse, if the red overdue labels made you avoid your task manager instead of use it, the problem was never your work ethic. It was the mismatch between the tool and the way your brain processes pressure and choice.
 
-Dawny is not trying to out-feature Todoist. It is trying to do one thing differently, make your task list a place you want to open in the morning, not something you dread. It resets instead of accumulates. It limits instead of expands. It archives tasks that keep getting skipped instead of letting them haunt you indefinitely.
+Dawny is not trying to out-feature Todoist. It is trying to do one thing differently: make your task list a place you want to open in the morning, not something you dread. It resets instead of accumulates. It limits instead of expands. It archives tasks that keep getting skipped instead of letting them haunt you indefinitely.
 
-It is a beta, it is iOS-only, and it has fewer features than almost every other app in this category. But for the right person, that is exactly the point.
+It is iOS-only, and it has fewer features than almost every other app in this category. But for the right person, that is exactly the point.
 
 If you want to try a task app built around this philosophy, Dawny is available on the App Store.
     
