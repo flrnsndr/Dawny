@@ -1,6 +1,7 @@
 ---
 import Base from "@/layouts/Base.astro";
 import { type Lang, getDict } from "@/i18n";
+import { extractFaq, extractQuickAnswer, countWords } from "@/lib/blog";
 
 interface Props {
   lang: Lang;
@@ -8,10 +9,21 @@ interface Props {
   description: string;
   pubDate: Date;
   slug: string;
+  /** Raw markdown of the post, used to derive article and FAQ structured data. */
+  body: string;
 }
 
-const { lang, title, description, pubDate, slug } = Astro.props;
+const { lang, title, description, pubDate, slug, body } = Astro.props;
 const dict = getDict(lang);
+
+const article = {
+  title,
+  description,
+  abstract: extractQuickAnswer(body),
+  datePublished: pubDate,
+  wordCount: countWords(body),
+  faq: extractFaq(body),
+};
 
 const canonicalPath = `/blog/${slug}/`;
 const formattedDate = pubDate.toLocaleDateString(lang === "de" ? "de-DE" : "en-US", {
@@ -27,6 +39,7 @@ const formattedDate = pubDate.toLocaleDateString(lang === "de" ? "de-DE" : "en-U
   description={description}
   canonicalPath={canonicalPath}
   altCanonicalPath={canonicalPath}
+  article={article}
 >
   <article class="blog-article">
     <div class="container-narrow">
@@ -196,5 +209,35 @@ const formattedDate = pubDate.toLocaleDateString(lang === "de" ? "de-DE" : "en-U
     margin: 2.5rem 0;
     border: 0;
     border-top: 1px dashed rgba(14, 26, 46, 0.15);
+  }
+
+  /* Tables scroll inside their own box so a wide one never widens the page. */
+  .blog-prose table {
+    display: block;
+    overflow-x: auto;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.25rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .blog-prose th,
+  .blog-prose td {
+    padding: 0.6rem 0.9rem;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid rgba(14, 26, 46, 0.12);
+  }
+
+  .blog-prose th {
+    color: var(--color-ink);
+    font-weight: 600;
+    white-space: nowrap;
+    border-bottom-width: 2px;
+  }
+
+  .blog-prose tbody tr:last-child td {
+    border-bottom: 0;
   }
 </style>

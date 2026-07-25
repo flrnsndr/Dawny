@@ -1,42 +1,162 @@
 ---
-interface Props {
+import { type Lang, getDict, APP_STORE_URL, GITHUB_URL } from "@/i18n";
+import type { FaqEntry } from "@/lib/blog";
+
+export interface ArticleMeta {
+  title: string;
   description: string;
-  lang: string;
+  abstract?: string | null;
+  datePublished: Date;
+  wordCount?: number;
+  faq?: FaqEntry[];
 }
 
-const { description, lang } = Astro.props;
+export interface BlogIndexMeta {
+  posts: { url: string; title: string; description: string; datePublished: Date }[];
+}
 
-const softwareApp = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
+interface Props {
+  lang: Lang;
+  /** Canonical URL of the current page. */
+  url: string;
+  title: string;
+  description: string;
+  image: string;
+  article?: ArticleMeta;
+  blogIndex?: BlogIndexMeta;
+}
+
+const { lang, url, title, description, image, article, blogIndex } = Astro.props;
+
+const dict = getDict(lang);
+const site = Astro.site?.toString().replace(/\/$/, "") ?? "";
+const inLanguage = lang === "de" ? "de-DE" : "en-US";
+const imprintPath = lang === "de" ? "/de/impressum/" : "/en/imprint/";
+
+const ids = {
+  website: `${site}/#website`,
+  app: `${site}/#app`,
+  person: `${site}/#person`,
+  page: `${url}#webpage`,
+  article: `${url}#article`,
+  faq: `${url}#faq`,
+  blog: `${site}/${lang}/blog/#blog`,
+};
+
+const person = {
+  "@type": "Person",
+  "@id": ids.person,
+  name: "Florian Schneider",
+  url: `${site}${imprintPath}`,
+  sameAs: [GITHUB_URL],
+};
+
+const website = {
+  "@type": "WebSite",
+  "@id": ids.website,
   name: "Dawny",
+  url: site,
+  description: dict.meta.description,
+  inLanguage,
+  publisher: { "@id": ids.person },
+};
+
+// The app description always comes from the dictionary, never from the current
+// page — an article's summary describes the article, not the product.
+const app = {
+  "@type": "SoftwareApplication",
+  "@id": ids.app,
+  name: "Dawny",
+  description: dict.meta.description,
+  url: site,
   operatingSystem: "iOS",
   applicationCategory: "ProductivityApplication",
-  description,
-  url: "https://dawnyapp.com",
+  inLanguage,
+  installUrl: APP_STORE_URL,
+  downloadUrl: APP_STORE_URL,
   softwareVersion: "0.1",
-  inLanguage: lang === "de" ? "de" : "en",
-  author: {
-    "@type": "Person",
-    name: "Florian Schneider",
-    url: "https://dawnyapp.com",
-  },
+  author: { "@id": ids.person },
+  publisher: { "@id": ids.person },
+  sameAs: [APP_STORE_URL, GITHUB_URL],
   offers: {
     "@type": "Offer",
     price: "0",
     priceCurrency: "EUR",
+    availability: "https://schema.org/InStock",
   },
 };
 
-const website = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: "Dawny",
-  url: "https://dawnyapp.com",
+const webPage = {
+  "@type": "WebPage",
+  "@id": ids.page,
+  url,
+  name: title,
   description,
-  inLanguage: lang === "de" ? "de" : "en",
+  inLanguage,
+  isPartOf: { "@id": ids.website },
+  about: { "@id": ids.app },
+  primaryImageOfPage: { "@type": "ImageObject", url: image },
 };
+
+const graph: Record<string, unknown>[] = [person, website, app, webPage];
+
+if (article) {
+  graph.push({
+    "@type": "BlogPosting",
+    "@id": ids.article,
+    headline: article.title,
+    description: article.description,
+    ...(article.abstract ? { abstract: article.abstract } : {}),
+    datePublished: article.datePublished.toISOString(),
+    dateModified: article.datePublished.toISOString(),
+    inLanguage,
+    url,
+    mainEntityOfPage: { "@id": ids.page },
+    image,
+    author: { "@id": ids.person },
+    publisher: { "@id": ids.person },
+    isPartOf: { "@id": ids.blog },
+    ...(article.wordCount ? { wordCount: article.wordCount } : {}),
+  });
+
+  if (article.faq?.length) {
+    graph.push({
+      "@type": "FAQPage",
+      "@id": ids.faq,
+      inLanguage,
+      isPartOf: { "@id": ids.page },
+      mainEntity: article.faq.map((entry) => ({
+        "@type": "Question",
+        name: entry.question,
+        acceptedAnswer: { "@type": "Answer", text: entry.answer },
+      })),
+    });
+  }
+}
+
+if (blogIndex) {
+  graph.push({
+    "@type": "Blog",
+    "@id": ids.blog,
+    url,
+    name: `${dict.blog.title} — Dawny`,
+    description,
+    inLanguage,
+    isPartOf: { "@id": ids.website },
+    publisher: { "@id": ids.person },
+    blogPost: blogIndex.posts.map((post) => ({
+      "@type": "BlogPosting",
+      "@id": `${post.url}#article`,
+      headline: post.title,
+      description: post.description,
+      datePublished: post.datePublished.toISOString(),
+      url: post.url,
+      author: { "@id": ids.person },
+    })),
+  });
+}
+
+const jsonLd = { "@context": "https://schema.org", "@graph": graph };
 ---
 
-<script type="application/ld+json" set:html={JSON.stringify(softwareApp)} />
-<script type="application/ld+json" set:html={JSON.stringify(website)} />
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

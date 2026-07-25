@@ -12,6 +12,14 @@
 # Pretty URLs (serve /foo/index.html when /foo/ is requested)
 DirectoryIndex index.html
 
+# Crawlers and feed readers guess /sitemap.xml; the real file is the index.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^sitemap\.xml$ /sitemap-index.xml [L,R=301]
+  RewriteRule ^rss\.xml$ /en/rss.xml [L,R=301]
+  RewriteRule ^feed/?$ /en/rss.xml [L,R=301]
+</IfModule>
+
 # Browser-language redirect for the root URL.
 # If the visitor's Accept-Language starts with "de", send them to /de/,
 # otherwise to /en/. The static fallback in /index.html handles the rest.
@@ -34,6 +42,8 @@ DirectoryIndex index.html
   ExpiresByType text/html "access plus 0 seconds"
   ExpiresByType text/xml "access plus 0 seconds"
   ExpiresByType application/xml "access plus 0 seconds"
+  ExpiresByType application/rss+xml "access plus 0 seconds"
+  ExpiresByType text/plain "access plus 0 seconds"
 
   ExpiresByType text/css "access plus 1 year"
   ExpiresByType application/javascript "access plus 1 year"
@@ -62,7 +72,7 @@ DirectoryIndex index.html
 
 # Compress text assets
 <IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml text/xml application/xml
+  AddOutputFilterByType DEFLATE text/html text/css text/plain application/javascript application/json image/svg+xml text/xml application/xml application/rss+xml
 </IfModule>
 
 # Custom 404 falls back to the English landing page
