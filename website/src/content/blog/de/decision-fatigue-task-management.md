@@ -16,7 +16,7 @@ Entscheidungsmüdigkeit ist die Verschlechterung der Entscheidungsqualität, nac
 
 Eine der eindrucksvollsten Illustrationen stammt aus einer Studie israelischer Richter, die von Jonathan Levav und Shai Danziger untersucht wurde. Gefangene, die früh am Tag vor einer Bewährungskommission erschienen, bekamen in etwa 65 % der Fälle Bewährung. Am Ende einer Sitzung fielen die Genehmigungen auf fast null — nicht wegen irgendetwas, das die Gefangenen getan hatten, sondern weil die Entscheidungskapazität der Richter aufgebraucht war. Der gleiche kognitive Mechanismus wirkt, wenn du vor 9 Uhr morgens auf eine Liste mit 50 Aufgaben starrst.
 
-Das Konzept wurde seither in der Entscheidungsforschung intensiv untersucht — von Gesundheitswesen über Einzelhandel bis hin zu Knowledge Work und persönlicher Produktivität. Der Kernbefund bleibt: Mehr Entscheidungen führen zu schlechteren Entscheidungen später. Baumeisters ursprüngliche Studie zur Ego-Depletion bleibt eine grundlegende Referenz, und moderne Ratgeber bieten zusätzliche Perspektiven.
+Das Konzept wurde seither [in der Entscheidungsforschung intensiv untersucht](https://pmc.ncbi.nlm.nih.gov/articles/PMC6119549/) — von Gesundheitswesen über Einzelhandel bis hin zu Knowledge Work und persönlicher Produktivität. Der Kernbefund bleibt: Mehr Entscheidungen führen zu schlechteren Entscheidungen später. [Baumeisters ursprüngliche Studie zur Ego-Depletion](<http://faculty.washington.edu/jdb/345/345%20Articles/Baumeister%20et%20al.%20(1998).pdf>) bleibt eine grundlegende Referenz, und [moderne Ratgeber](https://www.asianefficiency.com/productivity/how-to-beat-decision-fatigue-the-ultimate-guide/) bieten zusätzliche Perspektiven.
 
 ## Wie deine Aufgabenliste Entscheidungsmüdigkeit verursacht
 
@@ -24,7 +24,7 @@ Eine Aufgabenliste mit 40 Einträgen enthält nicht 40 Aufgaben. Sie enthält 40
 
 Das passiert schnell und größtenteils unterhalb der Bewusstseinsschwelle. Aber es kostet dich trotzdem. Nachdem du durch eine lange Liste gescrollt hast und etwas Bestimmtes gefunden hast, mit dem du arbeiten möchtest, hast du schon einen bedeutsamen Teil deines täglichen Entscheidungs-Budgets für Meta-Entscheidungen aufgebraucht. Entscheidungen über Entscheidungen. Du hast noch kein einziges Element von deiner Liste erledigt, und du bist bereits erschöpfter als zu Beginn.
 
-Deshalb ist „To-Do-Listen erzeugen Überforderung" nicht einfach eine vage Beschwerde. Es ist eine mechanistische Beschreibung dessen, was lange Aufgabenlisten wirklich mit kognitiven Funktionen machen. Die Überforderung ist nicht imaginär. Sie hat eine neurologische Grundlage.
+Deshalb ist „[To-Do-Listen erzeugen Überforderung](/de/blog/why-to-do-lists-fail/)" nicht einfach eine vage Beschwerde. Es ist eine mechanistische Beschreibung dessen, was lange Aufgabenlisten wirklich mit kognitiven Funktionen machen. Die Überforderung ist nicht imaginär. Sie hat eine neurologische Grundlage.
 
 ## Der verstärkende Effekt: Warum längere Listen sich schlimmer anfühlen als sie sollten
 
@@ -48,11 +48,11 @@ Die strukturelle Lösung für Entscheidungsmüdigkeit in der Aufgabenverwaltung 
 
 **1. Trenne dein Backlog von deiner täglichen Liste.**
 
-Dein Backlog ist der Ort, an dem alles lebt: jede Idee, jede Aufgabe für irgendwann, jedes Projekt, das vielleicht mal wichtig wird. Er sollte umfassend sein und keinen Druck erzeugen. Deine tägliche Liste ist eine völlig separate Fläche — die kleine Menge an Dingen, zu denen du dich heute tatsächlich verpflichtest. Das Zwei-Listen-System macht diese Aufteilung explizit. Wenn du deine tägliche Liste öffnest, stöberst du nicht in deinem gesamten Task-Universum. Du schaust dir eine vorgefilterte Ansicht der heutigen Verpflichtungen an.
+Dein Backlog ist der Ort, an dem alles lebt: jede Idee, jede Aufgabe für irgendwann, jedes Projekt, das vielleicht mal wichtig wird. Er sollte umfassend sein und keinen Druck erzeugen. Deine tägliche Liste ist eine völlig separate Fläche — die kleine Menge an Dingen, zu denen du dich heute tatsächlich verpflichtest. Das [Zwei-Listen-System](/de/blog/two-list-system-backlog/) macht diese Aufteilung explizit. Wenn du deine tägliche Liste öffnest, stöberst du nicht in deinem gesamten Task-Universum. Du schaust dir eine vorgefilterte Ansicht der heutigen Verpflichtungen an.
 
 **2. Begrenze deine tägliche aktive Liste auf drei bis fünf Aufgaben, im Voraus ausgewählt.**
 
-Die täglichen Aufgaben auf drei zu begrenzen, ist eine der am häufigsten empfohlenen Strategien in der Produktivitätsforschung. Nicht weil mehr schlecht wäre, sondern weil die explizite und realistische Verpflichtung die Qualität der Entscheidungen, die du triffst, verändert. Wenn deine tägliche Liste drei Einträge hat, bekommt jeder echte Überlegung. Wenn sie dreißig hat, bekommt jeder einen Scan.
+[Die täglichen Aufgaben auf drei zu begrenzen](/de/blog/three-most-important-tasks/), ist eine der am häufigsten empfohlenen Strategien in der Produktivitätsforschung. Nicht weil mehr schlecht wäre, sondern weil die explizite und realistische Verpflichtung die Qualität der Entscheidungen, die du triffst, verändert. Wenn deine tägliche Liste drei Einträge hat, bekommt jeder echte Überlegung. Wenn sie dreißig hat, bekommt jeder einen Scan.
 
 Der Teil „im Voraus ausgewählt" ist genauso wichtig wie das Limit. Wenn du morgens drei Aufgaben am Abend zuvor auswählst, hast du dich während eines Moments relativer Klarheit vorentschieden, in dem du einen Überblick über den kommenden Tag hast und deine Energie weniger aufgebraucht ist als um 9 Uhr morgens. Das morgige Ich erbt die Entscheidungen, die das gestrige Ich getroffen hat. Das ist ein Geschenk.
 

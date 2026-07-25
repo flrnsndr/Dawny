@@ -10,7 +10,7 @@ You’ve probably had this experience: you open a feature-rich task app, spend 1
 
 ## What Is Cognitive Load?
 
-Cognitive load is the total mental effort required to process information and make decisions at any given moment. The concept was formalized by educational psychologist John Sweller in his 1988 paper on cognitive load theory, originally developed to explain why some instructional designs help students learn and others overwhelm them. The theory has since become foundational in interface design, software engineering, and — increasingly — productivity system design. For a more academic overview, see this systematic review of cognitive load theory.
+Cognitive load is the total mental effort required to process information and make decisions at any given moment. The concept was formalized by educational psychologist John Sweller in [his 1988 paper on cognitive load theory](https://nesslabs.com/productive-cognitive-load), originally developed to explain why some instructional designs help students learn and others overwhelm them. The theory has since become foundational in interface design, software engineering, and — increasingly — productivity system design. For a more academic overview, see this [systematic review of cognitive load theory](https://edtechbooks.org/encyclopedia/cognitive_load_theory).
 
 Sweller identified three types of cognitive load. **Intrinsic load** is the inherent complexity of the task itself — writing a difficult email, solving a technical problem, making a strategic decision. You can’t eliminate intrinsic load; it’s the actual work. **Extraneous load** is the overhead imposed by the system you’re working within — confusing interfaces, unnecessary decisions, unclear structure. This is the type you want to minimize. **Germane load** is the mental effort devoted to building understanding and skill, the load that actually helps you improve over time.
 
@@ -30,11 +30,11 @@ Most task apps are optimized for capturing tasks, not for minimizing the mental 
 
 ## The Cognitive Cost of Overdue Items
 
-There’s a specific type of cognitive burden that overdue tasks create, beyond the general overhead described above. Psychologists call it the Zeigarnik effect: incomplete tasks create persistent mental intrusion. Your brain keeps returning to unfinished business, even when you’re nominally doing something else entirely.
+There’s a specific type of cognitive burden that overdue tasks create, beyond the general overhead described above. Psychologists call it the [Zeigarnik effect](https://www.psychologytoday.com/us/basics/zeigarnik-effect): incomplete tasks create persistent mental intrusion. Your brain keeps returning to unfinished business, even when you’re nominally doing something else entirely.
 
 An overdue task doesn’t just appear on your list once. It reappears in your thoughts during meetings, during conversations, in the moments before you fall asleep. Each recurrence is a small cognitive tax, an interruption to whatever you were actually trying to think about. Scale that across ten or twenty overdue items, and you’re carrying a substantial background load of mental intrusion throughout your entire day.
 
-This is what task debt actually costs, not just the guilt of looking at the red items, but the persistent cognitive drain of unresolved open loops. Every overdue task is a micro-decision your brain keeps re-opening. Did I forget something? Should I feel bad about this? Do I still need to do this? Is it too late? Each of these questions consumes mental capacity that could be going toward your actual work.
+This is what [task debt](/en/blog/what-is-task-debt/) actually costs, not just the guilt of looking at the red items, but the persistent cognitive drain of unresolved open loops. Every overdue task is a micro-decision your brain keeps re-opening. Did I forget something? Should I feel bad about this? Do I still need to do this? Is it too late? Each of these questions consumes mental capacity that could be going toward your actual work.
 
 ## Why Simpler Systems Reduce Cognitive Load
 
@@ -44,7 +44,7 @@ A shorter daily task list reduces cognitive load in a concrete, measurable way: 
 
 The daily focus list functions as what cognitive scientists would call a **cognitive container**, a boundary that limits the scope of what your brain needs to actively process. If a task isn’t on today’s list, your brain doesn’t need to hold it in working memory right now. It exists in the backlog, accessible when you need it, but outside the active processing scope of your current day. This is the same principle behind progressive disclosure in interface design: show people only what they need right now, and let them access more when they ask for it.
 
-A good daily planning system builds this boundary deliberately. The decision about what enters today’s list is made once, at the start of the day, and then you don’t have to keep re-evaluating the full backlog while you’re trying to work.
+A good [daily planning system](/en/blog/daily-planning-system/) builds this boundary deliberately. The decision about what enters today’s list is made once, at the start of the day, and then you don’t have to keep re-evaluating the full backlog while you’re trying to work.
 
 ## Feature Complexity vs. Productivity
 
@@ -54,7 +54,7 @@ Each additional feature in a task app creates new decisions. Do I use tags or pr
 
 This is feature creep as a design problem, not just a software problem. When tool designers add features to serve power users, they inadvertently shift cognitive burden to every user, including those who will never use the advanced features. The result is an app that demands more from you just to operate it, leaving you less capacity for the work the app is supposed to support.
 
-Choosing between features is itself a decision, and decision fatigue is real. The more small decisions you make about your system, the less decision-making capacity you have for your actual work. Simpler tools win not because simplicity is inherently virtuous, but because they conserve the cognitive resources that matter.
+Choosing between features is itself a decision, and [decision fatigue](/en/blog/decision-fatigue-task-management/) is real. The more small decisions you make about your system, the less decision-making capacity you have for your actual work. Simpler tools win not because simplicity is inherently virtuous, but because they conserve the cognitive resources that matter.
 
 ## The Design Principle Behind Low-Cognitive-Load Apps
 

@@ -54,9 +54,9 @@ Hier ist die Frage, die am meisten zählt, wenn man eine Task-App bewertet: Was 
 
 Wenn unerledigte Aufgaben zu roten Überfällig-Einträgen werden, bestraft die App genau die Muster, die ADHS häufig macht: Aufgabeninitiierungsversagen, unterschätztes Zeitbudget, Ablenkung. Jeden Tag, wenn du nach einem harten Tag die App öffnest, triffst du auf eine Liste von Dingen, bei denen du „versagt" hast.
 
-Deshalb lassen Standard-To-Do-Listen so viele Menschen scheitern: Das Design geht davon aus, dass es motiviert, Versagen sichtbar zu machen, während es für die meisten Menschen einfach Vermeidung auslöst. Die App wird zur Sache, vor der du dich versteckst, was genau das Gegenteil ihres Zwecks ist.
+Deshalb [lassen Standard-To-Do-Listen so viele Menschen scheitern](/de/blog/why-to-do-lists-fail/): Das Design geht davon aus, dass es motiviert, Versagen sichtbar zu machen, während es für die meisten Menschen einfach Vermeidung auslöst. Die App wird zur Sache, vor der du dich versteckst, was genau das Gegenteil ihres Zwecks ist.
 
-Eine App, die unerledigte Aufgaben ohne Verurteilung zurücksetzt, ohne rote Markierungen, ohne gebrochene Streaks, ohne Umplanungs-Anforderungen, ist verständnisvoller für die Art, wie ADHS tatsächlich funktioniert. Aufgabenschulden sammeln sich nicht an, weil das System so entworfen ist, dass es das nicht zulässt.
+Eine App, die unerledigte Aufgaben ohne Verurteilung zurücksetzt, ohne rote Markierungen, ohne gebrochene Streaks, ohne Umplanungs-Anforderungen, ist verständnisvoller für die Art, wie ADHS tatsächlich funktioniert. [Aufgabenschulden](/de/blog/what-is-task-debt/) sammeln sich nicht an, weil das System so entworfen ist, dass es das nicht zulässt.
 
 Zwei Personen, die Dawny getestet haben, drücken es klar aus:
 
@@ -113,7 +113,7 @@ Der praktischste Ansatz ist die Trennung von Erfassung und täglichem Fokus. Beh
 
 ### Welche Funktionen sollte eine ADHS-Produktivitäts-App haben?
 
-Die nützlichere Frage ist: Welche Funktionen sollte sie nicht haben? Verzichte auf Streaks, komplexe Projekthierarchien, Überfällig-Markierungen, die sich häufen, und Erinnerungssysteme, die nicht leicht stummgeschaltet werden können. Was tatsächlich nützlich ist: schnelle Aufgabenerfassung mit minimalen erforderlichen Feldern, eine begrenzte tägliche Fokus-Ansicht getrennt vom ganzen Backlog, und eine Möglichkeit, mit unerledigten Aufgaben umzugehen, die keine Schuldgefühle erzeugt. Wie Dawny im Vergleich zu funktionsreichen Alternativen abschneidet, zeigt, wie viel davon auf Design-Philosophie statt auf Feature-Anzahl ankommt.
+Die nützlichere Frage ist: Welche Funktionen sollte sie nicht haben? Verzichte auf Streaks, komplexe Projekthierarchien, Überfällig-Markierungen, die sich häufen, und Erinnerungssysteme, die nicht leicht stummgeschaltet werden können. Was tatsächlich nützlich ist: schnelle Aufgabenerfassung mit minimalen erforderlichen Feldern, eine begrenzte tägliche Fokus-Ansicht getrennt vom ganzen Backlog, und eine Möglichkeit, mit unerledigten Aufgaben umzugehen, die keine Schuldgefühle erzeugt. [Wie Dawny im Vergleich zu funktionsreichen Alternativen abschneidet](/de/blog/dawny-vs-todoist/), zeigt, wie viel davon auf Design-Philosophie statt auf Feature-Anzahl ankommt.
 
 ## Fazit
 

@@ -32,7 +32,7 @@ Todoist is genuinely excellent software. It has earned its place as one of the m
 
 Its project system lets you organize work at any level of complexity — personal, professional, or team-wide. Subtasks, sections, and nested projects mean you can model almost any workflow. Labels and filters let power users slice their task list in dozens of ways, surfacing exactly what needs attention at any moment.
 
-The integration library is deep. Todoist connects with Google Calendar, Outlook, Slack, Zapier, and dozens of other tools via its official integrations. If your work already lives in other apps, Todoist can plug in without asking you to change your habits. For an independent assessment, see this Forbes review of Todoist.
+The integration library is deep. Todoist connects with Google Calendar, Outlook, Slack, Zapier, and dozens of other tools via its [official integrations](https://todoist.com/features). If your work already lives in other apps, Todoist can plug in without asking you to change your habits. For an independent assessment, see this [Forbes review of Todoist](https://www.forbes.com/advisor/business/software/todoist-review/).
 
 For teams, shared projects and task assignment make Todoist a legitimate lightweight project management tool. If you manage multiple people or hand off work regularly, that capability matters.
 
@@ -44,7 +44,7 @@ When a task manager has no natural limit on how many items you can add, lists gr
 
 More features also means more decisions. Before you can just *do* something, you have to decide: which project does this belong to? What priority? Which label? Should I set a due date? The overhead of maintaining a perfect system can cost more cognitive energy than the tasks themselves.
 
-This is what researchers sometimes call task debt: the accumulating weight of things you meant to do but did not. Todoist, like most traditional task managers, surfaces that debt constantly. For some users, that visibility is motivating. For others, it is paralyzing.
+This is what researchers sometimes call [task debt](/en/blog/what-is-task-debt/): the accumulating weight of things you meant to do but did not. Todoist, like most traditional task managers, surfaces that debt constantly. For some users, that visibility is motivating. For others, it is paralyzing.
 
 ## What Dawny Does Differently
 
@@ -54,7 +54,7 @@ The core mechanic is simple: at the end of each day, any tasks you did not compl
 
 Your Backlog is everything you might want to do someday. Your Daily Focus is the small set of tasks you choose to focus on *today*, intentionally kept small. Each morning you make an active, deliberate decision about what matters. Tasks that you keep skipping eventually get archived automatically through the “Make It Count” mechanic. No guilt required.
 
-This is the opposite of why most to-do lists fail: Dawny does not let your list become a monument to your past intentions. It forces a daily renegotiation with what actually matters now.
+This is the opposite of [why most to-do lists fail](/en/blog/why-to-do-lists-fail/): Dawny does not let your list become a monument to your past intentions. It forces a daily renegotiation with what actually matters now.
 
 Beta testers describe the shift clearly:
 

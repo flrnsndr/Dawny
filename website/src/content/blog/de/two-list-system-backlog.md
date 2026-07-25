@@ -12,7 +12,7 @@ Du hast eine Liste. Alles ist darauf — die Präsentation, die bis Freitag fäl
 
 Das Zwei-Listen-Konzept wird oft auf eine Geschichte mit Warren Buffett und seinem persönlichen Piloten Mike Flint zurückgeführt. Der Geschichte nach bat Buffett Flint, seine 25 wichtigsten Karriereziele aufzulisten und dann die fünf wichtigsten zu markieren. Die zwei entstandenen Gruppen — die Top Five und die restlichen zwanzig — wurden zu zwei separaten Listen. Die zweite Liste war keine Backup-Prioritätswarteschlange. Buffett soll Flint gesagt haben, alles darauf aktiv zu vermeiden, bis die Top Five erledigt seien.
 
-Der Ursprung dieser Geschichte ist umstritten und möglicherweise erfunden, aber das Prinzip, das sie veranschaulicht, ist echt und gut belegt: Der Akt der Trennung von „alles, was ich tun könnte" von „worauf ich mich konzentriere" ist selbst produktiv. Nicht weil die zweite Liste verschwindet, sondern weil sie aus deinem unmittelbaren Entscheidungsfeld entfernt wird. Angewendet auf die tägliche Aufgabenverwaltung wird dies zu einer mächtigen strukturellen Gewohnheit. Für eine zusätzliche Perspektive, siehe diesen TIME-Artikel über Warren Buffetts Zwei-Listen-Strategie.
+Der Ursprung dieser Geschichte ist [umstritten und möglicherweise erfunden](https://jamesclear.com/buffett-focus), aber das Prinzip, das sie veranschaulicht, ist echt und gut belegt: Der Akt der Trennung von „alles, was ich tun könnte" von „worauf ich mich konzentriere" ist selbst produktiv. Nicht weil die zweite Liste verschwindet, sondern weil sie aus deinem unmittelbaren Entscheidungsfeld entfernt wird. Angewendet auf die tägliche Aufgabenverwaltung wird dies zu einer mächtigen strukturellen Gewohnheit. Für eine zusätzliche Perspektive, siehe diesen [TIME-Artikel über Warren Buffetts Zwei-Listen-Strategie](https://time.com/3833410/warren-buffetts-2-list-strategy-how-to-maximize-your-focus-and-master-your-priorities/).
 
 Das Zwei-Listen-System für Aufgaben funktioniert nach der gleichen Logik: Eine Liste enthält alles, was du tun könntest. Die andere enthält nur das, was du heute machst. Die Disziplin liegt nicht im Tun, sondern darin, die beiden Listen getrennt zu halten.
 
@@ -30,7 +30,7 @@ Deine Daily-Focus-Liste ist, wo echte Verpflichtung stattfindet. Sie enthält nu
 
 Die Anzahl ist wichtiger, als sie zunächst erscheinen mag. Die Forschung zu Entscheidungsmüdigkeit zeigt: Je mehr Wahlmöglichkeiten wir haben, desto schlechter wird jede einzelne Entscheidung. Eine Daily-Focus-Liste mit fünfzehn Aufgaben ist überhaupt keine fokussierte Liste. Sie ist ein zweiter Backlog — kleiner, aber genauso lähmend. Drei bis fünf Aufgaben sind eine Beschränkung, die die echte Prioritätsfrage erzwingt: Wenn ich heute nur eine Handvoll Dinge erledigen könnte, welche spielen wirklich eine Rolle?
 
-Der Ansatz der drei wichtigsten Aufgaben für heute ist ein enger Verwandter dieser Idee, und die Überschneidung ist beabsichtigt. Ob deine tägliche Liste drei oder fünf Aufgaben hat, das Prinzip ist dasselbe: klein genug, dass jedes Element darauf eine echte Verpflichtung ist, keine Hoffnung.
+Der Ansatz der [drei wichtigsten Aufgaben für heute](/de/blog/three-most-important-tasks/) ist ein enger Verwandter dieser Idee, und die Überschneidung ist beabsichtigt. Ob deine tägliche Liste drei oder fünf Aufgaben hat, das Prinzip ist dasselbe: klein genug, dass jedes Element darauf eine echte Verpflichtung ist, keine Hoffnung.
 
 ## Das tägliche Übertragungs-Ritual
 
@@ -46,7 +46,7 @@ Ein paar Fragen helfen bei der Auswahl:
 
 - Was wollte ich schon lange tun, aber überspringe immer wieder, und ist heute der Tag, mich wirklich darauf zu verpflichten?
 
-Die abendliche Übertragung ist die andere Hälfte des Rituals. Am Ende des Tages leerst du die Daily-Focus-Liste. Abgeschlossene Aufgaben werden als erledigt markiert. Unvollendete Aufgaben kehren zum Backlog zurück, nicht als Fehlschläge, sondern als unentschiedene Aufgaben. Sie kommen zurück in den Pool der Dinge, die du morgen vielleicht wählst. Das ist der Moment, der verhindert, dass sich Aufgabenschulden ansammeln.
+Die abendliche Übertragung ist die andere Hälfte des Rituals. Am Ende des Tages leerst du die Daily-Focus-Liste. Abgeschlossene Aufgaben werden als erledigt markiert. Unvollendete Aufgaben kehren zum Backlog zurück, nicht als Fehlschläge, sondern als unentschiedene Aufgaben. Sie kommen zurück in den Pool der Dinge, die du morgen vielleicht wählst. Das ist der Moment, der verhindert, dass sich [Aufgabenschulden](/de/blog/what-is-task-debt/) ansammeln.
 
 ## Warum das Aufgabenschulden verhindert
 
@@ -58,7 +58,7 @@ Das Zwei-Listen-System funktioniert nach einer anderen Annahme: Wenn du heute et
 
 > „Fast alle Aufgaben, die automatisch archiviert wurden, waren einfach nicht wichtig genug. Ich habe keine einzige zurückgeholt." — Dawny-Beta-Tester
 
-Der emotionale Unterschied zwischen diesen beiden Ansätzen — Überfälligkeitsliste versus neutraler Backlog — ist erheblich. Eine Überfälligkeitsliste ist ein Protokoll deiner Versäumnisse. Ein Backlog ist eine Bibliothek von Optionen. Du gehst mit den beiden völlig unterschiedlich um. Das Tagesplanungssystem, das aus dem Zwei-Listen-Ansatz entsteht, ist eines, das du tatsächlich beibehalten kannst, weil es dich nicht dafür bestraft, menschlich zu sein.
+Der emotionale Unterschied zwischen diesen beiden Ansätzen — Überfälligkeitsliste versus neutraler Backlog — ist erheblich. Eine Überfälligkeitsliste ist ein Protokoll deiner Versäumnisse. Ein Backlog ist eine Bibliothek von Optionen. Du gehst mit den beiden völlig unterschiedlich um. Das [Tagesplanungssystem](/de/blog/daily-planning-system/), das aus dem Zwei-Listen-Ansatz entsteht, ist eines, das du tatsächlich beibehalten kannst, weil es dich nicht dafür bestraft, menschlich zu sein.
 
 ## Wie du das heute einrichtest (ohne eine App)
 
@@ -100,7 +100,7 @@ Die strukturelle Lösung besteht darin, deine Liste in Backlog und Daily Focus z
 
 ### Was hat Warren Buffett über To-Do-Listen gesagt?
 
-Die weit verbreitete Geschichte schreibt Buffett eine Zwei-Listen-Methode für die Zielplanung zu: schreib deine 25 wichtigsten Ziele auf, markiere die fünf wichtigsten, und behandle die restlichen zwanzig als Vermeidungsliste, bis die Top Five erledigt sind. Der genaue Ursprung dieser Geschichte ist umstritten, und sie könnte erfunden sein. Aber das zugrundeliegende Prinzip — dass die Trennung von „alles" von „den wenigen wichtigsten Dingen" selbst der produktive Akt ist — ist sowohl in Forschung als auch in der Praxis gut belegt.
+Die weit verbreitete Geschichte schreibt Buffett eine Zwei-Listen-Methode für die Zielplanung zu: schreib deine 25 wichtigsten Ziele auf, markiere die fünf wichtigsten, und behandle die restlichen zwanzig als Vermeidungsliste, bis die Top Five erledigt sind. Der genaue Ursprung dieser Geschichte ist [umstritten](https://jamesclear.com/buffett-focus), und sie könnte erfunden sein. Aber das zugrundeliegende Prinzip — dass die Trennung von „alles" von „den wenigen wichtigsten Dingen" selbst der produktive Akt ist — ist sowohl in Forschung als auch in der Praxis gut belegt.
 
 ## Fazit
 

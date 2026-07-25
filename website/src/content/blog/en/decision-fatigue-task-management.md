@@ -16,7 +16,7 @@ Decision fatigue is the deterioration in the quality of decisions made by a pers
 
 One of the most striking illustrations of this comes from a study of Israeli judges reviewed by Jonathan Levav and Shai Danziger. Prisoners appearing before a parole board early in the day were granted parole about 65% of the time. By the end of a session, approvals dropped close to zero — not because of anything the prisoners did, but because the judges’ decision-making capacity had been depleted. The same cognitive mechanism operates when you stare at a list of 50 tasks before 9 AM.
 
-The concept has since been extensively studied in decision-making research — from healthcare to retail to, increasingly, knowledge work and personal productivity. The core finding holds: more decisions made equals worse decisions made later. For additional context, the original Baumeister study on ego depletion remains a foundational reference, and modern guides like this comprehensive guide to overcoming decision fatigue and this practical article on decision fatigue tactics offer additional perspectives.
+The concept has since been [extensively studied in decision-making research](https://pmc.ncbi.nlm.nih.gov/articles/PMC6119549/) — from healthcare to retail to, increasingly, knowledge work and personal productivity. The core finding holds: more decisions made equals worse decisions made later. For additional context, the [original Baumeister study on ego depletion](<http://faculty.washington.edu/jdb/345/345%20Articles/Baumeister%20et%20al.%20(1998).pdf>) remains a foundational reference, and modern guides like this [comprehensive guide to overcoming decision fatigue](https://www.asianefficiency.com/productivity/how-to-beat-decision-fatigue-the-ultimate-guide/) and this [practical article on decision fatigue tactics](https://www.forbes.com/councils/forbescoachescouncil/2024/04/01/6-tactics-to-reduce-decision-fatigue/) offer additional perspectives.
 
 ## How Your Task List Causes Decision Fatigue
 
@@ -24,7 +24,7 @@ A task list of 40 items isn’t 40 tasks. It’s 40 open questions. Every time y
 
 This happens fast and mostly below the level of conscious awareness. But it still costs you. By the time you’ve scrolled through a long list and landed on something to work on, you’ve already spent a meaningful portion of your daily decision-making budget on meta-decisions, choices about choices. You haven’t done a single thing on your list, and you’re already more depleted than when you started.
 
-This is why why to-do lists create overwhelm isn’t just a vague complaint. It’s a mechanistic description of what long task lists actually do to cognitive function. The overwhelm isn’t imaginary. It has a neurological basis.
+This is why [why to-do lists create overwhelm](/en/blog/why-to-do-lists-fail/) isn’t just a vague complaint. It’s a mechanistic description of what long task lists actually do to cognitive function. The overwhelm isn’t imaginary. It has a neurological basis.
 
 ## The Compounding Effect: Why Bigger Lists Feel Worse Than They Should
 
@@ -44,15 +44,15 @@ Constraining your options, deliberately limiting your daily list to a handful of
 
 ## How to Reduce Decision Fatigue in Your Task System
 
-The structural fix for decision fatigue in task management comes down to three changes, each of which reduces the number of choices you have to make in the moment. For a practical overview of these techniques, see this comprehensive guide to overcoming decision fatigue.
+The structural fix for decision fatigue in task management comes down to three changes, each of which reduces the number of choices you have to make in the moment. For a practical overview of these techniques, see this [comprehensive guide to overcoming decision fatigue](https://focusme.com/blog/decision-fatigue-how-to-overcome-a-major-productivity-inhibitor/).
 
 **1. Separate your backlog from your daily list.**
 
-Your backlog is where everything lives: every idea, every someday task, every project that might matter eventually. It should be comprehensive and low-pressure. Your daily list is a completely separate surface: the small set of things you are actually committing to today. The two-list system makes this split explicit. When you open your daily list, you’re not browsing your entire task universe. You’re looking at a pre-filtered view of today’s commitments.
+Your backlog is where everything lives: every idea, every someday task, every project that might matter eventually. It should be comprehensive and low-pressure. Your daily list is a completely separate surface: the small set of things you are actually committing to today. The [two-list system](/en/blog/two-list-system-backlog/) makes this split explicit. When you open your daily list, you’re not browsing your entire task universe. You’re looking at a pre-filtered view of today’s commitments.
 
 **2. Limit your daily active list to three to five tasks, chosen in advance.**
 
-Limiting your daily tasks to three is one of the most consistently supported recommendations in productivity research. Not because doing more is bad, but because making the commitment explicit, and small enough to be realistic, changes the quality of the choices you make. When your daily list has three items, each one gets real consideration. When it has thirty, each one gets a scan.
+[Limiting your daily tasks to three](/en/blog/three-most-important-tasks/) is one of the most consistently supported recommendations in productivity research. Not because doing more is bad, but because making the commitment explicit, and small enough to be realistic, changes the quality of the choices you make. When your daily list has three items, each one gets real consideration. When it has thirty, each one gets a scan.
 
 The “chosen in advance” part matters as much as the limit. If you pick tomorrow’s three tasks the night before, you’ve pre-decided during a moment of relative clarity, when you have context about the day ahead and your energy is less depleted than it will be at 9 AM. Morning-you inherits the decisions evening-you made. That’s a gift.
 

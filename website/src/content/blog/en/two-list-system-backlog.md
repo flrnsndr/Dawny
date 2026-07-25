@@ -12,7 +12,7 @@ You have one list. Everything is on it — the presentation due Friday, the dent
 
 The two-list concept is often attributed to a story involving Warren Buffett and his personal pilot, Mike Flint. As the story goes, Buffett asked Flint to list his top 25 career goals, then circle the five most important ones. The resulting two groups — the top five and the remaining twenty — became two separate lists. The second list wasn’t a backup priority queue. Buffett reportedly told Flint to actively avoid everything on it until the top five were done.
 
-The story’s origin is disputed and possibly apocryphal, but the principle it illustrates is genuine and well-supported: the act of separating “everything I might do” from “what I’m focusing on” is itself productive. Not because it makes the second list disappear, but because it removes it from your immediate decision-making field. Applied to daily task management, this becomes a powerful structural habit. For an additional perspective, see this TIME article on Warren Buffett’s two-list strategy.
+The story’s origin is [disputed and possibly apocryphal](https://jamesclear.com/buffett-focus), but the principle it illustrates is genuine and well-supported: the act of separating “everything I might do” from “what I’m focusing on” is itself productive. Not because it makes the second list disappear, but because it removes it from your immediate decision-making field. Applied to daily task management, this becomes a powerful structural habit. For an additional perspective, see this [TIME article on Warren Buffett’s two-list strategy](https://time.com/3833410/warren-buffetts-2-list-strategy-how-to-maximize-your-focus-and-master-your-priorities/).
 
 The two-list system for tasks works on the same logic: one list holds everything you might do. The other holds only what you’re doing today. The discipline isn’t in the doing. It’s in keeping the two lists separate.
 
@@ -30,7 +30,7 @@ Your daily focus list is where real commitment happens. It holds only the tasks 
 
 The number matters more than it might seem. Research on decision fatigue shows that the more choices we face, the worse each individual decision becomes. A daily focus list with fifteen items isn’t a focused list at all. It’s a second backlog — smaller, but equally paralyzing. Three to five items is a constraint that forces the real prioritization question: if I could only do a handful of things today, which ones actually matter?
 
-The three most important tasks for today approach is a close cousin to this idea, and the overlap is intentional. Whether your daily list has three items or five, the principle is the same: small enough that every item on it is a genuine commitment, not a hope.
+The [three most important tasks for today](/en/blog/three-most-important-tasks/) approach is a close cousin to this idea, and the overlap is intentional. Whether your daily list has three items or five, the principle is the same: small enough that every item on it is a genuine commitment, not a hope.
 
 ## The Daily Transfer Ritual
 
@@ -46,7 +46,7 @@ A few questions help guide the selection:
 
 - What have I been wanting to do but keep skipping over, and is today the day to actually commit to it?
 
-The evening transfer is the other half of the ritual. At the end of the day, you clear the daily focus list. Completed tasks move to done. Uncompleted tasks return to the backlog, not as failures, but as undecided items. They join the pool of things you might choose tomorrow. This is the moment that prevents task debt from accumulating.
+The evening transfer is the other half of the ritual. At the end of the day, you clear the daily focus list. Completed tasks move to done. Uncompleted tasks return to the backlog, not as failures, but as undecided items. They join the pool of things you might choose tomorrow. This is the moment that prevents [task debt](/en/blog/what-is-task-debt/) from accumulating.
 
 ## Why This Prevents Task Debt
 
@@ -58,7 +58,7 @@ The two-list system operates on a different assumption: if you didn’t do somet
 
 > “Almost all the tasks that were automatically archived were simply not important enough. I haven’t moved a single one back.” – Dawny beta tester
 
-The emotional difference between these two approaches, overdue list versus neutral backlog, is significant. An overdue list is a record of your shortcomings. A backlog is a library of options. You approach the two very differently. The daily planning system that emerges from the two-list approach is one that you can actually maintain, because it doesn’t punish you for being human.
+The emotional difference between these two approaches, overdue list versus neutral backlog, is significant. An overdue list is a record of your shortcomings. A backlog is a library of options. You approach the two very differently. The [daily planning system](/en/blog/daily-planning-system/) that emerges from the two-list approach is one that you can actually maintain, because it doesn’t punish you for being human.
 
 ## How to Set This Up Today (Without an App)
 
@@ -100,7 +100,7 @@ The structural fix is separating your list into backlog and daily focus. Your ba
 
 ### What did Warren Buffett say about to-do lists?
 
-The widely circulated story attributes to Buffett a two-list method for goal setting: write down your top 25 goals, circle the five most important, and treat the remaining twenty as an avoid-at-all-costs list until the top five are complete. The exact origin of this story is disputed, and it may be apocryphal. But the underlying principle — that separating “everything” from “the few things that matter most” is itself the productive act — is well-established in both research and practice.
+The widely circulated story attributes to Buffett a two-list method for goal setting: write down your top 25 goals, circle the five most important, and treat the remaining twenty as an avoid-at-all-costs list until the top five are complete. The exact origin of this story is [disputed](https://jamesclear.com/buffett-focus), and it may be apocryphal. But the underlying principle — that separating “everything” from “the few things that matter most” is itself the productive act — is well-established in both research and practice.
 
 ## Conclusion
 

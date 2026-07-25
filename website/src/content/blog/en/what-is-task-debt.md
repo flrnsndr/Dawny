@@ -14,7 +14,7 @@ Task debt is the accumulated weight of unfinished, overdue, or no-longer-relevan
 
 The term borrows from the concept of technical debt in software development, where shortcuts today create bigger problems tomorrow. Task debt works the same way: every task you defer without a decision adds to a backlog that eventually becomes unmanageable.
 
-What makes task debt particularly insidious is its psychological effect. Research on the Zeigarnik effect — first described by Soviet psychologist Bluma Zeigarnik in the 1920s — shows that incomplete tasks create persistent cognitive intrusion. Your brain keeps returning to unfinished business, even when you’re trying to focus on something else. A long list of overdue tasks isn’t just visually overwhelming; it occupies mental bandwidth around the clock. Additional resources include this article on how unfinished tasks drain mental energy and this modern look at the Zeigarnik effect.
+What makes task debt particularly insidious is its psychological effect. Research on the [Zeigarnik effect](https://super-productivity.com/blog/zeigarnik-effect-productivity/) — first described by Soviet psychologist Bluma Zeigarnik in the 1920s — shows that incomplete tasks create persistent cognitive intrusion. Your brain keeps returning to unfinished business, even when you’re trying to focus on something else. A long list of overdue tasks isn’t just visually overwhelming; it occupies mental bandwidth around the clock. Additional resources include this article on [how unfinished tasks drain mental energy](https://www.attendancebot.com/blog/the-zeigarnik-effect-how-unfinished-tasks-drain-your-mental-energy/) and this [modern look at the Zeigarnik effect](https://alamrafiul.com/blogs/zeigarnik-effect/).
 
 ## How Does Task Debt Build Up?
 
@@ -36,7 +36,7 @@ The problem is that this design doesn’t distinguish between two very different
 
 Florian, the developer behind Dawny, experienced this firsthand. He tried every major productivity app (Todoist, Any.do, Microsoft To-Do, Apple Reminders) and hit the same wall every time. Tasks multiplied. Deadlines passed. Some tasks had already resolved themselves by the time he got to them. He kept looking at a growing wall of red, overdue items: tasks he’d meant to do, tasks that no longer mattered, tasks that made him feel guilty. And he’d just close the app. The apps weren’t broken. They were working exactly as designed. But the design was wrong for how his brain, and many brains, actually work.
 
-This is one of the core reasons why to-do lists fail by design: they’re built around the assumption that more visibility equals more accountability. In practice, more visibility of things you haven’t done mostly equals more anxiety.
+This is one of the core reasons [why to-do lists fail by design](/en/blog/why-to-do-lists-fail/): they’re built around the assumption that more visibility equals more accountability. In practice, more visibility of things you haven’t done mostly equals more anxiety.
 
 ## What Does Task Debt Actually Cost You?
 
@@ -54,7 +54,7 @@ The cost of carrying task debt isn’t just the vague guilt you feel when you se
 
 The architectural solution to task debt is a shift in what “not done” means. Instead of treating an incomplete task as overdue, a failure requiring reckoning, a reset-based system treats it as undecided. The task returns to a neutral state and waits for you to choose it again tomorrow, if it’s still worth choosing.
 
-This is the philosophy behind the two-list system: keep a Backlog for everything that might matter someday, and a Daily Focus list for the small number of tasks you’re genuinely committing to today. At the end of the day, tasks that didn’t get done return to the Backlog, not to an overdue pile. Every morning starts clean.
+This is the philosophy behind [the two-list system](/en/blog/two-list-system-backlog/): keep a Backlog for everything that might matter someday, and a Daily Focus list for the small number of tasks you’re genuinely committing to today. At the end of the day, tasks that didn’t get done return to the Backlog, not to an overdue pile. Every morning starts clean.
 
 There’s a secondary mechanism that makes this approach even more powerful: tasks that keep getting skipped eventually reveal themselves. If you’ve moved a task back to the Backlog five times without ever choosing it for your Daily Focus, that’s data. That task is telling you something, probably that it’s not actually a priority. In Dawny, tasks that are repeatedly skipped get archived automatically, through a mechanic called Make It Count. You don’t have to decide to delete them. The system notices the pattern for you.
 
