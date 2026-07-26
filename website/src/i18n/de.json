@@ -85,9 +85,9 @@
     "eyebrow": "Make It Count",
     "title": "Wenn eine Aufgabe immer wieder liegen bleibt —",
     "titleAccent": "ist sie dann noch eine Priorität?",
-    "narrative": "Nicht erledigt heißt nicht gescheitert. Es heißt: vielleicht war es nicht wichtig genug für heute. Wenn eine Aufgabe immer wieder liegen bleibt, nimmt Dawny dieses Signal ernst.",
+    "narrative": "Nicht erledigt heißt nicht gescheitert. Es heißt: vielleicht war es nicht wichtig genug für heute. Wenn eine Aufgabe liegen bleibt, nimmt Dawny dieses Signal ernst.",
     "logicLabel": "So funktioniert es",
-    "logic": "Schaffst du eine Heute-Aufgabe nicht, wandert sie zurück ins Backlog. Bleibt sie immer wieder liegen, verschiebt Dawny sie leise ins Archiv – dein digitaler Ballast, aus dem Weg.",
+    "logic": "Schaffst du eine Heute-Aufgabe nicht, verschiebt Dawny sie beim nächsten Reset leise ins Archiv, aus dem Weg. Vorher kannst du Aufgaben bis zu sieben verpasste Tage geben, so lange wandern sie zurück ins Backlog. Wiederkehrende Aufgaben werden nie archiviert.",
     "safetyLabel": "Dein Sicherheitsnetz",
     "safety": "Im Archiv ist nichts verloren. Per Tipp zurück ins Backlog oder direkt nach Heute.",
     "flow": {

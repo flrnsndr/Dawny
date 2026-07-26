@@ -85,9 +85,9 @@
     "eyebrow": "Make It Count",
     "title": "If a task has been on your list for two weeks —",
     "titleAccent": "is it still a priority?",
-    "narrative": "An unchecked task isn't a failure. It's information. Choosing a task for Today is a commitment to yourself. When that commitment keeps breaking, Dawny takes the signal seriously.",
+    "narrative": "An unchecked task isn't a failure. It's information. Choosing a task for Today is a commitment to yourself. When that commitment breaks, Dawny takes the signal seriously.",
     "logicLabel": "How it works",
-    "logic": "If you don't get to a task you chose for Today, it goes back to your Backlog. If it keeps slipping, Dawny quietly moves it to the Archive — your digital baggage, out of the way.",
+    "logic": "If you don't get to a task you chose for Today, Dawny quietly moves it to the Archive at the next reset, out of the way. You can grant tasks up to seven missed days first, and until then they simply return to your Backlog. Recurring tasks are never archived.",
     "safetyLabel": "Your safety net",
     "safety": "Nothing in the Archive is gone. Restore any task to your Backlog or back to Today with a single tap.",
     "flow": {
