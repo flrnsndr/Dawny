@@ -99,6 +99,30 @@
       "edgeSlipping": "keeps slipping"
     }
   },
+  "reminders": {
+    "eyebrow": "Alongside Apple Reminders",
+    "title": "You can keep Reminders.",
+    "paragraphs": [
+      {
+        "before": "Apple Reminders is good at what it was built for: things with a time and a place. The dentist appointment, the four o'clock call, the shopping list your flatmate can see too, the parcel you want to be reminded about the moment you get home. You don't need a second app for that.",
+        "link": "",
+        "href": "",
+        "after": ""
+      },
+      {
+        "before": "The rest is where it gets awkward. \"I should clear out the basement sometime.\" \"Switch insurance at some point.\" These tasks have no date, and you only get two options. Give them one so they stay visible, and ",
+        "link": "they turn red the moment the day is over",
+        "href": "/blog/what-is-task-debt/",
+        "after": ". Give them none, and they sink to the bottom, where you never see them again."
+      },
+      {
+        "before": "That ",
+        "link": "pile belongs in Dawny",
+        "href": "/blog/two-list-system-backlog/",
+        "after": ". It sits in the Backlog, with no date and no colour, and every morning you decide again what gets your attention today. Whatever you commit to, Dawny writes into Reminders for you if you switch sync on. Two apps, one list for today."
+      }
+    ]
+  },
   "faq": {
     "eyebrow": "Questions",
     "title": "The things people ask first.",

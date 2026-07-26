@@ -99,6 +99,30 @@
       "edgeSlipping": "immer wieder verpasst"
     }
   },
+  "reminders": {
+    "eyebrow": "Neben Apple Erinnerungen",
+    "title": "Erinnerungen darfst du behalten.",
+    "paragraphs": [
+      {
+        "before": "Apple Erinnerungen ist gut in dem, wofür es gebaut wurde: Dinge mit Zeit und Ort. Der Zahnarzttermin, der Anruf um vier, die Einkaufsliste, die deine Mitbewohnerin auch sieht, das Paket, an das du erinnert werden willst, sobald du zu Hause bist. Dafür brauchst du keine zweite App.",
+        "link": "",
+        "href": "",
+        "after": ""
+      },
+      {
+        "before": "Schwierig wird der Rest. „Den Keller müsste ich mal ausmisten.“ „Irgendwann die Versicherung wechseln.“ Diese Aufgaben haben kein Datum, und du hast nur zwei Möglichkeiten. Gibst du ihnen eins, damit sie sichtbar bleiben, ",
+        "link": "werden sie rot, sobald der Tag vorbei ist",
+        "href": "/blog/what-is-task-debt/",
+        "after": ". Gibst du ihnen keins, rutschen sie nach unten und du siehst sie nie wieder."
+      },
+      {
+        "before": "Genau ",
+        "link": "dieser Stapel",
+        "href": "/blog/two-list-system-backlog/",
+        "after": " gehört nach Dawny. Er liegt im Backlog, ohne Datum und ohne Farbe, und jeden Morgen entscheidest du neu, was davon heute drankommt. Was du dir vornimmst, schreibt Dawny auf Wunsch selbst in Erinnerungen. Zwei Apps, eine Liste für heute."
+      }
+    ]
+  },
   "faq": {
     "eyebrow": "Fragen",
     "title": "Was zuerst gefragt wird.",
