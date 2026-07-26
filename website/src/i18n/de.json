@@ -99,6 +99,44 @@
       "edgeSlipping": "immer wieder verpasst"
     }
   },
+  "faq": {
+    "eyebrow": "Fragen",
+    "title": "Was zuerst gefragt wird.",
+    "items": [
+      {
+        "q": "Was passiert mit Aufgaben, die ich nicht schaffe?",
+        "a": "Beim täglichen Reset wandert eine Aufgabe, die du für Heute ausgewählt und nicht erledigt hast, ins Archiv. So konkurriert sie nicht mehr mit dem, was du dir morgen vornimmst. Wenn du Aufgaben mehr als einen Anlauf geben möchtest, stellst du den Schwellwert „Make it count“ in den Einstellungen auf bis zu sieben verpasste Tage. Wiederkehrende Aufgaben sind die Ausnahme, sie gehen immer zurück ins Backlog und landen nie im Archiv."
+      },
+      {
+        "q": "Löscht Dawny wirklich meine Aufgaben?",
+        "a": "Nein. Ohne dein Zutun verschwindet nichts. Gestern löschen heißt, dass Aufgaben deine Tagesliste verlassen, nicht die App. Sie wandern ins Archiv, wo du sie jederzeit nachlesen und mit einem Tap zurück ins Backlog oder direkt nach Heute holen kannst."
+      },
+      {
+        "q": "Kann ich die Reset-Zeit von 3 Uhr ändern?",
+        "a": "Ja. 3 Uhr ist nur die Voreinstellung, gewählt, weil sie nach den meisten langen Abenden und vor den meisten Weckern liegt. In den Einstellungen legst du jede beliebige Stunde fest, und der Reset läuft dann zu dieser Zeit auf deinem iPhone."
+      },
+      {
+        "q": "Unterstützt Dawny wiederkehrende Aufgaben?",
+        "a": "Ja, über wiederkehrende Kategorien. Eine Aufgabe in einer wiederkehrenden Kategorie geht nach dem Reset immer zurück ins Backlog und wird nie archiviert, egal wie oft sie offen bleibt. So kannst du Gewohnheiten und Routinen in Dawny führen, ohne dass sie dir stillschweigend abhandenkommen."
+      },
+      {
+        "q": "Ist Dawny kostenlos?",
+        "a": "Ja. Dawny ist ein kostenloser Download im App Store. Es gibt kein Abo, keine In-App-Käufe und keine Werbung."
+      },
+      {
+        "q": "Synchronisiert Dawny mit Apple Erinnerungen?",
+        "a": "Auf Wunsch ja. Wenn du die Synchronisation einschaltest, tauchen die Aufgaben aus deinem Daily Focus in der Erinnerungen-App und in der Aufgabenliste der Kalender-App auf, und Änderungen von dort fließen zurück nach Dawny. Wird eine Erinnerung außerhalb der App gelöscht, kehrt die Aufgabe still ins Backlog zurück, statt zu verschwinden."
+      },
+      {
+        "q": "Brauche ich ein Konto, und wo liegen meine Daten?",
+        "a": "Es gibt kein Konto und keine Anmeldung, weil es keinen Dawny-Server gibt. Deine Aufgaben bleiben auf deinem iPhone oder, wenn du iCloud nutzt, in deiner eigenen iCloud, verwaltet von Apple. Der Entwickler sieht sie nie und erhebt keine personenbezogenen Daten."
+      },
+      {
+        "q": "Läuft Dawny auf iPad oder Mac?",
+        "a": "Dawny ist für das iPhone gebaut. Ein für das iPad optimiertes Layout und eine Mac-App gibt es derzeit nicht."
+      }
+    ]
+  },
   "finalCta": {
     "eyebrow": "Jetzt verfügbar",
     "title": {

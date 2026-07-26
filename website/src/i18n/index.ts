@@ -32,6 +32,7 @@ export function alternateLang(lang: Lang): Lang {
   return lang === "en" ? "de" : "en";
 }
 
-export const APP_STORE_URL = "https://apps.apple.com/app/id6762262959";
+export const APP_STORE_ID = "6762262959";
+export const APP_STORE_URL = `https://apps.apple.com/app/id${APP_STORE_ID}`;
 export const GITHUB_URL = "https://github.com/flrnsndr/Dawny";
 export const CONTACT_EMAIL = "info@dawnyapp.com";
