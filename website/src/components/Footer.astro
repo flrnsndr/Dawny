@@ -43,6 +43,12 @@ const imprintPath = lang === "de" ? "/de/impressum/" : "/en/imprint/";
 
     <nav class="text-sm grid grid-cols-2 gap-x-6 gap-y-3" aria-label="Footer">
       <a
+        href={`/${lang}/#faq`}
+        class="text-white/60 hover:text-white transition-colors"
+        data-ph-event="faq_click"
+        data-ph-location="footer"
+      >{dict.footer.links.faq}</a>
+      <a
         href={privacyPath}
         class="text-white/60 hover:text-white transition-colors"
         data-ph-event="legal_click"

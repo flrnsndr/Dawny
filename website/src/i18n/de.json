@@ -85,9 +85,9 @@
     "eyebrow": "Make It Count",
     "title": "Wenn eine Aufgabe immer wieder liegen bleibt —",
     "titleAccent": "ist sie dann noch eine Priorität?",
-    "narrative": "Nicht erledigt heißt nicht gescheitert. Es heißt: vielleicht war es nicht wichtig genug für heute. Wenn eine Aufgabe immer wieder liegen bleibt, nimmt Dawny dieses Signal ernst.",
+    "narrative": "Nicht erledigt heißt nicht gescheitert. Es heißt: vielleicht war es nicht wichtig genug für heute. Wenn eine Aufgabe liegen bleibt, nimmt Dawny dieses Signal ernst.",
     "logicLabel": "So funktioniert es",
-    "logic": "Schaffst du eine Heute-Aufgabe nicht, wandert sie zurück ins Backlog. Bleibt sie immer wieder liegen, verschiebt Dawny sie leise ins Archiv – dein digitaler Ballast, aus dem Weg.",
+    "logic": "Schaffst du eine Heute-Aufgabe nicht, verschiebt Dawny sie beim nächsten Reset leise ins Archiv, aus dem Weg. Vorher kannst du Aufgaben bis zu sieben verpasste Tage geben, so lange wandern sie zurück ins Backlog. Wiederkehrende Aufgaben werden nie archiviert.",
     "safetyLabel": "Dein Sicherheitsnetz",
     "safety": "Im Archiv ist nichts verloren. Per Tipp zurück ins Backlog oder direkt nach Heute.",
     "flow": {
@@ -98,6 +98,68 @@
       "edgeMissed": "verpasst",
       "edgeSlipping": "immer wieder verpasst"
     }
+  },
+  "reminders": {
+    "eyebrow": "Neben Apple Erinnerungen",
+    "title": "Erinnerungen darfst du behalten.",
+    "paragraphs": [
+      {
+        "before": "Apple Erinnerungen ist gut in dem, wofür es gebaut wurde: Dinge mit Zeit und Ort. Der Zahnarzttermin, der Anruf um vier, die Einkaufsliste, die deine Mitbewohnerin auch sieht, das Paket, an das du erinnert werden willst, sobald du zu Hause bist. Dafür brauchst du keine zweite App.",
+        "link": "",
+        "href": "",
+        "after": ""
+      },
+      {
+        "before": "Schwierig wird der Rest. „Den Keller müsste ich mal ausmisten.“ „Irgendwann die Versicherung wechseln.“ Diese Aufgaben haben kein Datum, und du hast nur zwei Möglichkeiten. Gibst du ihnen eins, damit sie sichtbar bleiben, ",
+        "link": "werden sie rot, sobald der Tag vorbei ist",
+        "href": "/blog/what-is-task-debt/",
+        "after": ". Gibst du ihnen keins, rutschen sie nach unten und du siehst sie nie wieder."
+      },
+      {
+        "before": "Genau ",
+        "link": "dieser Stapel",
+        "href": "/blog/two-list-system-backlog/",
+        "after": " gehört nach Dawny. Er liegt im Backlog, ohne Datum und ohne Farbe, und jeden Morgen entscheidest du neu, was davon heute drankommt. Was du dir vornimmst, schreibt Dawny auf Wunsch selbst in Erinnerungen. Zwei Apps, eine Liste für heute."
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "Fragen",
+    "title": "Was zuerst gefragt wird.",
+    "items": [
+      {
+        "q": "Was passiert mit Aufgaben, die ich nicht schaffe?",
+        "a": "Beim täglichen Reset wandert eine Aufgabe, die du für Heute ausgewählt und nicht erledigt hast, ins Archiv. So konkurriert sie nicht mehr mit dem, was du dir morgen vornimmst. Wenn du Aufgaben mehr als einen Anlauf geben möchtest, stellst du den Schwellwert „Make it count“ in den Einstellungen auf bis zu sieben verpasste Tage. Wiederkehrende Aufgaben sind die Ausnahme, sie gehen immer zurück ins Backlog und landen nie im Archiv."
+      },
+      {
+        "q": "Löscht Dawny wirklich meine Aufgaben?",
+        "a": "Nein. Ohne dein Zutun verschwindet nichts. Gestern löschen heißt, dass Aufgaben deine Tagesliste verlassen, nicht die App. Sie wandern ins Archiv, wo du sie jederzeit nachlesen und mit einem Tap zurück ins Backlog oder direkt nach Heute holen kannst."
+      },
+      {
+        "q": "Kann ich die Reset-Zeit von 3 Uhr ändern?",
+        "a": "Ja. 3 Uhr ist nur die Voreinstellung, gewählt, weil sie nach den meisten langen Abenden und vor den meisten Weckern liegt. In den Einstellungen legst du jede beliebige Stunde fest, und der Reset läuft dann zu dieser Zeit auf deinem iPhone."
+      },
+      {
+        "q": "Unterstützt Dawny wiederkehrende Aufgaben?",
+        "a": "Ja, über wiederkehrende Kategorien. Eine Aufgabe in einer wiederkehrenden Kategorie geht nach dem Reset immer zurück ins Backlog und wird nie archiviert, egal wie oft sie offen bleibt. So kannst du Gewohnheiten und Routinen in Dawny führen, ohne dass sie dir stillschweigend abhandenkommen."
+      },
+      {
+        "q": "Ist Dawny kostenlos?",
+        "a": "Ja. Dawny ist ein kostenloser Download im App Store. Es gibt kein Abo, keine In-App-Käufe und keine Werbung."
+      },
+      {
+        "q": "Synchronisiert Dawny mit Apple Erinnerungen?",
+        "a": "Auf Wunsch ja. Wenn du die Synchronisation einschaltest, tauchen die Aufgaben aus deinem Daily Focus in der Erinnerungen-App und in der Aufgabenliste der Kalender-App auf, und Änderungen von dort fließen zurück nach Dawny. Wird eine Erinnerung außerhalb der App gelöscht, kehrt die Aufgabe still ins Backlog zurück, statt zu verschwinden."
+      },
+      {
+        "q": "Brauche ich ein Konto, und wo liegen meine Daten?",
+        "a": "Es gibt kein Konto und keine Anmeldung, weil es keinen Dawny-Server gibt. Deine Aufgaben bleiben auf deinem iPhone oder, wenn du iCloud nutzt, in deiner eigenen iCloud, verwaltet von Apple. Der Entwickler sieht sie nie und erhebt keine personenbezogenen Daten."
+      },
+      {
+        "q": "Läuft Dawny auf iPad oder Mac?",
+        "a": "Dawny ist für das iPhone gebaut. Ein für das iPad optimiertes Layout und eine Mac-App gibt es derzeit nicht."
+      }
+    ]
   },
   "finalCta": {
     "eyebrow": "Jetzt verfügbar",
@@ -113,6 +175,7 @@
     "tagline": "Eine To Do App, die Aufgaben von gestern löscht. Absichtlich.",
     "rights": "© {year} Florian Schneider. Mit Sorgfalt in Deutschland gemacht.",
     "links": {
+      "faq": "Häufige Fragen",
       "privacy": "Datenschutz",
       "imprint": "Impressum",
       "github": "GitHub",

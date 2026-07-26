@@ -24,9 +24,13 @@ interface Props {
   image: string;
   article?: ArticleMeta;
   blogIndex?: BlogIndexMeta;
+  /** FAQ entries for pages that are not articles, such as the landing page. */
+  faq?: FaqEntry[];
 }
 
-const { lang, url, title, description, image, article, blogIndex } = Astro.props;
+const { lang, url, title, description, image, article, blogIndex, faq } = Astro.props;
+
+const faqEntries = article?.faq ?? faq;
 
 const dict = getDict(lang);
 const site = Astro.site?.toString().replace(/\/$/, "") ?? "";
@@ -118,20 +122,20 @@ if (article) {
     isPartOf: { "@id": ids.blog },
     ...(article.wordCount ? { wordCount: article.wordCount } : {}),
   });
+}
 
-  if (article.faq?.length) {
-    graph.push({
-      "@type": "FAQPage",
-      "@id": ids.faq,
-      inLanguage,
-      isPartOf: { "@id": ids.page },
-      mainEntity: article.faq.map((entry) => ({
-        "@type": "Question",
-        name: entry.question,
-        acceptedAnswer: { "@type": "Answer", text: entry.answer },
-      })),
-    });
-  }
+if (faqEntries?.length) {
+  graph.push({
+    "@type": "FAQPage",
+    "@id": ids.faq,
+    inLanguage,
+    isPartOf: { "@id": ids.page },
+    mainEntity: faqEntries.map((entry) => ({
+      "@type": "Question",
+      name: entry.question,
+      acceptedAnswer: { "@type": "Answer", text: entry.answer },
+    })),
+  });
 }
 
 if (blogIndex) {

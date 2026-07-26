@@ -6,7 +6,8 @@ import Footer from "@/components/Footer.astro";
 import PostHog from "@/components/PostHog.astro";
 import SchemaOrg from "@/components/SchemaOrg.astro";
 import type { ArticleMeta, BlogIndexMeta } from "@/components/SchemaOrg.astro";
-import { type Lang, getDict, alternateLang } from "@/i18n";
+import type { FaqEntry } from "@/lib/blog";
+import { type Lang, getDict, alternateLang, APP_STORE_ID } from "@/i18n";
 import appleTouchIconSrc from "@/assets/icons/dawny-icon-light.png";
 
 interface Props {
@@ -18,6 +19,7 @@ interface Props {
   bodyClass?: string;
   article?: ArticleMeta;
   blogIndex?: BlogIndexMeta;
+  faq?: FaqEntry[];
 }
 
 const {
@@ -29,6 +31,7 @@ const {
   bodyClass = "",
   article,
   blogIndex,
+  faq,
 } = Astro.props;
 
 const dict = getDict(lang);
@@ -52,6 +55,9 @@ const appleTouchIcon = await getImage({ src: appleTouchIconSrc, width: 180, heig
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#0B1733" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#F8FAFC" media="(prefers-color-scheme: light)" />
+
+    {/* Smart App Banner in iOS Safari, and a machine-readable link to the App Store listing. */}
+    <meta name="apple-itunes-app" content={`app-id=${APP_STORE_ID}`} />
 
     <title>{pageTitle}</title>
     <meta name="description" content={pageDescription} />
@@ -95,6 +101,7 @@ const appleTouchIcon = await getImage({ src: appleTouchIconSrc, width: 180, heig
       image={ogImage}
       article={article}
       blogIndex={blogIndex}
+      faq={faq}
     />
     <PostHog />
     <slot name="head" />

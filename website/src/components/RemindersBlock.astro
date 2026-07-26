@@ -1,0 +1,61 @@
+---
+import { type Lang, getDict } from "@/i18n";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const dict = getDict(lang);
+---
+
+<section
+  id="reminders"
+  class="relative bg-[var(--color-paper-warm)] text-[var(--color-ink)] py-32 sm:py-44"
+>
+  <div class="container-narrow relative z-10">
+    <p class="reveal text-xs font-medium uppercase tracking-[0.18em] text-[var(--color-ink-soft)]/70 mb-6">
+      <span class="inline-block h-px w-8 bg-[var(--color-ink-soft)]/40 align-middle mr-3"></span>
+      {dict.reminders.eyebrow}
+    </p>
+
+    <h2 class="reveal text-display text-[clamp(2rem,5vw,3.75rem)] mb-12">
+      {dict.reminders.title}
+    </h2>
+
+    {/* Each paragraph stays on one line: a line break around the link would render as a stray space. */}
+    <div class="reminders-prose">
+      {dict.reminders.paragraphs.map((part, i) => (
+        <p class="reveal" style={`transition-delay: ${i * 90}ms`}>{part.before}{part.link && <a href={`/${lang}${part.href}`}>{part.link}</a>}{part.after}</p>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .reminders-prose {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 62ch;
+  }
+
+  .reminders-prose p {
+    margin: 0;
+    font-size: clamp(1.0625rem, 1.3vw, 1.2rem);
+    line-height: 1.7;
+    color: var(--color-ink-soft);
+  }
+
+  .reminders-prose a {
+    color: var(--color-horizon);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition: color 200ms;
+  }
+
+  .reminders-prose a:hover {
+    color: var(--color-ink);
+  }
+</style>
