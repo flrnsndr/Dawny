@@ -175,6 +175,7 @@
     "tagline": "Eine To Do App, die Aufgaben von gestern löscht. Absichtlich.",
     "rights": "© {year} Florian Schneider. Mit Sorgfalt in Deutschland gemacht.",
     "links": {
+      "faq": "Häufige Fragen",
       "privacy": "Datenschutz",
       "imprint": "Impressum",
       "github": "GitHub",

@@ -175,6 +175,7 @@
     "tagline": "A task app that deletes yesterday's tasks. On purpose.",
     "rights": "© {year} Florian Schneider. Made with care in Germany.",
     "links": {
+      "faq": "FAQ",
       "privacy": "Privacy",
       "imprint": "Imprint",
       "github": "GitHub",
