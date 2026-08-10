@@ -29,6 +29,7 @@ struct SettingsView: View {
     @State private var resetTime: Date
     @State private var showingFeedbackMail = false
     @State private var showingNoMailAlert = false
+    @State private var iCloudAccountAvailability: CloudSyncStatus.Availability?
     
     init(
         settings: AppSettings = .shared,
@@ -62,6 +63,7 @@ struct SettingsView: View {
                 debugSection
                 resetSection
                 makeItCountSection
+                iCloudSyncSection
                 synchronisationSection
                 appearanceSection
                 welcomeSection
@@ -257,13 +259,68 @@ struct SettingsView: View {
         }
     }
     
+    private var iCloudSyncSection: some View {
+        Section {
+            Toggle(
+                String(localized: "settings.icloud.toggle", defaultValue: "Sync with iCloud"),
+                isOn: $settings.iCloudSyncEnabled
+            )
+
+            if settings.iCloudSyncEnabled, let availability = iCloudAccountAvailability {
+                Label {
+                    Text(iCloudStatusText(for: availability))
+                } icon: {
+                    Image(systemName: availability == .available ? "checkmark.icloud" : "exclamationmark.icloud")
+                }
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+            }
+        } header: {
+            Text(String(localized: "settings.icloud.section", defaultValue: "iCloud Sync"))
+        } footer: {
+            Text(String(
+                localized: "settings.icloud.footer.restart",
+                defaultValue: "Takes effect after you relaunch Dawny. Your tasks sync through your personal iCloud account."
+            ))
+            .foregroundStyle(.secondary)
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .task(id: settings.iCloudSyncEnabled) {
+            guard settings.iCloudSyncEnabled else {
+                iCloudAccountAvailability = nil
+                return
+            }
+            iCloudAccountAvailability = await CloudSyncStatus.accountAvailability()
+        }
+    }
+
+    private func iCloudStatusText(for availability: CloudSyncStatus.Availability) -> String {
+        switch availability {
+        case .available:
+            return String(localized: "settings.icloud.status.available", defaultValue: "iCloud available")
+        case .unavailable:
+            return String(
+                localized: "settings.icloud.status.noAccount",
+                defaultValue: "Not signed into iCloud. Sync is paused."
+            )
+        }
+    }
+
     private var synchronisationSection: some View {
         Section {
             Toggle(String(localized: "settings.sync.toggle", defaultValue: "Calendar Sync"), isOn: $settings.calendarSyncEnabled)
         } footer: {
-            Text(String(localized: "settings.sync.description", defaultValue: "Synchronizes Daily Focus tasks with iOS Reminders."))
-                .foregroundStyle(.secondary)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(String(localized: "settings.sync.description", defaultValue: "Synchronizes Daily Focus tasks with iOS Reminders."))
+                if settings.iCloudSyncEnabled {
+                    Text(String(
+                        localized: "settings.icloud.footer.reminders",
+                        defaultValue: "Tip: enable the Apple Reminders integration on one device only."
+                    ))
+                }
+            }
+            .foregroundStyle(.secondary)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
     

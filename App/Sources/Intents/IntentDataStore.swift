@@ -51,22 +51,67 @@ enum IntentDataStore {
             return persistentContainer
         }
 
-        let config: ModelConfiguration
-        if AppGroup.isMigrated, let storeURL = AppGroup.storeURL {
-            // Geteilter Store in der App Group (App + Widget lesen denselben Container).
-            config = ModelConfiguration(schema: schema, url: storeURL)
-        } else if AppGroup.isRunningInAppExtension {
-            // Das Widget darf niemals einen (verfrühten) lokalen oder Group-Store anlegen:
-            // die Migration läuft ausschließlich im App-Prozess. Bis dahin: keine Daten.
+        // Das Widget darf niemals einen (verfrühten) lokalen oder Group-Store anlegen:
+        // die Migration läuft ausschließlich im App-Prozess. Bis dahin: keine Daten.
+        if sharedStoreURL == nil, AppGroup.isRunningInAppExtension {
             throw IntentDataStoreError.dataStoreUnavailable
-        } else {
-            // Vor der Migration (oder ohne App-Group-Entitlement): Legacy-Default-Store.
-            config = ModelConfiguration(schema: schema)
         }
 
-        let container = try ModelContainer(for: schema, configurations: [config])
+        let container: ModelContainer
+        if shouldUseCloudKit {
+            do {
+                container = try ModelContainer(
+                    for: schema,
+                    configurations: [makeConfiguration(schema: schema, cloudKit: .private(CloudKitConfig.containerID))]
+                )
+            } catch {
+                // Kein Entitlement, kein iCloud-Account, Container nicht erreichbar:
+                // lieber lokal weiterlaufen als die App blockieren. Das Flag wird
+                // zurückgesetzt, damit die Settings den echten Zustand zeigen.
+                print("⚠️ CloudKit-Container nicht verfügbar, Fallback auf lokalen Store: \(error)")
+                AppSettings.shared.iCloudSyncEnabled = false
+                container = try ModelContainer(
+                    for: schema,
+                    configurations: [makeConfiguration(schema: schema, cloudKit: .none)]
+                )
+            }
+        } else {
+            container = try ModelContainer(
+                for: schema,
+                configurations: [makeConfiguration(schema: schema, cloudKit: .none)]
+            )
+        }
+
         persistentContainer = container
         return container
+    }
+
+    /// Baut die Store-Konfiguration. `cloudKit` entscheidet, ob derselbe Store
+    /// zusätzlich an die private CloudKit-Datenbank gekoppelt wird — der Pfad
+    /// bleibt in beiden Fällen identisch, ein Wechsel verschiebt also keine Daten.
+    private static func makeConfiguration(
+        schema: Schema,
+        cloudKit: ModelConfiguration.CloudKitDatabase
+    ) -> ModelConfiguration {
+        if let storeURL = sharedStoreURL {
+            // Geteilter Store in der App Group (App + Widget lesen denselben Container).
+            return ModelConfiguration(schema: schema, url: storeURL, cloudKitDatabase: cloudKit)
+        }
+        // Vor der Migration (oder ohne App-Group-Entitlement): Legacy-Default-Store.
+        return ModelConfiguration(schema: schema, cloudKitDatabase: cloudKit)
+    }
+
+    /// URL des geteilten Stores — nur gültig, wenn die Migration gelaufen ist
+    /// UND das App-Group-Entitlement vorhanden ist.
+    private static var sharedStoreURL: URL? {
+        guard AppGroup.isMigrated else { return nil }
+        return AppGroup.storeURL
+    }
+
+    /// CloudKit-Sync läuft ausschließlich im App-Prozess: die Widget-Extension
+    /// liest denselben Store lokal weiter (siehe `CloudKitConfig`).
+    private static var shouldUseCloudKit: Bool {
+        !AppGroup.isRunningInAppExtension && AppSettings.shared.iCloudSyncEnabled
     }
 
     static func makeContext(isStoredInMemoryOnly: Bool = false) throws -> ModelContext {

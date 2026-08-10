@@ -4743,6 +4743,114 @@
         }
       }
     },
+    "settings.icloud.footer.reminders" : {
+      "comment" : "Settings · Extra footer hint under the Reminders toggle while iCloud sync is on.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tipp: Aktiviere die Apple-Erinnerungen-Integration nur auf einem Gerät."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tip: enable the Apple Reminders integration on one device only."
+          }
+        }
+      }
+    },
+    "settings.icloud.footer.restart" : {
+      "comment" : "Settings · Footer below the iCloud sync toggle · Plain sentences.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wird nach einem Neustart von Dawny aktiv. Deine Aufgaben werden über dein persönliches iCloud-Konto synchronisiert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Takes effect after you relaunch Dawny. Your tasks sync through your personal iCloud account."
+          }
+        }
+      }
+    },
+    "settings.icloud.section" : {
+      "comment" : "Settings · Section header above the iCloud sync toggle.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud-Sync"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud Sync"
+          }
+        }
+      }
+    },
+    "settings.icloud.status.available" : {
+      "comment" : "Settings · Status line shown when the iCloud account is usable.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud verfügbar"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud available"
+          }
+        }
+      }
+    },
+    "settings.icloud.status.noAccount" : {
+      "comment" : "Settings · Status line shown when no iCloud account is signed in.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicht bei iCloud angemeldet. Der Sync pausiert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not signed into iCloud. Sync is paused."
+          }
+        }
+      }
+    },
+    "settings.icloud.toggle" : {
+      "comment" : "Settings · Label of the toggle that enables iCloud sync.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mit iCloud synchronisieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sync with iCloud"
+          }
+        }
+      }
+    },
     "settings.info.build" : {
       "comment" : "Settings · Info row label · Single noun. Followed by the build number.",
       "extractionState" : "manual",

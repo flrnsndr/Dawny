@@ -123,7 +123,10 @@ final class CategoryService {
         "Wiederkehrende Aufgaben"
     ]
 
-    private func isLikelyDefaultRecurringCategory(_ category: Category) -> Bool {
+    /// Erkennt die automatisch angelegte „Wiederkehrende Aufgaben"-Kategorie.
+    /// Nicht `private`, weil der `CloudDeduplicator` dieselbe Definition braucht,
+    /// um doppelt geseedete Exemplare nach einem CloudKit-Import zusammenzuführen.
+    func isLikelyDefaultRecurringCategory(_ category: Category) -> Bool {
         guard category.isRecurring, category.categoryType == .custom else { return false }
         let loc = String(
             localized: "category.recurring.default.name",

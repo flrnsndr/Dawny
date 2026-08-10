@@ -15,25 +15,27 @@ import SwiftData
 @Model
 final class Category {
     // MARK: - Stored Properties
-    
+
+    // Inline-Defaults sind CloudKit-Pflicht — siehe Hinweis in `Task`.
+
     /// Eindeutige ID
-    var id: UUID
-    
+    var id: UUID = UUID()
+
     /// Kategorie-Typ (Enum)
-    var categoryType: TaskCategory
-    
+    var categoryType: TaskCategory = TaskCategory.custom
+
     /// Name der Kategorie (lokalisiert, kann überschrieben werden)
-    var name: String
-    
+    var name: String = ""
+
     /// SF Symbol Icon-Name
-    var iconName: String
-    
+    var iconName: String = ""
+
     /// Sortierungs-Index (für konfigurierbare Reihenfolge)
-    var orderIndex: Int
-    
+    var orderIndex: Int = 0
+
     /// Flag ob dies die "Unkategorisiert"-Kategorie ist
-    var isUncategorized: Bool
-    
+    var isUncategorized: Bool = false
+
     /// Markiert, dass der Nutzer den Namen manuell überschrieben hat.
     /// Solange `false`, wird `categoryType.displayName` (lokalisiert) angezeigt.
     var isNameCustomized: Bool = false
@@ -51,13 +53,13 @@ final class Category {
     var autoArchiveDays: Int? = nil
 
     /// Erstellungsdatum
-    var createdAt: Date
-    
+    var createdAt: Date = Date()
+
     // MARK: - Relationships
-    
+
     /// Alle Tasks in dieser Kategorie
     @Relationship(deleteRule: .nullify, inverse: \Task.category)
-    var tasks: [Task]
+    var tasks: [Task] = []
     
     // MARK: - Initializer
     

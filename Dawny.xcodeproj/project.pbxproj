@@ -89,6 +89,8 @@
 				Sources/Services/CategoryService.swift,
 				Sources/Services/ResetOutcomePlanner.swift,
 				Sources/Utilities/AppGroup.swift,
+				Sources/Utilities/CloudKitConfig.swift,
+				Sources/Utilities/UbiquitousKeyValueStoring.swift,
 				Sources/Utilities/WidgetRefresher.swift,
 			);
 			target = D7C9B6FE300E74F6005696F9 /* DawnyWidgetsExtension */;

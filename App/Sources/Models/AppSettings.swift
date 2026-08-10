@@ -21,6 +21,7 @@ final class AppSettings {
     enum Keys {
         static let resetHour = "DawnyResetHour"
         static let calendarSyncEnabled = "DawnyCalendarSyncEnabled"
+        static let iCloudSyncEnabled = "DawnyICloudSyncEnabled"
         static let showCompletedTasksInToday = "DawnyShowCompletedTasksInToday"
         static let showCategories = "DawnyShowCategories"
         static let defaultCategoryType = "DawnyDefaultCategoryType"
@@ -34,18 +35,29 @@ final class AppSettings {
 
         /// Alle Keys — vom `AppGroupMigrator` genutzt, um bestehende Werte in die App-Group-Suite zu übernehmen.
         static let allKeys: [String] = [
-            resetHour, calendarSyncEnabled, showCompletedTasksInToday, showCategories,
+            resetHour, calendarSyncEnabled, iCloudSyncEnabled, showCompletedTasksInToday, showCategories,
             defaultCategoryType, hasSeenWelcome, makeItCountThreshold, hasNewArchivedTasks,
             lastArchiveVisitDate, appLaunchCount, totalResetEventCount, lastReviewPromptDate
         ]
     }
 
+    /// Keys im iCloud-Key-Value-Store. Bewusst getrennt von den lokalen Keys:
+    /// nur die drei verhaltensrelevanten Werte wandern zwischen Geräten, weil
+    /// der nächtliche Reset auf allen Geräten dieselben Parameter braucht
+    /// (sonst können zwei Geräte widersprüchliche Ergebnisse schreiben).
+    enum CloudKeys {
+        static let resetHour = "DawnyKVSResetHour"
+        static let makeItCountThreshold = "DawnyKVSMakeItCountThreshold"
+        static let defaultCategoryType = "DawnyKVSDefaultCategoryType"
+    }
+
     // MARK: - Properties
-    
+
     /// Reset-Zeit in Stunden (0-23)
     var resetHour: Int {
         didSet {
             AppGroup.defaults.set(resetHour, forKey: Keys.resetHour)
+            pushToCloud(resetHour, forKey: CloudKeys.resetHour)
         }
     }
     
@@ -56,6 +68,16 @@ final class AppSettings {
         }
     }
     
+    /// iCloud-Sync über CloudKit aktiviert (Opt-in, Standard: aus).
+    /// Bewusst gerätelokal: jedes Gerät entscheidet selbst, ob es syncen soll.
+    /// Wird erst beim nächsten App-Start wirksam, weil der `ModelContainer`
+    /// einmalig in `DawnyApp.init()` gebaut wird.
+    var iCloudSyncEnabled: Bool {
+        didSet {
+            AppGroup.defaults.set(iCloudSyncEnabled, forKey: Keys.iCloudSyncEnabled)
+        }
+    }
+
     /// Erledigte Tasks im Heute-Tab anzeigen
     var showCompletedTasksInToday: Bool {
         didSet {
@@ -81,6 +103,7 @@ final class AppSettings {
     var makeItCountThreshold: Int {
         didSet {
             AppGroup.defaults.set(makeItCountThreshold, forKey: Keys.makeItCountThreshold)
+            pushToCloud(makeItCountThreshold, forKey: CloudKeys.makeItCountThreshold)
         }
     }
 
@@ -126,15 +149,31 @@ final class AppSettings {
             if let encoded = try? JSONEncoder().encode(defaultCategoryType.rawValue) {
                 AppGroup.defaults.set(encoded, forKey: Keys.defaultCategoryType)
             }
+            pushToCloud(defaultCategoryType.rawValue, forKey: CloudKeys.defaultCategoryType)
         }
     }
     
+    // MARK: - iCloud sync state
+
+    /// Injizierbar für Tests. `nil` = im Betrieb erst bei aktiviertem Sync auflösen,
+    /// damit Tests und Nicht-Sync-Nutzer den echten Store nie anfassen.
+    @ObservationIgnored private let injectedCloudStore: UbiquitousKeyValueStoring?
+
+    /// Verhindert Ping-Pong: Werte, die gerade aus der Cloud übernommen werden,
+    /// dürfen nicht sofort wieder hochgeschrieben werden.
+    @ObservationIgnored private var isApplyingCloudValues = false
+
+    @ObservationIgnored private var cloudObserver: NSObjectProtocol?
+
     // MARK: - Initializer
-    
-    init() {
+
+    init(cloudStore: UbiquitousKeyValueStoring? = nil) {
+        self.injectedCloudStore = cloudStore
+
         // Lade Werte aus UserDefaults oder verwende Defaults
         self.resetHour = AppGroup.defaults.object(forKey: Keys.resetHour) as? Int ?? 3
         self.calendarSyncEnabled = AppGroup.defaults.object(forKey: Keys.calendarSyncEnabled) as? Bool ?? true
+        self.iCloudSyncEnabled = AppGroup.defaults.bool(forKey: Keys.iCloudSyncEnabled)
         self.showCompletedTasksInToday = AppGroup.defaults.object(forKey: Keys.showCompletedTasksInToday) as? Bool ?? true
         self.showCategories = AppGroup.defaults.object(forKey: Keys.showCategories) as? Bool ?? true
         self.hasSeenWelcome = AppGroup.defaults.bool(forKey: Keys.hasSeenWelcome)
@@ -164,6 +203,85 @@ final class AppSettings {
         }
     }
     
+    // MARK: - iCloud Key-Value Sync
+
+    private var cloudStore: UbiquitousKeyValueStoring? {
+        if let injectedCloudStore { return injectedCloudStore }
+        guard iCloudSyncEnabled else { return nil }
+        return NSUbiquitousKeyValueStore.default
+    }
+
+    /// Startet die Settings-Synchronisation. Wird beim App-Start aufgerufen.
+    ///
+    /// Beim ersten Lauf mit aktiviertem Sync gewinnen vorhandene Cloud-Werte über
+    /// die lokalen — so übernimmt ein neu hinzugefügtes Gerät deterministisch die
+    /// Einstellungen des ersten. Fehlt ein Wert in der Cloud, wird der lokale
+    /// hochgeschoben.
+    func activateCloudSyncIfEnabled() {
+        guard iCloudSyncEnabled, let store = cloudStore else { return }
+
+        store.synchronize()
+        adoptCloudValues(from: store)
+        pushMissingValues(to: store)
+        startObservingCloudChanges(store)
+    }
+
+    /// Übernimmt alle in der Cloud vorhandenen Werte.
+    private func adoptCloudValues(from store: UbiquitousKeyValueStoring) {
+        isApplyingCloudValues = true
+        defer { isApplyingCloudValues = false }
+
+        if let hour = store.object(forKey: CloudKeys.resetHour) as? Int, hour != resetHour {
+            resetHour = hour
+        }
+        if let threshold = store.object(forKey: CloudKeys.makeItCountThreshold) as? Int,
+           threshold != makeItCountThreshold {
+            makeItCountThreshold = threshold
+        }
+        if let raw = store.object(forKey: CloudKeys.defaultCategoryType) as? String,
+           let category = TaskCategory(rawValue: raw),
+           category != defaultCategoryType {
+            defaultCategoryType = category
+        }
+    }
+
+    /// Schreibt lokale Werte hoch, die in der Cloud noch fehlen.
+    private func pushMissingValues(to store: UbiquitousKeyValueStoring) {
+        var didWrite = false
+        if store.object(forKey: CloudKeys.resetHour) == nil {
+            store.set(resetHour, forKey: CloudKeys.resetHour)
+            didWrite = true
+        }
+        if store.object(forKey: CloudKeys.makeItCountThreshold) == nil {
+            store.set(makeItCountThreshold, forKey: CloudKeys.makeItCountThreshold)
+            didWrite = true
+        }
+        if store.object(forKey: CloudKeys.defaultCategoryType) == nil {
+            store.set(defaultCategoryType.rawValue, forKey: CloudKeys.defaultCategoryType)
+            didWrite = true
+        }
+        if didWrite {
+            store.synchronize()
+        }
+    }
+
+    private func startObservingCloudChanges(_ store: UbiquitousKeyValueStoring) {
+        guard cloudObserver == nil else { return }
+        cloudObserver = NotificationCenter.default.addObserver(
+            forName: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.adoptCloudValues(from: store)
+        }
+    }
+
+    private func pushToCloud(_ value: Any, forKey key: String) {
+        guard !isApplyingCloudValues, iCloudSyncEnabled, let store = cloudStore else { return }
+        store.set(value, forKey: key)
+        store.synchronize()
+    }
+
     // MARK: - Computed
 
     /// True wenn alle Bedingungen für den Review-Prompt erfüllt sind

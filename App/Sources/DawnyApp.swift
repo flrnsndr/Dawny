@@ -24,7 +24,8 @@ struct DawnyApp: App {
     let calendarService: CalendarServiceProtocol
     let resetEngine: ResetEngine
     let syncEngine: SyncEngine
-    
+    let cloudSyncObserver: CloudSyncObserver
+
     @Environment(\.scenePhase) private var scenePhase
     @State private var hasLaunchedBefore = false
     
@@ -54,7 +55,8 @@ struct DawnyApp: App {
             calendarService: calendarService,
             modelContext: modelContainer.mainContext
         )
-        
+        cloudSyncObserver = CloudSyncObserver(modelContext: modelContainer.mainContext)
+
         // Cross-reference for reset engine
         resetEngine.syncEngine = syncEngine
 
@@ -117,6 +119,15 @@ struct DawnyApp: App {
         // 5. Initialize Categories
         let categoryService = CategoryService(modelContext: modelContainer.mainContext)
         categoryService.initializeDefaultCategories()
+
+        // 5a. iCloud: Einstellungen abgleichen, Duplikate aus dem Seeding einsammeln
+        // (siehe CloudDeduplicator) und auf weitere Importe horchen.
+        // Ohne aktivierten Sync passiert nichts.
+        if AppSettings.shared.iCloudSyncEnabled {
+            AppSettings.shared.activateCloudSyncIfEnabled()
+            await cloudSyncObserver.handleRemoteChanges()
+            cloudSyncObserver.startObserving()
+        }
 
         #if DEBUG
         if ScreenshotSeeder.isActive {

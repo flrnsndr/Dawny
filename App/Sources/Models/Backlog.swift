@@ -15,24 +15,26 @@ import SwiftData
 @Model
 final class Backlog {
     // MARK: - Stored Properties
-    
+
+    // Inline-Defaults sind CloudKit-Pflicht — siehe Hinweis in `Task`.
+
     /// Eindeutige ID
-    var id: UUID
-    
+    var id: UUID = UUID()
+
     /// Name des Backlogs
-    var title: String
-    
+    var title: String = ""
+
     /// Sortierungs-Index (für Multi-Backlog später)
-    var orderIndex: Int
-    
+    var orderIndex: Int = 0
+
     /// Erstellungsdatum
-    var createdAt: Date
-    
+    var createdAt: Date = Date()
+
     // MARK: - Relationships
-    
+
     /// Alle Tasks in diesem Backlog
     @Relationship(deleteRule: .cascade, inverse: \Task.backlog)
-    var tasks: [Task]
+    var tasks: [Task] = []
     
     // MARK: - Initializer
     
