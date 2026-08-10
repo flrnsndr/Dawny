@@ -562,7 +562,6 @@
 				ENABLE_SECURITY_COMPILER_WARNINGS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Dawny-Info.plist";
-				INFOPLIST_KEY_BGTaskSchedulerPermittedIdentifiers = Flo.Dawny.reset;
 				INFOPLIST_KEY_CFBundleDisplayName = Dawny;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
@@ -609,7 +608,6 @@
 				ENABLE_SECURITY_COMPILER_WARNINGS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Dawny-Info.plist";
-				INFOPLIST_KEY_BGTaskSchedulerPermittedIdentifiers = Flo.Dawny.reset;
 				INFOPLIST_KEY_CFBundleDisplayName = Dawny;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
