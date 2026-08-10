@@ -100,7 +100,27 @@ final class SyncEngineTests: XCTestCase {
         XCTAssertNil(calendarService.reminders[reminderID])
         XCTAssertNil(task.externalReminderID)
     }
-    
+
+    /// Ein Gerät ohne Reminders-Integration darf die Verknüpfung nicht anfassen.
+    /// Bei aktivem iCloud-Sync würde das Lösen sonst zum verknüpfenden Gerät
+    /// zurücksyncen und dessen echte Erinnerung verwaisen lassen.
+    func testRemoveIsNoOpWhileCalendarSyncIsDisabled() async throws {
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let task = TestModelContainer.createTask(in: context, title: "Test", status: .dailyFocus, backlog: backlog)
+        task.scheduledDate = Date()
+
+        await syncEngine.syncTaskToCalendar(task)
+        let reminderID = task.externalReminderID
+        XCTAssertNotNil(reminderID)
+
+        AppSettings.shared.calendarSyncEnabled = false
+        await syncEngine.removeTaskFromCalendar(task)
+
+        XCTAssertEqual(calendarService.deleteCallCount, 0, "Ohne Reminders-Integration darf EventKit nicht angefasst werden")
+        XCTAssertEqual(task.externalReminderID, reminderID, "Die Verknüpfung muss erhalten bleiben")
+    }
+
+
     // MARK: - Sync All Tests
     
     func testSyncAllDailyFocusTasks() async throws {

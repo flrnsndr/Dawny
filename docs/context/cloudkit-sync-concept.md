@@ -1,9 +1,10 @@
 # Dawny — iCloud Multi-Device Sync Concept (SwiftData + CloudKit)
 
 > **Status: code implemented on branch `feat/icloud-sync`, feature off by default.**
-> PRs 1–4 of §15 are in the tree (schema defaults, opt-in toggle + container matrix +
-> local fallback, dedup routine + remote-change observer, KVS settings sync) together
-> with the unit tests of §14.1. **Not yet done:** the Xcode capability steps of §3
+> PRs 1–5 of §15 are in the tree (schema defaults, opt-in toggle + container matrix +
+> local fallback, dedup routine + remote-change observer, KVS settings sync, EventKit
+> guard + Settings footers) together with the unit tests of §14.1.
+> **Not yet done:** the Xcode capability steps of §3
 > (iCloud/CloudKit container, Background Mode "Remote notifications", Key-value storage)
 > and the CloudKit schema deployment — these are GUI/portal steps. Until they are done,
 > flipping the toggle makes the container fall back to the local store (§5.4) and the
@@ -392,26 +393,25 @@ only. Devices with it disabled never touch EventKit (existing guard). Consequenc
 - If the user enables Reminders sync on two devices anyway, duplicate reminders can
   appear. Accepted (§12). Add a footnote to the Settings row (§11).
 
-#### 10.2.1 Open decision — unlink propagation
+#### 10.2.1 Unlink propagation — decided, implemented
 
-`ResetEngine.performReset` calls `syncEngine.removeTaskFromCalendar(task)` for every
-synced task **without** a `calendarSyncEnabled` guard (unlike `syncTaskToCalendar`).
-Combined with the local-identifier finding above, on a second device this sequence runs:
+`ResetEngine.performReset` used to call `syncEngine.removeTaskFromCalendar(task)` for
+every synced task **without** a `calendarSyncEnabled` guard (unlike `syncTaskToCalendar`).
+Combined with the local-identifier finding above, this sequence ran on a second device:
 `deleteReminder` no-ops (identifier unknown locally) → `task.unlinkFromCalendar()` clears
 `externalReminderID` → the cleared value syncs back to device A, whose real reminder is
 now orphaned.
 
-This was **left unchanged deliberately** — both fixes trade something away and the choice
-is a product decision:
+**Decision: `removeTaskFromCalendar` now guards on `calendarSyncEnabled`.** A device
+without the Reminders integration never touches EventKit and never mutates the link, so
+nothing can propagate back. This also makes the claim in `architecture.md` §7 ("every
+SyncEngine operation checks `calendarSyncEnabled`") true, which it previously was not.
 
-- **Guard `removeTaskFromCalendar` on `calendarSyncEnabled`**: fixes the propagation, but
-  changes existing single-device behavior (a user who switches Reminders sync off would
-  keep leftover reminders instead of having the reset clean them up).
-- **Only unlink when the reminder actually resolved**: keeps single-device behavior, but
-  leaves stale links alive forever on the device that legitimately deleted the reminder.
+Accepted trade-off: a user who switches the Reminders integration off keeps leftover
+reminders in the Reminders app instead of having the next reset clean them up. This
+matches every other path — nothing else cleans up on disable either.
 
-Until this is decided, the mitigation is the Settings footnote: enable the Reminders
-integration on one device only.
+Covered by `SyncEngineTests.testRemoveIsNoOpWhileCalendarSyncIsDisabled`.
 
 ---
 
@@ -537,8 +537,9 @@ suppressed elsewhere once synced — decision D8.)
   `membershipExceptions` in `project.pbxproj`. Both are deliberately free of
   `import CloudKit`; the actual CloudKit call (`accountStatus()`) sits in the app-only
   `CloudSyncStatus`.
-- **§10.2 hardening** turned out to be unnecessary (`deleteReminder` already no-ops), but
-  surfaced the open decision in §10.2.1.
+- **§10.2 hardening** turned out to be unnecessary at the EventKit layer
+  (`deleteReminder` already no-ops on an unknown identifier), but surfaced the real
+  problem one level up — resolved in §10.2.1 by guarding `removeTaskFromCalendar`.
 
 Each PR must keep `xcodebuild test` green (see `CLAUDE.md` for the exact commands) and
 follow the repo rules: localized strings in both locales, license headers on new Swift

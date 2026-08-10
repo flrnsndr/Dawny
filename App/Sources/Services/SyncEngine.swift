@@ -109,12 +109,22 @@ final class SyncEngine {
         }
     }
     
-    /// Entfernt einen Task aus dem Kalender
+    /// Entfernt einen Task aus dem Kalender.
+    ///
+    /// Der `calendarSyncEnabled`-Guard ist bei aktivem iCloud-Sync wichtig:
+    /// `externalReminderID` hält die gerätelokale `calendarItemIdentifier` und synct
+    /// trotzdem mit. Ohne den Guard würde ein Zweitgerät, das die Erinnerung gar nicht
+    /// kennt, beim Reset die Verknüpfung lösen — und dieses Lösen zurück zum Erstgerät
+    /// syncen, dessen echte Erinnerung damit verwaist.
     func removeTaskFromCalendar(_ task: Task) async {
+        guard AppSettings.shared.calendarSyncEnabled else {
+            return
+        }
+
         guard let reminderID = task.externalReminderID else {
             return
         }
-        
+
         do {
             try await calendarService.deleteReminder(id: reminderID)
             task.unlinkFromCalendar()
