@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Dawny</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <style>
+      :root {
+        color-scheme: light dark;
+        --paper: #f8fafc;
+        --ink: #0e1a2e;
+        --ink-soft: #2c3a52;
+        --dawn: #f5b042;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --paper: #050d20;
+          --ink: #f8fafc;
+          --ink-soft: #bedde6;
+        }
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; height: 100%; }
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+      main { max-width: 32rem; text-align: center; }
+      .mark {
+        width: 3rem;
+        height: 3rem;
+        margin: 0 auto 1.75rem;
+        border-radius: 50%;
+        background: radial-gradient(circle at 50% 65%, var(--dawn), transparent 70%);
+        border-bottom: 2px solid var(--dawn);
+      }
+      h1 { margin: 0 0 1rem; font-size: 1.75rem; font-weight: 600; letter-spacing: -0.01em; }
+      p { margin: 0 0 0.75rem; color: var(--ink-soft); }
+      p:last-child { margin-bottom: 0; }
+      [lang="de"] { margin-top: 1.5rem; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="mark" aria-hidden="true"></div>
+      <h1>Dawny</h1>
+      <p lang="en">This site is currently offline.</p>
+      <p lang="de">Diese Seite ist derzeit offline.</p>
+    </main>
+  </body>
+</html>
