@@ -1,3 +1,10 @@
+# The website is currently taken offline: instead of building the Astro site,
+# this workflow mirrors `website/offline/` — a single notice page plus its
+# .htaccess — onto the webspace. Because the mirror runs with --delete, that
+# upload removes every previously published page.
+#
+# To bring the site back, revert the commit that introduced this state. That
+# restores the `npm ci` / `npm run build` steps and the `dist/` mirror.
 name: Deploy Website to IONOS
 
 on:
@@ -18,27 +25,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: website/package-lock.json
-
-      - run: npm ci
-
-      - run: npm run build
-        env:
-          PUBLIC_POSTHOG_PROJECT_TOKEN: ${{ secrets.PUBLIC_POSTHOG_PROJECT_TOKEN }}
-          PUBLIC_POSTHOG_HOST: ${{ secrets.PUBLIC_POSTHOG_HOST }}
-
       - name: Install lftp
         run: sudo apt-get update && sudo apt-get install -y lftp
         working-directory: .
 
-      - name: Deploy to IONOS via SFTP
+      - name: Deploy offline notice to IONOS via SFTP
         run: |
           lftp -u "${{ secrets.IONOS_FTP_USER }},${{ secrets.IONOS_FTP_PASSWORD }}" \
             sftp://${{ secrets.IONOS_FTP_HOST }} -e "
             set sftp:auto-confirm yes;
-            mirror --reverse --delete --verbose dist/ ${{ secrets.IONOS_FTP_REMOTE_DIR }};
+            mirror --reverse --delete --verbose offline/ ${{ secrets.IONOS_FTP_REMOTE_DIR }};
             quit"

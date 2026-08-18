@@ -1,0 +1,39 @@
+## ----------------------------------------------------------------------
+## Dawny website .htaccess — OFFLINE state
+##
+## This directory replaces `dist/` on the webspace while the site is taken
+## down. The deploy mirrors with --delete, so uploading it removes every
+## previously published page. Old URLs therefore return 404 and get the
+## notice page below as their error document.
+##
+## To bring the site back: revert the commit that introduced this directory
+## (it also restores the `dist/` deploy in deploy-website.yml) and push.
+## ----------------------------------------------------------------------
+
+# Force HTTPS
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+DirectoryIndex index.html
+
+# Every removed URL answers 404 and shows the offline notice.
+ErrorDocument 404 /index.html
+
+<IfModule mod_headers.c>
+  # Keep the domain out of search results while it is down.
+  Header always set X-Robots-Tag "noindex"
+
+  # Never let the notice page get cached past the relaunch.
+  Header always set Cache-Control "no-store, max-age=0"
+
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html image/svg+xml
+</IfModule>
