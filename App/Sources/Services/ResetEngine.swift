@@ -31,6 +31,9 @@ final class ResetEngine {
     
     /// Optional: Referenz zum SyncEngine für Kalender-Cleanup
     weak var syncEngine: SyncEngine?
+
+    /// Der Launch-Handler darf pro Prozess nur einmal registriert werden.
+    private var didRegisterBackgroundTask = false
     
     // MARK: - Initializer
     
@@ -150,9 +153,26 @@ final class ResetEngine {
         }
     }
     
-    /// Registriert Background Task für automatischen Reset
+    /// Registriert Background Task für automatischen Reset und plant den nächsten Lauf.
+    ///
+    /// Wird sowohl beim App-Start als auch bei jedem Wechsel in den Hintergrund
+    /// aufgerufen. `BGTaskScheduler.register` darf pro Identifier aber nur **einmal
+    /// pro Prozess** laufen — ein zweiter Aufruf beendet die App mit
+    /// „Launch handler for task with identifier … has already been registered".
+    /// Das Neuplanen (`scheduleNextBackgroundReset`) soll dagegen jedes Mal passieren.
     func registerBackgroundTask() {
         #if !targetEnvironment(simulator)
+        if !didRegisterBackgroundTask {
+            didRegisterBackgroundTask = true
+            registerLaunchHandler()
+        }
+
+        scheduleNextBackgroundReset()
+        #endif
+    }
+
+    #if !targetEnvironment(simulator)
+    private func registerLaunchHandler() {
         BGTaskScheduler.shared.register(
             forTaskWithIdentifier: backgroundTaskIdentifier,
             using: nil
@@ -168,10 +188,9 @@ final class ResetEngine {
                 self.scheduleNextBackgroundReset()
             }
         }
-        
-        scheduleNextBackgroundReset()
-        #endif
     }
+    #endif
+
     
     // MARK: - Private Methods
     
