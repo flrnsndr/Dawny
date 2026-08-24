@@ -55,12 +55,15 @@ final class BacklogViewModel {
         
         do {
             backlogs = try modelContext.fetch(descriptor)
-            
-            // Setze ersten Backlog als current falls keiner gesetzt
-            if currentBacklog == nil {
-                currentBacklog = backlogs.first
-            }
-            
+
+            // Immer neu zuweisen, auch wenn es dasselbe Objekt ist: `backlogTasks` und
+            // `groupedTasks` lesen über die Beziehung `currentBacklog.tasks`, und die
+            // Observation bemerkt einen CloudKit-Import an diesem Objekt nicht von selbst.
+            // Erst die Zuweisung auf `currentBacklog` löst das Neuzeichnen aus.
+            let previousID = currentBacklog?.id
+            currentBacklog = backlogs.first(where: { $0.id == previousID }) ?? backlogs.first
+
+
             // Falls keine Backlogs existieren, erstelle Default-Backlog
             if backlogs.isEmpty {
                 createDefaultBacklog()
