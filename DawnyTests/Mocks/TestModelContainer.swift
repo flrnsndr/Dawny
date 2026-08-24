@@ -39,6 +39,39 @@ enum TestModelContainer {
         )
     }
     
+    /// Erstellt einen ModelContainer auf einer **Datei**, damit sich zwei Container
+    /// denselben Store teilen können. Genau das passiert im Betrieb: CloudKit, die
+    /// Widget-Extension und die App-Intents schreiben aus einem anderen Koordinator
+    /// in denselben App-Group-Store.
+    ///
+    /// Auch hier ist `cloudKitDatabase: .none` Pflicht (siehe `create()`).
+    static func createOnDisk(at url: URL) throws -> ModelContainer {
+        let schema = Schema([
+            Task.self,
+            Backlog.self,
+            Category.self
+        ])
+
+        let configuration = ModelConfiguration(
+            schema: schema,
+            url: url,
+            cloudKitDatabase: .none
+        )
+
+        return try ModelContainer(
+            for: schema,
+            configurations: [configuration]
+        )
+    }
+
+    /// Räumt eine mit `createOnDisk(at:)` erzeugte Store-Datei samt WAL-Begleitern weg.
+    static func removeStore(at url: URL) {
+        for suffix in ["", "-wal", "-shm"] {
+            let path = url.path + suffix
+            try? FileManager.default.removeItem(atPath: path)
+        }
+    }
+
     /// Erstellt einen ModelContext aus einem neuen Container
     static func createContext() throws -> ModelContext {
         let container = try create()
