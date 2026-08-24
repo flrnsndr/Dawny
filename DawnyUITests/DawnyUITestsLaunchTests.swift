@@ -1,3 +1,7 @@
+// Dawny
+// Copyright (c) 2025-2026 Florian Schneider
+// Licensed under the MIT License — see LICENSE in the repository root.
+
 //
 //  DawnyUITestsLaunchTests.swift
 //  DawnyUITests
