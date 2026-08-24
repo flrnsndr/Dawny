@@ -1,0 +1,31 @@
+{
+  "configurations": [
+    {
+      "id": "7BA0EAEE-E377-4E00-9F92-EB16381D33A5",
+      "name": "Configuration 1",
+      "options": {}
+    }
+  ],
+  "defaultOptions": {},
+  "testTargets": [
+    {
+      "target": {
+        "containerPath": "container:Dawny.xcodeproj",
+        "identifier": "D78530922FAD3D7E00B088D7",
+        "name": "DawnyTests"
+      }
+    },
+    {
+      "skippedTests": [
+        "DawnyUITests/testLaunchPerformance()",
+        "ScreenshotTests"
+      ],
+      "target": {
+        "containerPath": "container:Dawny.xcodeproj",
+        "identifier": "D769C0012FAD439D00BFA1D1",
+        "name": "DawnyUITests"
+      }
+    }
+  ],
+  "version": 1
+}

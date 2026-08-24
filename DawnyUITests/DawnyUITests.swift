@@ -29,10 +29,17 @@ final class DawnyUITests: XCTestCase {
         element.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
     }
 
+    /// Pollt statt `XCTNSPredicateExpectation` auf `hittable`: Ein Element mit ungültigem
+    /// Frame (z. B. ein Tab-Bar-Button mitten in der Animation) lässt XCTest die
+    /// Hittability-Prüfung des Predicates mit einem Testfehler abbrechen, statt `false`
+    /// zu liefern. Der Frame-Check überspringt solche Zwischenzustände.
     private func waitForHittable(_ element: XCUIElement, timeout: TimeInterval) -> Bool {
-        let predicate = NSPredicate(format: "exists == true AND hittable == true")
-        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: element)
-        return XCTWaiter().wait(for: [expectation], timeout: timeout) == .completed
+        let deadline = Date().addingTimeInterval(timeout)
+        repeat {
+            if element.exists, element.frame.size != .zero, element.isHittable { return true }
+            Thread.sleep(forTimeInterval: 0.1)
+        } while Date() < deadline
+        return false
     }
 
     /// SwiftUI-Listen: `firstMatch` kann ein off-screen Eintrag sein (`exists` ja, `hittable` nein).
@@ -68,7 +75,9 @@ final class DawnyUITests: XCTestCase {
     /// Sucht einen antippbaren Quick-Add-Button und scrollt bei Bedarf in der Backlog-Liste.
     private func tapVisibleQuickAddInBacklog() {
         let prefixes = ["Neue Aufgabe in ", "Add new task in "]
-        for _ in 0..<14 {
+        // Die Task-Tabelle ist unter `--uitesting` leer, der Button ist ohne Scrollen sichtbar.
+        // Die Runden bleiben als Reserve für den Fall, dass doch Inhalt vorhanden ist.
+        for _ in 0..<4 {
             var fallbackCandidate: XCUIElement?
             for prefix in prefixes {
                 let q = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", prefix))
@@ -112,28 +121,24 @@ final class DawnyUITests: XCTestCase {
         app = nil
     }
 
-    // MARK: - Welcome Helper
+    // MARK: - Launch Helper
 
-    private func dismissWelcomeIfShown() {
-        let startById = app.buttons["WelcomeStartButton"]
-        let nextById = app.buttons["WelcomeNextButton"]
-        let settingsById = app.buttons["ToolbarSettingsButton"]
+    /// Wartet, bis die Hauptansicht steht.
+    /// Mit `--uitesting` setzt `UITestSupport` `hasSeenWelcome` vor, der Welcome-Cover
+    /// erscheint also gar nicht mehr. Das Wegtippen bleibt nur als Sicherheitsnetz.
+    private func waitForMainUI() {
+        let settingsButton = app.buttons["ToolbarSettingsButton"]
+        let startButton = app.buttons["WelcomeStartButton"]
+        let nextButton = app.buttons["WelcomeNextButton"]
 
-        let deadline = Date().addingTimeInterval(12)
+        let deadline = Date().addingTimeInterval(15)
         while Date() < deadline {
-            if settingsById.exists { return }
-
-            if startById.exists || startById.waitForExistence(timeout: 0.3) {
-                robustTap(startById, timeout: 2)
-                continue
-            }
-            if nextById.exists || nextById.waitForExistence(timeout: 0.3) {
-                robustTap(nextById, timeout: 1.5)
-                continue
-            }
-
+            if settingsButton.exists { return }
+            if startButton.exists { robustTap(startButton, timeout: 2); continue }
+            if nextButton.exists { robustTap(nextButton, timeout: 2); continue }
             Thread.sleep(forTimeInterval: 0.2)
         }
+        XCTFail("Hauptansicht ist nach dem Start nicht erschienen.")
     }
 
     // MARK: - Navigation
@@ -148,7 +153,7 @@ final class DawnyUITests: XCTestCase {
     }
 
     func testTabNavigation() throws {
-        dismissWelcomeIfShown()
+        waitForMainUI()
 
         let archiveTab = app.buttons["ToolbarArchiveButton"]
         XCTAssertTrue(archiveTab.waitForExistence(timeout: 5))
@@ -167,7 +172,7 @@ final class DawnyUITests: XCTestCase {
     // MARK: - Task Creation
 
     func testCreateTaskInBacklog() throws {
-        dismissWelcomeIfShown()
+        waitForMainUI()
 
         let backlogTab = app.buttons["Backlog"]
         XCTAssertTrue(backlogTab.waitForExistence(timeout: 5))
@@ -178,49 +183,59 @@ final class DawnyUITests: XCTestCase {
 
     /// Standard-Kategorie „Recurring Tasks" (EN) erscheint im Backlog (laut Default-`initializeDefaultCategories`).
     func testRecurringDefaultCategoryVisibleInBacklog() throws {
-        dismissWelcomeIfShown()
+        waitForMainUI()
 
         let backlogTab = tabButton(en: "Backlog", de: "Backlog")
         XCTAssertTrue(backlogTab.waitForExistence(timeout: 5))
         robustTap(backlogTab)
 
-        // Erst nach oben scrollen, danach in mehreren Etappen die Liste durchscrollen.
-        let host = scrollHostForBacklog()
-        for _ in 0..<6 { host.swipeDown() }
-
         // Suche über mehrere Element-Typen, weil SwiftUI-Section-Header je nach Konfiguration
-        // mal als staticText, mal als otherElement im Tree landen.
-        for _ in 0..<20 {
+        // mal als staticText, mal als otherElement im Tree landen. Die Liste startet unter
+        // `--uitesting` leer, deshalb reichen wenige Scroll-Etappen als Reserve.
+        let host = scrollHostForBacklog()
+        for _ in 0..<6 {
             if app.staticTexts["Recurring Tasks"].firstMatch.exists { return }
             if app.otherElements["Recurring Tasks"].firstMatch.exists { return }
             if app.descendants(matching: .any).matching(identifier: "Recurring Tasks").firstMatch.exists { return }
-            scrollHostForBacklog().swipeUp()
+            host.swipeUp()
         }
         XCTFail("Kategorie 'Recurring Tasks' nicht sichtbar")
     }
 
     // MARK: - Settings Flow
 
+    /// Belegt, dass das Settings-Sheet präsentiert ist. Die Make-it-count-Pille liegt
+    /// im ersten Abschnitt des Forms und ist damit ohne Scrollen im Tree.
+    private func settingsSheetIsPresented(timeout: TimeInterval) -> Bool {
+        let marker = app.descendants(matching: .any)
+            .matching(identifier: "SettingsMakeItCountThreshold")
+            .firstMatch
+        if marker.waitForExistence(timeout: timeout) { return true }
+        return app.buttons["SettingsShowWelcomeButton"].exists
+    }
+
+
     func testShowWelcomeFromSettingsHelpButton() throws {
-        dismissWelcomeIfShown()
+        waitForMainUI()
 
         let settingsButton = app.buttons["ToolbarSettingsButton"]
         XCTAssertTrue(settingsButton.waitForExistence(timeout: 5))
         robustTap(settingsButton)
 
-        // Auf Sheet-Präsentation warten, bevor wir nach Inhalten suchen oder scrollen.
-        let sheetMarker = app.descendants(matching: .any)
-            .matching(identifier: "SettingsMakeItCountThreshold")
-            .firstMatch
-        _ = sheetMarker.waitForExistence(timeout: 5)
+        // Präsentation prüfen, bevor gescrollt wird. Ohne Sheet liefen sonst zehn
+        // wirkungslose Drags auf dem Hauptscreen und der Test scheiterte erst danach
+        // mit einer irreführenden Meldung.
+        XCTAssertTrue(settingsSheetIsPresented(timeout: 5), "Settings-Sheet wurde nach dem Tap nicht präsentiert.")
 
         let showWelcomeButton = app.buttons["SettingsShowWelcomeButton"]
         if !showWelcomeButton.waitForExistence(timeout: 2) {
             // Das Settings-`Form` wird von einer UICollectionView getragen, nicht von
-            // einem `scrollView` — ein swipeUp auf `app.scrollViews` scrollt deshalb
-            // nichts. Stattdessen per Koordinaten innerhalb des Sheets nach oben
-            // ziehen (Inhalt hoch scrollen schließt das Sheet nicht).
-            for _ in 0..<10 {
+            // einem `scrollView`, ein swipeUp auf `app.scrollViews` scrollt deshalb nichts.
+            // Stattdessen per Koordinaten im Fenster nach oben ziehen. Bewusst nicht
+            // relativ zum Collection-View: bei präsentiertem Sheet bleiben die drei
+            // Tab-Seiten der ContentView im Baum, und `app.collectionViews.firstMatch`
+            // liefert die Seite bei x = -440, also einen Startpunkt außerhalb des Schirms.
+            for _ in 0..<4 {
                 if showWelcomeButton.exists && showWelcomeButton.isHittable { break }
                 let start = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.8))
                 let end = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.2))

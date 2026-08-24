@@ -1,0 +1,24 @@
+{
+  "configurations": [
+    {
+      "id": "959D29C5-7C46-4DA8-84EC-D09BC0EE4045",
+      "name": "Configuration 1",
+      "options": {}
+    }
+  ],
+  "defaultOptions": {},
+  "testTargets": [
+    {
+      "selectedTests": [
+        "ScreenshotTests/testTakeScreenshotsDE()",
+        "ScreenshotTests/testTakeScreenshotsEN()"
+      ],
+      "target": {
+        "containerPath": "container:Dawny.xcodeproj",
+        "identifier": "D769C0012FAD439D00BFA1D1",
+        "name": "DawnyUITests"
+      }
+    }
+  ],
+  "version": 1
+}
