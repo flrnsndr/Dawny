@@ -250,4 +250,90 @@ final class SyncEngineTests: XCTestCase {
         await syncEngine.syncNow()
         await fulfillment(of: [expectation], timeout: 0.5)
     }
+
+    // MARK: - Sync Toggle Tests
+
+    /// Der Kern des gemeldeten Fehlers: Wer den Sync einschaltet, während schon
+    /// Aufgaben in Heute liegen, hat den Moment verpasst, in dem eine Erinnerung
+    /// entstanden wäre. Das Nachziehen holt genau diese Aufgaben ein.
+    func testBackfillAfterEnablingCreatesRemindersForExistingDailyFocusTasks() async throws {
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let first = TestModelContainer.createTask(in: context, title: "Erste", status: .dailyFocus, backlog: backlog)
+        first.scheduledDate = Date()
+        let second = TestModelContainer.createTask(in: context, title: "Zweite", status: .dailyFocus, backlog: backlog)
+        second.scheduledDate = Date()
+        let backlogTask = TestModelContainer.createTask(in: context, title: "Im Backlog", status: .inBacklog, backlog: backlog)
+
+        await syncEngine.backfillAfterEnabling()
+
+        XCTAssertEqual(calendarService.createCallCount, 2)
+        XCTAssertNotNil(first.externalReminderID)
+        XCTAssertNotNil(second.externalReminderID)
+        XCTAssertNil(backlogTask.externalReminderID)
+    }
+
+    /// Beim Ausschalten steht `calendarSyncEnabled` bereits auf `false`. Das Aufräumen
+    /// muss trotzdem laufen, sonst bleiben verwaiste Erinnerungen zurück, die Dawny
+    /// danach nie wieder anfasst.
+    func testTeardownAfterDisablingRemovesRemindersEvenWhenSyncIsOff() async throws {
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let task = TestModelContainer.createTask(in: context, title: "Test", status: .dailyFocus, backlog: backlog)
+        task.scheduledDate = Date()
+
+        await syncEngine.syncTaskToCalendar(task)
+        XCTAssertEqual(calendarService.reminders.count, 1)
+
+        AppSettings.shared.calendarSyncEnabled = false
+        await syncEngine.teardownAfterDisabling()
+
+        XCTAssertEqual(calendarService.deleteCallCount, 1)
+        XCTAssertTrue(calendarService.reminders.isEmpty)
+        XCTAssertNil(task.externalReminderID)
+    }
+
+    /// Auch eine inzwischen erledigte Aufgabe kann noch eine Erinnerung tragen.
+    /// Das Aufräumen darf sich deshalb nicht auf `.dailyFocus` beschränken.
+    func testTeardownAfterDisablingRemovesRemindersOfCompletedTasks() async throws {
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let task = TestModelContainer.createTask(in: context, title: "Test", status: .dailyFocus, backlog: backlog)
+        task.scheduledDate = Date()
+
+        await syncEngine.syncTaskToCalendar(task)
+        task.complete()
+        XCTAssertNotNil(task.externalReminderID)
+
+        AppSettings.shared.calendarSyncEnabled = false
+        await syncEngine.teardownAfterDisabling()
+
+        XCTAssertTrue(calendarService.reminders.isEmpty)
+        XCTAssertNil(task.externalReminderID)
+    }
+
+    // MARK: - Error Surfacing Tests
+
+    /// Vorher landeten Kalender-Fehler nur in einem `print`, der Nutzer sah nie,
+    /// dass das Anlegen einer Erinnerung fehlgeschlagen ist.
+    func testFailedSyncSurfacesErrorMessage() async throws {
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let task = TestModelContainer.createTask(in: context, title: "Test", status: .dailyFocus, backlog: backlog)
+        task.scheduledDate = Date()
+        calendarService.shouldFailOperations = true
+
+        await syncEngine.syncTaskToCalendar(task)
+
+        XCTAssertNotNil(syncEngine.lastErrorMessage)
+
+        syncEngine.clearError()
+        XCTAssertNil(syncEngine.lastErrorMessage)
+    }
+
+    func testSuccessfulSyncLeavesNoErrorMessage() async throws {
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let task = TestModelContainer.createTask(in: context, title: "Test", status: .dailyFocus, backlog: backlog)
+        task.scheduledDate = Date()
+
+        await syncEngine.syncTaskToCalendar(task)
+
+        XCTAssertNil(syncEngine.lastErrorMessage)
+    }
 }

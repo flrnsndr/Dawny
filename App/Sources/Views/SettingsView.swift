@@ -18,6 +18,7 @@ struct SettingsView: View {
     private static let makeItCountThresholdRange = 1...7
     @Bindable var settings: AppSettings
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.syncEngine) private var syncEngine
     
     let onRequestAddTestItems: (() -> Void)?
     let onRequestDeleteAll: (() -> Void)?
@@ -309,6 +310,20 @@ struct SettingsView: View {
     private var synchronisationSection: some View {
         Section {
             Toggle(String(localized: "settings.sync.toggle", defaultValue: "Calendar Sync"), isOn: $settings.calendarSyncEnabled)
+                // Der Schalter muss den Bestand nachziehen, nicht nur den Wert kippen:
+                // Erinnerungen entstehen sonst nur beim Übergang einer Aufgabe nach Heute.
+                // Wer den Sync einschaltet, während schon Aufgaben in Heute liegen, hat
+                // diesen Moment verpasst und bekäme für sie nie eine Erinnerung.
+                .onChange(of: settings.calendarSyncEnabled) { _, isEnabled in
+                    guard let syncEngine else { return }
+                    _Concurrency.Task {
+                        if isEnabled {
+                            await syncEngine.backfillAfterEnabling()
+                        } else {
+                            await syncEngine.teardownAfterDisabling()
+                        }
+                    }
+                }
         } footer: {
             VStack(alignment: .leading, spacing: 4) {
                 Text(String(localized: "settings.sync.description", defaultValue: "Synchronizes Daily Focus tasks with iOS Reminders."))
