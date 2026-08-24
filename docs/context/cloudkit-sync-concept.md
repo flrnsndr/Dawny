@@ -419,6 +419,28 @@ the planner and is therefore automatically preserved on every device.
 
 Add the convergence unit test (§14.1) to lock this in.
 
+#### 10.1.1 A device that has never reset must not reset on its first launch
+
+Found on real hardware during §14.2 on 2026-08-24, and it is the one place where the
+per-device gate genuinely breaks.
+
+`DawnyLastResetDate` is device-local. A device joining an existing sync has no value for
+it, so the old fallback (1970) made every fresh device consider a reset overdue and run
+one **at join time** — 22:20 in the observed case. That is not a re-application of the
+other device's 3 AM reset, it is an extra unscheduled one: today's `dailyFocus` tasks
+went back to the backlog, completed ones were archived, `resetCount` went up on
+everything, and CloudKit carried that result to the device whose day it had just wiped.
+
+Fix (chosen over syncing the date itself, product decision 2026-08-24): when the key is
+absent, `checkAndPerformResetIfNeeded` writes the current threshold and returns without
+resetting. The next regular reset then runs normally. On a device without sync the store
+is empty at that moment, so nothing is lost either way. `WidgetDataSource.isResetPending`
+benefits from the same write: a fresh device no longer claims a pending reset.
+
+Do **not** "simplify" this back into a `Date(timeIntervalSince1970: 0)` fallback. Locked
+in by `testFirstLaunchWithoutOwnResetDateDoesNotReset` and
+`testFirstLaunchRecordsThresholdSoTheNextResetStillRuns`.
+
 ### 10.2 EventKit / Apple Reminders
 
 `calendarSyncEnabled` stays **device-local** (not in §7's KVS set). Policy: the

@@ -50,11 +50,20 @@ final class ResetEngine {
     /// Prüft ob ein Reset fällig ist und führt ihn ggf. durch
     func checkAndPerformResetIfNeeded() async {
         let currentDate = timeProvider.currentDate
-        let lastResetDate = getLastResetDate()
-        
+
         // Berechne wann der letzte Reset hätte stattfinden sollen
         let shouldHaveResetAt = calculateLastResetThreshold(for: currentDate)
-        
+
+        // Erststart auf diesem Gerät: es gibt keinen eigenen Reset-Stand. Bei aktivem
+        // iCloud-Sync liegen hier aber schon Aufgaben, die ein anderes Gerät heute
+        // eingeplant hat — ein Reset würde die Tagesplanung aller Geräte einkassieren.
+        // Deshalb wird der Zeitpunkt nur festgeschrieben; der nächste reguläre Reset
+        // läuft normal. Ohne Sync ist der Store leer, es gäbe ohnehin nichts zu tun.
+        guard let lastResetDate = storedLastResetDate() else {
+            saveLastResetDate(shouldHaveResetAt)
+            return
+        }
+
         // Wenn der letzte Reset vor dem Threshold liegt, führe Reset durch
         if lastResetDate < shouldHaveResetAt {
             await performReset(referenceDate: currentDate)
@@ -194,13 +203,10 @@ final class ResetEngine {
     
     // MARK: - Private Methods
     
-    /// Holt das Datum des letzten Resets aus UserDefaults (App Group, damit das Widget den Stand sieht)
-    private func getLastResetDate() -> Date {
-        if let lastReset = AppGroup.defaults.object(forKey: userDefaultsKey) as? Date {
-            return lastReset
-        }
-        // Wenn noch nie resettet wurde, verwende ein Datum weit in der Vergangenheit
-        return Date(timeIntervalSince1970: 0)
+    /// Holt das Datum des letzten Resets aus UserDefaults (App Group, damit das Widget den Stand sieht).
+    /// `nil` heißt: auf diesem Gerät lief noch nie ein Reset.
+    private func storedLastResetDate() -> Date? {
+        AppGroup.defaults.object(forKey: userDefaultsKey) as? Date
     }
 
     /// Speichert das Datum des letzten Resets in UserDefaults (App Group)
