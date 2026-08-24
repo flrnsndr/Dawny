@@ -502,7 +502,32 @@ suppressed elsewhere once synced — decision D8.)
 2. User enables toggle on device A → relaunch → store opens with CloudKit → existing
    data uploads. Device B: install/update, enable toggle, relaunch → download + dedup.
 3. CloudKit Console: after the first DEBUG run has created the Development schema,
-   **deploy to Production before the first TestFlight build** (§3).
+   **verify the schema is complete, then deploy to Production before the first TestFlight
+   build** (§3).
+
+   **CloudKit materializes fields lazily — only for values actually uploaded.** An
+   optional attribute that is `nil` across every record never gets a field, and
+   Production does not let clients add fields later: the first record that does carry a
+   value fails to export, permanently, and silently for that record.
+
+   Hit for real on 2026-08-24: `CD_Task` came up with 20 record fields instead of 21.
+   Missing was `CD_notes`, because `Task.notes` is never set from Dawny's UI — it only
+   round-trips from Apple Reminders.
+
+   Pre-deploy check, per record type: **console field count − 6 metadata fields
+   (`createdTimestamp`, `createdUserRecordName`, `___etag`, `modifiedTimestamp`,
+   `modifiedUserRecordName`, `recordName`) must equal the model's stored properties plus
+   `entityName`.** To-many relationships do not count — Core Data stores the reference on
+   the to-one side (`Task.backlog` → `CD_backlog`), so `Backlog.tasks` and
+   `Category.tasks` produce no field of their own.
+
+   Expected: `CD_Backlog` 11, `CD_Category` 18, `CD_Task` **27**. (`Users` is CloudKit's
+   own record type and is not ours.)
+
+   To materialize a missing field, get one real record to carry a value and let it sync —
+   for `CD_notes` that means adding a note to a synced reminder in the Reminders app and
+   letting `SyncEngine` pull it back in. Prefer that over adding the field by hand in the
+   console, so Core Data picks the type and indexes itself.
 4. Release as its own focused release; do not bundle with other feature work.
 5. Website/App-Store copy: no privacy-label change needed (private database; the
    developer has no access to user data). Existing "data stays in your iCloud" copy
