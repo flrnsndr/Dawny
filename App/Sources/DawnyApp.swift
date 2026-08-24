@@ -61,6 +61,9 @@ struct DawnyApp: App {
         resetEngine.syncEngine = syncEngine
 
         #if DEBUG
+        if UITestSupport.isActive {
+            UITestSupport.prepareForLaunch()
+        }
         if ScreenshotSeeder.isActive {
             ScreenshotSeeder.prepareForLaunch()
         }
@@ -99,15 +102,23 @@ struct DawnyApp: App {
         AppSettings.shared.appLaunchCount += 1
 
         // 1. Request Calendar Permissions (falls noch nicht erteilt)
-        do {
-            let granted = try await calendarService.requestAccess()
-            if granted {
-                print("✅ Calendar access granted")
-            } else {
-                print("⚠️ Calendar access denied")
+        // Im UI-Test übersprungen: der Systemdialog blockiert sonst jeden App-Start.
+        #if DEBUG
+        let skipsCalendarAccess = UITestSupport.isActive
+        #else
+        let skipsCalendarAccess = false
+        #endif
+        if !skipsCalendarAccess {
+            do {
+                let granted = try await calendarService.requestAccess()
+                if granted {
+                    print("✅ Calendar access granted")
+                } else {
+                    print("⚠️ Calendar access denied")
+                }
+            } catch {
+                print("❌ Calendar access failed: \(error)")
             }
-        } catch {
-            print("❌ Calendar access failed: \(error)")
         }
         
         // 2. Perform Reset Check (kritisch!)
@@ -135,6 +146,8 @@ struct DawnyApp: App {
         #if DEBUG
         if ScreenshotSeeder.isActive {
             ScreenshotSeeder.seed(into: modelContainer.mainContext)
+        } else if UITestSupport.isActive {
+            UITestSupport.resetTasks(in: modelContainer.mainContext)
         }
         #endif
 
