@@ -58,8 +58,10 @@ final class Category {
     // MARK: - Relationships
 
     /// Alle Tasks in dieser Kategorie
+    // Optional, weil CloudKit ausnahmslos optionale Relationships verlangt.
+    // Siehe Hinweis in `Backlog`.
     @Relationship(deleteRule: .nullify, inverse: \Task.category)
-    var tasks: [Task] = []
+    var tasks: [Task]? = []
     
     // MARK: - Initializer
     
@@ -108,7 +110,7 @@ final class Category {
     /// Filtert bereits als gelöscht markierte Tasks aus der Relationship.
     /// Siehe Hinweis in `Backlog.liveTasks`.
     private var liveTasks: [Task] {
-        tasks.filter { !$0.isDeleted }
+        (tasks ?? []).filter { !$0.isDeleted }
     }
 
     // MARK: - Display

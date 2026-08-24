@@ -112,7 +112,7 @@ final class CloudDeduplicatorTests: XCTestCase {
         let quickCategories = try fetchCategories().filter { $0.categoryType == .quick }
         XCTAssertEqual(quickCategories.count, 1)
         XCTAssertEqual(quickCategories.first?.id, older.id)
-        XCTAssertEqual(quickCategories.first?.tasks.filter { !$0.isDeleted }.count, 2)
+        XCTAssertEqual((quickCategories.first?.tasks ?? []).filter { !$0.isDeleted }.count, 2)
     }
 
     func testCustomizationOfLoserIsPreservedOnUncustomizedWinner() throws {

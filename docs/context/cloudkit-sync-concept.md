@@ -1,14 +1,17 @@
 # Dawny — iCloud Multi-Device Sync Concept (SwiftData + CloudKit)
 
-> **Status: code implemented on branch `feat/icloud-sync`, feature off by default.**
+> **Status: code and Xcode capabilities done on branch `feat/icloud-sync`,
+> feature off by default.**
 > PRs 1–5 of §15 are in the tree (schema defaults, opt-in toggle + container matrix +
 > local fallback, dedup routine + remote-change observer, KVS settings sync, EventKit
-> guard + Settings footers) together with the unit tests of §14.1.
-> **Not yet done:** the Xcode capability steps of §3
-> (iCloud/CloudKit container, Background Mode "Remote notifications", Key-value storage)
-> and the CloudKit schema deployment — these are GUI/portal steps. Until they are done,
-> flipping the toggle makes the container fall back to the local store (§5.4) and the
-> flag resets itself, so the app behaves exactly as before. Read
+> guard + Settings footers) together with the unit tests of §14.1. The capability steps
+> of §3 are applied to the Dawny target (CloudKit container
+> `iCloud.Florian.Dawny.MVP`, key-value storage, push notifications, Background Mode
+> `remote-notification`); the widget target is untouched.
+> **Not yet done:** creating the Development schema by running the app once with the
+> toggle on, deploying that schema to Production (§13.3), and the two-device matrix of
+> §14.2. Until the schema is deployed, TestFlight and App Store builds have no
+> Production schema to sync against. Read
 > `docs/context/architecture.md` first; this document assumes its terminology.
 >
 > Guiding principle (explicit product decision): **robustness beats edge-case completeness.**
@@ -160,17 +163,42 @@ var createdAt: Date = Date()
 var tasks: [Task] = []
 ```
 
-### 4.4 Relationship caveat
+### 4.4 Relationships must be optional — confirmed, applied
 
-Start with non-optional to-many arrays with `= []` as shown. If, at container init with
-the CloudKit configuration, SwiftData throws a validation error demanding optional
-relationships (behavior has varied across OS releases), switch both to `[Task]?` and
-adjust exactly these touch points with `?? []`:
+The optimistic variant (non-optional arrays with `= []`) does **not** work. As soon as the
+iCloud entitlement is present, Core Data validates the schema and refuses to load the
+store:
+
+```
+CloudKit integration requires that all relationships be optional, the following are not:
+Backlog: tasks
+Category: tasks
+```
+
+Both to-many relationships are therefore declared `[Task]? = []`. The touch points, all
+resolved with `?? []`:
 
 - `Backlog.liveTasks`, `Backlog.addTask` (`tasks.append` → `tasks = (tasks ?? []) + [task]`),
-  `Backlog.removeTask`
+  `Backlog.removeTask` (`removeAll` → `filter`)
 - `Category.liveTasks`
 - `CategoryService.delete(_:strategy:)` (the two `category.tasks` snapshots)
+- `CloudDeduplicator` (both `loser.tasks` snapshots)
+- `BacklogView` (two `category.tasks.count` in the delete confirmation)
+- Tests: `PersistenceTests`, `BacklogModelTests`, `CloudDeduplicatorTests`
+
+The `init` parameters stay `[Task]`, so no call site passes an optional.
+
+### 4.4.1 In-memory stores must opt out of CloudKit explicitly
+
+`ModelConfiguration`'s `cloudKitDatabase` defaults to `.automatic`. Without an iCloud
+entitlement that resolved to "no CloudKit"; **with** the entitlement it starts binding
+every store to the container — including `isStoredInMemoryOnly` ones. That broke the whole
+unit-test suite (every `TestModelContainer.create()` failed with
+`loadIssueModelContainer`) even though tests never enable sync.
+
+Every in-memory configuration therefore passes `cloudKitDatabase: .none` explicitly:
+`TestModelContainer`, `IntentDataStore.makeModelContainer(isStoredInMemoryOnly:)`,
+`PreviewSupport`, and the `TaskRowView` preview.
 
 ### 4.5 Store-compat note
 

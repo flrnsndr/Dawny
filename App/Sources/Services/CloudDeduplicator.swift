@@ -77,7 +77,7 @@ enum CloudDeduplicator {
         for loser in losers {
             // Snapshot: das Umhängen mutiert die Inverse-Relationship während der Iteration.
             // Muss vor dem Löschen passieren — `Backlog` löscht seine Tasks kaskadierend.
-            let tasksToMove = loser.tasks.filter { !$0.isDeleted }
+            let tasksToMove = (loser.tasks ?? []).filter { !$0.isDeleted }
             for task in tasksToMove {
                 task.backlog = winner
                 task.parentBacklogID = winner.id
@@ -120,7 +120,7 @@ enum CloudDeduplicator {
 
             for loser in ordered.dropFirst() {
                 // Snapshot wegen Inverse-Relationship-Mutation während der Iteration.
-                let tasksToMove = loser.tasks.filter { !$0.isDeleted }
+                let tasksToMove = (loser.tasks ?? []).filter { !$0.isDeleted }
                 for task in tasksToMove {
                     task.category = winner
                     task.modifiedAt = Date()

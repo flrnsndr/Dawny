@@ -423,7 +423,7 @@ final class CategoryService {
         switch strategy {
         case .deleteTasks:
             // Snapshot, weil wir während der Iteration aus der Relationship löschen.
-            let tasksToDelete = category.tasks
+            let tasksToDelete = category.tasks ?? []
             for task in tasksToDelete {
                 modelContext.delete(task)
             }
@@ -433,7 +433,7 @@ final class CategoryService {
                 throw CategoryEditError.uncategorizedMissing
             }
             // Snapshot wegen Inverse-Relationship-Mutation während der Iteration.
-            let tasksToMove = category.tasks
+            let tasksToMove = category.tasks ?? []
             for task in tasksToMove {
                 task.category = uncategorized
                 task.modifiedAt = Date()

@@ -22,7 +22,8 @@ enum DawnyPreview {
         ])
         let configuration = ModelConfiguration(
             schema: schema,
-            isStoredInMemoryOnly: true
+            isStoredInMemoryOnly: true,
+            cloudKitDatabase: .none
         )
         let container = try! ModelContainer(for: schema, configurations: [configuration])
         let calendarService = PreviewCalendarService()

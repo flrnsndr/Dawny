@@ -24,9 +24,13 @@ enum TestModelContainer {
             Category.self
         ])
         
+        // `.none` ist Pflicht: der Default `.automatic` koppelt seit dem
+        // iCloud-Entitlement auch In-Memory-Stores an CloudKit, was das
+        // Laden des Containers scheitern lässt.
         let configuration = ModelConfiguration(
             schema: schema,
-            isStoredInMemoryOnly: true
+            isStoredInMemoryOnly: true,
+            cloudKitDatabase: .none
         )
         
         return try ModelContainer(

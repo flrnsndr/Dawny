@@ -634,7 +634,7 @@ private struct CategoryDeleteConfirmation: ViewModifier {
             titleVisibility: .visible,
             presenting: pendingCategory
         ) { category in
-            let count = category.tasks.count
+            let count = (category.tasks ?? []).count
             if count > 0 {
                 Button(
                     String(
@@ -673,7 +673,7 @@ private struct CategoryDeleteConfirmation: ViewModifier {
                 pendingCategory = nil
             }
         } message: { category in
-            let count = category.tasks.count
+            let count = (category.tasks ?? []).count
             if count > 0 {
                 let format = String(
                     localized: "category.delete.message",

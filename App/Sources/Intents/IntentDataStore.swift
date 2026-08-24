@@ -43,7 +43,13 @@ enum IntentDataStore {
         let schema = Schema([Task.self, Backlog.self, Category.self])
 
         if isStoredInMemoryOnly {
-            let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
+            // `.none` ist Pflicht: der Default `.automatic` würde seit dem
+            // iCloud-Entitlement auch In-Memory-Stores an CloudKit koppeln.
+            let config = ModelConfiguration(
+                schema: schema,
+                isStoredInMemoryOnly: true,
+                cloudKitDatabase: .none
+            )
             return try ModelContainer(for: schema, configurations: [config])
         }
 
