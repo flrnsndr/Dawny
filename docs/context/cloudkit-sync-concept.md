@@ -8,10 +8,12 @@
 > of §3 are applied to the Dawny target (CloudKit container
 > `iCloud.Florian.Dawny.MVP`, key-value storage, push notifications, Background Mode
 > `remote-notification`); the widget target is untouched.
-> **Not yet done:** creating the Development schema by running the app once with the
-> toggle on, deploying that schema to Production (§13.3), and the two-device matrix of
-> §14.2. Until the schema is deployed, TestFlight and App Store builds have no
-> Production schema to sync against. Read
+> The toggle is **opt-out**: sync is on by default (D2), so the Production schema
+> deployment is a **release blocker**, not a nice-to-have.
+> **Not yet done:** creating the Development schema by running the app once, deploying
+> that schema to Production (§13.3), and the two-device matrix of §14.2. Until the schema
+> is deployed, TestFlight and App Store builds have no Production schema to sync against —
+> and with sync on by default that would hit every user, not just opt-ins. Read
 > `docs/context/architecture.md` first; this document assumes its terminology.
 >
 > Guiding principle (explicit product decision): **robustness beats edge-case completeness.**
@@ -54,7 +56,7 @@ using SwiftData's built-in CloudKit integration.
 | # | Decision | Rationale |
 |---|----------|-----------|
 | D1 | CloudKit **private database** via SwiftData (`ModelConfiguration(cloudKitDatabase:)`), no custom backend | No accounts, no server cost, matches the public "your data stays in your own iCloud" positioning |
-| D2 | **Opt-in** toggle, default off, device-local | Existing users are never affected until they act; de-risks rollout |
+| D2 | **Opt-out** toggle, default **on**, device-local | Product decision (2026-08-24): sync should just work without the user hunting for a switch. Cost: existing users are migrated to CloudKit on the update, so the Production schema must be deployed first (§13) |
 | D3 | Reset stays **per-device**; correctness comes from **convergence, not coordination** | A synced "who resets" lock is fragile under offline/latency; a deterministic reset function applied twice converges under CloudKit's field-level last-writer-wins |
 | D4 | Reset **parameters** are synced (`resetHour`, `makeItCountThreshold`) via `NSUbiquitousKeyValueStore` | Convergence only holds if all devices compute with the same inputs |
 | D5 | Seeding stays as-is; a **dedup routine** repairs duplicates after remote imports | Simpler and more robust than making seeding sync-aware; the dedup pass doubles as a general repair mechanism |
@@ -214,10 +216,19 @@ and [`DawnyApp.swift`](../../App/Sources/DawnyApp.swift).
 
 ### 5.1 New setting
 
-`AppSettings.iCloudSyncEnabled: Bool` (default `false`), persisted in `AppGroup.defaults`
-under key `DawnyICloudSyncEnabled`, **device-local by design** (each device opts in
-itself; do NOT put this key into the KVS sync set). Add the key to `Keys.allKeys` so the
+`AppSettings.iCloudSyncEnabled: Bool` (default **`true`**), persisted in
+`AppGroup.defaults` under key `DawnyICloudSyncEnabled`, **device-local by design** (each
+device decides for itself; do NOT put this key into the KVS sync set). Read via
+`object(forKey:) as? Bool ?? true` — `bool(forKey:)` would return `false` for the absent
+key and silently turn the default off. The key is in `Keys.allKeys` so the
 `AppGroupMigrator` carries it.
+
+**Test isolation is mandatory with an on-by-default flag.** `CloudKitConfig.isDisabledForTesting`
+forces both the CloudKit container and the KVS off whenever the process is a test run —
+detected via `XCTestConfigurationFilePath` (unit tests share the app process) or the
+`--uitesting` launch argument that both UI test suites already pass. Without this, the
+suites would bind real stores and push seeded data and churned settings into the
+developer's own iCloud.
 
 ### 5.2 Configuration matrix
 

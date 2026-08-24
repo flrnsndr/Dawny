@@ -68,7 +68,7 @@ final class AppSettings {
         }
     }
     
-    /// iCloud-Sync über CloudKit aktiviert (Opt-in, Standard: aus).
+    /// iCloud-Sync über CloudKit aktiviert (Opt-out, Standard: an).
     /// Bewusst gerätelokal: jedes Gerät entscheidet selbst, ob es syncen soll.
     /// Wird erst beim nächsten App-Start wirksam, weil der `ModelContainer`
     /// einmalig in `DawnyApp.init()` gebaut wird.
@@ -173,7 +173,9 @@ final class AppSettings {
         // Lade Werte aus UserDefaults oder verwende Defaults
         self.resetHour = AppGroup.defaults.object(forKey: Keys.resetHour) as? Int ?? 3
         self.calendarSyncEnabled = AppGroup.defaults.object(forKey: Keys.calendarSyncEnabled) as? Bool ?? true
-        self.iCloudSyncEnabled = AppGroup.defaults.bool(forKey: Keys.iCloudSyncEnabled)
+        // Opt-out: standardmäßig an. `bool(forKey:)` liefert bei fehlendem Key
+        // `false`, deshalb hier explizit über `object(forKey:)`.
+        self.iCloudSyncEnabled = AppGroup.defaults.object(forKey: Keys.iCloudSyncEnabled) as? Bool ?? true
         self.showCompletedTasksInToday = AppGroup.defaults.object(forKey: Keys.showCompletedTasksInToday) as? Bool ?? true
         self.showCategories = AppGroup.defaults.object(forKey: Keys.showCategories) as? Bool ?? true
         self.hasSeenWelcome = AppGroup.defaults.bool(forKey: Keys.hasSeenWelcome)
@@ -207,7 +209,7 @@ final class AppSettings {
 
     private var cloudStore: UbiquitousKeyValueStoring? {
         if let injectedCloudStore { return injectedCloudStore }
-        guard iCloudSyncEnabled else { return nil }
+        guard iCloudSyncEnabled, !CloudKitConfig.isDisabledForTesting else { return nil }
         return NSUbiquitousKeyValueStore.default
     }
 

@@ -20,4 +20,18 @@ import Foundation
 enum CloudKitConfig {
     /// Muss exakt dem Container in Signing & Capabilities entsprechen.
     static let containerID = "iCloud.Florian.Dawny.MVP"
+
+    /// True in Testläufen. Dort darf weder der CloudKit-Container noch der
+    /// iCloud-Key-Value-Store angefasst werden: Tests verstellen Einstellungen
+    /// reihenweise und seeden Daten, das würde sonst in die echte iCloud des
+    /// Entwicklers wandern und auf dessen Geräte synchronisieren.
+    ///
+    /// Unit-Tests laufen im selben Prozess wie die App und sind an der
+    /// XCTest-Umgebungsvariable erkennbar. UI-Tests starten die App als eigenen
+    /// Prozess ohne diese Variable — sie setzen bereits `--uitesting`.
+    static let isDisabledForTesting: Bool = {
+        let info = ProcessInfo.processInfo
+        return info.environment["XCTestConfigurationFilePath"] != nil
+            || info.arguments.contains("--uitesting")
+    }()
 }

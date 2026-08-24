@@ -32,6 +32,7 @@ final class AppSettingsTests: XCTestCase {
         AppGroup.defaults.removeObject(forKey: "DawnyResetHour")
         AppGroup.defaults.removeObject(forKey: "DawnyCalendarSyncEnabled")
         AppGroup.defaults.removeObject(forKey: "DawnyShowCompletedTasksInToday")
+        AppGroup.defaults.removeObject(forKey: AppSettings.Keys.iCloudSyncEnabled)
         settings = nil
     }
     
@@ -43,6 +44,22 @@ final class AppSettingsTests: XCTestCase {
         XCTAssertEqual(newSettings.resetHour, 3, "Standard Reset-Zeit sollte 3 Uhr sein")
         XCTAssertTrue(newSettings.calendarSyncEnabled, "Kalender-Sync sollte standardmäßig aktiviert sein")
         XCTAssertTrue(newSettings.showCompletedTasksInToday, "Erledigte Tasks sollten standardmäßig angezeigt werden")
+    }
+
+    /// iCloud-Sync ist bewusst Opt-out. `bool(forKey:)` würde bei fehlendem Key
+    /// `false` liefern — der Default muss deshalb explizit abgesichert sein.
+    func testICloudSyncIsEnabledByDefault() {
+        AppGroup.defaults.removeObject(forKey: AppSettings.Keys.iCloudSyncEnabled)
+
+        XCTAssertTrue(AppSettings().iCloudSyncEnabled, "iCloud-Sync sollte standardmäßig aktiviert sein")
+    }
+
+    /// Ein einmal gesetztes Opt-out muss den Neustart überleben.
+    func testICloudSyncOptOutIsPersisted() {
+        AppGroup.defaults.set(false, forKey: AppSettings.Keys.iCloudSyncEnabled)
+        defer { AppGroup.defaults.removeObject(forKey: AppSettings.Keys.iCloudSyncEnabled) }
+
+        XCTAssertFalse(AppSettings().iCloudSyncEnabled, "Ein abgeschaltetes Opt-out darf nicht zurückspringen")
     }
     
     func testLoadsFromUserDefaults() {

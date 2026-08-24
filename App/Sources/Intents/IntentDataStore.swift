@@ -117,7 +117,9 @@ enum IntentDataStore {
     /// CloudKit-Sync läuft ausschließlich im App-Prozess: die Widget-Extension
     /// liest denselben Store lokal weiter (siehe `CloudKitConfig`).
     private static var shouldUseCloudKit: Bool {
-        !AppGroup.isRunningInAppExtension && AppSettings.shared.iCloudSyncEnabled
+        !AppGroup.isRunningInAppExtension
+            && !CloudKitConfig.isDisabledForTesting
+            && AppSettings.shared.iCloudSyncEnabled
     }
 
     static func makeContext(isStoredInMemoryOnly: Bool = false) throws -> ModelContext {
