@@ -66,4 +66,6 @@ private final class PreviewCalendarService: CalendarServiceProtocol {
     func fetchReminders(from startDate: Date, to endDate: Date) async throws -> [CalendarReminder] {
         []
     }
+
+    func stableIdentifier(forStoredID id: String) async throws -> String? { nil }
 }

@@ -55,7 +55,7 @@ final class EventKitCalendarService: CalendarServiceProtocol {
         
         do {
             try eventStore.save(reminder, commit: true)
-            return reminder.calendarItemIdentifier
+            return stableIdentifier(for: reminder)
         } catch {
             throw CalendarServiceError.saveFailed(underlying: error)
         }
@@ -121,6 +121,14 @@ final class EventKitCalendarService: CalendarServiceProtocol {
         return convertToCalendarReminder(ekReminder)
     }
     
+    func stableIdentifier(forStoredID id: String) async throws -> String? {
+        guard let reminder = try await fetchEKReminder(id: id) else {
+            return nil
+        }
+
+        return stableIdentifier(for: reminder)
+    }
+
     func fetchReminders(from startDate: Date, to endDate: Date) async throws -> [CalendarReminder] {
         let predicate = eventStore.predicateForReminders(in: nil)
         
@@ -147,19 +155,62 @@ final class EventKitCalendarService: CalendarServiceProtocol {
     
     // MARK: - Helper Methods
     
-    /// Holt einen EKReminder anhand seiner ID
+    /// Holt einen EKReminder anhand seiner ID.
+    ///
+    /// Erst über die geräteübergreifende `calendarItemExternalIdentifier`, dann über die
+    /// gerätelokale `calendarItemIdentifier`. Der zweite Weg deckt Verknüpfungen ab, die
+    /// vor der Umstellung gespeichert wurden und noch nicht migriert sind.
     private func fetchEKReminder(id: String) async throws -> EKReminder? {
-        guard let calendarItem = eventStore.calendarItem(withIdentifier: id) else {
-            return nil
+        let externalMatches = eventStore
+            .calendarItems(withExternalIdentifier: id)
+            .compactMap { $0 as? EKReminder }
+
+        if let reminder = preferredReminder(from: externalMatches) {
+            return reminder
         }
-        
-        return calendarItem as? EKReminder
+
+        return eventStore.calendarItem(withIdentifier: id) as? EKReminder
     }
-    
+
+    /// Die geräteübergreifend stabile ID einer Erinnerung.
+    ///
+    /// `calendarItemExternalIdentifier` ist bei iCloud-Erinnerungen auf allen Geräten
+    /// dieselbe und fällt bei lokalen Listen laut EventKit-Doku auf die lokale ID zurück.
+    /// Für Exchange-Erinnerungen unterscheidet sie sich zwischen Geräten — dort bleibt es
+    /// beim bisherigen Verhalten, ein besserer Anker existiert nicht.
+    private func stableIdentifier(for reminder: EKReminder) -> String {
+        guard let externalID = reminder.calendarItemExternalIdentifier, !externalID.isEmpty else {
+            return reminder.calendarItemIdentifier
+        }
+
+        return externalID
+    }
+
+    /// Wählt deterministisch eine Erinnerung aus, wenn eine externe ID auf mehrere zeigt.
+    ///
+    /// Das passiert unter anderem bei Wiederholungen und bei mehrfach importierten Listen.
+    /// Offene vor erledigten Einträgen, dann das frühere Fälligkeitsdatum, zuletzt die
+    /// lokale ID — damit landet jeder Aufruf auf demselben Eintrag.
+    private func preferredReminder(from candidates: [EKReminder]) -> EKReminder? {
+        candidates.min { lhs, rhs in
+            if lhs.isCompleted != rhs.isCompleted {
+                return !lhs.isCompleted
+            }
+
+            let lhsDue = lhs.dueDateComponents?.date ?? .distantFuture
+            let rhsDue = rhs.dueDateComponents?.date ?? .distantFuture
+            if lhsDue != rhsDue {
+                return lhsDue < rhsDue
+            }
+
+            return lhs.calendarItemIdentifier < rhs.calendarItemIdentifier
+        }
+    }
+
     /// Konvertiert einen EKReminder zu CalendarReminder
     private func convertToCalendarReminder(_ reminder: EKReminder) -> CalendarReminder {
         CalendarReminder(
-            id: reminder.calendarItemIdentifier,
+            id: stableIdentifier(for: reminder),
             title: reminder.title ?? "",
             notes: reminder.notes,
             isCompleted: reminder.isCompleted,

@@ -29,11 +29,16 @@ final class SyncEngineTests: XCTestCase {
         
         // Setze Kalender-Sync auf aktiviert für Tests
         AppSettings.shared.calendarSyncEnabled = true
+
+        // Das Migrations-Flag liegt in den geteilten UserDefaults und überlebt sonst
+        // den einzelnen Test — jeder Test startet mit einer nicht gelaufenen Migration.
+        AppGroup.defaults.removeObject(forKey: SyncEngine.reminderIdentifierMigrationKey)
     }
     
     override func tearDown() async throws {
         // Bereinige Settings nach jedem Test
         AppSettings.shared.calendarSyncEnabled = true
+        AppGroup.defaults.removeObject(forKey: SyncEngine.reminderIdentifierMigrationKey)
     }
     
     // MARK: - Create Reminder Tests
@@ -335,5 +340,129 @@ final class SyncEngineTests: XCTestCase {
         await syncEngine.syncTaskToCalendar(task)
 
         XCTAssertNil(syncEngine.lastErrorMessage)
+    }
+
+    // MARK: - Reminder-Identifier-Migration
+
+    /// Kern der Umstellung: Eine Verknüpfung aus der Zeit der gerätelokalen ID wird
+    /// auf die geräteübergreifend stabile ID gehoben.
+    func testMigrationRewritesLegacyIdentifierToStableID() async throws {
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let task = TestModelContainer.createTask(in: context, title: "Test", status: .dailyFocus, backlog: backlog)
+        task.scheduledDate = Date()
+
+        let stableID = try await calendarService.createReminder(title: "Test", notes: nil, dueDate: Date())
+        calendarService.registerLegacyIdentifier("local-only-id", for: stableID)
+        task.externalReminderID = "local-only-id"
+
+        await syncEngine.migrateReminderIdentifiersIfNeeded()
+
+        XCTAssertEqual(task.externalReminderID, stableID)
+    }
+
+    /// Eine ID, die dieses Gerät nicht auflösen kann, gehört einem anderen Gerät oder
+    /// einer gelöschten Erinnerung. Die Migration lässt sie in Ruhe — das verknüpfende
+    /// Gerät schreibt sie selbst um, gelöschte räumt der reguläre Sync ab.
+    func testMigrationKeepsUnresolvableLinkUntouched() async throws {
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let task = TestModelContainer.createTask(in: context, title: "Test", status: .dailyFocus, backlog: backlog)
+        task.externalReminderID = "id-vom-anderen-geraet"
+
+        await syncEngine.migrateReminderIdentifiersIfNeeded()
+
+        XCTAssertEqual(task.externalReminderID, "id-vom-anderen-geraet")
+    }
+
+    /// Das Flag liegt in den geteilten UserDefaults: Nach einem erfolgreichen Durchlauf
+    /// fasst die Migration nichts mehr an.
+    func testMigrationRunsOnlyOnce() async throws {
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let task = TestModelContainer.createTask(in: context, title: "Test", status: .dailyFocus, backlog: backlog)
+
+        await syncEngine.migrateReminderIdentifiersIfNeeded()
+        XCTAssertTrue(AppGroup.defaults.bool(forKey: SyncEngine.reminderIdentifierMigrationKey))
+
+        let stableID = try await calendarService.createReminder(title: "Test", notes: nil, dueDate: Date())
+        calendarService.registerLegacyIdentifier("local-only-id", for: stableID)
+        task.externalReminderID = "local-only-id"
+        calendarService.stableIdentifierCallCount = 0
+
+        await syncEngine.migrateReminderIdentifiersIfNeeded()
+
+        XCTAssertEqual(calendarService.stableIdentifierCallCount, 0)
+        XCTAssertEqual(task.externalReminderID, "local-only-id")
+    }
+
+    /// Scheitert der Zugriff auf EventKit — etwa ohne erteilte Berechtigung —, darf das
+    /// Flag nicht gesetzt werden, sonst bleibt die Verknüpfung für immer gerätelokal.
+    func testMigrationRetriesAfterFailure() async throws {
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let task = TestModelContainer.createTask(in: context, title: "Test", status: .dailyFocus, backlog: backlog)
+
+        let stableID = try await calendarService.createReminder(title: "Test", notes: nil, dueDate: Date())
+        calendarService.registerLegacyIdentifier("local-only-id", for: stableID)
+        task.externalReminderID = "local-only-id"
+
+        calendarService.shouldFailOperations = true
+        await syncEngine.migrateReminderIdentifiersIfNeeded()
+
+        XCTAssertFalse(AppGroup.defaults.bool(forKey: SyncEngine.reminderIdentifierMigrationKey))
+        XCTAssertEqual(task.externalReminderID, "local-only-id")
+
+        calendarService.shouldFailOperations = false
+        await syncEngine.migrateReminderIdentifiersIfNeeded()
+
+        XCTAssertEqual(task.externalReminderID, stableID)
+    }
+
+    /// Bis die Migration läuft, muss der normale Sync mit der Alt-ID weiterarbeiten:
+    /// EventKit löst die gerätelokale ID auf dem verknüpfenden Gerät weiterhin auf.
+    func testSyncStillResolvesLegacyIdentifier() async throws {
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let task = TestModelContainer.createTask(in: context, title: "Neuer Titel", status: .dailyFocus, backlog: backlog)
+        task.scheduledDate = Date()
+
+        let stableID = try await calendarService.createReminder(title: "Alter Titel", notes: nil, dueDate: Date())
+        calendarService.registerLegacyIdentifier("local-only-id", for: stableID)
+        task.externalReminderID = "local-only-id"
+        calendarService.createCallCount = 0
+
+        await syncEngine.syncTaskToCalendar(task)
+
+        XCTAssertEqual(calendarService.createCallCount, 0, "Keine zweite Erinnerung für dieselbe Aufgabe")
+        XCTAssertEqual(calendarService.updateCallCount, 1)
+        XCTAssertEqual(calendarService.reminders[stableID]?.title, "Neuer Titel")
+    }
+
+    /// Der eigentliche Fehler: Vor der Umstellung fand ein Zweitgerät zur mitgesyncten
+    /// ID keine Erinnerung und legte eine zweite an. Mit der stabilen ID greift es auf
+    /// dieselbe zu. Das zweite Gerät wird durch einen eigenen Context bei geteiltem
+    /// Kalender abgebildet — genau so sieht iCloud für beide Geräte aus.
+    func testSecondDeviceUpdatesTheSameReminderInsteadOfCreatingADuplicate() async throws {
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let task = TestModelContainer.createTask(in: context, title: "Test", status: .dailyFocus, backlog: backlog)
+        task.scheduledDate = Date()
+
+        await syncEngine.syncTaskToCalendar(task)
+        let stableID = try XCTUnwrap(task.externalReminderID)
+
+        // Gerät B: eigener Store, dieselbe Aufgabe samt mitgesyncter Verknüpfung.
+        let secondContainer = try TestModelContainer.create()
+        let secondContext = secondContainer.mainContext
+        let secondEngine = SyncEngine(calendarService: calendarService, modelContext: secondContext)
+        let secondBacklog = TestModelContainer.createBacklog(in: secondContext)
+        let secondTask = TestModelContainer.createTask(in: secondContext, title: "Test", status: .dailyFocus, backlog: secondBacklog)
+        secondTask.scheduledDate = Date()
+        secondTask.externalReminderID = stableID
+
+        calendarService.createCallCount = 0
+        await secondEngine.syncTaskToCalendar(secondTask)
+
+        XCTAssertEqual(calendarService.createCallCount, 0)
+        XCTAssertEqual(calendarService.reminders.count, 1, "Beide Geräte zeigen auf dieselbe Erinnerung")
+
+        // Abhaken auf Gerät B trifft die Erinnerung, die Gerät A angelegt hat.
+        await secondEngine.removeTaskFromCalendar(secondTask)
+        XCTAssertTrue(calendarService.reminders.isEmpty)
     }
 }
