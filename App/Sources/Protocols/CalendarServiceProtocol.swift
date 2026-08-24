@@ -50,4 +50,12 @@ protocol CalendarServiceProtocol {
     
     /// Holt alle Reminders für einen bestimmten Zeitraum
     func fetchReminders(from startDate: Date, to endDate: Date) async throws -> [CalendarReminder]
+
+    /// Löst eine gespeicherte Reminder-ID in die geräteübergreifend stabile ID auf.
+    ///
+    /// Gebraucht für die einmalige Migration bestehender Verknüpfungen: Dawny hat
+    /// früher die gerätelokale `calendarItemIdentifier` gespeichert, die auf einem
+    /// Zweitgerät ins Leere zeigt. Gibt `nil` zurück, wenn die Erinnerung auf diesem
+    /// Gerät nicht (mehr) auflösbar ist.
+    func stableIdentifier(forStoredID id: String) async throws -> String?
 }

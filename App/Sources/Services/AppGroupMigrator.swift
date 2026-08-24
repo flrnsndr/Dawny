@@ -78,6 +78,7 @@ enum AppGroupMigrator {
         var keys = AppSettings.Keys.allKeys
         keys.append("DawnyLastResetDate")
         keys.append(contentsOf: CategoryService.migrationFlagKeys)
+        keys.append(SyncEngine.reminderIdentifierMigrationKey)
 
         for key in keys where destination.object(forKey: key) == nil {
             if let value = source.object(forKey: key) {

@@ -30,6 +30,10 @@ final class SyncEngine {
     @ObservationIgnored private var lastSyncDate = Date()
     private let debounceInterval: TimeInterval = 1.0
 
+    /// Einmaliges Flag der Identifier-Migration. Nicht `private`: der `AppGroupMigrator`
+    /// übernimmt es in die geteilte Suite, damit die Migration nicht erneut läuft.
+    static let reminderIdentifierMigrationKey = "DawnyMigratedReminderExternalIDsV1"
+
     /// Letzter Fehler aus einer schreibenden Kalender-Operation, für die Fehleranzeige.
     ///
     /// Vorher landeten EventKit-Fehler ausschließlich in einem `print`. Scheiterte das
@@ -59,7 +63,11 @@ final class SyncEngine {
                 await handleCalendarChanged()
             }
         }
-        
+
+        // Bestehende Verknüpfungen auf die geräteübergreifende ID heben, bevor der
+        // erste Sync auf ihnen arbeitet.
+        await migrateReminderIdentifiersIfNeeded()
+
         // Initiale Sync
         await syncFromCalendar()
     }
@@ -171,10 +179,9 @@ final class SyncEngine {
     
     /// Entfernt einen Task aus dem Kalender.
     ///
-    /// Der `calendarSyncEnabled`-Guard ist bei aktivem iCloud-Sync wichtig:
-    /// `externalReminderID` hält die gerätelokale `calendarItemIdentifier` und synct
-    /// trotzdem mit. Ohne den Guard würde ein Zweitgerät, das die Erinnerung gar nicht
-    /// kennt, beim Reset die Verknüpfung lösen — und dieses Lösen zurück zum Erstgerät
+    /// Der `calendarSyncEnabled`-Guard ist bei aktivem iCloud-Sync wichtig: Ein Gerät
+    /// ohne Reminders-Integration kennt die Erinnerung nicht und würde beim Reset die
+    /// mitgesyncte Verknüpfung lösen — und dieses Lösen zurück zum verknüpfenden Gerät
     /// syncen, dessen echte Erinnerung damit verwaist.
     func removeTaskFromCalendar(_ task: Task) async {
         guard AppSettings.shared.calendarSyncEnabled else {
@@ -387,6 +394,63 @@ final class SyncEngine {
             print("❌ Failed to fetch linked tasks: \(error)")
             return []
         }
+    }
+
+    // MARK: - Migration
+
+    /// Hebt bestehende Verknüpfungen einmalig von der gerätelokalen
+    /// `calendarItemIdentifier` auf die geräteübergreifende `calendarItemExternalIdentifier`.
+    ///
+    /// Vor der Umstellung stand in `externalReminderID` eine ID, die nur auf dem
+    /// verknüpfenden Gerät auflösbar war. Bei aktivem iCloud-Sync sah ein Zweitgerät
+    /// deshalb eine Verknüpfung, zu der es keine Erinnerung finden konnte, und legte beim
+    /// Sync eine zweite an. Nach der Migration zeigen beide Geräte auf denselben Eintrag.
+    ///
+    /// Läuft bewusst ohne `calendarSyncEnabled`-Guard: Der Schritt liest nur aus EventKit
+    /// und ist bei ausgeschaltetem Sync ohnehin ein Leerlauf, weil dann keine
+    /// Verknüpfungen mehr existieren.
+    func migrateReminderIdentifiersIfNeeded() async {
+        guard !AppGroup.defaults.bool(forKey: Self.reminderIdentifierMigrationKey) else { return }
+
+        var didRewrite = false
+
+        for task in fetchTasksLinkedToCalendar() {
+            guard let storedID = task.externalReminderID else { continue }
+
+            do {
+                guard let stableID = try await calendarService.stableIdentifier(forStoredID: storedID) else {
+                    // Hier nicht auflösbar: entweder im Kalender gelöscht oder von einem
+                    // anderen Gerät verknüpft. Beides fasst die Migration nicht an — der
+                    // reguläre Sync räumt gelöschte Erinnerungen auf, und eine fremde
+                    // Verknüpfung schreibt das verknüpfende Gerät selbst um.
+                    continue
+                }
+
+                guard stableID != storedID else { continue }
+
+                // Direkt gesetzt statt über `linkToCalendar`: Ein neues `modifiedAt` würde
+                // die Aufgabe im Last-Write-Wins-Vergleich künstlich gewinnen lassen,
+                // obwohl sich inhaltlich nichts geändert hat.
+                task.externalReminderID = stableID
+                didRewrite = true
+                print("🔁 Migrated reminder link to external identifier: \(task.title)")
+            } catch {
+                // Flag nicht setzen — der nächste Start versucht es erneut.
+                print("❌ Failed to migrate reminder identifier: \(error)")
+                return
+            }
+        }
+
+        if didRewrite {
+            do {
+                try modelContext.save()
+            } catch {
+                print("❌ Failed to save migrated reminder identifiers: \(error)")
+                return
+            }
+        }
+
+        AppGroup.defaults.set(true, forKey: Self.reminderIdentifierMigrationKey)
     }
 
     /// Übersetzt einen Kalender-Fehler in eine Meldung für das Fehler-Banner.
