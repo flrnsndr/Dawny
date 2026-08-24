@@ -10,22 +10,34 @@
 //
 
 import Foundation
+import Observation
 import SwiftData
 import EventKit
 import Combine
 
 /// SyncEngine - Verantwortlich für Kalender-Synchronisation
 @MainActor
+@Observable
 final class SyncEngine {
     // MARK: - Properties
     
     private let calendarService: CalendarServiceProtocol
     private let modelContext: ModelContext
-    private var observerTask: _Concurrency.Task<Void, Never>?
-    private var syncInProgress = false
-    private var lastSyncDate = Date()
+    // Interne Sync-Mechanik, keine UI-State: `@ObservationIgnored` hält sie aus der
+    // Beobachtung heraus und lässt `deinit` weiterhin auf `observerTask` zugreifen.
+    @ObservationIgnored private var observerTask: _Concurrency.Task<Void, Never>?
+    @ObservationIgnored private var syncInProgress = false
+    @ObservationIgnored private var lastSyncDate = Date()
     private let debounceInterval: TimeInterval = 1.0
-    
+
+    /// Letzter Fehler aus einer schreibenden Kalender-Operation, für die Fehleranzeige.
+    ///
+    /// Vorher landeten EventKit-Fehler ausschließlich in einem `print`. Scheiterte das
+    /// Anlegen einer Erinnerung — etwa weil in der Erinnerungen-App keine Standardliste
+    /// eingerichtet ist — sah der Nutzer weiterhin einen aktiven Schalter und nie eine
+    /// Erinnerung, ohne jeden Hinweis darauf, dass etwas schiefgelaufen ist.
+    private(set) var lastErrorMessage: String?
+
     // MARK: - Initializer
     
     init(calendarService: CalendarServiceProtocol, modelContext: ModelContext) {
@@ -57,7 +69,54 @@ final class SyncEngine {
         observerTask?.cancel()
         observerTask = nil
     }
-    
+
+    /// Verwirft die aktuelle Fehlermeldung (Tap auf das X im Banner).
+    func clearError() {
+        lastErrorMessage = nil
+    }
+
+    /// Zieht die Erinnerungen nach, nachdem der Nutzer den Sync eingeschaltet hat.
+    ///
+    /// Ohne diesen Nachlauf bleiben Aufgaben, die schon vor dem Einschalten in Heute
+    /// lagen, dauerhaft ohne Erinnerung: Eine Erinnerung entsteht sonst nur im Moment
+    /// des Übergangs nach Heute, und genau den hat der Nutzer dann verpasst.
+    func backfillAfterEnabling() async {
+        await syncAllDailyFocusTasks()
+    }
+
+    /// Entfernt alle von Dawny angelegten Erinnerungen, nachdem der Nutzer den Sync
+    /// ausgeschaltet hat.
+    ///
+    /// Läuft absichtlich ohne den `calendarSyncEnabled`-Guard: Beim Aufruf steht die
+    /// Einstellung bereits auf `false`, der Guard würde also genau das Aufräumen
+    /// verhindern, für das diese Methode da ist. Betroffen sind nur Aufgaben mit
+    /// `externalReminderID`, also ausschließlich Erinnerungen, die Dawny selbst
+    /// angelegt hat.
+    func teardownAfterDisabling() async {
+        let linkedTasks = fetchTasksLinkedToCalendar()
+        guard !linkedTasks.isEmpty else { return }
+
+        for task in linkedTasks {
+            guard let reminderID = task.externalReminderID else { continue }
+
+            do {
+                try await calendarService.deleteReminder(id: reminderID)
+                task.unlinkFromCalendar()
+                print("✅ Removed reminder from calendar: \(task.title)")
+            } catch {
+                print("❌ Failed to remove reminder from calendar: \(error)")
+                setError(from: error)
+            }
+        }
+
+        do {
+            try modelContext.save()
+        } catch {
+            print("❌ Failed to save teardown changes: \(error)")
+            setError(from: error)
+        }
+    }
+
     /// Synchronisiert einen Task zum Kalender (App → Calendar)
     func syncTaskToCalendar(_ task: Task) async {
         // Prüfe ob Kalender-Sync aktiviert ist
@@ -97,6 +156,7 @@ final class SyncEngine {
             }
         } catch {
             print("❌ Failed to sync task to calendar: \(error)")
+            setError(from: error)
         }
     }
     
@@ -132,9 +192,10 @@ final class SyncEngine {
             print("✅ Removed reminder from calendar: \(task.title)")
         } catch {
             print("❌ Failed to remove reminder from calendar: \(error)")
+            setError(from: error)
         }
     }
-    
+
     /// Synchronisiert alle Daily Focus Tasks
     func syncAllDailyFocusTasks() async {
         let tasks = fetchDailyFocusTasks()
@@ -302,7 +363,7 @@ final class SyncEngine {
     /// Holt alle Daily Focus Tasks aus dem Context
     private func fetchDailyFocusTasks() -> [Task] {
         let descriptor = FetchDescriptor<Task>()
-        
+
         do {
             let allTasks = try modelContext.fetch(descriptor)
             // Filter manuell nach status (Predicates mit Enums funktionieren nicht gut)
@@ -310,6 +371,37 @@ final class SyncEngine {
         } catch {
             print("❌ Failed to fetch daily focus tasks: \(error)")
             return []
+        }
+    }
+
+    /// Holt alle Tasks, die eine Erinnerung in der Erinnerungen-App haben.
+    ///
+    /// Bewusst nicht auf `.dailyFocus` eingeschränkt: Beim Abräumen zählt jede
+    /// Verknüpfung, auch die einer inzwischen erledigten oder verschobenen Aufgabe.
+    private func fetchTasksLinkedToCalendar() -> [Task] {
+        let descriptor = FetchDescriptor<Task>()
+
+        do {
+            return try modelContext.fetch(descriptor).filter { $0.isSyncedToCalendar }
+        } catch {
+            print("❌ Failed to fetch linked tasks: \(error)")
+            return []
+        }
+    }
+
+    /// Übersetzt einen Kalender-Fehler in eine Meldung für das Fehler-Banner.
+    private func setError(from error: Error) {
+        if let calendarError = error as? CalendarServiceError,
+           case .permissionDenied = calendarError {
+            lastErrorMessage = String(
+                localized: "error.sync.reminders_permission",
+                defaultValue: "Dawny has no access to Reminders. You can grant it in the iOS settings."
+            )
+        } else {
+            lastErrorMessage = String(
+                localized: "error.sync.reminders_failed",
+                defaultValue: "Tasks cannot be synced with Reminders right now."
+            )
         }
     }
 }

@@ -140,6 +140,19 @@ struct ContentView: View {
             #endif
             .ignoresSafeArea(.keyboard, edges: .bottom)
         }
+        // Fehler aus dem Kalender-Sync gehören über alle drei Tabs, weil sie in
+        // jedem von ihnen ausgelöst werden können.
+        .overlay(alignment: .top) {
+            if let syncEngine, let message = syncEngine.lastErrorMessage {
+                ErrorBannerView(message: message) {
+                    syncEngine.clearError()
+                }
+                .padding(.top, 8)
+                .onAppear {
+                    HapticFeedback.error()
+                }
+            }
+        }
         .environment(\.triggerWelcomeFlow) {
             showWelcome = true
         }

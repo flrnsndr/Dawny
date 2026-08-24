@@ -3152,6 +3152,42 @@
         }
       }
     },
+    "error.sync.reminders_failed" : {
+      "comment" : "Error banner · SyncEngine · Shown when writing to Apple Reminders fails.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufgaben lassen sich gerade nicht mit Erinnerungen synchronisieren."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tasks cannot be synced with Reminders right now."
+          }
+        }
+      }
+    },
+    "error.sync.reminders_permission" : {
+      "comment" : "Error banner · SyncEngine · Shown when Reminders access was denied.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dawny hat keinen Zugriff auf Erinnerungen. Du kannst ihn in den iOS-Einstellungen erlauben."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dawny has no access to Reminders. You can grant it in the iOS settings."
+          }
+        }
+      }
+    },
     "focus" : {
 
     },
