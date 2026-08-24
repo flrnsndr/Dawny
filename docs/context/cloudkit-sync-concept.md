@@ -586,7 +586,12 @@ suppressed elsewhere once synced — decision D8.)
 4. **PR 4 — KVS settings sync** (§7) with unit tests, plus the reset convergence test
    (§14.1).
 5. **PR 5 — EventKit no-op hardening + Settings footers** (§10.2, §11 leftovers).
-6. TestFlight phase on the developer's own devices (matrix §14.2), then release.
+6. Two-device matrix (§14.2) on Debug builds — these run entirely against the
+   **Development** environment, so they need no Production schema.
+7. **Only then** deploy the schema to Production (§13.3). Deploying is one-way: from
+   that point the schema is additive-only forever, so any correction the two-device
+   testing turns up is far cheaper to make before this step than after it.
+8. TestFlight phase, then release.
 
 ### Implementation notes (deviations from the spec above)
 
