@@ -46,7 +46,7 @@ xcodebuild test \
     -project "$PROJECT" \
     -scheme "$SCHEME" \
     -destination "platform=iOS Simulator,name=$SIMULATOR" \
-    -only-testing:DawnyUITests/ScreenshotTests \
+    -testPlan Screenshots \
     -resultBundlePath "$TEMP_ROOT/result.xcresult" \
     > "$TEMP_ROOT/xcodebuild.log" 2>&1
 XCODEBUILD_EXIT=$?
