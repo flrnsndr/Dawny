@@ -578,7 +578,56 @@ suppressed elsewhere once synced — decision D8.)
   the flag (inject the failure; if not injectable, cover the decision logic extracted
   into a testable function).
 
-### 14.2 Manual two-device matrix (TestFlight, physical devices; CloudKit pushes do not reach the Simulator reliably)
+### 14.2 Manual two-device matrix (Debug builds, Development environment)
+
+Run this **before** deploying the schema (§15 step 6): a correction found here is cheap,
+the same correction after the deploy is permanent.
+
+**Rig (as of 2026-08: one iPhone available).** Device A is the iPhone running a Debug
+build from Xcode, device B is an iOS Simulator on the same Mac. The Mac itself cannot be
+a device, see §14.2.1. Both must be signed into the **same Apple ID**; both are Debug
+builds, so both talk to the **Development** environment.
+
+The two directions are not symmetric, and that is expected:
+
+- B → A arrives by silent push (Background Mode `remote-notification` is on).
+- A → B needs the Simulator app foregrounded or relaunched; CloudKit pushes do not reach
+  the Simulator reliably.
+
+**Setup**
+
+1. Simulator: Settings → sign in with the same Apple ID, iCloud Drive on. Do this first,
+   it is the step most likely to hiccup.
+2. iPhone: Run from Xcode. The Debug build replaces the App Store version (same bundle
+   id) and the data container survives, but screenshot the backlog first anyway.
+3. On A the intro appears: toggle on, "Okay", then **relaunch for real** (Stop + Run in
+   Xcode counts; backgrounding does not, see §13.2).
+4. CloudKit Console → `iCloud.Florian.Dawny.MVP` → Development → Records: confirm A's
+   data arrived before bringing B in.
+5. Repeat step 3 on B. That is scenario 1 of the matrix below.
+
+**Per-scenario notes**
+
+- 3, 4, 7 (offline): iPhone into airplane mode, the USB cable keeps Xcode attached. For B
+  either quit the Simulator or turn the Mac's Wi-Fi off.
+- 5 (reset): run scenario 6 first, so both devices carry the same `resetHour` and
+  `makeItCountThreshold`. Then the DEBUG button "Zeit +24h & Reset" on A, then on B, then
+  compare the end states. The time offset is device-local, which is exactly the
+  "two devices apply the same function" case of D3.
+- 8 (signed out of iCloud): on B, not on the personal iPhone.
+- 9 (widget/Siri): A only, the widget target never syncs (D6).
+- Before the deploy, materialize `CD_notes` on purpose (§13.3): put a note on a synced
+  reminder in the Reminders app and let `SyncEngine` pull it back in.
+
+#### 14.2.1 Why the Mac is not a second device
+
+The Dawny target is `TARGETED_DEVICE_FAMILY = 1` (iPhone) with
+`SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"`, so neither "Mac (Designed for iPad)"
+nor Mac Catalyst is an available destination. An **iPad** would work as device B today
+without any project change: iPhone-only apps install on iPad in compatibility mode. Real
+iPad support (`TARGETED_DEVICE_FAMILY = "1,2"`) is a build setting plus a layout pass,
+since the app has no size-class handling at all today, and is out of scope for this
+feature.
 
 | # | Scenario | Expected |
 |---|---|---|
