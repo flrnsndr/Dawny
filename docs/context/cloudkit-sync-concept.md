@@ -8,12 +8,15 @@
 > of §3 are applied to the Dawny target (CloudKit container
 > `iCloud.Florian.Dawny.MVP`, key-value storage, push notifications, Background Mode
 > `remote-notification`); the widget target is untouched.
-> The toggle is **opt-out**: sync is on by default (D2), so the Production schema
-> deployment is a **release blocker**, not a nice-to-have.
+> Sync is **off until the user says yes once** (D2, revised 2026-08-24): the first launch
+> after the update shows `ICloudSyncIntroView` with a pre-enabled toggle, and only "Okay"
+> writes the decision. A fresh install gets the same choice on the second-to-last welcome
+> page (Make it count stays the last one). Every device that opts in still needs the
+> Production schema, so its deployment remains a **release blocker**.
 > **Not yet done:** creating the Development schema by running the app once, deploying
 > that schema to Production (§13.3), and the two-device matrix of §14.2. Until the schema
 > is deployed, TestFlight and App Store builds have no Production schema to sync against —
-> and with sync on by default that would hit every user, not just opt-ins. Read
+> and the intro would invite users into a sync that cannot work. Read
 > `docs/context/architecture.md` first; this document assumes its terminology.
 >
 > Guiding principle (explicit product decision): **robustness beats edge-case completeness.**
@@ -56,7 +59,7 @@ using SwiftData's built-in CloudKit integration.
 | # | Decision | Rationale |
 |---|----------|-----------|
 | D1 | CloudKit **private database** via SwiftData (`ModelConfiguration(cloudKitDatabase:)`), no custom backend | No accounts, no server cost, matches the public "your data stays in your own iCloud" positioning |
-| D2 | **Opt-out** toggle, default **on**, device-local | Product decision (2026-08-24): sync should just work without the user hunting for a switch. Cost: existing users are migrated to CloudKit on the update, so the Production schema must be deployed first (§13) |
+| D2 | **One-time opt-in**, default **off**, device-local | Product decision (2026-08-24, revised the same day): CloudKit **merges**, it never overwrites, so nothing is lost when two device states meet. But the merged list can carry duplicates the user did not expect, so the update explains the merge once and lets the user decide. Declining points at the Settings toggle |
 | D3 | Reset stays **per-device**; correctness comes from **convergence, not coordination** | A synced "who resets" lock is fragile under offline/latency; a deterministic reset function applied twice converges under CloudKit's field-level last-writer-wins |
 | D4 | Reset **parameters** are synced (`resetHour`, `makeItCountThreshold`) via `NSUbiquitousKeyValueStore` | Convergence only holds if all devices compute with the same inputs |
 | D5 | Seeding stays as-is; a **dedup routine** repairs duplicates after remote imports | Simpler and more robust than making seeding sync-aware; the dedup pass doubles as a general repair mechanism |
@@ -216,12 +219,13 @@ and [`DawnyApp.swift`](../../App/Sources/DawnyApp.swift).
 
 ### 5.1 New setting
 
-`AppSettings.iCloudSyncEnabled: Bool` (default **`true`**), persisted in
+`AppSettings.iCloudSyncEnabled: Bool` (default **`false`**), persisted in
 `AppGroup.defaults` under key `DawnyICloudSyncEnabled`, **device-local by design** (each
-device decides for itself; do NOT put this key into the KVS sync set). Read via
-`object(forKey:) as? Bool ?? true` — `bool(forKey:)` would return `false` for the absent
-key and silently turn the default off. The key is in `Keys.allKeys` so the
-`AppGroupMigrator` carries it.
+device decides for itself; do NOT put this key into the KVS sync set). It is joined by
+`hasSeenICloudSyncIntro` (key `DawnyHasSeenICloudSyncIntro`, default `false`), which
+records that the one-time intro was answered — without it, "off" cannot be told apart
+from "not asked yet". Both keys are in `Keys.allKeys` so the `AppGroupMigrator` carries
+them.
 
 **Test isolation is mandatory with an on-by-default flag.** `CloudKitConfig.isDisabledForTesting`
 forces both the CloudKit container and the KVS off whenever the process is a test run —
@@ -238,7 +242,7 @@ developer's own iCloud.
 |---|---|
 | In-memory (tests/previews) | unchanged |
 | Widget/intent extension process | unchanged: plain `ModelConfiguration(schema:url:)` on the App-Group URL — **never** the CloudKit option |
-| Main app, `iCloudSyncEnabled == false` | unchanged (plain App-Group config) |
+| Main app, `iCloudSyncEnabled == false` (including every launch before the user opts in) | unchanged (plain App-Group config) |
 | Main app, `iCloudSyncEnabled == true` | `ModelConfiguration(schema:url:cloudKitDatabase: .private(CloudKitConfig.containerID))` on the **same App-Group store URL** |
 
 Keeping the same store URL means: enabling sync does not move data; SwiftData/Core Data
@@ -454,7 +458,7 @@ Covered by `SyncEngineTests.testRemoveIsNoOpWhileCalendarSyncIsDisabled`.
 
 ---
 
-## 11. UI Changes (Settings only) + Localization
+## 11. UI Changes (Settings + one-time intro) + Localization
 
 All strings go into `App/Sources/Localizable.xcstrings` in **both** locales (en + de).
 Suggested keys/values:
@@ -463,10 +467,21 @@ Suggested keys/values:
 |---|---|---|
 | `settings.icloud.section` | iCloud Sync | iCloud-Sync |
 | `settings.icloud.toggle` | Sync with iCloud | Mit iCloud synchronisieren |
-| `settings.icloud.footer.restart` | Takes effect after you relaunch Dawny. Your tasks sync through your personal iCloud account. | Wird nach einem Neustart von Dawny aktiv. Deine Aufgaben werden über dein persönliches iCloud-Konto synchronisiert. |
+| `settings.icloud.footer.restart` | Takes effect the next time Dawny launches. Close Dawny completely once and open it again. Your tasks sync through your personal iCloud account. | Wird beim nächsten Start von Dawny aktiv. Schließe Dawny dafür einmal ganz und öffne es neu. Deine Aufgaben werden über dein persönliches iCloud-Konto synchronisiert. |
 | `settings.icloud.status.available` | iCloud available | iCloud verfügbar |
 | `settings.icloud.status.noAccount` | Not signed into iCloud. Sync is paused. | Nicht bei iCloud angemeldet. Der Sync pausiert. |
 | `settings.icloud.footer.reminders` | Tip: enable the Apple Reminders integration on one device only. | Tipp: Aktiviere die Apple-Erinnerungen-Integration nur auf einem Gerät. |
+
+One-time intro ([`ICloudSyncIntroView`](../../App/Sources/Views/ICloudSyncIntroView.swift)):
+shown as a sheet on the first launch after the update (`hasSeenWelcome == true &&
+!hasSeenICloudSyncIntro`). Test runs suppress it, because as a modal layer it blocks every
+other interaction; the `--icloud-intro` launch argument switches it back on and seeds a
+deterministic state (`ICloudSyncIntroTestSupport`), which is how
+`DawnyUITests/ICloudSyncIntroUITests` covers it. It explains the merge, carries a pre-enabled toggle, and
+"Okay" writes both flags via `ICloudSyncOptIn.apply(_:)`. Switching the toggle off swaps
+the hint for the pointer at the Settings toggle. A fresh install sees the same toggle on
+the iCloud welcome page instead (second to last — **Make it count stays the last page**),
+and `WelcomeView.finish()` applies it. Keys: `icloudintro.*`, `welcome.icloud.*`.
 
 Settings view: new section with the toggle, the account-status line (§5.5), and the two
 footers. No other UI changes. (The auto-archive review overlay needs **no** change:
@@ -499,8 +514,11 @@ suppressed elsewhere once synced — decision D8.)
 
 1. Ship schema changes (§4) **first or together** with the container change — they are
    inert while the toggle is off (default). Existing users: zero behavior change.
-2. User enables toggle on device A → relaunch → store opens with CloudKit → existing
-   data uploads. Device B: install/update, enable toggle, relaunch → download + dedup.
+2. First launch after the update shows the intro (or the welcome page on a fresh install).
+   The user confirms with the toggle on → relaunch → store opens with CloudKit → existing
+   data uploads. Device B: install/update, confirm the same way, relaunch → download +
+   dedup. Backgrounding is **not** enough for the relaunch: the process must actually end,
+   which is why the copy asks the user to close Dawny completely.
 3. CloudKit Console: after the first DEBUG run has created the Development schema,
    **verify the schema is complete, then deploy to Production before the first TestFlight
    build** (§3).

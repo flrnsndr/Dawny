@@ -64,6 +64,9 @@ struct DawnyApp: App {
         if ScreenshotSeeder.isActive {
             ScreenshotSeeder.prepareForLaunch()
         }
+        if ICloudSyncIntroTestSupport.isActive {
+            ICloudSyncIntroTestSupport.prepareForLaunch()
+        }
         #endif
 
         // Siri Shortcuts registrieren

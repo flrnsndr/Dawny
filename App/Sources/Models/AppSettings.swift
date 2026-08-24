@@ -22,6 +22,7 @@ final class AppSettings {
         static let resetHour = "DawnyResetHour"
         static let calendarSyncEnabled = "DawnyCalendarSyncEnabled"
         static let iCloudSyncEnabled = "DawnyICloudSyncEnabled"
+        static let hasSeenICloudSyncIntro = "DawnyHasSeenICloudSyncIntro"
         static let showCompletedTasksInToday = "DawnyShowCompletedTasksInToday"
         static let showCategories = "DawnyShowCategories"
         static let defaultCategoryType = "DawnyDefaultCategoryType"
@@ -35,7 +36,8 @@ final class AppSettings {
 
         /// Alle Keys — vom `AppGroupMigrator` genutzt, um bestehende Werte in die App-Group-Suite zu übernehmen.
         static let allKeys: [String] = [
-            resetHour, calendarSyncEnabled, iCloudSyncEnabled, showCompletedTasksInToday, showCategories,
+            resetHour, calendarSyncEnabled, iCloudSyncEnabled, hasSeenICloudSyncIntro,
+            showCompletedTasksInToday, showCategories,
             defaultCategoryType, hasSeenWelcome, makeItCountThreshold, hasNewArchivedTasks,
             lastArchiveVisitDate, appLaunchCount, totalResetEventCount, lastReviewPromptDate
         ]
@@ -68,13 +70,22 @@ final class AppSettings {
         }
     }
     
-    /// iCloud-Sync über CloudKit aktiviert (Opt-out, Standard: an).
+    /// iCloud-Sync über CloudKit aktiviert (Standard: aus, bis der Nutzer zustimmt).
     /// Bewusst gerätelokal: jedes Gerät entscheidet selbst, ob es syncen soll.
     /// Wird erst beim nächsten App-Start wirksam, weil der `ModelContainer`
     /// einmalig in `DawnyApp.init()` gebaut wird.
     var iCloudSyncEnabled: Bool {
         didSet {
             AppGroup.defaults.set(iCloudSyncEnabled, forKey: Keys.iCloudSyncEnabled)
+        }
+    }
+
+    /// Der einmalige Sync-Hinweis wurde beantwortet (Okay getippt).
+    /// Erst danach steht fest, ob `iCloudSyncEnabled` eine Nutzerentscheidung ist
+    /// oder nur der Startwert. Gerätelokal wie der Sync-Schalter selbst.
+    var hasSeenICloudSyncIntro: Bool {
+        didSet {
+            AppGroup.defaults.set(hasSeenICloudSyncIntro, forKey: Keys.hasSeenICloudSyncIntro)
         }
     }
 
@@ -173,9 +184,11 @@ final class AppSettings {
         // Lade Werte aus UserDefaults oder verwende Defaults
         self.resetHour = AppGroup.defaults.object(forKey: Keys.resetHour) as? Int ?? 3
         self.calendarSyncEnabled = AppGroup.defaults.object(forKey: Keys.calendarSyncEnabled) as? Bool ?? true
-        // Opt-out: standardmäßig an. `bool(forKey:)` liefert bei fehlendem Key
-        // `false`, deshalb hier explizit über `object(forKey:)`.
-        self.iCloudSyncEnabled = AppGroup.defaults.object(forKey: Keys.iCloudSyncEnabled) as? Bool ?? true
+        // Standardmäßig aus: der Sync geht erst an, wenn der Nutzer den einmaligen
+        // Hinweis bestätigt hat (siehe `ICloudSyncIntroView`). Damit trifft ein Update
+        // nie ungefragt Geräte-Stände aufeinander.
+        self.iCloudSyncEnabled = AppGroup.defaults.object(forKey: Keys.iCloudSyncEnabled) as? Bool ?? false
+        self.hasSeenICloudSyncIntro = AppGroup.defaults.bool(forKey: Keys.hasSeenICloudSyncIntro)
         self.showCompletedTasksInToday = AppGroup.defaults.object(forKey: Keys.showCompletedTasksInToday) as? Bool ?? true
         self.showCategories = AppGroup.defaults.object(forKey: Keys.showCategories) as? Bool ?? true
         self.hasSeenWelcome = AppGroup.defaults.bool(forKey: Keys.hasSeenWelcome)

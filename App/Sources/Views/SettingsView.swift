@@ -280,7 +280,7 @@ struct SettingsView: View {
         } footer: {
             Text(String(
                 localized: "settings.icloud.footer.restart",
-                defaultValue: "Takes effect after you relaunch Dawny. Your tasks sync through your personal iCloud account."
+                defaultValue: "Takes effect the next time Dawny launches. Close Dawny completely once and open it again. Your tasks sync through your personal iCloud account."
             ))
             .foregroundStyle(.secondary)
             .frame(maxWidth: .infinity, alignment: .leading)
