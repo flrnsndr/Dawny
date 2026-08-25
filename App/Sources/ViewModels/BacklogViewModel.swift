@@ -88,6 +88,25 @@ final class BacklogViewModel {
         }
     }
     
+    /// Aktualisiert die Backlog-Liste (Pull-to-Refresh).
+    ///
+    /// Der Refresh liest nur den lokalen Store neu: einen CloudKit-Abruf kann er nicht
+    /// erzwingen, denn SwiftData holt fremde Änderungen selbst und wird dabei von Push
+    /// angestoßen. Wer zieht, sieht also den aktuellen Stand auf diesem Gerät, nicht
+    /// garantiert den des anderen.
+    func refresh() async {
+        isLoading = true
+        defer { isLoading = false }
+
+        // Kalender → App, derselbe Aufruf wie beim Wechsel in den Vordergrund. Ist der
+        // Kalender-Sync aus, kehrt er sofort zurück.
+        await syncEngine.syncNow()
+
+        loadBacklogs()
+        // Auch die Kategorien, sonst fehlt einer von außen angelegten Aufgabe die Section.
+        loadCategories()
+    }
+
     /// Erstellt einen neuen Backlog
     func createBacklog(title: String) {
         let backlog = Backlog(

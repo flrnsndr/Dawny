@@ -164,6 +164,33 @@ final class ExternalStoreWriteTests: XCTestCase {
         )
     }
 
+    /// Pull-to-Refresh im Backlog. Was der Nutzer zieht, muss dasselbe leisten wie ein
+    /// `loadBacklogs()`: eine von außen angelegte Aufgabe steht danach in der Liste, und
+    /// die Observation hat es gemeldet, sonst bliebe die Liste am Bildschirm stehen.
+    ///
+    /// Was der Test **nicht** zeigt: dass ein Zug frische Daten vom anderen Gerät holt.
+    /// Der Refresh liest den lokalen Store, mehr kann er nicht.
+    func testRefreshBringsAnExternalTaskIntoTheList() async throws {
+        let backlogID = try currentBacklogID()
+        try writeTask(title: "Vom anderen Gerät", toBacklogWithID: backlogID, through: importContext)
+
+        var didNotify = false
+        withObservationTracking {
+            _ = viewModel.backlogTasks
+        } onChange: {
+            didNotify = true
+        }
+
+        await viewModel.refresh()
+
+        XCTAssertEqual(viewModel.backlogTasks.map(\.title), ["Vom anderen Gerät"])
+        XCTAssertTrue(
+            didNotify,
+            "Ohne Benachrichtigung zieht der Nutzer, und die Liste zeigt trotzdem den alten Stand."
+        )
+        XCTAssertFalse(viewModel.isLoading, "Der Ladezustand muss nach dem Refresh wieder aus sein.")
+    }
+
     // MARK: - Anzeigeweg
 
     /// Der eigentliche Regressionstest. Aktuelle Daten allein nützen nichts, wenn
