@@ -55,16 +55,25 @@ Details und Formulierungen in [siri-manuelle-tests.md](siri-manuelle-tests.md).
 
 ## 3. Nach dem Archiv, vor dem Upload
 
-- [ ] Entitlements des Archivs prüfen:
+- [ ] Entitlements der **exportierten** App prüfen:
   ```bash
-  codesign -d --entitlements - /pfad/zum/Dawny.app
+  unzip -q -o ~/Desktop/Dawny.ipa -d /tmp/dawny-ipa && codesign -d --entitlements :- /tmp/dawny-ipa/Payload/Dawny.app
   ```
   `aps-environment` muss auf `production` stehen. Steht dort `development`, kommen die
   stillen CloudKit-Pushes im Store-Build nicht an und Sync aktualisiert nur beim App-Start.
 
+  > **Nicht das `.xcarchive` prüfen.** Das trägt immer die Entwickler-Entitlements, zu
+  > erkennen an `get-task-allow = true`. Die Distribution-Entitlements entstehen erst beim
+  > Export, wenn Xcode mit dem Distributionsprofil neu signiert. Ein Check auf dem Archiv
+  > meldet also auch dann `development`, wenn alles stimmt. Dafür im Organizer
+  > **Distribute App → Export** statt direkt **Upload** wählen.
+
 - [ ] **Nur wenn sich am CloudKit-Schema etwas geändert hat:** Ad-Hoc-Build auf ein Gerät
   installieren, eine Aufgabe anlegen und in der CloudKit Console unter
   **Production → Records** nachsehen, ob der Record ankommt.
+
+  Ein Ad-Hoc-Export deckt beide Punkte auf einmal ab, denn er wird ebenfalls mit einem
+  Distributionsprofil signiert und lässt sich genauso auf `aps-environment` prüfen.
 
   Der Grund: Welche CloudKit-Umgebung eine App anspricht, hängt am Provisioning-Profil,
   nicht an der Build-Konfiguration. Debug-Builds und lokal gebaute Release-Builds mit
