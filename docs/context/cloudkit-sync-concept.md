@@ -610,11 +610,27 @@ build from Xcode, device B is an iOS Simulator on the same Mac. The Mac itself c
 a device, see §14.2.1. Both must be signed into the **same Apple ID**; both are Debug
 builds, so both talk to the **Development** environment.
 
-The two directions are not symmetric, and that is expected:
+Both directions arrive by silent push (Background Mode `remote-notification` is on), and
+both were confirmed on 2026-08-25:
 
-- B → A arrives by silent push (Background Mode `remote-notification` is on).
-- A → B needs the Simulator app foregrounded or relaunched; CloudKit pushes do not reach
-  the Simulator reliably.
+- B → A: a task created on the Simulator showed up on the iPhone after two to three
+  seconds.
+- A → B: a task created on the iPhone reached the Simulator's store and its backlog list
+  with **no relaunch and no foregrounding**, in an app that had been running untouched for
+  eight hours. How long the delivery itself took is unknown, because the Mac was asleep for
+  most of that window.
+
+An earlier note here claimed the Simulator does not receive CloudKit pushes reliably. That
+was wrong. The evidence for it was an eight-hour gap whose real cause was the **Mac being
+asleep**, which suspends the Simulator with it.
+
+Two consequences for running this matrix:
+
+- Keep the Mac awake (`caffeinate`) for anything that waits on delivery, or check elapsed
+  time against the wall clock before concluding that something did not arrive.
+- A stale list on screen is not a delivery failure. Delivery lands in the store; showing it
+  is a separate step (see §14.1, `ExternalStoreWriteTests`). Check the store before blaming
+  the sync.
 
 **Setup**
 
@@ -654,7 +670,7 @@ feature.
 | # | Scenario | Expected |
 |---|---|---|
 | 1 | Enable on device A with existing data; enable on fresh device B | B shows A's data; exactly one Backlog, one category per built-in type, one default recurring category |
-| 2 | Create/complete/archive/unarchive tasks on A | Appears on B (foreground the app) |
+| 2 | Create/complete/archive/unarchive tasks on A | Appears on B without a relaunch (creating is confirmed, the other three are not) |
 | 3 | Both devices offline, edit different tasks, go online | Both edits present |
 | 4 | Both devices offline, edit the SAME task's title | One title wins (LWW), no crash, no duplicate |
 | 5 | Let the 3 AM reset pass, open A, then open B | Identical end state on both; recurring tasks in backlog on both, never archived; archived task appears once in the review overlay (first-opened device) |
