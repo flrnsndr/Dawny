@@ -30,9 +30,14 @@ _Dieser Ablauf gilt für jeden Build, der in TestFlight oder den App Store geht.
 
 ## Phase 2 — Version & Build bumpen
 
-1. In Xcode: **Project → Dawny target → General**
-2. **Version** (`MARKETING_VERSION`) anpassen — Semver laut obiger Tabelle
-3. **Build** (`CURRENT_PROJECT_VERSION`) um +1 erhöhen
+1. In Xcode: **Project → Dawny (das Projekt, nicht das Target) → Build Settings → Versioning**
+2. **Marketing Version** (`MARKETING_VERSION`) anpassen, Semver laut obiger Tabelle
+3. **Current Project Version** (`CURRENT_PROJECT_VERSION`) um +1 erhöhen
+
+   > **Nicht über den General-Tab des Targets gehen.** Beide Werte stehen bewusst auf
+   > Projektebene, damit die Widget-Extension sie erbt. Apple erwartet dieselbe Version in
+   > App und Extension. Eine Eingabe im General-Tab legt wieder eine Überschreibung auf dem
+   > Target an, und die Extension fällt still zurück auf ihren alten Wert.
 4. Änderung auf einem Branch committen. `main` ist per Repository-Ruleset geschützt, ein direkter Push wird mit `GH013` abgelehnt:
    ```bash
    git checkout -b chore/bump-X.Y.Z
