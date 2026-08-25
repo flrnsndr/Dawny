@@ -38,14 +38,12 @@ final class CloudSyncObserver {
     func startObserving() {
         guard AppSettings.shared.iCloudSyncEnabled, observerTask == nil else { return }
 
-        print("☁️ CloudSyncObserver: Beobachtung gestartet")
         observerTask = _Concurrency.Task { [weak self] in
             let notifications = NotificationCenter.default.notifications(
                 named: .NSPersistentStoreRemoteChange
             )
             for await _ in notifications {
                 guard let self else { return }
-                print("☁️ CloudSyncObserver: Remote-Change eingetroffen")
                 self.scheduleHandling()
             }
         }
@@ -77,36 +75,12 @@ final class CloudSyncObserver {
     /// die eingetroffen sind, während die App geschlossen war.
     func handleRemoteChanges() async {
         do {
-            let didDedupe = try CloudDeduplicator.dedupe(in: modelContext)
-            print("☁️ CloudSyncObserver: verarbeitet, Dedup \(didDedupe ? "hat aufgeräumt" : "ohne Befund")")
+            try CloudDeduplicator.dedupe(in: modelContext)
         } catch {
             print("⚠️ Dedup nach CloudKit-Import fehlgeschlagen: \(error)")
         }
 
-        refreshContextFromStore()
         WidgetRefresher.reload()
         NotificationCenter.default.post(name: .dawnyDidReset, object: nil)
-    }
-
-    /// Der Import landet im Store, aber bereits geladene Objekte behalten im Kontext ihre
-    /// alten Beziehungen. Die Backlog-Liste liest über `Backlog.tasks` (siehe
-    /// `Backlog.backlogTasks`) und zeigt eine importierte Aufgabe deshalb erst nach einem
-    /// Neustart — fetchbasierte Listen wie Heute sind sofort aktuell. `rollback()` wirft
-    /// den Objekt-Cache weg, danach liest alles frisch aus dem Store.
-    ///
-    /// Eigene ungespeicherte Änderungen würde der Rollback mitnehmen, deshalb werden sie
-    /// vorher gesichert.
-    private func refreshContextFromStore() {
-        if modelContext.hasChanges {
-            do {
-                try modelContext.save()
-            } catch {
-                // Nicht speicherbar heißt: lieber veraltet anzeigen als Eingaben verlieren.
-                print("⚠️ Speichern vor dem Kontext-Refresh fehlgeschlagen: \(error)")
-                return
-            }
-        }
-        modelContext.rollback()
-        print("☁️ CloudSyncObserver: Kontext-Cache verworfen")
     }
 }

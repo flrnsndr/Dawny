@@ -145,8 +145,10 @@ final class ExternalStoreWriteTests: XCTestCase {
         XCTAssertEqual(viewModel.taskCount, 1)
     }
 
-    /// Noch nicht gespeicherte Eingaben dürfen der Auffrischung nicht zum Opfer
-    /// fallen: `refreshContextFromStore()` sichert sie vorher.
+    /// Lokale Eingaben dürfen der Verarbeitung eines Imports nicht zum Opfer fallen.
+    /// Der Observer hat dafür einmal den Objekt-Cache verworfen (`rollback()`); das ist
+    /// wieder raus, weil der Datenweg auch ohne stimmt. Dieser Test hält fest, was ein
+    /// Rollback an dieser Stelle kaputt machen würde.
     func testUnsavedLocalEditSurvivesTheRefresh() async throws {
         let backlogID = try currentBacklogID()
         viewModel.addTask(title: "Lokal getippt")
