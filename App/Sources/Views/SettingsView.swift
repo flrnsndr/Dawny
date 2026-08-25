@@ -325,17 +325,7 @@ struct SettingsView: View {
                     }
                 }
         } footer: {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(String(localized: "settings.sync.description", defaultValue: "Synchronizes Daily Focus tasks with iOS Reminders."))
-                if settings.iCloudSyncEnabled {
-                    Text(String(
-                        localized: "settings.icloud.footer.reminders",
-                        defaultValue: "Tip: enable the Apple Reminders integration on one device only."
-                    ))
-                }
-            }
-            .foregroundStyle(.secondary)
-            .frame(maxWidth: .infinity, alignment: .leading)
+            Text(String(localized: "settings.sync.description", defaultValue: "Synchronizes Daily Focus tasks with iOS Reminders."))
         }
     }
     
