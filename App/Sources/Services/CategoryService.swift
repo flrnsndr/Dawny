@@ -123,7 +123,10 @@ final class CategoryService {
         "Wiederkehrende Aufgaben"
     ]
 
-    private func isLikelyDefaultRecurringCategory(_ category: Category) -> Bool {
+    /// Erkennt die automatisch angelegte „Wiederkehrende Aufgaben"-Kategorie.
+    /// Nicht `private`, weil der `CloudDeduplicator` dieselbe Definition braucht,
+    /// um doppelt geseedete Exemplare nach einem CloudKit-Import zusammenzuführen.
+    func isLikelyDefaultRecurringCategory(_ category: Category) -> Bool {
         guard category.isRecurring, category.categoryType == .custom else { return false }
         let loc = String(
             localized: "category.recurring.default.name",
@@ -420,7 +423,7 @@ final class CategoryService {
         switch strategy {
         case .deleteTasks:
             // Snapshot, weil wir während der Iteration aus der Relationship löschen.
-            let tasksToDelete = category.tasks
+            let tasksToDelete = category.tasks ?? []
             for task in tasksToDelete {
                 modelContext.delete(task)
             }
@@ -430,7 +433,7 @@ final class CategoryService {
                 throw CategoryEditError.uncategorizedMissing
             }
             // Snapshot wegen Inverse-Relationship-Mutation während der Iteration.
-            let tasksToMove = category.tasks
+            let tasksToMove = category.tasks ?? []
             for task in tasksToMove {
                 task.category = uncategorized
                 task.modifiedAt = Date()

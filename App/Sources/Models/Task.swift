@@ -25,22 +25,26 @@ enum ArchiveReason: String, Codable {
 @Model
 final class Task {
     // MARK: - Stored Properties
-    
+
+    // Jede nicht-optionale Property braucht einen Inline-Default: CloudKit materialisiert
+    // Records feldweise, und Defaults aus dem `init` zählen dafür nicht. Die Werte hier
+    // sind reine Platzhalter — der `init` verlangt weiterhin alle Pflichtfelder.
+
     /// Eindeutige ID des Tasks
-    var id: UUID
-    
+    var id: UUID = UUID()
+
     /// Titel/Beschreibung des Tasks
-    var title: String
-    
+    var title: String = ""
+
     /// Optional: Zusätzliche Notizen
     var notes: String?
-    
+
     /// Aktueller Status im Lifecycle
-    var status: TaskStatus
-    
+    var status: TaskStatus = TaskStatus.inBacklog
+
     /// ID des Parent-Backlogs (wichtig für Reset)
-    var parentBacklogID: UUID
-    
+    var parentBacklogID: UUID = UUID()
+
     /// Optional: Geplantes Datum (nur wenn scheduled oder dailyFocus)
     var scheduledDate: Date?
     
@@ -49,16 +53,16 @@ final class Task {
     
     /// Sortier-Priorität (für Backlog-Anordnung)
     /// Bei Reset wird dies auf Date() gesetzt, um Tasks nach oben zu bringen
-    var sortPriority: Date
-    
+    var sortPriority: Date = Date()
+
     /// Erstellungsdatum (unveränderlich)
-    var createdAt: Date
-    
+    var createdAt: Date = Date()
+
     /// Letztes Änderungsdatum (für Sync-Konfliktauflösung)
-    var modifiedAt: Date
-    
+    var modifiedAt: Date = Date()
+
     /// Flag ob Task abgeschlossen ist
-    var isCompleted: Bool
+    var isCompleted: Bool = false
 
     /// Setzt `complete`/`uncomplete` für wiederkehrende Aufgaben mit dem
     /// erzeugten Backlog-Clone in Verbindung.

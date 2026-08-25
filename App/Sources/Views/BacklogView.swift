@@ -51,6 +51,13 @@ struct BacklogView: View {
                 }
             }
             .toolbar(.hidden, for: .navigationBar)
+            // Hier und nicht an den Listen, damit beide Listen-Varianten es erben.
+            // Im Sortiermodus bleibt es weg: dort zieht der Nutzer Kategorien.
+            .modifier(
+                PullToRefresh(isEnabled: !isSortingCategories) {
+                    await viewModel.refresh()
+                }
+            )
             .sheet(item: $editorTarget) { target in
                 switch target {
                 case .add:
@@ -634,7 +641,7 @@ private struct CategoryDeleteConfirmation: ViewModifier {
             titleVisibility: .visible,
             presenting: pendingCategory
         ) { category in
-            let count = category.tasks.count
+            let count = (category.tasks ?? []).count
             if count > 0 {
                 Button(
                     String(
@@ -673,7 +680,7 @@ private struct CategoryDeleteConfirmation: ViewModifier {
                 pendingCategory = nil
             }
         } message: { category in
-            let count = category.tasks.count
+            let count = (category.tasks ?? []).count
             if count > 0 {
                 let format = String(
                     localized: "category.delete.message",
@@ -725,6 +732,26 @@ private enum CategoryEditorTarget: Identifiable {
         switch self {
         case .add: return "add"
         case .edit(let category): return "edit-\(category.id)"
+        }
+    }
+}
+
+// MARK: - PullToRefresh
+
+/// Hängt Pull-to-Refresh nur an, wenn es gerade passt. `.refreshable` lässt sich
+/// nicht abschalten, sobald es einmal am Baum hängt, also wird es hier gar nicht
+/// erst gesetzt — im Sortiermodus soll ein Zug nach unten Kategorien bewegen und
+/// keinen Spinner auslösen.
+private struct PullToRefresh: ViewModifier {
+    let isEnabled: Bool
+    let action: @Sendable () async -> Void
+
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        if isEnabled {
+            content.refreshable { await action() }
+        } else {
+            content
         }
     }
 }

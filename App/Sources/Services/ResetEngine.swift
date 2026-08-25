@@ -31,6 +31,9 @@ final class ResetEngine {
     
     /// Optional: Referenz zum SyncEngine für Kalender-Cleanup
     weak var syncEngine: SyncEngine?
+
+    /// Der Launch-Handler darf pro Prozess nur einmal registriert werden.
+    private var didRegisterBackgroundTask = false
     
     // MARK: - Initializer
     
@@ -47,11 +50,20 @@ final class ResetEngine {
     /// Prüft ob ein Reset fällig ist und führt ihn ggf. durch
     func checkAndPerformResetIfNeeded() async {
         let currentDate = timeProvider.currentDate
-        let lastResetDate = getLastResetDate()
-        
+
         // Berechne wann der letzte Reset hätte stattfinden sollen
         let shouldHaveResetAt = calculateLastResetThreshold(for: currentDate)
-        
+
+        // Erststart auf diesem Gerät: es gibt keinen eigenen Reset-Stand. Bei aktivem
+        // iCloud-Sync liegen hier aber schon Aufgaben, die ein anderes Gerät heute
+        // eingeplant hat — ein Reset würde die Tagesplanung aller Geräte einkassieren.
+        // Deshalb wird der Zeitpunkt nur festgeschrieben; der nächste reguläre Reset
+        // läuft normal. Ohne Sync ist der Store leer, es gäbe ohnehin nichts zu tun.
+        guard let lastResetDate = storedLastResetDate() else {
+            saveLastResetDate(shouldHaveResetAt)
+            return
+        }
+
         // Wenn der letzte Reset vor dem Threshold liegt, führe Reset durch
         if lastResetDate < shouldHaveResetAt {
             await performReset(referenceDate: currentDate)
@@ -150,9 +162,26 @@ final class ResetEngine {
         }
     }
     
-    /// Registriert Background Task für automatischen Reset
+    /// Registriert Background Task für automatischen Reset und plant den nächsten Lauf.
+    ///
+    /// Wird sowohl beim App-Start als auch bei jedem Wechsel in den Hintergrund
+    /// aufgerufen. `BGTaskScheduler.register` darf pro Identifier aber nur **einmal
+    /// pro Prozess** laufen — ein zweiter Aufruf beendet die App mit
+    /// „Launch handler for task with identifier … has already been registered".
+    /// Das Neuplanen (`scheduleNextBackgroundReset`) soll dagegen jedes Mal passieren.
     func registerBackgroundTask() {
         #if !targetEnvironment(simulator)
+        if !didRegisterBackgroundTask {
+            didRegisterBackgroundTask = true
+            registerLaunchHandler()
+        }
+
+        scheduleNextBackgroundReset()
+        #endif
+    }
+
+    #if !targetEnvironment(simulator)
+    private func registerLaunchHandler() {
         BGTaskScheduler.shared.register(
             forTaskWithIdentifier: backgroundTaskIdentifier,
             using: nil
@@ -168,20 +197,16 @@ final class ResetEngine {
                 self.scheduleNextBackgroundReset()
             }
         }
-        
-        scheduleNextBackgroundReset()
-        #endif
     }
+    #endif
+
     
     // MARK: - Private Methods
     
-    /// Holt das Datum des letzten Resets aus UserDefaults (App Group, damit das Widget den Stand sieht)
-    private func getLastResetDate() -> Date {
-        if let lastReset = AppGroup.defaults.object(forKey: userDefaultsKey) as? Date {
-            return lastReset
-        }
-        // Wenn noch nie resettet wurde, verwende ein Datum weit in der Vergangenheit
-        return Date(timeIntervalSince1970: 0)
+    /// Holt das Datum des letzten Resets aus UserDefaults (App Group, damit das Widget den Stand sieht).
+    /// `nil` heißt: auf diesem Gerät lief noch nie ein Reset.
+    private func storedLastResetDate() -> Date? {
+        AppGroup.defaults.object(forKey: userDefaultsKey) as? Date
     }
 
     /// Speichert das Datum des letzten Resets in UserDefaults (App Group)

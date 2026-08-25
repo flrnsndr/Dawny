@@ -34,7 +34,18 @@ final class BacklogViewModel {
     var isLoading = false
     var errorMessage: String?
     var categories: [Category] = []
-    
+
+    /// Zählt jedes Neuladen mit und ist das einzige Signal, an dem die Backlog-Listen
+    /// für die Observation hängen.
+    ///
+    /// `backlogTasks`, `taskCount` und `groupedTasks` lesen über die Beziehung
+    /// `currentBacklog.tasks`. Ein Schreibvorgang von außen (CloudKit-Import, Widget,
+    /// App-Intent) verändert diese Beziehung, ohne eine beobachtbare Eigenschaft des
+    /// ViewModels anzufassen — die Liste am Bildschirm bliebe stehen. `currentBacklog`
+    /// einfach neu zuzuweisen hilft nicht: Observation unterdrückt die Meldung, wenn
+    /// dasselbe Objekt zugewiesen wird (siehe `ExternalStoreWriteTests`).
+    private(set) var reloadCount = 0
+
     // MARK: - Initializer
     
     init(modelContext: ModelContext, syncEngine: SyncEngine) {
@@ -55,16 +66,19 @@ final class BacklogViewModel {
         
         do {
             backlogs = try modelContext.fetch(descriptor)
-            
-            // Setze ersten Backlog als current falls keiner gesetzt
-            if currentBacklog == nil {
-                currentBacklog = backlogs.first
-            }
-            
+
+            // Das zuvor gewählte Backlog beibehalten, solange es den Fetch überlebt hat.
+            let previousID = currentBacklog?.id
+            currentBacklog = backlogs.first(where: { $0.id == previousID }) ?? backlogs.first
+
             // Falls keine Backlogs existieren, erstelle Default-Backlog
             if backlogs.isEmpty {
                 createDefaultBacklog()
             }
+
+            // Zum Schluss, damit die Views auch dann neu zeichnen, wenn sich am
+            // ViewModel selbst nichts geändert hat — siehe `reloadCount`.
+            reloadCount &+= 1
         } catch {
             let format = String(
                 localized: "error.backlog.load_backlogs",
@@ -74,6 +88,25 @@ final class BacklogViewModel {
         }
     }
     
+    /// Aktualisiert die Backlog-Liste (Pull-to-Refresh).
+    ///
+    /// Der Refresh liest nur den lokalen Store neu: einen CloudKit-Abruf kann er nicht
+    /// erzwingen, denn SwiftData holt fremde Änderungen selbst und wird dabei von Push
+    /// angestoßen. Wer zieht, sieht also den aktuellen Stand auf diesem Gerät, nicht
+    /// garantiert den des anderen.
+    func refresh() async {
+        isLoading = true
+        defer { isLoading = false }
+
+        // Kalender → App, derselbe Aufruf wie beim Wechsel in den Vordergrund. Ist der
+        // Kalender-Sync aus, kehrt er sofort zurück.
+        await syncEngine.syncNow()
+
+        loadBacklogs()
+        // Auch die Kategorien, sonst fehlt einer von außen angelegten Aufgabe die Section.
+        loadCategories()
+    }
+
     /// Erstellt einen neuen Backlog
     func createBacklog(title: String) {
         let backlog = Backlog(
@@ -374,12 +407,20 @@ final class BacklogViewModel {
     
     /// Alle Tasks im aktuellen Backlog
     var backlogTasks: [Task] {
-        currentBacklog?.backlogTasks ?? []
+        observeReloads()
+        return currentBacklog?.backlogTasks ?? []
     }
-    
+
     /// Anzahl der Tasks im Backlog
     var taskCount: Int {
-        currentBacklog?.taskCount ?? 0
+        observeReloads()
+        return currentBacklog?.taskCount ?? 0
+    }
+
+    /// Meldet der Observation, dass diese Liste von `reloadCount` abhängt. Ohne den
+    /// Zugriff erfährt SwiftUI nie, dass sich hinter der Beziehung etwas getan hat.
+    private func observeReloads() {
+        _ = reloadCount
     }
     
     // MARK: - Category Management
@@ -397,6 +438,7 @@ final class BacklogViewModel {
     
     /// Tasks nach Kategorie gruppiert (Key: Category ID)
     var groupedTasks: [UUID: [Task]] {
+        observeReloads()
         guard let backlog = currentBacklog else { return [:] }
         
         var grouped: [UUID: [Task]] = [:]

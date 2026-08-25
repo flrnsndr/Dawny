@@ -20,7 +20,7 @@ HEADER_MARKER="Licensed under the MIT License"
 
 HEADER=$'// Dawny\n// Copyright (c) 2025-2026 Florian Schneider\n// Licensed under the MIT License \xe2\x80\x94 see LICENSE in the repository root.\n\n'
 
-DIRS=("App" "DawnyTests")
+DIRS=("App" "DawnyTests" "DawnyUITests")
 
 changed=0
 skipped=0

@@ -32,6 +32,8 @@ final class AppSettingsTests: XCTestCase {
         AppGroup.defaults.removeObject(forKey: "DawnyResetHour")
         AppGroup.defaults.removeObject(forKey: "DawnyCalendarSyncEnabled")
         AppGroup.defaults.removeObject(forKey: "DawnyShowCompletedTasksInToday")
+        AppGroup.defaults.removeObject(forKey: AppSettings.Keys.iCloudSyncEnabled)
+        AppGroup.defaults.removeObject(forKey: AppSettings.Keys.hasSeenICloudSyncIntro)
         settings = nil
     }
     
@@ -43,6 +45,62 @@ final class AppSettingsTests: XCTestCase {
         XCTAssertEqual(newSettings.resetHour, 3, "Standard Reset-Zeit sollte 3 Uhr sein")
         XCTAssertTrue(newSettings.calendarSyncEnabled, "Kalender-Sync sollte standardmäßig aktiviert sein")
         XCTAssertTrue(newSettings.showCompletedTasksInToday, "Erledigte Tasks sollten standardmäßig angezeigt werden")
+    }
+
+    /// Der Sync bleibt aus, bis der Nutzer den einmaligen Hinweis bestätigt hat.
+    /// Sonst würde ein Update ungefragt zwei Gerätestände zusammenführen.
+    func testICloudSyncIsDisabledUntilTheUserOptsIn() {
+        AppGroup.defaults.removeObject(forKey: AppSettings.Keys.iCloudSyncEnabled)
+        AppGroup.defaults.removeObject(forKey: AppSettings.Keys.hasSeenICloudSyncIntro)
+
+        let fresh = AppSettings()
+
+        XCTAssertFalse(fresh.iCloudSyncEnabled, "Ohne Zustimmung darf der Sync nicht laufen")
+        XCTAssertFalse(fresh.hasSeenICloudSyncIntro, "Der Hinweis gilt erst nach dem Bestätigen als gesehen")
+    }
+
+    /// Ein einmal gesetztes Opt-out muss den Neustart überleben.
+    func testICloudSyncOptOutIsPersisted() {
+        AppGroup.defaults.set(false, forKey: AppSettings.Keys.iCloudSyncEnabled)
+        defer { AppGroup.defaults.removeObject(forKey: AppSettings.Keys.iCloudSyncEnabled) }
+
+        XCTAssertFalse(AppSettings().iCloudSyncEnabled, "Ein abgeschaltetes Opt-out darf nicht zurückspringen")
+    }
+
+    /// Zustimmung im Hinweis: Sync an, Hinweis erledigt, beides übersteht den Neustart.
+    func testOptInFromIntroEnablesSyncPersistently() {
+        AppGroup.defaults.removeObject(forKey: AppSettings.Keys.iCloudSyncEnabled)
+        AppGroup.defaults.removeObject(forKey: AppSettings.Keys.hasSeenICloudSyncIntro)
+
+        let previous = (AppSettings.shared.iCloudSyncEnabled, AppSettings.shared.hasSeenICloudSyncIntro)
+        defer {
+            AppSettings.shared.iCloudSyncEnabled = previous.0
+            AppSettings.shared.hasSeenICloudSyncIntro = previous.1
+        }
+
+        ICloudSyncOptIn.apply(true)
+
+        let afterRelaunch = AppSettings()
+        XCTAssertTrue(afterRelaunch.iCloudSyncEnabled, "Nach dem Okay soll der Sync beim nächsten Start greifen")
+        XCTAssertTrue(afterRelaunch.hasSeenICloudSyncIntro, "Der Hinweis darf nicht erneut erscheinen")
+    }
+
+    /// Ablehnung im Hinweis: Sync bleibt aus, der Hinweis kommt trotzdem nicht wieder.
+    func testOptOutFromIntroKeepsSyncOffButMarksIntroSeen() {
+        AppGroup.defaults.removeObject(forKey: AppSettings.Keys.iCloudSyncEnabled)
+        AppGroup.defaults.removeObject(forKey: AppSettings.Keys.hasSeenICloudSyncIntro)
+
+        let previous = (AppSettings.shared.iCloudSyncEnabled, AppSettings.shared.hasSeenICloudSyncIntro)
+        defer {
+            AppSettings.shared.iCloudSyncEnabled = previous.0
+            AppSettings.shared.hasSeenICloudSyncIntro = previous.1
+        }
+
+        ICloudSyncOptIn.apply(false)
+
+        let afterRelaunch = AppSettings()
+        XCTAssertFalse(afterRelaunch.iCloudSyncEnabled, "Ein abgelehnter Sync darf nicht doch anspringen")
+        XCTAssertTrue(afterRelaunch.hasSeenICloudSyncIntro, "Auch die Ablehnung ist eine Entscheidung")
     }
     
     func testLoadsFromUserDefaults() {

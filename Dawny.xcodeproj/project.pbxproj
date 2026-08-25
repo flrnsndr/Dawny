@@ -55,6 +55,7 @@
 		D769C0022FAD439D00BFA1D1 /* DawnyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DawnyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D78530932FAD3D7E00B088D7 /* DawnyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DawnyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D79A54162F9D5D1100404706 /* Dawny.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dawny.entitlements; sourceTree = "<group>"; };
+		D79F9417302A3084008DC005 /* Dawny-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Dawny-Info.plist"; sourceTree = "<group>"; };
 		D7C9B6FF300E74F6005696F9 /* DawnyWidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DawnyWidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7C9B701300E74F6005696F9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		D7C9B703300E74F6005696F9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -89,6 +90,8 @@
 				Sources/Services/CategoryService.swift,
 				Sources/Services/ResetOutcomePlanner.swift,
 				Sources/Utilities/AppGroup.swift,
+				Sources/Utilities/CloudKitConfig.swift,
+				Sources/Utilities/UbiquitousKeyValueStoring.swift,
 				Sources/Utilities/WidgetRefresher.swift,
 			);
 			target = D7C9B6FE300E74F6005696F9 /* DawnyWidgetsExtension */;
@@ -161,6 +164,7 @@
 		5C9C9EB62F0180D90092AD03 = {
 			isa = PBXGroup;
 			children = (
+				D79F9417302A3084008DC005 /* Dawny-Info.plist */,
 				D7C9B73E300E78BB005696F9 /* DawnyWidgetsExtension.entitlements */,
 				D79A54162F9D5D1100404706 /* Dawny.entitlements */,
 				5C9C9EC12F0180D90092AD03 /* App */,
@@ -557,7 +561,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_SECURITY_COMPILER_WARNINGS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_BGTaskSchedulerPermittedIdentifiers = Flo.Dawny.reset;
+				INFOPLIST_FILE = "Dawny-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Dawny;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
@@ -565,7 +569,6 @@
 				INFOPLIST_KEY_NSSiriUsageDescription = "Dawny lets you add tasks hands-free with Siri.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UIBackgroundModes = "fetch processing";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
@@ -604,7 +607,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_SECURITY_COMPILER_WARNINGS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_BGTaskSchedulerPermittedIdentifiers = Flo.Dawny.reset;
+				INFOPLIST_FILE = "Dawny-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Dawny;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
@@ -612,7 +615,6 @@
 				INFOPLIST_KEY_NSSiriUsageDescription = "Dawny lets you add tasks hands-free with Siri.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UIBackgroundModes = "fetch processing";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.6;

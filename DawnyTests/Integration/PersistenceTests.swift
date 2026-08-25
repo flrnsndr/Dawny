@@ -74,7 +74,7 @@ final class PersistenceTests: XCTestCase {
         let loadedBacklog = loadedBacklogs.first { $0.title == "Relationship Test" }
         
         XCTAssertNotNil(loadedBacklog)
-        XCTAssertEqual(loadedBacklog?.tasks.count, 3)
+        XCTAssertEqual(loadedBacklog?.tasks?.count, 3)
     }
     
     func testTaskStatusPersistence() throws {

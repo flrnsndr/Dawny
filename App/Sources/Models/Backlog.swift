@@ -15,24 +15,28 @@ import SwiftData
 @Model
 final class Backlog {
     // MARK: - Stored Properties
-    
+
+    // Inline-Defaults sind CloudKit-Pflicht — siehe Hinweis in `Task`.
+
     /// Eindeutige ID
-    var id: UUID
-    
+    var id: UUID = UUID()
+
     /// Name des Backlogs
-    var title: String
-    
+    var title: String = ""
+
     /// Sortierungs-Index (für Multi-Backlog später)
-    var orderIndex: Int
-    
+    var orderIndex: Int = 0
+
     /// Erstellungsdatum
-    var createdAt: Date
-    
+    var createdAt: Date = Date()
+
     // MARK: - Relationships
-    
+
     /// Alle Tasks in diesem Backlog
+    // Optional, weil CloudKit ausnahmslos optionale Relationships verlangt.
+    // Interner Zugriff geht über `liveTasks`, extern über `tasks ?? []`.
     @Relationship(deleteRule: .cascade, inverse: \Task.backlog)
-    var tasks: [Task]
+    var tasks: [Task]? = []
     
     // MARK: - Initializer
     
@@ -75,7 +79,7 @@ final class Backlog {
     /// Relationship. SwiftData hält solche Referenzen teils noch bis zum
     /// nächsten Save – Zugriffe auf `status` o.ä. crashen sonst.
     private var liveTasks: [Task] {
-        tasks.filter { !$0.isDeleted }
+        (tasks ?? []).filter { !$0.isDeleted }
     }
     
     // MARK: - Methods
@@ -89,13 +93,13 @@ final class Backlog {
             parentBacklogID: self.id
         )
         task.backlog = self
-        tasks.append(task)
+        tasks = (tasks ?? []) + [task]
         return task
     }
     
     /// Entfernt einen Task aus dem Backlog
     func removeTask(_ task: Task) {
-        tasks.removeAll { $0.id == task.id }
+        tasks = (tasks ?? []).filter { $0.id != task.id }
     }
 }
 

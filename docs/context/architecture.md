@@ -118,7 +118,7 @@ The schema is registered in `DawnyApp.init()` with `isStoredInMemoryOnly: false`
 | `status` | `TaskStatus` | Core lifecycle state — see §5 |
 | `parentBacklogID` | `UUID` | Denormalized FK; all tasks carry this regardless of status |
 | `scheduledDate` | `Date?` | Set when status is `.dailyFocus` or `.scheduled` |
-| `externalReminderID` | `String?` | EKReminder identifier when synced |
+| `externalReminderID` | `String?` | `calendarItemExternalIdentifier` of the linked EKReminder — stable across devices, so a task synced via iCloud resolves to the same reminder everywhere. Legacy values hold the device-local `calendarItemIdentifier`; `SyncEngine.migrateReminderIdentifiersIfNeeded()` rewrites them once (flag `DawnyMigratedReminderExternalIDsV1`). |
 | `sortPriority` | `Date` | Controls display order; newer = higher. Set to `Date()` on reset to surface tasks at the top of Backlog. |
 | `createdAt` | `Date` | Immutable after creation |
 | `modifiedAt` | `Date` | Updated on every mutation; used for Last-Write-Wins conflict resolution in SyncEngine |
@@ -236,7 +236,8 @@ The app uses modern **Swift Concurrency (async/await)**. Because SwiftData conte
 
 - **SyncEngine:** Handles bidirectional synchronization between Dawny and Apple Reminders via EventKit. It subscribes to `.EKEventStoreChanged` using a Swift `AsyncStream` wrapper, with a 1-second debounce to avoid thrashing. Only tasks with status `.dailyFocus` are synced.
 - **Conflict Resolution:** Implements a _Last-Write-Wins_ strategy based on `modifiedAt` timestamps. If a Reminder's `modificationDate` is newer than the task's `modifiedAt`, the Reminder wins. Resolved fields: completion status, title, notes, due date. If a Reminder is deleted in the Reminders app, the task is moved back to Backlog.
-- **`calendarSyncEnabled` guard:** Every SyncEngine operation checks `AppSettings.shared.calendarSyncEnabled` before touching EventKit.
+- **`calendarSyncEnabled` guard:** Every SyncEngine operation checks `AppSettings.shared.calendarSyncEnabled` before touching EventKit. The one exception is `teardownAfterDisabling()`, which runs after the setting is already `false`.
+- **Reminder identity:** `EventKitCalendarService` resolves a stored ID first via `calendarItems(withExternalIdentifier:)` and only then via the device-local `calendarItem(withIdentifier:)`, so unmigrated links keep working. When an external ID matches several items (recurrence, multiply imported lists), the service picks deterministically: not-completed before completed, then earliest due date, then local identifier. Two caveats from EventKit: local (non-iCloud) lists pass the external ID through to the local one, and for Exchange reminders it differs per device.
 - **`EventKitCalendarService`:** A concrete implementation of `CalendarServiceProtocol`, allowing the SyncEngine to be fully mocked in tests.
 - _Architectural note:_ Running all database mutations and EventKit fetching on `@MainActor` ensures thread safety but risks frame drops during heavy sync loads. Moving background sync to a private `ModelActor` would reduce main-thread contention.
 

@@ -23,6 +23,7 @@ struct ContentView: View {
     @State private var selectedTab: Tab = .backlog
     @State private var hasSetInitialTab = false
     @State private var showWelcome = false
+    @State private var showICloudSyncIntro = false
     @State private var showingSettings = false
     @State private var showAutoArchiveReview = false
     @State private var autoArchiveReviewVM: AutoArchiveReviewViewModel?
@@ -139,6 +140,19 @@ struct ContentView: View {
             #endif
             .ignoresSafeArea(.keyboard, edges: .bottom)
         }
+        // Fehler aus dem Kalender-Sync gehören über alle drei Tabs, weil sie in
+        // jedem von ihnen ausgelöst werden können.
+        .overlay(alignment: .top) {
+            if let syncEngine, let message = syncEngine.lastErrorMessage {
+                ErrorBannerView(message: message) {
+                    syncEngine.clearError()
+                }
+                .padding(.top, 8)
+                .onAppear {
+                    HapticFeedback.error()
+                }
+            }
+        }
         .environment(\.triggerWelcomeFlow) {
             showWelcome = true
         }
@@ -160,6 +174,11 @@ struct ContentView: View {
                 onRequestAdvanceTimeBy24h: advanceTimeBy24hAction,
                 onRequestResetTimeOffset: resetTimeOffsetAction
             )
+        }
+        .sheet(isPresented: $showICloudSyncIntro) {
+            ICloudSyncIntroView {
+                showICloudSyncIntro = false
+            }
         }
         .sheet(isPresented: $showAutoArchiveReview) {
             if let vm = autoArchiveReviewVM {
@@ -201,7 +220,13 @@ struct ContentView: View {
                     selectedTab = .today
                 }
                 if !AppSettings.shared.hasSeenWelcome {
+                    // Neuinstallation: die letzte Welcome-Seite trägt den Sync-Schalter.
                     showWelcome = true
+                } else if !AppSettings.shared.hasSeenICloudSyncIntro,
+                          !isICloudSyncIntroSuppressed {
+                    // Bestandsnutzer nach dem Update: einmaliger Hinweis, Sync bis
+                    // zur Bestätigung aus.
+                    showICloudSyncIntro = true
                 }
             }
         }
@@ -412,8 +437,23 @@ struct ContentView: View {
 
     /// Lädt die Review-Queue und zeigt das Sheet, falls unreviewed Auto-Archive-Items existieren.
     /// Nur wenn Welcome bereits gesehen wurde (kein Onboarding-Konflikt).
+    /// In Testläufen ist der Sync ohnehin abgeschaltet, und das modale Sheet würde
+    /// jede Interaktion blockieren. Der Intro-UI-Test hebt das mit `--icloud-intro`
+    /// wieder auf und testet das Sheet gezielt.
+    private var isICloudSyncIntroSuppressed: Bool {
+        guard CloudKitConfig.isDisabledForTesting else { return false }
+        #if DEBUG
+        return !ICloudSyncIntroTestSupport.isActive
+        #else
+        return true
+        #endif
+    }
+
     private func triggerAutoArchiveReviewIfNeeded() {
         guard AppSettings.shared.hasSeenWelcome else { return }
+        // Zwei Sheets gleichzeitig kann SwiftUI nicht: der Sync-Hinweis geht vor,
+        // das Review meldet sich beim nächsten Start von selbst wieder.
+        guard !showICloudSyncIntro else { return }
         let vm = AutoArchiveReviewViewModel(modelContext: modelContext)
         vm.loadQueue()
         guard vm.shouldPresent else { return }

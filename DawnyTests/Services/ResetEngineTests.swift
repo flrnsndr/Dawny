@@ -104,7 +104,44 @@ final class ResetEngineTests: XCTestCase {
         // Assert: Task sollte jetzt im Backlog sein
         XCTAssertEqual(task.status, .inBacklog)
     }
-    
+
+    /// Erststart auf einem Gerät ohne eigenen Reset-Stand: mit iCloud-Sync liegen hier
+    /// bereits Aufgaben, die ein anderes Gerät heute eingeplant hat. Ein Reset würde die
+    /// Tagesplanung aller Geräte einkassieren, deshalb darf hier keiner laufen.
+    func testFirstLaunchWithoutOwnResetDateDoesNotReset() async throws {
+        let currentDate = createDate(year: 2025, month: 1, day: 15, hour: 10)
+        timeProvider.setCurrentDate(currentDate)
+        resetEngine.clearLastResetDate()
+
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let task = TestModelContainer.createTask(in: context, title: "Von Gerät A geplant", status: .dailyFocus, backlog: backlog)
+
+        await resetEngine.checkAndPerformResetIfNeeded()
+
+        XCTAssertEqual(task.status, .dailyFocus)
+        XCTAssertEqual(task.resetCount, 0, "Der übersprungene Reset darf den Zähler nicht hochsetzen.")
+    }
+
+    /// Der übersprungene Erststart schreibt den Schwellwert fest, damit der nächste
+    /// reguläre Reset ganz normal läuft und nicht ebenfalls ausfällt.
+    func testFirstLaunchRecordsThresholdSoTheNextResetStillRuns() async throws {
+        timeProvider.setCurrentDate(createDate(year: 2025, month: 1, day: 15, hour: 10))
+        resetEngine.clearLastResetDate()
+
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let task = TestModelContainer.createTask(in: context, title: "Von Gerät A geplant", status: .dailyFocus, backlog: backlog)
+
+        await resetEngine.checkAndPerformResetIfNeeded()
+        XCTAssertEqual(task.status, .dailyFocus)
+
+        // Nächster Tag, 10:00: die Schwelle von heute 03:00 liegt jetzt hinter dem
+        // festgeschriebenen Stand von gestern.
+        timeProvider.setCurrentDate(createDate(year: 2025, month: 1, day: 16, hour: 10))
+        await resetEngine.checkAndPerformResetIfNeeded()
+
+        XCTAssertEqual(task.status, .inBacklog)
+    }
+
     func testResetMovesOnlyDailyFocusTasks() async throws {
         let currentDate = createDate(year: 2025, month: 1, day: 15, hour: 10)
         timeProvider.setCurrentDate(currentDate)

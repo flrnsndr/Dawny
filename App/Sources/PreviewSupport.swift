@@ -22,7 +22,8 @@ enum DawnyPreview {
         ])
         let configuration = ModelConfiguration(
             schema: schema,
-            isStoredInMemoryOnly: true
+            isStoredInMemoryOnly: true,
+            cloudKitDatabase: .none
         )
         let container = try! ModelContainer(for: schema, configurations: [configuration])
         let calendarService = PreviewCalendarService()
@@ -65,4 +66,6 @@ private final class PreviewCalendarService: CalendarServiceProtocol {
     func fetchReminders(from startDate: Date, to endDate: Date) async throws -> [CalendarReminder] {
         []
     }
+
+    func stableIdentifier(forStoredID id: String) async throws -> String? { nil }
 }

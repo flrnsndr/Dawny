@@ -3152,6 +3152,42 @@
         }
       }
     },
+    "error.sync.reminders_failed" : {
+      "comment" : "Error banner · SyncEngine · Shown when writing to Apple Reminders fails.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufgaben lassen sich gerade nicht mit Erinnerungen synchronisieren."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tasks cannot be synced with Reminders right now."
+          }
+        }
+      }
+    },
+    "error.sync.reminders_permission" : {
+      "comment" : "Error banner · SyncEngine · Shown when Reminders access was denied.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dawny hat keinen Zugriff auf Erinnerungen. Du kannst ihn in den iOS-Einstellungen erlauben."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dawny has no access to Reminders. You can grant it in the iOS settings."
+          }
+        }
+      }
+    },
     "focus" : {
 
     },
@@ -3169,6 +3205,132 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "OK"
+          }
+        }
+      }
+    },
+    "icloudintro.body" : {
+      "comment" : "iCloud intro · One-time sheet after the update · Explains what sync does.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieses Update bringt den iCloud-Sync. Deine Aufgaben, Kategorien und Einstellungen bleiben auf allen Geräten mit deinem iCloud-Account gleich. Yay!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This update brings iCloud sync. Your tasks, categories and settings stay in step on every device that uses your iCloud account. Yay!"
+          }
+        }
+      }
+    },
+    "icloudintro.cta" : {
+      "comment" : "iCloud intro · Confirm button · Applies the toggle state and closes the sheet.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Okay"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Okay"
+          }
+        }
+      }
+    },
+    "icloudintro.hint.on" : {
+      "comment" : "iCloud intro · Hint below the toggle when sync is switched on.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Sync startet beim nächsten Start von Dawny. Schließe Dawny dafür einmal ganz und öffne es neu."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sync starts the next time Dawny launches. Close Dawny completely once and open it again."
+          }
+        }
+      }
+    },
+    "icloudintro.hint.off" : {
+      "comment" : "iCloud intro · Hint below the toggle when sync is left off.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Sync bleibt aus und nichts verlässt dieses Gerät. Du kannst ihn jederzeit in den Einstellungen einschalten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sync stays off and nothing leaves this device. You can switch it on any time in Settings."
+          }
+        }
+      }
+    },
+    "icloudintro.merge" : {
+      "comment" : "iCloud intro · Explains that data from all devices is merged, nothing is deleted.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beim Einschalten werden die Aufgaben von all deinen Geräten zu einer Liste zusammengeführt. Nichts wird gelöscht. Wenn du dieselbe Aufgabe auf zwei Geräten angelegt hast, steht sie danach doppelt in der Liste und du kannst eine davon löschen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When you switch it on, the tasks from all your devices are merged into one list. Nothing is deleted. If you created the same task on two devices, it appears twice and you can delete one of them."
+          }
+        }
+      }
+    },
+    "icloudintro.title" : {
+      "comment" : "iCloud intro · Headline of the one-time sheet.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dawny auf allen deinen Geräten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dawny on all your devices"
+          }
+        }
+      }
+    },
+    "icloudintro.toggle" : {
+      "comment" : "iCloud intro · Label of the opt-in toggle, shared with the welcome flow.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud-Sync aktivieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable iCloud sync"
           }
         }
       }
@@ -4743,6 +4905,114 @@
         }
       }
     },
+    "settings.icloud.footer.reminders" : {
+      "comment" : "Settings · Extra footer hint under the Reminders toggle while iCloud sync is on.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tipp: Aktiviere die Apple-Erinnerungen-Integration nur auf einem Gerät."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tip: enable the Apple Reminders integration on one device only."
+          }
+        }
+      }
+    },
+    "settings.icloud.footer.restart" : {
+      "comment" : "Settings · Footer below the iCloud sync toggle · Plain sentences.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wird beim nächsten Start von Dawny aktiv. Schließe Dawny dafür einmal ganz und öffne es neu. Deine Aufgaben werden über dein persönliches iCloud-Konto synchronisiert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Takes effect the next time Dawny launches. Close Dawny completely once and open it again. Your tasks sync through your personal iCloud account."
+          }
+        }
+      }
+    },
+    "settings.icloud.section" : {
+      "comment" : "Settings · Section header above the iCloud sync toggle.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud-Sync"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud Sync"
+          }
+        }
+      }
+    },
+    "settings.icloud.status.available" : {
+      "comment" : "Settings · Status line shown when the iCloud account is usable.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud verfügbar"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud available"
+          }
+        }
+      }
+    },
+    "settings.icloud.status.noAccount" : {
+      "comment" : "Settings · Status line shown when no iCloud account is signed in.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicht bei iCloud angemeldet. Der Sync pausiert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not signed into iCloud. Sync is paused."
+          }
+        }
+      }
+    },
+    "settings.icloud.toggle" : {
+      "comment" : "Settings · Label of the toggle that enables iCloud sync.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mit iCloud synchronisieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sync with iCloud"
+          }
+        }
+      }
+    },
     "settings.info.build" : {
       "comment" : "Settings · Info row label · Single noun. Followed by the build number.",
       "extractionState" : "manual",
@@ -5699,6 +5969,42 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Get started"
+          }
+        }
+      }
+    },
+    "welcome.icloud.body" : {
+      "comment" : "Welcome · iCloud onboarding page body · Mentions the merge on a device that already has iCloud data.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine Aufgaben liegen in deiner persönlichen iCloud und bleiben überall gleich, wo du Dawny nutzt. Wenn in deiner iCloud schon Aufgaben von Dawny liegen, werden alle zu einer Liste zusammengeführt und nichts wird gelöscht."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your tasks live in your personal iCloud and stay in step wherever you use Dawny. If Dawny already holds tasks in your iCloud, everything is merged into one list and nothing is deleted."
+          }
+        }
+      }
+    },
+    "welcome.icloud.title" : {
+      "comment" : "Welcome · iCloud onboarding page title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dawny auf allen deinen Geräten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dawny on all your devices"
           }
         }
       }

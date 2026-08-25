@@ -14,6 +14,12 @@ import SwiftUI
 struct WelcomeView: View {
     @State private var currentPage = 0
     @State private var showMakeItCountLockedAlert = false
+    /// Vorbelegt mit „an", solange der Sync-Hinweis noch nicht beantwortet wurde.
+    /// Wird der Welcome-Flow später erneut geöffnet, gewinnt die bereits
+    /// getroffene Entscheidung, damit sie hier nicht ungefragt überschrieben wird.
+    @State private var enableICloudSync = AppSettings.shared.hasSeenICloudSyncIntro
+        ? AppSettings.shared.iCloudSyncEnabled
+        : true
     var onDismiss: () -> Void
 
     private let pages: [WelcomePage] = [
@@ -90,6 +96,19 @@ struct WelcomeView: View {
             )
         ),
         WelcomePage(
+            icon: "icloud.fill",
+            iconColor: .blue,
+            title: LocalizedStringResource(
+                "welcome.icloud.title",
+                defaultValue: "Dawny on all your devices"
+            ),
+            body: LocalizedStringResource(
+                "welcome.icloud.body",
+                defaultValue: "Your tasks live in your personal iCloud and stay in step wherever you use Dawny. If Dawny already holds tasks in your iCloud, everything is merged into one list and nothing is deleted."
+            ),
+            accessory: .iCloudSync
+        ),
+        WelcomePage(
             icon: "archivebox.fill",
             iconColor: .indigo,
             title: LocalizedStringResource(
@@ -99,7 +118,8 @@ struct WelcomeView: View {
             body: LocalizedStringResource(
                 "welcome.makeitcount.body",
                 defaultValue: "Tasks you don't complete get archived instead of silently piling up. Your backlog stays lean, honest, and meaningful."
-            )
+            ),
+            accessory: .makeItCount
         )
     ]
 
@@ -107,13 +127,21 @@ struct WelcomeView: View {
         VStack(spacing: 0) {
             TabView(selection: $currentPage) {
                 ForEach(Array(pages.enumerated()), id: \.offset) { index, page in
-                    pageView(page, pageIndex: index)
+                    pageView(page)
                         .tag(index)
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
             .animation(.easeInOut(duration: 0.3), value: currentPage)
-            .highPriorityGesture(closeOnLastPageSwipeGesture)
+            // Nur auf der letzten Seite, und dort neben den Gesten der Kind-Elemente.
+            // Dauerhaft als `highPriorityGesture` über allen Seiten hat sie jede
+            // Berührung vorab beansprucht und damit auch den Wisch verschluckt, mit
+            // dem man durch das Onboarding blättert. `.subviews` schaltet auf den
+            // übrigen Seiten nur die eigene Geste ab.
+            .simultaneousGesture(
+                closeOnLastPageSwipeGesture,
+                including: isOnLastPage ? .all : .subviews
+            )
 
             bottomSection
                 .padding(.horizontal, 32)
@@ -124,9 +152,8 @@ struct WelcomeView: View {
 
     // MARK: - Page Content
 
-    private func pageView(_ page: WelcomePage, pageIndex: Int) -> some View {
-        let isMakeItCountPage = pageIndex == pages.count - 1
-        return VStack(spacing: 28) {
+    private func pageView(_ page: WelcomePage) -> some View {
+        VStack(spacing: 28) {
             Spacer()
 
             Image(systemName: page.icon)
@@ -151,9 +178,15 @@ struct WelcomeView: View {
 
             Spacer()
 
-            if isMakeItCountPage {
+            switch page.accessory {
+            case .makeItCount:
                 makeItCountCheckbox
                     .padding(.horizontal, 32)
+            case .iCloudSync:
+                ICloudSyncOptInSection(isEnabled: $enableICloudSync)
+                    .padding(.horizontal, 32)
+            case .none:
+                EmptyView()
             }
 
             Spacer()
@@ -167,7 +200,7 @@ struct WelcomeView: View {
             pageIndicator
 
             if currentPage == pages.count - 1 {
-                Button(action: onDismiss) {
+                Button(action: finish) {
                     Text(String(localized: "welcome.cta.start", defaultValue: "Get started"))
                         .font(.headline)
                         .frame(maxWidth: .infinity)
@@ -247,13 +280,22 @@ struct WelcomeView: View {
         }
     }
 
+    /// Schreibt die Sync-Entscheidung der letzten Seite fest und schließt den Flow.
+    private func finish() {
+        ICloudSyncOptIn.apply(enableICloudSync)
+        onDismiss()
+    }
+
+    private var isOnLastPage: Bool {
+        currentPage == pages.count - 1
+    }
+
     private var closeOnLastPageSwipeGesture: some Gesture {
         DragGesture(minimumDistance: 24)
             .onEnded { value in
-                let isLastPage = currentPage == pages.count - 1
                 let isSwipeToNext = value.translation.width < -48
-                if isLastPage && isSwipeToNext {
-                    onDismiss()
+                if isOnLastPage && isSwipeToNext {
+                    finish()
                 }
             }
     }
@@ -266,6 +308,14 @@ private struct WelcomePage {
     let iconColor: Color
     let title: LocalizedStringResource
     let body: LocalizedStringResource
+    var accessory: WelcomeAccessory = .none
+}
+
+/// Interaktives Element unterhalb des Seitentexts.
+private enum WelcomeAccessory {
+    case none
+    case makeItCount
+    case iCloudSync
 }
 
 #Preview {

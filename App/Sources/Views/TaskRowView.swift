@@ -461,7 +461,7 @@ struct TaskDetailView: View {
 
 #Preview {
     let schema = Schema([Task.self, Backlog.self, Category.self])
-    let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
+    let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true, cloudKitDatabase: .none)
     let container = try! ModelContainer(for: schema, configurations: [configuration])
     let backlog = Backlog(title: "Preview", orderIndex: 0)
     let task = Task(

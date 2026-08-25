@@ -14,8 +14,14 @@ import Foundation
 
 final class MockCalendarService: CalendarServiceProtocol {
     // MARK: - Mock State
-    
+
+    /// Erinnerungen, abgelegt unter ihrer geräteübergreifend stabilen ID.
     var reminders: [String: CalendarReminder] = [:]
+
+    /// Bildet gerätelokale Alt-IDs auf die stabile ID ab — wie EventKit, das eine
+    /// `calendarItemIdentifier` weiterhin auflöst, aber nur auf dem Gerät, das sie kennt.
+    var legacyIdentifiers: [String: String] = [:]
+
     var shouldGrantAccess = true
     var shouldFailOperations = false
     
@@ -26,6 +32,7 @@ final class MockCalendarService: CalendarServiceProtocol {
     var updateCallCount = 0
     var deleteCallCount = 0
     var fetchCallCount = 0
+    var stableIdentifierCallCount = 0
     
     // MARK: - CalendarServiceProtocol
     
@@ -73,7 +80,7 @@ final class MockCalendarService: CalendarServiceProtocol {
             throw CalendarServiceError.saveFailed(underlying: NSError(domain: "MockError", code: -1))
         }
         
-        guard var reminder = reminders[id] else {
+        guard let resolvedID = resolve(id), var reminder = reminders[resolvedID] else {
             throw CalendarServiceError.reminderNotFound
         }
         
@@ -122,7 +129,7 @@ final class MockCalendarService: CalendarServiceProtocol {
             )
         }
         
-        reminders[id] = reminder
+        reminders[resolvedID] = reminder
     }
     
     func deleteReminder(id: String) async throws {
@@ -132,7 +139,8 @@ final class MockCalendarService: CalendarServiceProtocol {
             throw CalendarServiceError.saveFailed(underlying: NSError(domain: "MockError", code: -1))
         }
         
-        reminders.removeValue(forKey: id)
+        guard let resolvedID = resolve(id) else { return }
+        reminders.removeValue(forKey: resolvedID)
     }
     
     func fetchReminder(id: String) async throws -> CalendarReminder? {
@@ -142,7 +150,18 @@ final class MockCalendarService: CalendarServiceProtocol {
             throw CalendarServiceError.fetchFailed(underlying: NSError(domain: "MockError", code: -1))
         }
         
-        return reminders[id]
+        guard let resolvedID = resolve(id) else { return nil }
+        return reminders[resolvedID]
+    }
+
+    func stableIdentifier(forStoredID id: String) async throws -> String? {
+        stableIdentifierCallCount += 1
+
+        if shouldFailOperations {
+            throw CalendarServiceError.fetchFailed(underlying: NSError(domain: "MockError", code: -1))
+        }
+
+        return resolve(id)
     }
     
     func fetchReminders(from startDate: Date, to endDate: Date) async throws -> [CalendarReminder] {
@@ -159,9 +178,29 @@ final class MockCalendarService: CalendarServiceProtocol {
     }
     
     // MARK: - Helper Methods
-    
+
+    /// Simuliert eine Verknüpfung aus der Zeit vor der Umstellung: Die Aufgabe hält eine
+    /// gerätelokale ID, die nur dieses Gerät auf die Erinnerung auflösen kann.
+    func registerLegacyIdentifier(_ legacyID: String, for stableID: String) {
+        legacyIdentifiers[legacyID] = stableID
+    }
+
+    /// Löst eine gespeicherte ID auf: stabile ID direkt, Alt-ID über die Zuordnung.
+    private func resolve(_ id: String) -> String? {
+        if reminders[id] != nil {
+            return id
+        }
+
+        guard let mapped = legacyIdentifiers[id], reminders[mapped] != nil else {
+            return nil
+        }
+
+        return mapped
+    }
+
     func reset() {
         reminders.removeAll()
+        legacyIdentifiers.removeAll()
         shouldGrantAccess = true
         shouldFailOperations = false
         accessRequestCount = 0
@@ -169,5 +208,6 @@ final class MockCalendarService: CalendarServiceProtocol {
         updateCallCount = 0
         deleteCallCount = 0
         fetchCallCount = 0
+        stableIdentifierCallCount = 0
     }
 }

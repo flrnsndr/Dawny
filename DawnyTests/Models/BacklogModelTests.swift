@@ -31,7 +31,7 @@ final class BacklogModelTests: XCTestCase {
         
         XCTAssertEqual(backlog.title, "Test Backlog")
         XCTAssertEqual(backlog.orderIndex, 0)
-        XCTAssertTrue(backlog.tasks.isEmpty)
+        XCTAssertTrue((backlog.tasks ?? []).isEmpty)
     }
     
     // MARK: - AddTask Tests
