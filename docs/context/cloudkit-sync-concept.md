@@ -632,6 +632,17 @@ Two consequences for running this matrix:
   is a separate step (see §14.1, `ExternalStoreWriteTests`). Check the store before blaming
   the sync.
 
+**Correction from the full matrix run (2026-08-25 afternoon).** The claim above that B
+needs "no relaunch and no foregrounding" held for that one observation, but it was the
+exception, not the rule. Across the full ten-scenario run, B consistently needed
+`xcrun simctl terminate <udid> Florian.Dawny.MVP` followed by `simctl launch` to make an
+already-arrived CloudKit change visible, even though the store on disk already had the
+correct data at the time of the check. Treat "the Simulator will just pick it up" as
+false by default; budget a restart into every step that waits on B. One case needed it
+twice: after a title rename, a first restart still showed the old title in a
+freshly-cold-started list (see the finding below), and only a second restart — once the
+import had fully settled — showed the new one.
+
 **Setup**
 
 1. Simulator: Settings → sign in with the same Apple ID, iCloud Drive on. Do this first,
@@ -667,18 +678,48 @@ iPad support (`TARGETED_DEVICE_FAMILY = "1,2"`) is a build setting plus a layout
 since the app has no size-class handling at all today, and is out of scope for this
 feature.
 
-| # | Scenario | Expected |
-|---|---|---|
-| 1 | Enable on device A with existing data; enable on fresh device B | B shows A's data; exactly one Backlog, one category per built-in type, one default recurring category |
-| 2 | Create/complete/archive/unarchive tasks on A | Appears on B without a relaunch (creating is confirmed, the other three are not) |
-| 3 | Both devices offline, edit different tasks, go online | Both edits present |
-| 4 | Both devices offline, edit the SAME task's title | One title wins (LWW), no crash, no duplicate |
-| 5 | Let the 3 AM reset pass, open A, then open B | Identical end state on both; recurring tasks in backlog on both, never archived; archived task appears once in the review overlay (first-opened device) |
-| 6 | Change `resetHour`/`makeItCountThreshold` on A | Value appears on B (KVS); next reset uses it on both |
-| 7 | Complete a recurring task on A while B is offline; complete it on B too; go online | Two clones in backlog (accepted limitation #1), nothing worse |
-| 8 | Sign out of iCloud on B | App keeps working locally; Settings shows the paused hint; sign back in → sync resumes |
-| 9 | Complete a task via widget/Siri on A, then open app A | Change reaches B after A's app ran |
-| 10 | Toggle sync off on A, edit, toggle on again | Local edits upload on re-enable; no data loss |
+| # | Scenario | Expected | Result (2026-08-25) |
+|---|---|---|---|
+| 1 | Enable on device A with existing data; enable on fresh device B | B shows A's data; exactly one Backlog, one category per built-in type, one default recurring category | ✅ Pass |
+| 2 | Create/complete/archive/unarchive tasks on A | Appears on B without a relaunch (creating is confirmed, the other three are not) | ✅ Pass |
+| 3 | Both devices offline, edit different tasks, go online | Both edits present | ✅ Pass |
+| 4 | Both devices offline, edit the SAME task's title | One title wins (LWW), no crash, no duplicate | ✅ Pass |
+| 5 | Let the 3 AM reset pass, open A, then open B | Identical end state on both; recurring tasks in backlog on both, never archived; archived task appears once in the review overlay (first-opened device) | ✅ Pass (simulated via the "Zeit +24h & Reset" debug button on both devices) |
+| 6 | Change `resetHour`/`makeItCountThreshold` on A | Value appears on B (KVS); next reset uses it on both | ✅ Pass |
+| 7 | Complete a recurring task on A while B is offline; complete it on B too; go online | Two clones in backlog (accepted limitation #1), nothing worse | ✅ Pass |
+| 8 | Sign out of iCloud on B | App keeps working locally; Settings shows the paused hint; sign back in → sync resumes | ❌ **Fail** — see finding below |
+| 9 | Complete a task via widget/Siri on A, then open app A | Change reaches B after A's app ran | ✅ Pass |
+| 10 | Toggle sync off on A, edit, toggle on again | Local edits upload on re-enable; no data loss | ✅ Pass |
+
+**Finding — Scenario 8: signing out of iCloud deletes local data.** Expected was "app
+keeps working locally, sync just pauses." Actual: `NSCloudKitMirroringDelegate` reacts
+to the `AccountLogout` event by calling `purgeMetadataAfterAccountChangeFromStore`,
+which logs "Removing rows after account change: Backlog" / "Category" / "Task" and
+empties all three entities from the local store — confirmed via `ZTASK`/`ZCATEGORY` row
+counts going to zero right after sign-out, and via `xcrun simctl spawn <udid> log show
+--predicate 'process == "Dawny"'`. This is built-in `NSPersistentCloudKitContainer`
+behavior, not a Simulator quirk, so it would reproduce identically on a real device.
+Signing back in and forcing a re-import (`simctl terminate` + `launch`) does restore the
+data from the other device, so nothing is unrecoverable as long as at least one signed-in
+device exists — but a lone device that signs out loses everything it hadn't synced
+elsewhere. Reviewed with Florian on 2026-08-25: **not treated as a deploy blocker** for
+now, accepted as a known limitation. A fix sketch (observe the account-change
+notification before the automatic purge runs, or drop to a local-only store instead of
+letting the reset happen) is parked as a follow-up task, not scheduled.
+
+**Finding — renamed tasks don't update live in a running app.** Not part of the original
+matrix, found while verifying scenario 3. A title changed on one device arrives
+correctly in the other device's store (confirmed by direct SQL query), but a
+already-running, already-rendered list on that device keeps showing the old title —
+even across a tab switch in the same process. Only a full app restart, once the import
+has settled, shows the new title. Root cause: the `reloadCount` mechanism from commit
+`a559229` (see above) only increments on backlog **membership** changes (task added or
+removed); a plain property mutation on an already-loaded task doesn't trigger it. This is
+not a Simulator delivery-timing artifact like the note above — the data was already
+correct in the store, only the observation failed to fire — so it would reproduce
+between two real devices too, just less often noticed since it requires the second
+device's app to already be open when the rename lands. Also reviewed and accepted as
+non-blocking on 2026-08-25.
 
 ---
 
@@ -692,7 +733,9 @@ feature.
    (§14.1).
 5. **PR 5 — EventKit no-op hardening + Settings footers** (§10.2, §11 leftovers).
 6. Two-device matrix (§14.2) on Debug builds — these run entirely against the
-   **Development** environment, so they need no Production schema.
+   **Development** environment, so they need no Production schema. **Done 2026-08-25**:
+   9/10 scenarios pass, the two findings (scenario 8 data loss on sign-out, live-rename
+   display gap) reviewed and accepted as non-blocking, no fix scheduled yet.
 7. **Only then** deploy the schema to Production (§13.3). Deploying is one-way: from
    that point the schema is additive-only forever, so any correction the two-device
    testing turns up is far cheaper to make before this step than after it.
