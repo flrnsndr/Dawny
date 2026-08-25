@@ -33,16 +33,32 @@ _Dieser Ablauf gilt für jeden Build, der in TestFlight oder den App Store geht.
 1. In Xcode: **Project → Dawny target → General**
 2. **Version** (`MARKETING_VERSION`) anpassen — Semver laut obiger Tabelle
 3. **Build** (`CURRENT_PROJECT_VERSION`) um +1 erhöhen
-4. Änderung committen:
+4. Änderung auf einem Branch committen. `main` ist per Repository-Ruleset geschützt, ein direkter Push wird mit `GH013` abgelehnt:
    ```bash
-   git add Dawny.xcodeproj/project.pbxproj
-   git commit -m "chore: bump version to X.Y.Z (build NNN)"
+   git checkout -b chore/bump-X.Y.Z
    ```
-5. Tag vergeben und pushen:
    ```bash
-   git tag vX.Y.Z
-   git push origin main --tags
+   git add Dawny.xcodeproj/project.pbxproj && git commit -m "chore: bump version to X.Y.Z (build NNN)"
    ```
+   ```bash
+   git push -u origin chore/bump-X.Y.Z
+   ```
+5. PR öffnen und mergen:
+   ```bash
+   gh pr create --base main --title "chore: bump version to X.Y.Z (build NNN)" --body "Version bump für den Release."
+   ```
+   ```bash
+   gh pr merge --merge --delete-branch
+   ```
+6. Erst **nach** dem Merge taggen, auf dem aktualisierten `main`:
+   ```bash
+   git checkout main && git pull
+   ```
+   ```bash
+   git tag vX.Y.Z && git push origin vX.Y.Z
+   ```
+
+   > **Den Tag einzeln pushen, nie mit `--tags` zusammen mit dem Branch.** Tags fallen nicht unter das Ruleset. Bei `git push origin main --tags` geht der Tag durch und nur der Branch wird abgelehnt. Der Tag zeigt dann auf einen Commit, den `main` nicht hat, und das fällt erst beim GitHub-Release auf.
 
 ---
 
