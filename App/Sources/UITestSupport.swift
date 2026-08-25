@@ -21,11 +21,25 @@ enum UITestSupport {
         ProcessInfo.processInfo.arguments.contains("--uitesting")
     }
 
+    /// Tests, die den Welcome-Flow selbst prüfen, holen ihn mit `--welcome-flow`
+    /// zurück, den `--uitesting` sonst überspringt.
+    static var wantsWelcomeFlow: Bool {
+        ProcessInfo.processInfo.arguments.contains("--welcome-flow")
+    }
+
     /// Setzt die Einstellungen, die sonst beim ersten Start Dialoge auslösen.
     /// Muss aus `DawnyApp.init()` laufen, bevor die erste View erscheint, sonst
     /// präsentiert `ContentView` den Welcome-Cover bereits.
     static func prepareForLaunch() {
-        AppSettings.shared.hasSeenWelcome = true
+        if wantsWelcomeFlow {
+            // Ausgangszustand wie bei einer Neuinstallation: der Cover erscheint und
+            // der Sync-Schalter der iCloud-Seite steht vorbelegt auf „an".
+            AppSettings.shared.hasSeenWelcome = false
+            AppSettings.shared.hasSeenICloudSyncIntro = false
+            AppSettings.shared.iCloudSyncEnabled = false
+        } else {
+            AppSettings.shared.hasSeenWelcome = true
+        }
         // Ohne Sync kein `requestFullAccessToReminders` und damit kein Systemdialog,
         // der den Test blockiert.
         AppSettings.shared.calendarSyncEnabled = false

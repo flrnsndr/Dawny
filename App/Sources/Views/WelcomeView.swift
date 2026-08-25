@@ -133,7 +133,15 @@ struct WelcomeView: View {
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
             .animation(.easeInOut(duration: 0.3), value: currentPage)
-            .highPriorityGesture(closeOnLastPageSwipeGesture)
+            // Nur auf der letzten Seite, und dort neben den Gesten der Kind-Elemente.
+            // Dauerhaft als `highPriorityGesture` über allen Seiten hat sie jede
+            // Berührung vorab beansprucht und damit auch den Wisch verschluckt, mit
+            // dem man durch das Onboarding blättert. `.subviews` schaltet auf den
+            // übrigen Seiten nur die eigene Geste ab.
+            .simultaneousGesture(
+                closeOnLastPageSwipeGesture,
+                including: isOnLastPage ? .all : .subviews
+            )
 
             bottomSection
                 .padding(.horizontal, 32)
@@ -278,12 +286,15 @@ struct WelcomeView: View {
         onDismiss()
     }
 
+    private var isOnLastPage: Bool {
+        currentPage == pages.count - 1
+    }
+
     private var closeOnLastPageSwipeGesture: some Gesture {
         DragGesture(minimumDistance: 24)
             .onEnded { value in
-                let isLastPage = currentPage == pages.count - 1
                 let isSwipeToNext = value.translation.width < -48
-                if isLastPage && isSwipeToNext {
+                if isOnLastPage && isSwipeToNext {
                     finish()
                 }
             }
