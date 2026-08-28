@@ -23,7 +23,7 @@ const { frontmatter } = Astro.props;
   altCanonicalPath={frontmatter.altCanonicalPath}
 >
   <article class="legal-article">
-    <div class="container-narrow">
+    <div class="legal-wrap">
       <p class="legal-eyebrow">
         <a href={`/${frontmatter.lang}/`} class="legal-back">← Dawny</a>
       </p>
@@ -39,21 +39,28 @@ const { frontmatter } = Astro.props;
   .legal-article {
     background: var(--color-paper);
     color: var(--color-ink);
-    padding: 8rem 0 6rem;
+    padding: clamp(4rem, 10vw, 7rem) 0 6rem;
     min-height: 80vh;
+  }
+
+  .legal-wrap {
+    width: 100%;
+    max-width: 46rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 2.5rem);
   }
 
   .legal-eyebrow {
     margin-bottom: 1.5rem;
     font-size: 0.85rem;
-    color: var(--color-ink-soft);
+    color: var(--color-muted);
   }
 
   .legal-back {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    color: var(--color-ink-soft);
+    color: var(--color-ink-2);
     transition: color 200ms;
   }
 
@@ -62,20 +69,20 @@ const { frontmatter } = Astro.props;
   }
 
   .legal-title {
-    font-family: var(--font-display);
+    font-family: var(--font-serif);
+    font-weight: 400;
     font-size: clamp(2rem, 4vw, 3rem);
     line-height: 1.1;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
     margin-bottom: 2.5rem;
   }
 
   .legal-prose {
     font-size: 1.0625rem;
     line-height: 1.7;
-    color: var(--color-ink-soft);
+    color: var(--color-ink-2);
   }
 
-  .legal-prose h1,
   .legal-prose h2,
   .legal-prose h3 {
     color: var(--color-ink);
@@ -85,7 +92,9 @@ const { frontmatter } = Astro.props;
   }
 
   .legal-prose h2 {
-    font-size: 1.5rem;
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 1.6rem;
   }
   .legal-prose h3 {
     font-size: 1.15rem;
@@ -108,26 +117,26 @@ const { frontmatter } = Astro.props;
   }
 
   .legal-prose a {
-    color: var(--color-horizon);
+    color: var(--color-accent);
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 3px;
   }
 
   .legal-prose a:hover {
-    color: var(--color-dawn);
+    color: var(--color-ink);
   }
 
   .legal-prose blockquote {
-    border-left: 3px solid var(--color-dawn);
+    border-left: 3px solid var(--color-accent);
     padding: 0.5rem 0 0.5rem 1.25rem;
-    background: rgba(245, 176, 66, 0.06);
+    background: var(--color-accent-soft);
     border-radius: 0 8px 8px 0;
     color: var(--color-ink);
   }
 
   .legal-prose code {
-    background: rgba(14, 26, 46, 0.06);
+    background: var(--color-paper-2);
     padding: 0.1rem 0.35rem;
     border-radius: 4px;
     font-size: 0.9em;
@@ -140,6 +149,6 @@ const { frontmatter } = Astro.props;
   .legal-prose hr {
     margin: 2.5rem 0;
     border: 0;
-    border-top: 1px dashed rgba(14, 26, 46, 0.15);
+    border-top: 1px solid var(--color-rule);
   }
 </style>

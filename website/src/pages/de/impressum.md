@@ -9,36 +9,35 @@ altCanonicalPath: "/imprint/"
 
 ## Angaben gemäß § 5 DDG
 
-**Florian Schneider**
-Postfach 11 13 15
-76063 Karlsruhe
+Florian Schneider<br>
+Kreuzstraße 26<br>
+76133 Karlsruhe<br>
 Deutschland
 
 ## Kontakt
 
-E-Mail: info@dawnyapp.com
+E-Mail: [info@dawnyapp.com](mailto:info@dawnyapp.com)
+
+Ich beantworte Anfragen in der Regel innerhalb weniger Tage.
 
 ## Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV
 
 Florian Schneider (Anschrift wie oben)
 
-## EU-Streitschlichtung
+## Verbraucherstreitbeilegung
 
-Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: [https://ec.europa.eu/consumers/odr](https://ec.europa.eu/consumers/odr/).
-Unsere E-Mail-Adresse findest du oben im Impressum.
-
-## Verbraucherstreitbeilegung / Universalschlichtungsstelle
-
-Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
+Ich bin nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
 
 ## Haftung für Inhalte
 
-Als Diensteanbieter sind wir gemäß § 7 Abs. 1 DDG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
+Als Diensteanbieter bin ich gemäß § 7 Abs. 1 DDG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG bin ich als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
 
 ## Haftung für Links
 
-Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.
+Dieses Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte ich keinen Einfluss habe. Deshalb kann ich für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.
 
-## Urheberrecht
+## Urheberrecht und Kennzeichen
 
-Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Marke „Dawny", das Dawny-Logo und das App-Icon sind Marken von Florian Schneider. Der Quellcode der App ist Open Source unter der MIT-Lizenz verfügbar.
+Die von mir erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. „Dawny", das Logo und das App-Icon sind Kennzeichen von Florian Schneider. Der Quellcode der App steht unter der MIT-Lizenz öffentlich zur Verfügung.
+
+Apple, das Apple-Logo, iPhone, iPad, Mac, Apple Watch, iCloud, Siri und App Store sind Marken der Apple Inc., eingetragen in den USA und anderen Ländern. App Store ist eine Dienstleistungsmarke der Apple Inc.
