@@ -1,0 +1,112 @@
+---
+import { getDict, type Lang } from "@/i18n";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const dict = getDict(lang);
+const d = dict.demo;
+
+// NOTE: static scaffold only. Step 7 of the relaunch ports the guided animation
+// from website/prototype/demo.js into src/scripts/reset-stage.ts and wires the
+// timeline, pause control and reduced-motion path. Without JavaScript this
+// end-state stays on screen, which is the intended progressive-enhancement
+// fallback (concept 4.2).
+---
+
+<section id="reset" class="stage section-y" aria-labelledby="stage-title">
+  <div class="container">
+    <p class="kicker">{d.kicker}</p>
+    <h2 id="stage-title" class="stage__heading">{d.heading}</h2>
+    <p class="stage__line">{d.line}</p>
+
+    <div class="stage__panes">
+      <div class="stage__pane">
+        <h3>{d.columns.backlog}</h3>
+        <ul>
+          <li>Reisepass verlängern</li>
+          <li>Urlaub planen</li>
+        </ul>
+      </div>
+      <div class="stage__pane">
+        <h3>{d.columns.today}</h3>
+        <p class="stage__empty">–</p>
+      </div>
+      <div class="stage__pane">
+        <h3>{d.columns.archive}</h3>
+        <p class="stage__sub">{d.archiveSections.done}</p>
+        <ul>
+          <li class="is-done">Tickets kaufen</li>
+        </ul>
+        <p class="stage__sub">{d.archiveSections.archived}</p>
+        <ul>
+          <li>Rezept abholen</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .stage {
+    background: var(--color-night);
+    color: var(--color-night-ink);
+  }
+  .stage .kicker {
+    color: var(--color-accent);
+  }
+  .stage__heading {
+    margin-top: 0.5rem;
+    color: var(--color-night-ink);
+  }
+  .stage__line {
+    margin-top: 1.25rem;
+    max-width: 52ch;
+    color: var(--color-night-muted);
+  }
+  .stage__panes {
+    margin-top: clamp(2.5rem, 6vw, 4rem);
+    display: grid;
+    gap: 1rem;
+  }
+  @media (min-width: 760px) {
+    .stage__panes {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .stage__pane {
+    background: var(--color-night-2);
+    border: 1px solid var(--color-night-rule);
+    border-radius: 1rem;
+    padding: 1.25rem;
+  }
+  .stage__pane h3 {
+    color: var(--color-night-ink);
+    margin-bottom: 0.75rem;
+  }
+  .stage__pane ul {
+    list-style: none;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .stage__pane li {
+    font-size: 0.9375rem;
+    color: var(--color-night-ink);
+  }
+  .stage__pane li.is-done {
+    color: var(--color-night-muted);
+    text-decoration: line-through;
+  }
+  .stage__sub {
+    margin: 0.75rem 0 0.5rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-night-muted);
+  }
+  .stage__empty {
+    color: var(--color-night-muted);
+  }
+</style>

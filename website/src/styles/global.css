@@ -191,24 +191,19 @@
 }
 
 /* Reveal-on-scroll, driven by the single observer in page.ts. Split blocks only,
-   300ms / 12px / soft ease, nothing over 400ms (concept 6.5). */
+   300ms / 12px / soft ease, nothing over 400ms (concept 6.5).
+   Progressive enhancement: elements are only hidden once page.ts has added
+   `reveal-ready` to <html>. No JS, failed JS, or reduced motion -> fully visible. */
 @layer components {
-  [data-reveal] {
+  .reveal-ready [data-reveal] {
     opacity: 0;
     transform: translateY(12px);
     transition:
       opacity 300ms var(--ease-soft),
       transform 300ms var(--ease-soft);
   }
-  [data-reveal].is-revealed {
+  .reveal-ready [data-reveal].is-revealed {
     opacity: 1;
     transform: none;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    [data-reveal] {
-      opacity: 1;
-      transform: none;
-      transition: none;
-    }
   }
 }

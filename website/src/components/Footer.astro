@@ -1,7 +1,5 @@
 ---
-import { Image } from "astro:assets";
-import { type Lang, getDict, GITHUB_URL, CONTACT_EMAIL } from "@/i18n";
-import iconLight from "@/assets/icons/dawny-icon-light.png";
+import { type Lang, getDict, alternateLang, GITHUB_URL, CONTACT_EMAIL } from "@/i18n";
 
 interface Props {
   lang: Lang;
@@ -9,81 +7,95 @@ interface Props {
 
 const { lang } = Astro.props;
 const dict = getDict(lang);
-const year = new Date().getFullYear();
-const rights = dict.footer.rights.replace("{year}", String(year));
+const altLang = alternateLang(lang);
+
 const privacyPath = lang === "de" ? "/de/datenschutz/" : "/en/privacy/";
 const imprintPath = lang === "de" ? "/de/impressum/" : "/en/imprint/";
+const altHref = `/${altLang}/`;
+
+const links = [
+  { href: imprintPath, label: dict.footer.links.imprint },
+  { href: privacyPath, label: dict.footer.links.privacy },
+  { href: `mailto:${CONTACT_EMAIL}`, label: dict.footer.links.contact },
+  { href: GITHUB_URL, label: dict.footer.links.github, external: true },
+];
 ---
 
-<footer class="relative bg-[var(--color-night-deep)] text-white/70 pt-20 pb-12 overflow-hidden">
-  <div
-    class="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-white/15 to-transparent"
-    aria-hidden="true"
-  ></div>
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <p class="site-footer__mark">Dawny</p>
 
-  <div class="container-content grid gap-10 md:grid-cols-[1.4fr_1fr] items-start">
-    <div class="space-y-4">
-      <div class="flex items-center gap-3">
-        <Image
-          src={iconLight}
-          alt=""
-          width={32}
-          height={32}
-          widths={[32, 64]}
-          sizes="32px"
-          class="h-8 w-8 rounded-md opacity-90"
-          loading="lazy"
-        />
-        <span class="text-display text-lg text-white">Dawny</span>
-      </div>
-      <p class="max-w-md text-sm text-white/60 leading-relaxed">
-        {dict.footer.tagline}
-      </p>
-    </div>
-
-    <nav class="text-sm grid grid-cols-2 gap-x-6 gap-y-3" aria-label="Footer">
-      <a
-        href={`/${lang}/#faq-bedienung`}
-        class="text-white/60 hover:text-white transition-colors"
-        data-ph-event="faq_click"
-        data-ph-location="footer"
-      >{dict.footer.links.faq}</a>
-      <a
-        href={privacyPath}
-        class="text-white/60 hover:text-white transition-colors"
-        data-ph-event="legal_click"
-        data-ph-target="privacy"
-      >{dict.footer.links.privacy}</a>
-      <a
-        href={imprintPath}
-        class="text-white/60 hover:text-white transition-colors"
-        data-ph-event="legal_click"
-        data-ph-target="imprint"
-      >{dict.footer.links.imprint}</a>
-      <a
-        href={GITHUB_URL}
-        target="_blank"
-        rel="noopener"
-        class="text-white/60 hover:text-white transition-colors inline-flex items-center gap-1.5"
-        data-ph-event="outbound_click"
-        data-ph-target="github"
-      >
-        {dict.footer.links.github}
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path d="M7 17L17 7M17 7H8M17 7v9"/>
-        </svg>
-      </a>
-      <a
-        href={`mailto:${CONTACT_EMAIL}`}
-        class="text-white/60 hover:text-white transition-colors"
-        data-ph-event="outbound_click"
-        data-ph-target="mail"
-      >{dict.footer.links.mail}</a>
+    <nav class="site-footer__nav" aria-label={dict.footer.links.imprint}>
+      {
+        links.map((l) => (
+          <a
+            href={l.href}
+            class="site-footer__link"
+            {...(l.external ? { target: "_blank", rel: "noopener" } : {})}
+          >
+            {l.label}
+          </a>
+        ))
+      }
     </nav>
+
+    <a
+      href={altHref}
+      hreflang={altLang}
+      class="site-footer__lang"
+      data-ph-event="language_toggle"
+      data-ph-target={altLang}
+    >{altLang.toUpperCase()}</a>
   </div>
 
-  <div class="container-content mt-12 pt-6 border-t border-white/8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs text-white/40">
-    <p>{rights}</p>
-    <p class="font-mono">v1.0</p>
-  </div>
+  <p class="container site-footer__made">{dict.footer.madeIn}</p>
 </footer>
+
+<style>
+  .site-footer {
+    background: var(--color-night);
+    color: var(--color-night-muted);
+    padding-block: 3.5rem 2.5rem;
+  }
+  .site-footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 2rem;
+  }
+  .site-footer__mark {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    color: var(--color-night-ink);
+  }
+  .site-footer__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    font-size: 0.9375rem;
+  }
+  .site-footer__link {
+    color: var(--color-night-muted);
+    transition: color 150ms;
+  }
+  .site-footer__link:hover {
+    color: var(--color-night-ink);
+  }
+  .site-footer__lang {
+    margin-left: auto;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--color-night-muted);
+    transition: color 150ms;
+  }
+  .site-footer__lang:hover {
+    color: var(--color-night-ink);
+  }
+  .site-footer__made {
+    margin-top: 2rem;
+    font-size: 0.8125rem;
+  }
+  :where(.site-footer a):focus-visible {
+    outline-color: var(--color-night-ink);
+  }
+</style>

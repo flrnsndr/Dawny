@@ -1,0 +1,341 @@
+---
+import type { GetStaticPaths } from "astro";
+import { Image, getImage } from "astro:assets";
+import Base from "@/layouts/Base.astro";
+import SplitBlock from "@/components/SplitBlock.astro";
+import FaqSection from "@/components/FaqSection.astro";
+import ResetStage from "@/components/ResetStage.astro";
+import AppStoreBadge from "@/components/AppStoreBadge.astro";
+import { getDict, type Lang } from "@/i18n";
+import { faqEntries, type FaqBlock } from "@/data/faq";
+import { faqBlocks as faqDe } from "@/data/faq.de";
+import { faqBlocks as faqEn } from "@/data/faq.en";
+
+import heroImg from "@/assets/screenshots/hero-heute.png";
+import backlogImg from "@/assets/screenshots/backlog.png";
+import todayImg from "@/assets/screenshots/heute.png";
+import archiveImg from "@/assets/screenshots/archiv.png";
+import widgetsImg from "@/assets/screenshots/widgets.png";
+import iconLight from "@/assets/icons/dawny-icon-light.png";
+import iconDarkSrc from "@/assets/icons/dawny-icon-dark.png";
+
+export const getStaticPaths = (() => [
+  { params: { lang: "en" } },
+  { params: { lang: "de" } },
+]) satisfies GetStaticPaths;
+
+const lang = Astro.params.lang as Lang;
+const dict = getDict(lang);
+
+const faqBlocks: FaqBlock[] = lang === "de" ? faqDe : faqEn;
+const block = (id: FaqBlock["id"]) => faqBlocks.find((b) => b.id === id)!;
+const faq = faqEntries(faqBlocks);
+
+const usageImages = [backlogImg, todayImg, archiveImg];
+const iconDark = await getImage({ src: iconDarkSrc, width: 192, height: 192, format: "webp" });
+---
+
+<Base lang={lang} canonicalPath="/" faq={faq}>
+  {/* ---------- Hero ---------- */}
+  <section class="hero">
+    <div class="container hero__grid">
+      <div class="hero__text">
+        <p class="kicker">{dict.hero.kicker}</p>
+        <h1>{dict.hero.headline}</h1>
+        <p class="hero__lead">{dict.hero.lead}</p>
+        <div class="hero__cta">
+          <AppStoreBadge lang={lang} location="hero" height={48} />
+          <p class="hero__note">{dict.hero.ctaNote}</p>
+        </div>
+      </div>
+      <div class="hero__media">
+        <Image
+          class="hero__shot"
+          src={heroImg}
+          alt={dict.hero.imageAlt}
+          widths={[320, 480, 660]}
+          sizes="(min-width: 900px) 40vw, 82vw"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+  </section>
+
+  {/* ---------- Guided demo ---------- */}
+  <ResetStage lang={lang} />
+
+  {/* ---------- FAQ A: the reset ---------- */}
+  <FaqSection lang={lang} block={block("reset")} />
+
+  {/* ---------- Usage: the three places ---------- */}
+  <section id="bedienung" class="usage section-y">
+    <div class="container">
+      <p class="kicker">{dict.usage.kicker}</p>
+      <div class="usage__blocks">
+        {
+          dict.usage.blocks.map((b, i) => (
+            <SplitBlock
+              kicker={b.kicker}
+              heading={b.heading}
+              lead={b.lead}
+              list={b.list}
+              close={b.close}
+              image={usageImages[i]}
+              imageAlt={b.imageAlt}
+              reversed={i % 2 === 1}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* ---------- FAQ B: using it ---------- */}
+  <FaqSection lang={lang} block={block("bedienung")} />
+
+  {/* ---------- Haltung ---------- */}
+  <section id="haltung" class="haltung section-y">
+    <div class="container haltung__inner">
+      <p class="kicker">{dict.haltung.kicker}</p>
+      <h2 class="haltung__heading">{dict.haltung.heading}</h2>
+      {dict.haltung.paragraphs.map((p) => <p class="haltung__p">{p}</p>)}
+    </div>
+  </section>
+
+  {/* ---------- FAQ C: the idea ---------- */}
+  <FaqSection lang={lang} block={block("konzept")} />
+
+  {/* ---------- Devices ---------- */}
+  <section id="geraete" class="devices section-y">
+    <div class="container">
+      <p class="kicker">{dict.geraete.kicker}</p>
+      <SplitBlock
+        as="h2"
+        kicker={dict.geraete.widgets.kicker}
+        heading={dict.geraete.widgets.heading}
+        lead={dict.geraete.widgets.lead}
+        close={dict.geraete.widgets.close}
+        image={widgetsImg}
+        imageAlt={dict.geraete.widgets.imageAlt}
+      />
+      <ul class="factgrid">
+        {
+          dict.geraete.grid.map((tile) => (
+            <li class="factgrid__tile">
+              <h3>{tile.title}</h3>
+              <p>{tile.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  {/* ---------- FAQ D: devices, sync, widgets ---------- */}
+  <FaqSection lang={lang} block={block("technik")} />
+
+  {/* ---------- Trust band ---------- */}
+  <section id="vertrauen" class="trust section-y">
+    <div class="container trust__inner">
+      <p class="kicker">{dict.vertrauen.kicker}</p>
+      <ul class="trust__stats">
+        {
+          dict.vertrauen.stats.map((s) => (
+            <li>
+              <span class="trust__value">{s.value}</span>
+              <span class="trust__label">{s.label}</span>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="trust__note">{dict.vertrauen.note}</p>
+    </div>
+  </section>
+
+  {/* ---------- FAQ E: data, cost, support ---------- */}
+  <FaqSection lang={lang} block={block("daten")} />
+
+  {/* ---------- Final CTA ---------- */}
+  <section class="final section-y">
+    <div class="container final__inner">
+      <picture>
+        <source srcset={iconDark.src} media="(prefers-color-scheme: dark)" />
+        <Image src={iconLight} alt={dict.finalCta.iconAlt} width={96} height={96} widths={[96, 192]} sizes="96px" loading="lazy" class="final__icon" />
+      </picture>
+      <h2 class="final__heading">{dict.finalCta.heading}</h2>
+      <AppStoreBadge lang={lang} location="final" height={48} />
+      <p class="final__note">{dict.finalCta.note}</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ---------- Hero ---------- */
+  .hero {
+    background: var(--color-paper-warm);
+    border-bottom: 1px solid var(--color-rule);
+    padding-block: clamp(3rem, 7vw, 6rem);
+  }
+  .hero__grid {
+    display: grid;
+    gap: clamp(2.5rem, 6vw, 5rem);
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .hero__grid {
+      grid-template-columns: 1.05fr 0.95fr;
+    }
+  }
+  .hero h1 {
+    margin-top: 1.25rem;
+  }
+  .hero__lead {
+    margin-top: 1.5rem;
+    max-width: 46ch;
+    font-size: clamp(1.0625rem, 0.98rem + 0.4vw, 1.1875rem);
+    color: var(--color-ink-2);
+  }
+  .hero__cta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+    margin-top: 2.25rem;
+  }
+  .hero__note {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    max-width: 24ch;
+  }
+  .hero__media {
+    display: flex;
+    justify-content: center;
+  }
+  .hero__shot {
+    width: min(320px, 82%);
+    height: auto;
+    border: 1px solid var(--color-rule);
+    border-bottom: 0;
+    border-radius: 1.75rem 1.75rem 0 0;
+    -webkit-mask-image: linear-gradient(to bottom, #000 84%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 84%, transparent 100%);
+  }
+
+  /* ---------- Usage ---------- */
+  .usage__blocks {
+    margin-top: 2.5rem;
+    display: grid;
+    gap: clamp(3.5rem, 8vw, 6rem);
+  }
+
+  /* ---------- Haltung ---------- */
+  .haltung {
+    background: var(--color-paper-warm);
+  }
+  .haltung__inner {
+    max-width: 62ch;
+  }
+  .haltung__heading {
+    margin-top: 0.75rem;
+  }
+  .haltung__p {
+    margin-top: 1.5rem;
+    color: var(--color-ink-2);
+  }
+
+  /* ---------- Devices ---------- */
+  .factgrid {
+    margin-top: clamp(3rem, 6vw, 4.5rem);
+    list-style: none;
+    display: grid;
+    gap: 1px;
+    background: var(--color-rule);
+    border: 1px solid var(--color-rule);
+    border-radius: 1rem;
+    overflow: clip;
+  }
+  @media (min-width: 640px) {
+    .factgrid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (min-width: 960px) {
+    .factgrid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .factgrid__tile {
+    background: var(--color-card);
+    padding: 1.5rem;
+  }
+  .factgrid__tile h3 {
+    margin-bottom: 0.4rem;
+  }
+  .factgrid__tile p {
+    font-size: 0.9375rem;
+    color: var(--color-ink-2);
+  }
+
+  /* ---------- Trust band ---------- */
+  .trust {
+    background: var(--color-paper-2);
+  }
+  .trust__stats {
+    margin-top: 1.5rem;
+    list-style: none;
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 720px) {
+    .trust__stats {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .trust__value {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: clamp(1.75rem, 1.3rem + 1.8vw, 2.5rem);
+    color: var(--color-ink);
+  }
+  .trust__label {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 0.9375rem;
+    color: var(--color-ink-2);
+  }
+  .trust__note {
+    margin-top: 2.5rem;
+    max-width: 60ch;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+  }
+
+  /* ---------- Final CTA ---------- */
+  .final {
+    text-align: center;
+  }
+  .final__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .final__icon {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 22.4%;
+    border: 1px solid var(--color-rule);
+  }
+  .final__heading {
+    margin: 1.75rem auto 0;
+    max-width: 20ch;
+  }
+  .final :global(.app-store-badge) {
+    margin-top: 2rem;
+  }
+  .final__note {
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+</style>

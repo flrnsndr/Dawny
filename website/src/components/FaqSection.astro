@@ -1,0 +1,151 @@
+---
+import type { FaqBlock } from "@/data/faq";
+import { getDict, type Lang } from "@/i18n";
+
+interface Props {
+  lang: Lang;
+  block: FaqBlock;
+}
+
+const { lang, block } = Astro.props;
+const dict = getDict(lang);
+
+const surface = {
+  paper: "var(--color-paper)",
+  "paper-warm": "var(--color-paper-warm)",
+  "paper-2": "var(--color-paper-2)",
+}[block.surface];
+---
+
+<section
+  id={block.anchor}
+  class="faq section-y"
+  style={`background:${surface}`}
+  aria-labelledby={`${block.anchor}-title`}
+>
+  <div class="container faq__inner">
+    <p class="kicker">FAQ</p>
+    <h2 id={`${block.anchor}-title`} class="faq__title">{block.title}</h2>
+    <p class="faq__intro">{block.intro}</p>
+
+    {
+      block.groups.map((group) => (
+        <div class="faq__group">
+          {group.label && <p class="faq__group-label">{group.label}</p>}
+          {group.items.map((item) => (
+            <details id={item.id} class="faq__item">
+              <summary class="faq__question">
+                <span>{item.q}</span>
+                <svg class="faq__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                  <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                </svg>
+              </summary>
+              <div class="faq__answer">
+                <p>{item.a}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      ))
+    }
+
+    {
+      block.next && (
+        <a class="faq__next" href={`#${block.next.anchor}`}>
+          {dict.faqNav.next} {block.next.label}
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <path
+              d="M3 8h10M9 4l4 4-4 4"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              fill="none"
+            />
+          </svg>
+        </a>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .faq__inner {
+    max-width: 44rem;
+  }
+  .faq__title {
+    margin-top: 0.5rem;
+  }
+  .faq__intro {
+    margin-top: 0.75rem;
+    color: var(--color-muted);
+  }
+  .faq__group {
+    margin-top: 2.5rem;
+  }
+  .faq__group + .faq__group {
+    margin-top: 3.5rem;
+  }
+  .faq__group-label {
+    margin-bottom: 0.5rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+  .faq__item {
+    border-top: 1px solid var(--color-rule);
+  }
+  .faq__item:last-child {
+    border-bottom: 1px solid var(--color-rule);
+  }
+  .faq__question {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 0;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: var(--color-ink);
+    list-style: none;
+    cursor: pointer;
+  }
+  .faq__question::-webkit-details-marker {
+    display: none;
+  }
+  .faq__icon {
+    flex: none;
+    align-self: center;
+    color: var(--color-muted);
+    transition: transform 200ms var(--ease-soft);
+  }
+  .faq__item[open] .faq__icon {
+    transform: rotate(135deg);
+  }
+  .faq__answer {
+    padding-bottom: 1.25rem;
+    max-width: 62ch;
+  }
+  .faq__answer p {
+    color: var(--color-ink-2);
+  }
+  .faq__next {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 2.5rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-accent);
+  }
+  .faq__next:hover {
+    color: var(--color-ink);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .faq__icon {
+      transition: none;
+    }
+  }
+</style>

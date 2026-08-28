@@ -3,7 +3,9 @@
  *
  *  1. Reveal-on-scroll for `[data-reveal]` elements, via a single
  *     IntersectionObserver that unobserves each element once shown. Nothing is
- *     wired to the scroll event (see concept 7.10).
+ *     wired to the scroll event (see concept 7.10). Progressive enhancement:
+ *     this script adds `reveal-ready` to <html>, and only then does the CSS
+ *     hide the elements. No JS or reduced motion means everything stays visible.
  *  2. Deep-link opener: if the URL hash points at a `<details>` (a FAQ item),
  *     open it and scroll it into view. Stateless, no storage.
  */
@@ -12,12 +14,9 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
 
 function initReveal(): void {
   const els = document.querySelectorAll<HTMLElement>("[data-reveal]");
-  if (!els.length) return;
+  if (!els.length || reduceMotion || !("IntersectionObserver" in window)) return;
 
-  if (reduceMotion || !("IntersectionObserver" in window)) {
-    els.forEach((el) => el.classList.add("is-revealed"));
-    return;
-  }
+  document.documentElement.classList.add("reveal-ready");
 
   const io = new IntersectionObserver(
     (entries) => {

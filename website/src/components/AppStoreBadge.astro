@@ -1,0 +1,49 @@
+---
+import { type Lang, APP_STORE_URL } from "@/i18n";
+
+interface Props {
+  lang: Lang;
+  /** PostHog location tag for the click event. */
+  location: string;
+  /** Rendered height in px. Apple requires at least 40. */
+  height?: number;
+  class?: string;
+}
+
+const { lang, location, height = 44, class: className = "" } = Astro.props;
+
+// Official Apple badge, used unmodified (concept 2.4). The badge is the button.
+// Black on light backgrounds, white on dark — keyed to the page's colour scheme.
+const alt = lang === "de" ? "Dawny im App Store laden" : "Download Dawny on the App Store";
+const src = (variant: "blk" | "wht") => `/assets/app-store-badge-${lang}-${variant}.svg`;
+// Native SVG aspect ratio is 119.66407 × 40.
+const width = Math.round((height * 119.66407) / 40);
+---
+
+<a
+  href={APP_STORE_URL}
+  target="_blank"
+  rel="noopener"
+  class:list={["app-store-badge", className]}
+  data-ph-event="appstore_click"
+  data-ph-location={location}
+>
+  <picture>
+    <source srcset={src("wht")} media="(prefers-color-scheme: dark)" />
+    <img src={src("blk")} alt={alt} width={width} height={height} decoding="async" />
+  </picture>
+</a>
+
+<style define:vars={{ badgeHeight: `${height}px` }}>
+  .app-store-badge {
+    display: inline-block;
+    /* Clear space: at least one tenth of the badge height on every side. */
+    padding: calc(var(--badgeHeight) / 10);
+    margin: calc(var(--badgeHeight) / -10);
+    border-radius: 12px;
+  }
+  .app-store-badge img {
+    height: var(--badgeHeight);
+    width: auto;
+  }
+</style>
