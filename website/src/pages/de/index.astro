@@ -1,34 +1,20 @@
 ---
 import Base from "@/layouts/Base.astro";
-import SunriseStage from "@/components/SunriseStage.astro";
-import HeroSunrise from "@/components/HeroSunrise.astro";
-import ManifestStatement from "@/components/ManifestStatement.astro";
-import ResetAnimation from "@/components/ResetAnimation.astro";
-import TwoLists from "@/components/TwoLists.astro";
-import ContrastBlock from "@/components/ContrastBlock.astro";
-import AudienceBlock from "@/components/AudienceBlock.astro";
-import RemindersBlock from "@/components/RemindersBlock.astro";
-import FaqBlock from "@/components/FaqBlock.astro";
-
-import FinalCTA from "@/components/FinalCTA.astro";
-import { getDict } from "@/i18n";
+import { faqBlocks } from "@/data/faq.de";
+import { faqEntries } from "@/data/faq";
 
 const lang = "de" as const;
-const dict = getDict(lang);
-const faq = dict.faq.items.map((item) => ({ question: item.q, answer: item.a }));
+const faq = faqEntries(faqBlocks);
 ---
 
 <Base lang={lang} canonicalPath="/" faq={faq}>
-  <SunriseStage>
-    <HeroSunrise lang={lang} />
-    <ManifestStatement lang={lang} />
-  </SunriseStage>
-  <ResetAnimation lang={lang} />
-
-  <TwoLists lang={lang} />
-  <ContrastBlock lang={lang} />
-  <AudienceBlock lang={lang} />
-  <RemindersBlock lang={lang} />
-  <FaqBlock lang={lang} />
-  <FinalCTA lang={lang} />
+  <section class="mx-auto max-w-[1140px] px-6 py-24">
+    <p class="text-sm uppercase tracking-[0.08em] text-[var(--color-muted)]">To-do-App fürs iPhone</p>
+    <h1 class="font-serif text-[clamp(2.5rem,6vw,4.5rem)] leading-[1.05] text-[var(--color-ink)]">
+      Jeden Morgen eine leere Liste.
+    </h1>
+    <p class="mt-6 max-w-[62ch] text-[var(--color-ink-2)]">
+      Seitengerüst folgt in den nächsten Schritten.
+    </p>
+  </section>
 </Base>

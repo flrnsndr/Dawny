@@ -7,7 +7,13 @@
   "nav": {
     "skipToContent": "Skip to content",
     "languageLabel": "Language",
-    "appStore": "App Store"
+    "menuLabel": "Main navigation",
+    "appStore": "App Store",
+    "links": {
+      "reset": "The reset",
+      "usage": "Using it",
+      "faq": "Questions"
+    }
   },
   "hero": {
     "eyebrow": "For people who hate to-do lists",
@@ -185,12 +191,5 @@
   "legal": {
     "privacyTitle": "Privacy Policy",
     "imprintTitle": "Imprint"
-  },
-  "blog": {
-    "title": "Blog",
-    "description": "Practical guides on daily planning, task management, and beating decision fatigue. From the team behind Dawny, the iOS task app built on a daily reset.",
-    "readMore": "Read article",
-    "backToBlog": "← Blog",
-    "publishedOn": "Published"
   }
 }

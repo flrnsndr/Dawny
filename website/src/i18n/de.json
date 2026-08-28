@@ -7,7 +7,13 @@
   "nav": {
     "skipToContent": "Zum Inhalt springen",
     "languageLabel": "Sprache",
-    "appStore": "App Store"
+    "menuLabel": "Hauptnavigation",
+    "appStore": "App Store",
+    "links": {
+      "reset": "Der Reset",
+      "usage": "Bedienung",
+      "faq": "Fragen"
+    }
   },
   "hero": {
     "eyebrow": "Für alle, die To-do-Listen hassen",
@@ -185,12 +191,5 @@
   "legal": {
     "privacyTitle": "Datenschutzerklärung",
     "imprintTitle": "Impressum"
-  },
-  "blog": {
-    "title": "Blog",
-    "description": "Praktische Anleitungen zu Tagesplanung, Aufgabenmanagement und wie du Entscheidungsmüdigkeit überwindest. Vom Team hinter Dawny, der iOS-App mit täglichem Reset.",
-    "readMore": "Artikel lesen",
-    "backToBlog": "← Blog",
-    "publishedOn": "Veröffentlicht"
   }
 }

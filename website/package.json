@@ -21,7 +21,6 @@
     "@fontsource/instrument-serif": "^5.1.0",
     "@tailwindcss/vite": "^4.2.0",
     "astro": "^5.18.0",
-    "motion": "^11.15.0",
     "tailwindcss": "^4.2.0"
   },
   "devDependencies": {

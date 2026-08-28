@@ -1,19 +1,6 @@
 ---
 import { type Lang, getDict, APP_STORE_URL, GITHUB_URL } from "@/i18n";
-import type { FaqEntry } from "@/lib/blog";
-
-export interface ArticleMeta {
-  title: string;
-  description: string;
-  abstract?: string | null;
-  datePublished: Date;
-  wordCount?: number;
-  faq?: FaqEntry[];
-}
-
-export interface BlogIndexMeta {
-  posts: { url: string; title: string; description: string; datePublished: Date }[];
-}
+import type { FaqEntry } from "@/data/faq";
 
 interface Props {
   lang: Lang;
@@ -22,15 +9,11 @@ interface Props {
   title: string;
   description: string;
   image: string;
-  article?: ArticleMeta;
-  blogIndex?: BlogIndexMeta;
-  /** FAQ entries for pages that are not articles, such as the landing page. */
+  /** FAQ entries for the landing page. Emitted as one FAQPage per language. */
   faq?: FaqEntry[];
 }
 
-const { lang, url, title, description, image, article, blogIndex, faq } = Astro.props;
-
-const faqEntries = article?.faq ?? faq;
+const { lang, url, title, description, image, faq } = Astro.props;
 
 const dict = getDict(lang);
 const site = Astro.site?.toString().replace(/\/$/, "") ?? "";
@@ -42,9 +25,7 @@ const ids = {
   app: `${site}/#app`,
   person: `${site}/#person`,
   page: `${url}#webpage`,
-  article: `${url}#article`,
   faq: `${url}#faq`,
-  blog: `${site}/${lang}/blog/#blog`,
 };
 
 const person = {
@@ -65,8 +46,6 @@ const website = {
   publisher: { "@id": ids.person },
 };
 
-// The app description always comes from the dictionary, never from the current
-// page — an article's summary describes the article, not the product.
 const app = {
   "@type": "SoftwareApplication",
   "@id": ids.app,
@@ -78,7 +57,6 @@ const app = {
   inLanguage,
   installUrl: APP_STORE_URL,
   downloadUrl: APP_STORE_URL,
-  softwareVersion: "0.1",
   author: { "@id": ids.person },
   publisher: { "@id": ids.person },
   sameAs: [APP_STORE_URL, GITHUB_URL],
@@ -104,58 +82,16 @@ const webPage = {
 
 const graph: Record<string, unknown>[] = [person, website, app, webPage];
 
-if (article) {
-  graph.push({
-    "@type": "BlogPosting",
-    "@id": ids.article,
-    headline: article.title,
-    description: article.description,
-    ...(article.abstract ? { abstract: article.abstract } : {}),
-    datePublished: article.datePublished.toISOString(),
-    dateModified: article.datePublished.toISOString(),
-    inLanguage,
-    url,
-    mainEntityOfPage: { "@id": ids.page },
-    image,
-    author: { "@id": ids.person },
-    publisher: { "@id": ids.person },
-    isPartOf: { "@id": ids.blog },
-    ...(article.wordCount ? { wordCount: article.wordCount } : {}),
-  });
-}
-
-if (faqEntries?.length) {
+if (faq?.length) {
   graph.push({
     "@type": "FAQPage",
     "@id": ids.faq,
     inLanguage,
     isPartOf: { "@id": ids.page },
-    mainEntity: faqEntries.map((entry) => ({
+    mainEntity: faq.map((entry) => ({
       "@type": "Question",
       name: entry.question,
       acceptedAnswer: { "@type": "Answer", text: entry.answer },
-    })),
-  });
-}
-
-if (blogIndex) {
-  graph.push({
-    "@type": "Blog",
-    "@id": ids.blog,
-    url,
-    name: `${dict.blog.title} — Dawny`,
-    description,
-    inLanguage,
-    isPartOf: { "@id": ids.website },
-    publisher: { "@id": ids.person },
-    blogPost: blogIndex.posts.map((post) => ({
-      "@type": "BlogPosting",
-      "@id": `${post.url}#article`,
-      headline: post.title,
-      description: post.description,
-      datePublished: post.datePublished.toISOString(),
-      url: post.url,
-      author: { "@id": ids.person },
     })),
   });
 }
