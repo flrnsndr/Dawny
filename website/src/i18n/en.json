@@ -31,6 +31,12 @@
     "resume": "Resume",
     "columns": { "backlog": "Backlog", "today": "Today", "archive": "Archive" },
     "archiveSections": { "done": "Completed", "archived": "Archived" },
+    "tasks": {
+      "urlaub": "Plan a trip ☀️",
+      "pass": "Renew passport",
+      "rezept": "Pick up prescription",
+      "tickets": "Buy tickets 🎟️"
+    },
     "steps": ["Before", "Morning", "During the day", "3 AM", "Next morning"],
     "captions": [
       "Before: The Backlog collects everything that is coming up at some point. Today is empty.",

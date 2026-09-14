@@ -31,6 +31,12 @@
     "resume": "Weiter",
     "columns": { "backlog": "Backlog", "today": "Heute", "archive": "Archiv" },
     "archiveSections": { "done": "Erledigt", "archived": "Archiviert" },
+    "tasks": {
+      "urlaub": "Urlaub planen ☀️",
+      "pass": "Reisepass verlängern",
+      "rezept": "Rezept abholen",
+      "tickets": "Tickets kaufen 🎟️"
+    },
     "steps": ["Vorher", "Morgens", "Tagsüber", "03:00 Uhr", "Nächster Morgen"],
     "captions": [
       "Vorher: Im Backlog sammelt sich, was irgendwann ansteht. Heute ist leer.",
