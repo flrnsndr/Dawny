@@ -18,30 +18,30 @@
   "hero": {
     "kicker": "The iPhone to-do app",
     "headline": "A clean list every morning.",
-    "lead": "What you take on for today counts. At 3 a.m. the day ends: what you finished is filed away, what you didn't moves to the archive instead of piling up. In the morning you decide again what really matters today.",
+    "lead": "What you take on for today counts. At 3 a.m. everything resets: what you finished is filed away, what you didn't moves to the archive instead of piling up. In the morning you decide again what really matters today.",
     "ctaNote": "Free. No subscription, no ads, no account.",
     "imageAlt": "The Today view of Dawny on the iPhone with open and completed tasks"
   },
   "demo": {
     "kicker": "A day in Dawny",
-    "heading": "Three places, one rule.",
-    "line": "Three places, one rule: Today is a commitment, not a place to store things.",
+    "heading": "Three lists, one philosophy.",
+    "line": "What's on Today counts today. Nothing else.",
     "replay": "Play again",
     "pause": "Pause",
     "resume": "Resume",
     "columns": { "backlog": "Backlog", "today": "Today", "archive": "Archive" },
-    "archiveSections": { "done": "Done", "archived": "Archived" },
+    "archiveSections": { "done": "Completed", "archived": "Archived" },
     "steps": ["Before", "Morning", "During the day", "3 AM", "Next morning"],
     "captions": [
       "Before: The Backlog collects everything that is coming up at some point. Today is empty.",
       "Morning: You pull two tasks over to Today, the rest stays where it is.",
       "During the day: You tick one task off and it moves down to the completed ones.",
-      "3 AM: The day ends. What you finished moves to the Archive under Done, what you didn't under Archived.",
+      "3 AM: The day ends. What you finished moves to the Archive under Completed, what you didn't under Archived.",
       "Next morning: Today is empty again. You decide anew."
     ]
   },
   "usage": {
-    "kicker": "The three places",
+    "kicker": "The three lists",
     "blocks": [
       {
         "kicker": "Backlog",
@@ -61,7 +61,7 @@
       {
         "kicker": "Today",
         "heading": "Today is deliberately short",
-        "lead": "Two sections, nothing else: Open and Done. No projects, no tags, no subtasks, no colours telling you how bad you should feel.",
+        "lead": "Two sections, nothing else: Open and Completed. No projects, no tags, no subtasks, no colours telling you how bad you should feel.",
         "list": [],
         "close": "You write a task straight into the line below. One tap ticks it off. To move a task from the Backlog to Today, swipe right.",
         "imageAlt": "The Today view in Dawny with open and completed tasks"
@@ -69,10 +69,10 @@
       {
         "kicker": "Archive",
         "heading": "The Archive is not a trash can",
-        "lead": "Two things sit side by side in the Archive: under <strong>Done</strong>, everything you managed, sorted by date. Under <strong>Archived</strong>, everything that was left undone. None of it is deleted.",
+        "lead": "Two things sit side by side in the Archive: under <strong>Completed</strong>, everything you managed, sorted by date. Under <strong>Archived</strong>, everything that was left undone. None of it is deleted.",
         "list": [],
         "close": "Swipe right to bring a task back, either to the Backlog or straight to Today. If you open the app in the morning after the reset, you first get a short overview of what was filed away overnight.",
-        "imageAlt": "The Archive in Dawny with the Done and Archived sections"
+        "imageAlt": "The Archive in Dawny with the Completed and Archived sections"
       }
     ]
   },
@@ -96,11 +96,9 @@
     },
     "grid": [
       { "title": "Sync with Reminders", "text": "If you want, you can mirror the Today list into Apple Reminders. That way your tasks also show up on Mac, iPad and Apple Watch." },
-      { "title": "iCloud sync, optional", "text": "Off by default. Turn it on and your iPhone and iPad stay in step, through your own iCloud account, with no outside server." },
+      { "title": "iCloud sync, optional", "text": "Turn it on and your iPhone and iPad stay in step, through your own iCloud account, with no outside server." },
       { "title": "Shortcuts and Siri", "text": "Create tasks by voice or from an automation, straight into the Backlog or to Today." },
-      { "title": "Three widgets", "text": "Today, Backlog and Archive, in several sizes. You can tick things off right in the widget, without opening the app." },
-      { "title": "German and English", "text": "Fully translated, including the widgets and Shortcuts. The app follows your system language." },
-      { "title": "Adjustable reset time", "text": "3 a.m. is the default, not a rule. If you go to bed later, move it." }
+      { "title": "Three widgets", "text": "Today, Backlog and Archive, in several sizes. You can tick things off right in the widget, without opening the app." }
     ]
   },
   "vertrauen": {
@@ -108,7 +106,7 @@
     "stats": [
       { "value": "Free", "label": "No subscription, no pro version, no in-app purchases." },
       { "value": "No account", "label": "No registration, no login, no email address." },
-      { "value": "Open source", "label": "The app is on GitHub under the MIT license." }
+      { "value": "Open source", "label": "The app is on <a href=\"https://github.com/flrnsndr/Dawny\" target=\"_blank\" rel=\"noopener\">GitHub</a> under the MIT license." }
     ],
     "note": "The app collects nothing. On this website I measure reach anonymously, without cookies. More on that in the privacy policy."
   },

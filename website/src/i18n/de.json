@@ -18,14 +18,14 @@
   "hero": {
     "kicker": "To-do-App fürs iPhone",
     "headline": "Jeden Morgen eine leere Liste.",
-    "lead": "Was du dir für heute vornimmst, zählt. Nachts um drei endet der Tag: Erledigtes wird abgelegt, Liegengebliebenes wandert ins Archiv, statt sich anzuhäufen. Morgens entscheidest du neu, was heute wirklich dran ist.",
+    "lead": "Was du dir für heute vornimmst, zählt. Nachts um drei wird alles zurückgesetzt: Erledigtes wird abgelegt, Liegengebliebenes wandert ins Archiv, statt sich anzuhäufen. Morgens entscheidest du neu, was heute wirklich dran ist.",
     "ctaNote": "Kostenlos. Kein Abo, keine Werbung, kein Konto.",
     "imageAlt": "Die Heute-Ansicht von Dawny auf dem iPhone mit offenen und erledigten Aufgaben"
   },
   "demo": {
     "kicker": "Ein Tag in Dawny",
-    "heading": "Drei Orte, eine Regel.",
-    "line": "Drei Orte, eine Regel: Heute ist eine Zusage, keine Ablage.",
+    "heading": "Drei Listen, eine Philosophie.",
+    "line": "Was in Heute steht, zählt heute. Nur das.",
     "replay": "Nochmal abspielen",
     "pause": "Anhalten",
     "resume": "Weiter",
@@ -41,7 +41,7 @@
     ]
   },
   "usage": {
-    "kicker": "Die drei Orte",
+    "kicker": "Die drei Listen",
     "blocks": [
       {
         "kicker": "Backlog",
@@ -96,11 +96,9 @@
     },
     "grid": [
       { "title": "Sync mit Erinnerungen", "text": "Wer möchte, spiegelt die Heute-Liste in die Apple Erinnerungen. Damit tauchen die Aufgaben auch auf Mac, iPad und Apple Watch auf." },
-      { "title": "iCloud-Sync, optional", "text": "Standardmäßig aus. Wer sie einschaltet, hält iPhone und iPad im Gleichstand, über den eigenen iCloud-Account, ohne fremden Server." },
+      { "title": "iCloud-Sync, optional", "text": "Wer sie einschaltet, hält iPhone und iPad im Gleichstand, über den eigenen iCloud-Account, ohne fremden Server." },
       { "title": "Kurzbefehle und Siri", "text": "Aufgaben per Sprache anlegen oder aus einer Automation heraus, direkt in den Backlog oder nach Heute." },
-      { "title": "Drei Widgets", "text": "Heute, Backlog und Archiv, in mehreren Größen. Abhaken geht direkt im Widget, ohne die App zu öffnen." },
-      { "title": "Deutsch und Englisch", "text": "Vollständig übersetzt, inklusive Widgets und Kurzbefehlen. Die App folgt der Systemsprache." },
-      { "title": "Reset-Zeit einstellbar", "text": "Drei Uhr nachts ist die Voreinstellung, keine Vorschrift. Wer später schlafen geht, verschiebt sie." }
+      { "title": "Drei Widgets", "text": "Heute, Backlog und Archiv, in mehreren Größen. Abhaken geht direkt im Widget, ohne die App zu öffnen." }
     ]
   },
   "vertrauen": {
@@ -108,7 +106,7 @@
     "stats": [
       { "value": "0 €", "label": "Kein Abo, keine Pro-Version, keine In-App-Käufe." },
       { "value": "Kein Konto", "label": "Keine Registrierung, kein Login, keine E-Mail-Adresse." },
-      { "value": "Offener Quellcode", "label": "Die App ist unter der MIT-Lizenz auf GitHub einsehbar." }
+      { "value": "Offener Quellcode", "label": "Die App ist unter der MIT-Lizenz auf <a href=\"https://github.com/flrnsndr/Dawny\" target=\"_blank\" rel=\"noopener\">GitHub</a> einsehbar." }
     ],
     "note": "Die App sammelt nichts. Auf dieser Website messe ich anonym die Reichweite, ohne Cookies. Mehr dazu in der Datenschutzerklärung."
   },

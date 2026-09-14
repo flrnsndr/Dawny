@@ -144,7 +144,7 @@ const iconDark = await getImage({ src: iconDarkSrc, width: 192, height: 192, for
           dict.vertrauen.stats.map((s) => (
             <li>
               <span class="trust__value">{s.value}</span>
-              <span class="trust__label">{s.label}</span>
+              <span class="trust__label" set:html={s.label} />
             </li>
           ))
         }
@@ -260,11 +260,6 @@ const iconDark = await getImage({ src: iconDarkSrc, width: 192, height: 192, for
       grid-template-columns: 1fr 1fr;
     }
   }
-  @media (min-width: 960px) {
-    .factgrid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
   .factgrid__tile {
     background: var(--color-card);
     padding: 1.5rem;
@@ -303,6 +298,15 @@ const iconDark = await getImage({ src: iconDarkSrc, width: 192, height: 192, for
     margin-top: 0.35rem;
     font-size: 0.9375rem;
     color: var(--color-ink-2);
+  }
+  .trust__label :global(a) {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  .trust__label :global(a:hover) {
+    color: var(--color-ink);
   }
   .trust__note {
     margin-top: 2.5rem;
