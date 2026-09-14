@@ -109,7 +109,7 @@ For audience and conversion measurement, this website uses **PostHog**, in fully
 
 **How it works:** When a page is loaded, the IP address and user agent are transmitted to PostHog servers in Frankfurt. From these, PostHog generates an **irreversible hash** (`hash of team ID + daily salt + IP + user agent + hostname`). The daily salt rotates every day and is deleted after processing. No personal data can be recovered from the hash.
 
-**Information collected:** Page views, approximate time on page, scroll depth, device type, browser, operating system, approximate geographic region (derived from the IP address, not stored), referrer and UTM parameters, as well as explicitly measured clicks on App Store download buttons.
+**Information collected:** Page views, approximate time on page, scroll depth, device type, browser, operating system, approximate geographic region (derived from the IP address, not stored), referrer and UTM parameters, as well as explicitly measured interactions with the website: clicks on App Store download buttons, language switches, FAQ questions that get opened, and use of the reset demo (start, step, pause, replay).
 
 **Legal basis:** Legitimate interest in audience measurement and in improving the website (Art. 6(1)(f) GDPR). Since no information is stored on your device, no consent under § 25 TDDDG is required.
 
