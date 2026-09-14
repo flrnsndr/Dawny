@@ -66,7 +66,7 @@ export const faqBlocks: FaqBlock[] = [
           {
             id: "bedienung-abhaken",
             q: "Wie hake ich eine Aufgabe ab?",
-            a: "Tippe im Heute-Tab auf den Kreis links neben der Aufgabe. Sie rutscht nach unten zu den erledigten Aufgaben. Wenn du sie dort nicht sehen willst, blendest du den Bereich in den Einstellungen aus.",
+            a: "Tippe im Heute-Tab auf den Kreis links neben der Aufgabe, sie rutscht dann nach unten zu den erledigten Aufgaben. Das geht bewusst nur in Heute: der Kreis im Backlog ist deshalb ausgegraut, denn Erledigen ist bei Dawny an die Heute-Liste gebunden. Wenn du die erledigten Aufgaben dort nicht sehen willst, blendest du den Bereich in den Einstellungen aus.",
           },
           {
             id: "bedienung-neue-aufgabe",
@@ -81,12 +81,7 @@ export const faqBlocks: FaqBlock[] = [
           {
             id: "bedienung-kategorie-wechseln",
             q: "Wie sortiere ich eine Aufgabe in eine andere Kategorie?",
-            a: "Halte die Zeile im Backlog gedrückt, dann erscheint eine Liste aller Kategorien. Alternativ ziehst du die Aufgabe auf die Überschrift der Zielkategorie.",
-          },
-          {
-            id: "bedienung-notizen",
-            q: "Kann ich Notizen an eine Aufgabe hängen?",
-            a: "Ja. Tippe die Aufgabe an, um die Details zu öffnen. Kurze Notizen zeigt Dawny direkt in der Zeile unter dem Titel an.",
+            a: "Halte die Zeile im Backlog gedrückt, dann erscheint eine Liste aller Kategorien. Wähl die Zielkategorie aus, und die Aufgabe wandert sofort dorthin.",
           },
           {
             id: "bedienung-eigene-kategorien",
@@ -116,12 +111,12 @@ export const faqBlocks: FaqBlock[] = [
           {
             id: "bedienung-immer-wieder-verschieben",
             q: "Was mache ich mit Aufgaben, die ich immer wieder verschiebe?",
-            a: "Wenn eine Aufgabe zum dritten Mal ins Archiv wandert, ist das die Antwort. Entweder du zerlegst sie in einen ersten kleinen Schritt, den du wirklich heute machst, oder du lässt sie im Archiv liegen. Beides ist eine Entscheidung, und beide sind besser als das ewige Weiterschieben.",
+            a: "Wenn eine Aufgabe zum dritten Mal ins Archiv wandert, ist das bereits die Antwort: So, wie du sie dir vorgenommen hast, wird sie offenbar nicht passieren. Unser Vorschlag: Lass sie entweder los. Oder, falls sie dir wirklich wichtig ist, frag dich, was dir fehlt, um sie morgen doch umzusetzen, und mach genau das zur nächsten Aufgabe.",
           },
           {
             id: "bedienung-grosses-vorhaben",
             q: "Ich habe eine große Sache vor, die Wochen dauert. Wie bilde ich die ab?",
-            a: "Gar nicht als eine Aufgabe. Dawny hat bewusst keine Projekte und keine Unteraufgaben. Leg die große Sache als Kategorie an und schreib die nächsten konkreten Schritte hinein. Jeden Morgen holst du einen davon nach Heute.",
+            a: "Dafür ist Dawny bewusst nicht das richtige Werkzeug: Eine To-do-Liste ist kein Projektmanagement-Tool. Plane größere Vorhaben lieber in einer App, die dafür gemacht ist. Was in Dawny helfen kann: eine wiederkehrende Aufgabe wie „Am Projekt weiterarbeiten“, die dich jeden Tag daran erinnert, egal wie weit du gerade bist.",
           },
         ],
       },
@@ -199,7 +194,7 @@ export const faqBlocks: FaqBlock[] = [
           {
             id: "technik-ipad-mac",
             q: "Läuft Dawny auf dem iPad oder dem Mac?",
-            a: "Dawny ist eine iPhone-App. Wer die Aufgaben auf anderen Apple-Geräten sehen will, aktiviert die Synchronisation mit der Erinnerungen-App, dann tauchen sie dort auf Mac, iPad und Apple Watch auf.",
+            a: "Dawny ist als iPhone-App gebaut. Auf dem iPad läuft sie im iPhone-Kompatibilitätsmodus, also im iPhone-Format statt mit einer eigenen iPad-Oberfläche. Auf dem Mac läuft sie nicht. Wer die Aufgaben zusätzlich nativ auf Mac oder Apple Watch sehen will, aktiviert die Synchronisation mit der Erinnerungen-App.",
           },
           {
             id: "technik-reminders-sync",

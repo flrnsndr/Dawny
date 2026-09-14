@@ -65,7 +65,7 @@ export const faqBlocks: FaqBlock[] = [
           {
             id: "bedienung-abhaken",
             q: "How do I check a task off?",
-            a: "In the Today tab, tap the circle to the left of the task. It slides down to the completed tasks. If you would rather not see them there, you can hide that section in Settings.",
+            a: "In the Today tab, tap the circle to the left of the task and it slides down to the completed tasks. This only works in Today, on purpose: the circle in the Backlog is greyed out for the same reason, since checking things off is deliberately tied to the Today list. If you would rather not see completed tasks there, you can hide that section in Settings.",
           },
           {
             id: "bedienung-neue-aufgabe",
@@ -80,12 +80,7 @@ export const faqBlocks: FaqBlock[] = [
           {
             id: "bedienung-kategorie-wechseln",
             q: "How do I move a task into a different category?",
-            a: "Press and hold the row in the Backlog and a list of all categories appears. Alternatively, drag the task onto the heading of the category you want.",
-          },
-          {
-            id: "bedienung-notizen",
-            q: "Can I attach notes to a task?",
-            a: "Yes. Tap the task to open its details. Short notes are shown right in the row below the title.",
+            a: "Press and hold the row in the Backlog and a list of all categories appears. Pick the one you want, and the task moves there right away.",
           },
           {
             id: "bedienung-eigene-kategorien",
@@ -115,12 +110,12 @@ export const faqBlocks: FaqBlock[] = [
           {
             id: "bedienung-immer-wieder-verschieben",
             q: "What do I do with tasks I keep postponing?",
-            a: "When a task lands in the Archive for the third time, that is your answer. Either you break it down into a first small step you will actually do today, or you leave it in the Archive. Both are a decision, and both beat postponing it forever.",
+            a: "When a task lands in the Archive for the third time, that is already the answer: the way you planned it, it is apparently not going to happen. Our suggestion: either let it go. Or, if it really matters to you, ask yourself what you are missing to actually get it done tomorrow, and make that the next task.",
           },
           {
             id: "bedienung-grosses-vorhaben",
             q: "I have a big undertaking that will take weeks. How do I model that?",
-            a: "Not as a single task. Dawny deliberately has no projects and no subtasks. Set the big thing up as a category and write the next concrete steps into it. Every morning you pull one of them into Today.",
+            a: "Dawny is deliberately not the right tool for that: a to-do list is not project management software. Plan bigger undertakings in an app built for that instead. What can help inside Dawny: a recurring task like “Keep working on the project”, which shows up every day regardless of how far you have gotten.",
           },
         ],
       },
@@ -198,7 +193,7 @@ export const faqBlocks: FaqBlock[] = [
           {
             id: "technik-ipad-mac",
             q: "Does Dawny run on iPad or Mac?",
-            a: "Dawny is an iPhone app. If you want to see your tasks on other Apple devices, turn on the sync with Apple Reminders and they show up there on Mac, iPad and Apple Watch.",
+            a: "Dawny is built as an iPhone app. On the iPad it runs in iPhone compatibility mode, in the iPhone-sized layout rather than a dedicated iPad interface. It does not run on the Mac. If you want your tasks on Mac or Apple Watch too, turn on the sync with Apple Reminders.",
           },
           {
             id: "technik-reminders-sync",
