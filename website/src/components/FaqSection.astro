@@ -51,7 +51,13 @@ const surface = {
 
     {
       block.next && (
-        <a class="faq__next" href={`#${block.next.anchor}`}>
+        <a
+          class="faq__next"
+          href={`#${block.next.anchor}`}
+          data-ph-event="faq_next_block"
+          data-ph-block={block.anchor}
+          data-ph-to={block.next.anchor}
+        >
           {dict.faqNav.next} {block.next.label}
           <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
             <path

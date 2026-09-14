@@ -109,7 +109,7 @@ Zur Reichweiten- und Conversion-Messung setzt diese Webseite **PostHog** ein –
 
 **Wie es funktioniert:** Beim Seitenaufruf werden IP-Adresse und User-Agent an PostHog-Server in Frankfurt übertragen. PostHog erzeugt daraus einen **irreversiblen Hash** (`Hash aus Team-ID + Tages-Salt + IP + User-Agent + Hostname`). Der Tages-Salt rotiert täglich und wird nach Verarbeitung gelöscht. Aus dem Hash lassen sich keine personenbezogenen Daten zurückgewinnen.
 
-**Erfasste Informationen:** Seitenaufrufe, ungefähre Verweildauer, Scroll-Tiefe, Gerätetyp, Browser, Betriebssystem, ungefähre geographische Region (aus IP abgeleitet, nicht gespeichert), Referrer und UTM-Parameter sowie explizit gemessene Klicks auf App-Store-Download-Buttons.
+**Erfasste Informationen:** Seitenaufrufe, ungefähre Verweildauer, Scroll-Tiefe, Gerätetyp, Browser, Betriebssystem, ungefähre geographische Region (aus IP abgeleitet, nicht gespeichert), Referrer und UTM-Parameter sowie explizit gemessene Interaktionen mit der Webseite: Klicks auf App-Store-Download-Buttons, Sprachwechsel, geöffnete FAQ-Fragen und die Bedienung der Reset-Demo (Start, Schritt, Pause, Wiederholung).
 
 **Rechtsgrundlage:** Berechtigtes Interesse an der Reichweitenmessung und Verbesserung der Webseite (Art. 6 Abs. 1 lit. f DSGVO). Da keine Informationen auf deinem Endgerät gespeichert werden, ist keine Einwilligung nach § 25 TDDDG erforderlich.
 

@@ -29,7 +29,13 @@
  *   [data-count] [data-empty]   count bubble / empty placeholder per pane resp. column
  *   .stage__task[data-id]       a task, containing an empty .stage__badge
  *   button[data-step][data-caption]  timeline station, caption for that step
+ *
+ * Analytics: the demo reports a handful of events through @/scripts/analytics,
+ * see the capture() calls below. Nothing here depends on them, they are no-ops
+ * without a PostHog token.
  */
+
+import { capture } from "@/scripts/analytics";
 
 const COLUMNS = ["backlog", "today", "archived", "done"] as const;
 type ColumnKey = (typeof COLUMNS)[number];
@@ -466,8 +472,9 @@ function setup(refs: Refs): void {
      only ever moved when the user pressed that very button, the autoplay never
      pulls it. */
 
-  function play(from: number): void {
+  function play(from: number, trigger: "autoplay" | "replay"): void {
     const my = ++token;
+    capture("reset_demo_started", { trigger });
     const wasOnReplay = document.activeElement === replayBtn;
     replayBtn.hidden = true;
     if (!reduce) {
@@ -482,6 +489,7 @@ function setup(refs: Refs): void {
         replayBtn.hidden = false;
         pauseBtn.hidden = true;
         if (wasOnPause) replayBtn.focus();
+        capture("reset_demo_completed", { trigger });
         return;
       }
       void goTo(i, my).then(() => {
@@ -517,6 +525,7 @@ function setup(refs: Refs): void {
 
     cancelAutoStart();
     setPaused(false);
+    capture("reset_demo_step_selected", { step: index + 1 });
     const my = ++token;
     replayBtn.hidden = false;
     pauseBtn.hidden = true;
@@ -533,10 +542,14 @@ function setup(refs: Refs): void {
     cancelAutoStart();
     setPaused(false);
     applyInstant(0);
-    play(0);
+    play(0, "replay");
   });
 
-  pauseBtn.addEventListener("click", () => setPaused(!paused));
+  pauseBtn.addEventListener("click", () => {
+    const next = !paused;
+    setPaused(next);
+    capture(next ? "reset_demo_paused" : "reset_demo_resumed", { step: current + 1 });
+  });
 
   // The afterglow lives in CSS but should scale with SPEED
   stage.style.setProperty("--land-dur", `${ms("land")}ms`);
@@ -561,7 +574,7 @@ function setup(refs: Refs): void {
       for (const entry of entries) {
         if (!entry.isIntersecting || started) continue;
         cancelAutoStart();
-        play(0);
+        play(0, "autoplay");
       }
     },
     { threshold: 0.35 },
