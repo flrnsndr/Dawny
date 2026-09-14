@@ -16,6 +16,9 @@ DerivedData/
 
 # Generated App Store screenshots (run scripts/take-screenshots.sh to regenerate)
 screenshots/
+# ...but the website's own committed screenshots are not build output
+!website/src/assets/screenshots/
+!website/src/assets/screenshots/**
 
 # Cursor and Claude IDEs
 .cursor/

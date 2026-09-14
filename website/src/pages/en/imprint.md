@@ -7,38 +7,37 @@ canonicalPath: "/imprint/"
 altCanonicalPath: "/impressum/"
 ---
 
-## Information according to § 5 DDG
+## Information pursuant to § 5 DDG
 
-**Florian Schneider**
-Postfach 11 13 15
-76063 Karlsruhe
+Florian Schneider<br>
+Kreuzstraße 26<br>
+76133 Karlsruhe<br>
 Germany
 
 ## Contact
 
-Email: info@dawnyapp.com
+Email: [info@dawnyapp.com](mailto:info@dawnyapp.com)
 
-## Responsible for content under § 18 (2) MStV
+I usually reply to enquiries within a few days.
+
+## Responsible for the content pursuant to § 18 (2) MStV
 
 Florian Schneider (address as above)
 
-## EU dispute resolution
-
-The European Commission provides a platform for online dispute resolution (ODR): [https://ec.europa.eu/consumers/odr](https://ec.europa.eu/consumers/odr/).
-Our email address is listed above.
-
 ## Consumer dispute resolution
 
-We are neither willing nor obliged to participate in dispute resolution proceedings before a consumer arbitration board.
+I am neither willing nor obliged to take part in dispute resolution proceedings before a consumer arbitration board.
 
 ## Liability for content
 
-As a service provider, we are responsible under § 7 (1) DDG for our own content on these pages in accordance with general laws. According to §§ 8 to 10 DDG, however, we are not obliged as a service provider to monitor transmitted or stored third-party information.
+As a service provider, I am responsible under § 7 (1) DDG for my own content on these pages in accordance with general law. Under §§ 8 to 10 DDG, however, I am not obliged as a service provider to monitor transmitted or stored third-party information, or to investigate circumstances that indicate unlawful activity.
 
 ## Liability for links
 
-Our offer contains links to external websites of third parties, on whose contents we have no influence. Therefore, we cannot accept any liability for these external contents. The respective provider or operator of the linked sites is always responsible for the content of those sites.
+This site contains links to external third-party websites over whose content I have no influence. I therefore cannot accept any responsibility for this external content. The respective provider or operator of the linked pages is always responsible for their content.
 
-## Copyright
+## Copyright and marks
 
-The content and works created by the site operator on these pages are subject to German copyright law. The "Dawny" name, the Dawny logo, and the app icon are trademarks of Florian Schneider. The source code of the app is open source under the MIT License.
+The content and works created by me on these pages are subject to German copyright law. "Dawny", the logo, and the app icon are marks of Florian Schneider. The source code of the app is publicly available under the MIT License.
+
+Apple, the Apple logo, iPhone, iPad, Mac, Apple Watch, iCloud, Siri, and App Store are trademarks of Apple Inc., registered in the U.S. and other countries. App Store is a service mark of Apple Inc.

@@ -1,0 +1,601 @@
+---
+import { getDict, type Lang } from "@/i18n";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const dict = getDict(lang);
+const d = dict.demo;
+
+// The guided demo (concept 4.2). The markup below is the end state after the
+// reset, station five of five: Today is empty again, what got done sits in the
+// archive under "Completed", what did not under "Archived".
+//
+// Without JavaScript that end state simply stays on screen and the timeline
+// stays hidden, which is the intended progressive-enhancement fallback. The
+// animation lives in src/scripts/reset-stage.ts and only ever rearranges these
+// nodes; it never builds them, and every string it shows is read back out of
+// the DOM, so nothing here needs to be duplicated in the script.
+const lastStep = d.captions.length - 1;
+---
+
+<section id="reset" class="stage section-y" aria-labelledby="stage-title">
+  <div class="container">
+    <p class="kicker">{d.kicker}</p>
+    <h2 id="stage-title" class="stage__heading">{d.heading}</h2>
+    <p class="stage__line">{d.line}</p>
+
+    <div class="stage__panes" id="stage-panes">
+      <div class="stage__pane" data-pane="backlog">
+        <div class="stage__pane-head">
+          <h3>{d.columns.backlog}</h3>
+          <span class="stage__count" data-count="backlog"></span>
+        </div>
+        <ul class="stage__list" data-col="backlog" data-label={d.columns.backlog}>
+          <li class="stage__task" data-id="urlaub">
+            <span class="stage__dot" aria-hidden="true"></span>
+            <span class="stage__task-text">{d.tasks.urlaub}</span>
+            <span class="stage__badge" hidden></span>
+          </li>
+          <li class="stage__task" data-id="pass">
+            <span class="stage__dot" aria-hidden="true"></span>
+            <span class="stage__task-text">{d.tasks.pass}</span>
+            <span class="stage__badge" hidden></span>
+          </li>
+        </ul>
+        <p class="stage__empty" data-empty="backlog" hidden>–</p>
+      </div>
+
+      <div class="stage__pane" data-pane="today">
+        <div class="stage__pane-head">
+          <h3>{d.columns.today}</h3>
+          <span class="stage__count" data-count="today"></span>
+        </div>
+        <ul class="stage__list" data-col="today" data-label={d.columns.today}></ul>
+        <p class="stage__empty" data-empty="today">–</p>
+      </div>
+
+      <div class="stage__pane" data-pane="archive">
+        <div class="stage__pane-head">
+          <h3>{d.columns.archive}</h3>
+          <span class="stage__count" data-count="archive"></span>
+        </div>
+
+        <p class="stage__sub">{d.archiveSections.done}</p>
+        <ul class="stage__list" data-col="done" data-label={d.archiveSections.done}>
+          <li class="stage__task is-done" data-id="rezept">
+            <span class="stage__dot" aria-hidden="true"></span>
+            <span class="stage__task-text">{d.tasks.rezept}</span>
+            <span class="stage__badge" hidden></span>
+          </li>
+        </ul>
+        <p class="stage__empty" data-empty="done" hidden>–</p>
+
+        <p class="stage__sub">{d.archiveSections.archived}</p>
+        <ul class="stage__list" data-col="archived" data-label={d.archiveSections.archived}>
+          <li class="stage__task" data-id="tickets">
+            <span class="stage__dot" aria-hidden="true"></span>
+            <span class="stage__task-text">{d.tasks.tickets}</span>
+            <span class="stage__badge" hidden></span>
+          </li>
+        </ul>
+        <p class="stage__empty" data-empty="archived" hidden>–</p>
+      </div>
+    </div>
+
+    {/* Hidden in markup, un-hidden by the script. No JS, no timeline. */}
+    <div class="stage__timeline" id="stage-timeline" hidden>
+      <span class="stage__sun" aria-hidden="true"></span>
+      <ol class="stage__stations">
+        {
+          d.steps.map((label, i) => (
+            <li>
+              <button type="button" data-step={i} data-caption={d.captions[i]}>
+                <span class="stage__tl-dot" aria-hidden="true" />
+                {label}
+              </button>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+
+    <p class="stage__caption" id="stage-caption" aria-live="polite">{d.captions[lastStep]}</p>
+
+    <div class="stage__controls">
+      <button
+        type="button"
+        class="stage__btn"
+        id="stage-pause"
+        data-label-pause={d.pause}
+        data-label-resume={d.resume}
+        hidden>{d.pause}</button
+      >
+      <button type="button" class="stage__btn" id="stage-replay" hidden>{d.replay}</button>
+    </div>
+  </div>
+</section>
+
+<script>
+  import "@/scripts/reset-stage.ts";
+</script>
+
+<style>
+  /* ---------- Guided day demo ----------
+     The arc of the day sits in here: light in the morning, dark at three, light
+     again afterwards. Every colour runs through a local alias that points at a
+     site token, so the switch is a single class on the section. */
+
+  .stage {
+    /* Day */
+    --stage-bg: var(--color-paper-warm);
+    --stage-card: var(--color-card);
+    --stage-ink: var(--color-ink);
+    --stage-muted: var(--color-muted);
+    --stage-rule: var(--color-rule);
+    --stage-accent: var(--color-accent);
+    /* Demo-only decoration, no site-wide token: the accent-tinted highlights,
+       the sun and its halo, the empty checkbox ring. */
+    --stage-dot: #b9b2a5;
+    --stage-hl: rgb(192 82 26 / 7%);
+    --stage-hl-strong: rgb(192 82 26 / 17%);
+    --stage-badge-bg: rgb(192 82 26 / 12%);
+    --stage-badge-ink: var(--color-accent);
+    --stage-sun-halo: rgb(247 176 74 / 20%);
+    --stage-sun-glow: rgb(247 176 74 / 30%);
+
+    background: var(--stage-bg);
+    color: var(--stage-ink);
+    border-top: 1px solid var(--color-rule);
+    transition:
+      background-color 1.1s ease,
+      color 1.1s ease;
+  }
+
+  /* Night, the 3 AM step. The accent is lifted a few steps because the day
+     accent is too dark to read on the night ground. */
+  .stage.is-night {
+    --stage-bg: var(--color-night);
+    --stage-card: var(--color-night-2);
+    --stage-ink: var(--color-night-ink);
+    --stage-muted: var(--color-night-muted);
+    --stage-rule: var(--color-night-rule);
+    --stage-accent: #e9762a;
+    --stage-dot: #4a4e59;
+    --stage-hl: rgb(233 118 42 / 10%);
+    --stage-hl-strong: rgb(233 118 42 / 24%);
+    --stage-badge-bg: rgb(233 118 42 / 16%);
+    --stage-badge-ink: #f0a468;
+    --stage-sun-halo: rgb(247 176 74 / 24%);
+    --stage-sun-glow: rgb(247 176 74 / 55%);
+  }
+
+  .stage .kicker {
+    color: var(--stage-accent);
+    transition: color 0.7s ease;
+  }
+  .stage__heading {
+    margin-top: 0.5rem;
+    color: var(--stage-ink);
+    transition: color 1.1s ease;
+  }
+  .stage__line {
+    margin: 1.25rem 0 clamp(2rem, 4vw, 3rem);
+    max-width: 52ch;
+    color: var(--stage-muted);
+    transition: color 0.7s ease;
+  }
+
+  /* ---------- Panes ---------- */
+
+  .stage__panes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(0.75rem, 1.6vw, 1.25rem);
+    align-items: stretch;
+  }
+  /* Stacked, all three panes should still fit on screen together, otherwise
+     tasks travel out of view. */
+  @media (max-width: 780px) {
+    .stage__panes {
+      grid-template-columns: 1fr;
+    }
+    .stage__pane {
+      min-height: 128px;
+    }
+  }
+
+  .stage__pane {
+    display: flex;
+    flex-direction: column;
+    min-height: 216px;
+    background: var(--stage-card);
+    border: 1px solid var(--stage-rule);
+    border-radius: 14px;
+    overflow: hidden;
+    transition:
+      background-color 1.1s ease,
+      border-color 0.45s ease;
+  }
+  .stage__pane.is-focus {
+    border-color: var(--stage-accent);
+  }
+
+  .stage__pane-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 0.7rem 0.9rem;
+    border-bottom: 1px solid var(--stage-rule);
+    transition: border-color 0.7s ease;
+  }
+  .stage__pane-head h3 {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--stage-ink);
+    transition: color 1.1s ease;
+  }
+  .stage__count {
+    display: inline-block;
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--stage-muted);
+    transition: color 0.7s ease;
+  }
+  .stage__count.is-bump {
+    animation: dawny-bump 0.55s ease;
+  }
+  @keyframes dawny-bump {
+    0% {
+      transform: none;
+    }
+    40% {
+      transform: scale(1.4);
+      color: var(--stage-accent);
+    }
+    100% {
+      transform: none;
+    }
+  }
+
+  .stage__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .stage__task {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-height: 44px;
+    padding: 0.6rem 0.9rem;
+    border-bottom: 1px solid var(--stage-rule);
+    font-size: 0.9375rem;
+    line-height: 1.3;
+    color: var(--stage-ink);
+    transition:
+      border-color 0.7s ease,
+      color 1.1s ease,
+      opacity 0.5s ease,
+      background-color 0.5s ease;
+  }
+  .stage__task-text {
+    min-width: 0;
+    transition: color 0.5s ease;
+  }
+  .stage__dot {
+    flex: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1.5px solid var(--stage-dot);
+    position: relative;
+    transition:
+      background-color 0.5s ease,
+      border-color 0.5s ease;
+  }
+  .stage__task.is-done .stage__dot {
+    background: var(--color-success);
+    border-color: var(--color-success);
+  }
+  .stage__task.is-done .stage__dot::after {
+    content: "";
+    position: absolute;
+    left: 4.5px;
+    top: 2px;
+    width: 4px;
+    height: 8px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  .stage__task.is-done .stage__task-text {
+    text-decoration: line-through;
+    color: var(--stage-muted);
+  }
+
+  /* ---------- Guidance during a step ----------
+     Affected tasks stay bright, everything else steps back. Plus a target badge
+     on the entry, the destination pane lighting up and a short afterglow on
+     arrival. */
+
+  .stage.is-guiding .stage__task {
+    opacity: 0.28;
+  }
+  .stage.is-guiding .stage__task.is-affected {
+    opacity: 1;
+  }
+  /* While a task is in flight the pane must not clip, otherwise the flying
+     entry is cut off at the pane edge. */
+  .stage.is-guiding .stage__pane {
+    overflow: visible;
+  }
+  .stage__task.is-affected,
+  .stage__task.is-landed {
+    position: relative;
+    z-index: 2;
+  }
+  .stage.is-guiding .stage__sub,
+  .stage.is-guiding .stage__empty {
+    opacity: 0.4;
+    transition: opacity 0.5s ease;
+  }
+
+  .stage__task.is-affected {
+    background: var(--stage-hl);
+    box-shadow: inset 3px 0 0 0 var(--stage-accent);
+  }
+
+  .stage__badge {
+    margin-left: auto;
+    flex: none;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    padding: 0.16rem 0.5rem 0.2rem;
+    border-radius: 999px;
+    background: var(--stage-badge-bg);
+    color: var(--stage-badge-ink);
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(-5px);
+    transition:
+      opacity 0.45s ease,
+      transform 0.45s ease;
+  }
+  .stage__badge.is-shown {
+    opacity: 1;
+    transform: none;
+  }
+
+  .stage__pane.is-target {
+    border-color: var(--stage-accent);
+    background: var(--stage-hl);
+  }
+
+  .stage__task.is-landed {
+    animation: dawny-land var(--land-dur, 1500ms) ease-out;
+  }
+  @keyframes dawny-land {
+    0%,
+    22% {
+      background: var(--stage-hl-strong);
+    }
+    100% {
+      background: transparent;
+    }
+  }
+
+  .stage__sub {
+    margin: 0;
+    padding: 0.6rem 0.9rem 0.3rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--stage-muted);
+    transition: color 0.7s ease;
+  }
+  .stage__empty {
+    margin: 0;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.875rem;
+    color: var(--stage-muted);
+    transition: color 0.7s ease;
+  }
+
+  /* ---------- Timeline ---------- */
+
+  .stage__timeline {
+    --tl-p: 0; /* 0 to 1, set by the script */
+    --tl-dur: 900ms;
+
+    position: relative;
+    margin: clamp(1.75rem, 3vw, 2.5rem) 0 0;
+  }
+  .stage__timeline[hidden] {
+    display: none;
+  }
+  .stage__stations {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  /* The sun from the app icon travels over the horizon. It shares --tl-p and
+     --tl-dur with the bar, covers the same distance in the same time and is
+     therefore exactly as fast. */
+  .stage__sun {
+    position: absolute;
+    z-index: 2;
+    top: 4.5px;
+    left: calc(4px + var(--tl-p) * 80%);
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 42%, #fcd684 0%, #f7b04a 62%, #ec9522 100%);
+    box-shadow:
+      0 0 0 3px var(--stage-sun-halo),
+      0 0 14px 3px var(--stage-sun-glow);
+    transform: translate(-50%, -50%);
+    transition: left var(--tl-dur) linear;
+  }
+
+  /* Rail and the progress running along it. 80 percent is where the last of the
+     five stations sits, that is where the axis ends. */
+  .stage__timeline::before,
+  .stage__timeline::after {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    height: 1px;
+  }
+  .stage__timeline::before {
+    width: 80%;
+    background: var(--stage-rule);
+    transition: background-color 0.7s ease;
+  }
+  .stage__timeline::after {
+    width: calc(var(--tl-p) * 80%);
+    background: var(--stage-accent);
+    transition:
+      width var(--tl-dur) linear,
+      background-color 0.7s ease;
+  }
+
+  .stage__timeline button {
+    width: 100%;
+    background: none;
+    border: 0;
+    font: inherit;
+    font-size: 0.8125rem;
+    color: var(--stage-muted);
+    padding: 0 0.75rem 0 0;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.7rem;
+    transition: color 0.3s ease;
+  }
+  .stage__tl-dot {
+    flex: none;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--stage-rule);
+    transition:
+      background-color 0.3s ease,
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+  .stage__timeline button:hover {
+    color: var(--stage-ink);
+  }
+
+  /* Already walked */
+  .stage__timeline button.is-past .stage__tl-dot {
+    background: var(--stage-accent);
+    opacity: 0.5;
+  }
+
+  /* Here is where we stand. The dot stays small, the sun sits above it. */
+  .stage__timeline button.is-active {
+    color: var(--stage-ink);
+    font-weight: 600;
+  }
+  .stage__timeline button.is-active .stage__tl-dot {
+    background: var(--stage-accent);
+  }
+
+  /* This is where it goes next */
+  .stage__timeline button.is-next {
+    color: var(--stage-ink);
+    opacity: 0.65;
+  }
+  .stage__timeline button.is-next .stage__tl-dot {
+    background: var(--stage-bg);
+    box-shadow: 0 0 0 2px var(--stage-accent);
+    animation: dawny-pulse 1.9s ease-in-out infinite;
+  }
+  @keyframes dawny-pulse {
+    0%,
+    100% {
+      opacity: 0.35;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  /* Stacked, the axis runs vertically and the sun travels downwards */
+  @media (max-width: 620px) {
+    .stage__stations {
+      grid-template-columns: 1fr;
+    }
+    .stage__timeline::before,
+    .stage__timeline::after {
+      top: 17px;
+      width: 1px;
+    }
+    .stage__timeline::before {
+      height: calc(100% - 34px);
+    }
+    .stage__timeline::after {
+      height: calc(var(--tl-p) * (100% - 34px));
+      transition:
+        height var(--tl-dur) linear,
+        background-color 0.7s ease;
+    }
+    .stage__sun {
+      left: 4.5px;
+      top: calc(17px + var(--tl-p) * (100% - 34px));
+      transition: top var(--tl-dur) linear;
+    }
+    .stage__timeline button {
+      flex-direction: row;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.45rem 0;
+    }
+  }
+
+  /* ---------- Caption and controls ---------- */
+
+  .stage__caption {
+    max-width: 58ch;
+    margin: clamp(1.5rem, 3vw, 2rem) 0 0;
+    font-size: clamp(1.0625rem, 1.35vw, 1.1875rem);
+    line-height: 1.55;
+    color: var(--stage-muted);
+    min-height: 3.2em; /* reserve the room, so the page does not jump per step */
+    transition: color 0.7s ease;
+  }
+
+  .stage__controls {
+    display: flex;
+    gap: 1.25rem;
+    margin: 0.5rem 0 0;
+    min-height: 40px; /* same, the controls appear and disappear */
+  }
+  .stage__btn {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    border: 0;
+    background: none;
+    padding: 0.5rem 0;
+    color: var(--stage-muted);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: color 0.18s ease;
+  }
+  .stage__btn:hover {
+    color: var(--stage-ink);
+  }
+</style>

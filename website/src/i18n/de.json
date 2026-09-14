@@ -1,196 +1,141 @@
 {
   "meta": {
-    "title": "Dawny - To Do App, die Aufgaben von gestern löscht",
-    "description": "Dawny ist eine minimalistische To Do App fürs iPhone. Keine überfälligen Aufgaben, kein tägliches Mitschleppen. Dein Daily Focus startet jeden Morgen frisch.",
-    "ogAlt": "Dawny — jeden Tag frisch starten"
+    "title": "Dawny: To-do-App fürs iPhone mit täglichem Reset",
+    "description": "Dawny beendet deinen Tag um drei Uhr nachts: Erledigtes wird abgelegt, Liegengebliebenes wandert ins Archiv. To-do-App fürs iPhone, kostenlos, ohne Konto.",
+    "ogAlt": "Dawny, jeden Morgen eine leere Liste"
   },
   "nav": {
     "skipToContent": "Zum Inhalt springen",
     "languageLabel": "Sprache",
-    "appStore": "App Store"
-  },
-  "hero": {
-    "eyebrow": "Für alle, die To-do-Listen hassen",
-    "headline": ["Eine To Do App, die", "deine Aufgaben löscht.", "Absichtlich."],
-    "sub": ["Was gestern offen blieb, blockiert heute nicht.", "Du entscheidest jeden Morgen neu, was wirklich zählt."],
-    "ctaPrimary": "Laden im App Store",
-    "ctaSecondary": "Artikel lesen"
-  },
-  "manifesto": {
-    "quote": "Warum zeigt dir deine App noch, was gestern nicht abgehakt wurde?",
-    "quoteSub": "Dein Tag sollte nicht mit dem anfangen, was gestern übrig blieb.",
-    "bodyMid": "Je länger alte Aufgaben stehen bleiben, desto schwerer findest du den Fokus für heute.",
-    "bodyExtra": "Dein Leben ist kein Projekt, bei dem du jeden Tag Wochen im Voraus planen kannst.",
-    "bodyAside": "Wenn eine Aufgabe seit zwei Wochen auf deiner Liste steht – wird sie dort besser oder nur älter?"
-  },
-  "reset": {
-    "eyebrow": "Der 3-Uhr-Reset",
-    "title": "Während du schläfst,",
-    "titleAccent": "startet dein Tag neu.",
-    "body": "Um 3 Uhr morgens räumt Dawny deinen Daily Focus auf. Offene Aufgaben wandern ins Archiv oder zurück ins Backlog. Du startest mit einer leeren Heute-Liste. Nichts geht verloren.",
-    "screenLabel": "Heute",
-    "tasks": ["Keller aufräumen", "Mit Hund raus", "Hochzeit zusagen"],
-    "steps": [
-      { "time": ["Morgens", "8:00"], "phase": "Tag 1", "doneCount": 0, "cleared": false, "footer": "0 von 3 erledigt" },
-      { "time": ["Abends", "22:00"], "phase": "Tag 1", "doneCount": 2, "cleared": false, "footer": "2 von 3 erledigt" },
-      { "time": ["Nachts", "3:00"], "phase": "Tag 2", "doneCount": 0, "cleared": true, "footer": "Frischer Start" }
-    ],
-    "timeline": {
-      "arrowDay": "Tag",
-      "arrowReset": "3 Uhr · leiser Reset"
-    },
-    "emptyTitle": "Noch nichts gewählt",
-    "emptySub": "Heute bewusst entscheiden",
-    "archiveLabel": "Archiv",
-    "returnedLabel": "Zurück ins Backlog"
-  },
-  "twoLists": {
-    "eyebrow": "So funktioniert es",
-    "title": "Eine Liste, ein Fokus, ein Archiv. Mehr nicht.",
-    "backlogLabel": "Backlog",
-    "backlogText": "Deine Aufgaben — Sammle hier alles, was du erledigen möchtest.",
-    "focusLabel": "Daily Focus",
-    "focusText": "Was heute zählt — Verschiebe Aufgaben hierher, wenn sie heute deinen Fokus verdienen.",
-    "progressLabel": "Archiv",
-    "progressText": "Für Liegengebliebenes — Was nicht wichtig genug war, wird weggeräumt.",
-    "captionBacklog": "Backlog — deine Sammlung von Vielleichts",
-    "captionFocus": "Daily Focus — heute, mit Absicht",
-    "captionProgress": "Daily Focus — offen und erledigt"
-  },
-  "contrast": {
-    "eyebrow": "Warum es sich anders anfühlt",
-    "title": "Die meisten Apps machen aus alten Plänen Druck.",
-    "titleAccent": "Dawny macht daraus Klarheit.",
-    "leftLabel": "Klassische Task-Apps",
-    "rightLabel": "Dawny",
-    "rows": [
-      { "left": "Eine wachsende Liste wird zum Grundrauschen", "right": "Heute bleibt fokussiert" },
-      { "left": "Rote Überfällig-Markierungen erzeugen künstliche Dringlichkeit", "right": "Verpasste Aufgaben werden neutrale Signale" },
-      { "left": "Alte Pläne konkurrieren mit echten Prioritäten", "right": "Veraltete Aufgaben rücken aus dem Blick" },
-      { "left": "Du schleppst alles weiter", "right": "Du entscheidest, was einen neuen Tag verdient" }
-    ]
-  },
-  "audience": {
-    "eyebrow": "Für wen Dawny gemacht ist",
-    "title": "Dawny passt zu dir, wenn…",
-    "items": [
-      "deine To Do Liste zum Friedhof guter Vorsätze geworden ist.",
-      "du Aufgaben mitschleppst, die du seit Tagen nicht mehr anschaust.",
-      "du für deine Tagesplanung kein komplexes Projektmanagement-Tool verwalten willst.",
-      "du Aufgaben zeitlich einordnen willst, ohne ihnen ein künstliches Datum zu geben."
-    ],
-    "footnote": "Dawny passt oft besonders gut zu Menschen, denen klassische Planungsregeln oft zu starr sind. Das gilt ganz besonders auch für viele neurodivergente Menschen."
-  },
-  "makeItCount": {
-    "eyebrow": "Make It Count",
-    "title": "Wenn eine Aufgabe immer wieder liegen bleibt —",
-    "titleAccent": "ist sie dann noch eine Priorität?",
-    "narrative": "Nicht erledigt heißt nicht gescheitert. Es heißt: vielleicht war es nicht wichtig genug für heute. Wenn eine Aufgabe liegen bleibt, nimmt Dawny dieses Signal ernst.",
-    "logicLabel": "So funktioniert es",
-    "logic": "Schaffst du eine Heute-Aufgabe nicht, verschiebt Dawny sie beim nächsten Reset leise ins Archiv, aus dem Weg. Vorher kannst du Aufgaben bis zu sieben verpasste Tage geben, so lange wandern sie zurück ins Backlog. Wiederkehrende Aufgaben werden nie archiviert.",
-    "safetyLabel": "Dein Sicherheitsnetz",
-    "safety": "Im Archiv ist nichts verloren. Per Tipp zurück ins Backlog oder direkt nach Heute.",
-    "flow": {
-      "backlog": "Backlog",
-      "today": "Heute",
-      "archive": "Archiv",
-      "edgeChoose": "du wählst",
-      "edgeMissed": "verpasst",
-      "edgeSlipping": "immer wieder verpasst"
+    "menuLabel": "Hauptnavigation",
+    "appStore": "App Store",
+    "links": {
+      "reset": "Der Reset",
+      "usage": "Bedienung",
+      "faq": "Fragen"
     }
   },
-  "reminders": {
-    "eyebrow": "Neben Apple Erinnerungen",
-    "title": "Erinnerungen darfst du behalten.",
-    "paragraphs": [
+  "hero": {
+    "kicker": "To-do-App fürs iPhone",
+    "headline": "Jeden Morgen eine leere Liste.",
+    "lead": "Was du dir für heute vornimmst, zählt. Nachts um drei wird alles zurückgesetzt: Erledigtes wird abgelegt, Liegengebliebenes wandert ins Archiv, statt sich anzuhäufen. Morgens entscheidest du neu, was heute wirklich dran ist.",
+    "ctaNote": "Kostenlos. Kein Abo, keine Werbung, kein Konto.",
+    "imageAlt": "Die Heute-Ansicht von Dawny auf dem iPhone mit offenen und erledigten Aufgaben"
+  },
+  "demo": {
+    "kicker": "Ein Tag in Dawny",
+    "heading": "Drei Listen, eine Philosophie.",
+    "line": "Was in Heute steht, zählt heute. Nur das.",
+    "replay": "Nochmal abspielen",
+    "pause": "Anhalten",
+    "resume": "Weiter",
+    "columns": { "backlog": "Backlog", "today": "Heute", "archive": "Archiv" },
+    "archiveSections": { "done": "Erledigt", "archived": "Archiviert" },
+    "tasks": {
+      "urlaub": "Urlaub planen ☀️",
+      "pass": "Reisepass verlängern",
+      "rezept": "Rezept abholen",
+      "tickets": "Tickets kaufen 🎟️"
+    },
+    "steps": ["Vorher", "Morgens", "Tagsüber", "03:00 Uhr", "Nächster Morgen"],
+    "captions": [
+      "Vorher: Im Backlog sammelt sich, was irgendwann ansteht. Heute ist leer.",
+      "Morgens: Du holst dir zwei Aufgaben nach Heute, der Rest bleibt liegen.",
+      "Tagsüber: Eine Aufgabe hakst du ab, sie rutscht zu den erledigten.",
+      "03:00 Uhr: Der Tag endet. Erledigtes wandert ins Archiv unter Erledigt, Liegengebliebenes unter Archiviert.",
+      "Nächster Morgen: Heute ist wieder leer. Du entscheidest neu."
+    ]
+  },
+  "usage": {
+    "kicker": "Die drei Listen",
+    "blocks": [
       {
-        "before": "Apple Erinnerungen ist gut in dem, wofür es gebaut wurde: Dinge mit Zeit und Ort. Der Zahnarzttermin, der Anruf um vier, die Einkaufsliste, die deine Mitbewohnerin auch sieht, das Paket, an das du erinnert werden willst, sobald du zu Hause bist. Dafür brauchst du keine zweite App.",
-        "link": "",
-        "href": "",
-        "after": ""
+        "kicker": "Backlog",
+        "heading": "Sortiert nach Zeithorizont, nicht nach Priorität",
+        "lead": "Prioritäten sind eine Lüge, die man sich selbst erzählt. Am Ende ist alles wichtig. Dawny fragt deshalb etwas Einfacheres: wann ungefähr?",
+        "list": [
+          "<strong>Schnell erledigt</strong> für alles, was in ein paar Minuten geht",
+          "<strong>Die nächsten Tage</strong> für das, was diese Woche dran ist",
+          "<strong>Die nächsten Wochen</strong> und <strong>Die nächsten Monate</strong> für den Rest",
+          "<strong>Irgendwann</strong> für alles ohne Horizont",
+          "eigene Kategorien, so viele du willst, mit eigenem Symbol",
+          "wiederkehrende Kategorien als Sonderfall"
+        ],
+        "close": "Aus jeder Gruppe holst du dir morgens nach Heute, was du dir zutraust. Der Rest bleibt sichtbar, ohne im Weg zu stehen.",
+        "imageAlt": "Der Backlog in Dawny mit den Kategorien nach Zeithorizont"
       },
       {
-        "before": "Schwierig wird der Rest. „Den Keller müsste ich mal ausmisten.“ „Irgendwann die Versicherung wechseln.“ Diese Aufgaben haben kein Datum, und du hast nur zwei Möglichkeiten. Gibst du ihnen eins, damit sie sichtbar bleiben, ",
-        "link": "werden sie rot, sobald der Tag vorbei ist",
-        "href": "/blog/what-is-task-debt/",
-        "after": ". Gibst du ihnen keins, rutschen sie nach unten und du siehst sie nie wieder."
+        "kicker": "Heute",
+        "heading": "Heute ist bewusst kurz",
+        "lead": "Zwei Abschnitte, mehr nicht: Offen und Erledigt. Keine Projekte, keine Tags, keine Unteraufgaben, keine Farben, die dir sagen, wie schlecht du dich fühlen sollst.",
+        "list": [],
+        "close": "Eine Aufgabe schreibst du direkt in die Zeile darunter. Ein Tippen hakt sie ab. Aus dem Backlog holst du eine Aufgabe mit einem Wisch nach rechts nach Heute.",
+        "imageAlt": "Die Heute-Ansicht in Dawny mit offenen und erledigten Aufgaben"
       },
       {
-        "before": "Genau ",
-        "link": "dieser Stapel",
-        "href": "/blog/two-list-system-backlog/",
-        "after": " gehört nach Dawny. Er liegt im Backlog, ohne Datum und ohne Farbe, und jeden Morgen entscheidest du neu, was davon heute drankommt. Was du dir vornimmst, schreibt Dawny auf Wunsch selbst in Erinnerungen. Zwei Apps, eine Liste für heute."
+        "kicker": "Archiv",
+        "heading": "Das Archiv ist kein Papierkorb",
+        "lead": "Im Archiv liegen zwei Dinge nebeneinander: unter <strong>Erledigt</strong>, was du geschafft hast, nach Datum sortiert. Unter <strong>Archiviert</strong>, was liegengeblieben ist. Nichts davon ist gelöscht.",
+        "list": [],
+        "close": "Ein Wisch nach rechts holt eine Aufgabe zurück, entweder in den Backlog oder direkt nach Heute. Wer den Morgen nach dem Reset öffnet, bekommt zuerst eine kurze Übersicht, was in der Nacht abgelegt wurde.",
+        "imageAlt": "Das Archiv in Dawny mit den Bereichen Erledigt und Archiviert"
       }
     ]
   },
-  "faq": {
-    "eyebrow": "Fragen",
-    "title": "Was zuerst gefragt wird.",
-    "items": [
-      {
-        "q": "Was passiert mit Aufgaben, die ich nicht schaffe?",
-        "a": "Beim täglichen Reset wandert eine Aufgabe, die du für Heute ausgewählt und nicht erledigt hast, ins Archiv. So konkurriert sie nicht mehr mit dem, was du dir morgen vornimmst. Wenn du Aufgaben mehr als einen Anlauf geben möchtest, stellst du den Schwellwert „Make it count“ in den Einstellungen auf bis zu sieben verpasste Tage. Wiederkehrende Aufgaben sind die Ausnahme, sie gehen immer zurück ins Backlog und landen nie im Archiv."
-      },
-      {
-        "q": "Löscht Dawny wirklich meine Aufgaben?",
-        "a": "Nein. Ohne dein Zutun verschwindet nichts. Gestern löschen heißt, dass Aufgaben deine Tagesliste verlassen, nicht die App. Sie wandern ins Archiv, wo du sie jederzeit nachlesen und mit einem Tap zurück ins Backlog oder direkt nach Heute holen kannst."
-      },
-      {
-        "q": "Kann ich die Reset-Zeit von 3 Uhr ändern?",
-        "a": "Ja. 3 Uhr ist nur die Voreinstellung, gewählt, weil sie nach den meisten langen Abenden und vor den meisten Weckern liegt. In den Einstellungen legst du jede beliebige Stunde fest, und der Reset läuft dann zu dieser Zeit auf deinem iPhone."
-      },
-      {
-        "q": "Unterstützt Dawny wiederkehrende Aufgaben?",
-        "a": "Ja, über wiederkehrende Kategorien. Eine Aufgabe in einer wiederkehrenden Kategorie geht nach dem Reset immer zurück ins Backlog und wird nie archiviert, egal wie oft sie offen bleibt. So kannst du Gewohnheiten und Routinen in Dawny führen, ohne dass sie dir stillschweigend abhandenkommen."
-      },
-      {
-        "q": "Ist Dawny kostenlos?",
-        "a": "Ja. Dawny ist ein kostenloser Download im App Store. Es gibt kein Abo, keine In-App-Käufe und keine Werbung."
-      },
-      {
-        "q": "Synchronisiert Dawny mit Apple Erinnerungen?",
-        "a": "Auf Wunsch ja. Wenn du die Synchronisation einschaltest, tauchen die Aufgaben aus deinem Daily Focus in der Erinnerungen-App und in der Aufgabenliste der Kalender-App auf, und Änderungen von dort fließen zurück nach Dawny. Wird eine Erinnerung außerhalb der App gelöscht, kehrt die Aufgabe still ins Backlog zurück, statt zu verschwinden."
-      },
-      {
-        "q": "Brauche ich ein Konto, und wo liegen meine Daten?",
-        "a": "Es gibt kein Konto und keine Anmeldung, weil es keinen Dawny-Server gibt. Deine Aufgaben bleiben auf deinem iPhone oder, wenn du iCloud nutzt, in deiner eigenen iCloud, verwaltet von Apple. Der Entwickler sieht sie nie und erhebt keine personenbezogenen Daten."
-      },
-      {
-        "q": "Läuft Dawny auf iPad oder Mac?",
-        "a": "Dawny ist für das iPhone gebaut. Ein für das iPad optimiertes Layout und eine Mac-App gibt es derzeit nicht."
-      }
+  "haltung": {
+    "kicker": "Warum Dawny so ist",
+    "heading": "Eine To-do-Liste soll dich nicht überführen.",
+    "paragraphs": [
+      "Die meisten Listen wachsen. Was du heute nicht schaffst, steht morgen wieder da, und übermorgen auch, nur mit einem roten Punkt daneben. Nach zwei Wochen ist die Liste ein Protokoll deiner Versäumnisse und du öffnest sie nicht mehr.",
+      "Dawny dreht das um. Ein Platz in der Heute-Liste ist eine Zusage für diesen einen Tag. Wird sie nicht eingelöst, ist der Tag vorbei und die Aufgabe wandert ins Archiv, ohne Vorwurf und ohne roten Punkt. Sie ist nicht weg, sie ist nur nicht mehr im Weg.",
+      "Was wirklich wichtig ist, holst du zurück. Was du dreimal nicht zurückholst, war es nicht."
     ]
+  },
+  "geraete": {
+    "kicker": "Geräte",
+    "widgets": {
+      "kicker": "Widgets",
+      "heading": "Auf dem Homescreen, ohne die App zu öffnen",
+      "lead": "Drei Widgets in mehreren Größen: Heute, Backlog und Archiv. Aufgaben lassen sich direkt im Widget abhaken, die App muss dafür nicht starten.",
+      "close": "Ein Tippen auf eine Zeile springt an die passende Stelle in der App. Der nächtliche Reset gilt für die Widgets genauso.",
+      "imageAlt": "Die Dawny-Widgets für Heute, Backlog und Archiv auf dem iPhone-Homescreen"
+    },
+    "grid": [
+      { "title": "Sync mit Erinnerungen", "text": "Wer möchte, spiegelt die Heute-Liste in die Apple Erinnerungen. Damit tauchen die Aufgaben auch auf Mac, iPad und Apple Watch auf." },
+      { "title": "iCloud-Sync, optional", "text": "Wer sie einschaltet, hält iPhone und iPad im Gleichstand, über den eigenen iCloud-Account, ohne fremden Server." },
+      { "title": "Kurzbefehle und Siri", "text": "Aufgaben per Sprache anlegen oder aus einer Automation heraus, direkt in den Backlog oder nach Heute." },
+      { "title": "Drei Widgets", "text": "Heute, Backlog und Archiv, in mehreren Größen. Abhaken geht direkt im Widget, ohne die App zu öffnen." }
+    ]
+  },
+  "vertrauen": {
+    "kicker": "Kostenlos, ohne Konto",
+    "stats": [
+      { "value": "0 €", "label": "Kein Abo, keine Pro-Version, keine In-App-Käufe." },
+      { "value": "Kein Konto", "label": "Keine Registrierung, kein Login, keine E-Mail-Adresse." },
+      { "value": "Offener Quellcode", "label": "Die App ist unter der MIT-Lizenz auf <a href=\"https://github.com/flrnsndr/Dawny\" target=\"_blank\" rel=\"noopener\">GitHub</a> einsehbar." }
+    ],
+    "note": "Die App sammelt nichts. Auf dieser Website messe ich anonym die Reichweite, ohne Cookies. Mehr dazu in der Datenschutzerklärung."
   },
   "finalCta": {
-    "eyebrow": "Jetzt verfügbar",
-    "title": {
-      "line1": "Frisch starten.",
-      "line2": "Jeden Tag."
-    },
-    "body": "Dawny ist jetzt im App Store. Kostenloser Download — starte heute mit einer leeren Liste.",
-    "cta": "Laden im App Store",
-    "qrAlt": "QR-Code scannen, um Dawny im App Store zu öffnen"
+    "heading": "Morgen früh ist die Liste leer. Was schreibst du drauf?",
+    "note": "Kostenlos, ohne Konto.",
+    "iconAlt": "App-Symbol von Dawny: eine aufgehende Sonne über dem Horizont"
+  },
+  "faqNav": {
+    "next": "Weiter zu:"
   },
   "footer": {
-    "tagline": "Eine To Do App, die Aufgaben von gestern löscht. Absichtlich.",
-    "rights": "© {year} Florian Schneider. Mit Sorgfalt in Deutschland gemacht.",
+    "tagline": "Jeden Morgen eine leere Liste.",
+    "madeIn": "Gemacht in Deutschland.",
     "links": {
-      "faq": "Häufige Fragen",
-      "privacy": "Datenschutz",
       "imprint": "Impressum",
-      "github": "GitHub",
-      "mail": "Kontakt"
+      "privacy": "Datenschutz",
+      "contact": "Kontakt",
+      "github": "GitHub"
     }
   },
   "legal": {
     "privacyTitle": "Datenschutzerklärung",
     "imprintTitle": "Impressum"
-  },
-  "blog": {
-    "title": "Blog",
-    "description": "Praktische Anleitungen zu Tagesplanung, Aufgabenmanagement und wie du Entscheidungsmüdigkeit überwindest. Vom Team hinter Dawny, der iOS-App mit täglichem Reset.",
-    "readMore": "Artikel lesen",
-    "backToBlog": "← Blog",
-    "publishedOn": "Veröffentlicht"
   }
 }
