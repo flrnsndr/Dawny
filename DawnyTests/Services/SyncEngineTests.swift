@@ -20,13 +20,22 @@ final class SyncEngineTests: XCTestCase {
     var context: ModelContext!
     var calendarService: MockCalendarService!
     var syncEngine: SyncEngine!
-    
+
+    /// Namen der pro Test angelegten UserDefaults-Suites. Das Verzeichnis der lokal
+    /// erreichbaren Erinnerungen ist gerätelokaler Zustand — jedes „Gerät" im Test
+    /// braucht sein eigenes, sonst weiß Gerät B von Erinnerungen, die es nie gesehen hat.
+    private var suiteNames: [String] = []
+
     override func setUp() async throws {
         container = try TestModelContainer.create()
         context = container.mainContext
         calendarService = MockCalendarService()
-        syncEngine = SyncEngine(calendarService: calendarService, modelContext: context)
-        
+        syncEngine = SyncEngine(
+            calendarService: calendarService,
+            modelContext: context,
+            linkRegistry: makeIsolatedRegistry()
+        )
+
         // Setze Kalender-Sync auf aktiviert für Tests
         AppSettings.shared.calendarSyncEnabled = true
 
@@ -34,11 +43,24 @@ final class SyncEngineTests: XCTestCase {
         // den einzelnen Test — jeder Test startet mit einer nicht gelaufenen Migration.
         AppGroup.defaults.removeObject(forKey: SyncEngine.reminderIdentifierMigrationKey)
     }
-    
+
     override func tearDown() async throws {
         // Bereinige Settings nach jedem Test
         AppSettings.shared.calendarSyncEnabled = true
         AppGroup.defaults.removeObject(forKey: SyncEngine.reminderIdentifierMigrationKey)
+
+        for name in suiteNames {
+            UserDefaults.standard.removePersistentDomain(forName: name)
+        }
+        suiteNames.removeAll()
+    }
+
+    /// Ein frisches, leeres Verzeichnis — entspricht einem Gerät, das noch keine
+    /// Erinnerung selbst aufgelöst hat.
+    private func makeIsolatedRegistry() -> ReminderLinkRegistry {
+        let name = "DawnyTests.ReminderLinks.\(UUID().uuidString)"
+        suiteNames.append(name)
+        return ReminderLinkRegistry(defaults: UserDefaults(suiteName: name)!)
     }
     
     // MARK: - Create Reminder Tests
@@ -464,5 +486,165 @@ final class SyncEngineTests: XCTestCase {
         // Abhaken auf Gerät B trifft die Erinnerung, die Gerät A angelegt hat.
         await secondEngine.removeTaskFromCalendar(secondTask)
         XCTAssertTrue(calendarService.reminders.isEmpty)
+    }
+
+    // MARK: - Nicht auflösbare Verknüpfungen anderer Geräte
+
+    /// Der gemeldete Fehler: Gerät B importiert eine Aufgabe samt Verknüpfung, kann die
+    /// Erinnerung dahinter aber nicht auflösen. Vorher las der Sync das als „in Reminders
+    /// gelöscht" und räumte die Aufgabe aus Heute — auf beiden Geräten.
+    func testSyncKeepsTaskInTodayWhenReminderBelongsToAnotherDevice() async throws {
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let task = TestModelContainer.createTask(in: context, title: "Test", status: .dailyFocus, backlog: backlog)
+        task.scheduledDate = Date()
+        task.externalReminderID = "id-vom-anderen-geraet"
+
+        await syncEngine.syncNow()
+
+        XCTAssertEqual(task.status, .dailyFocus, "Die Aufgabe muss in Heute bleiben")
+        XCTAssertEqual(task.externalReminderID, "id-vom-anderen-geraet", "Die Verknüpfung gehört Gerät A")
+    }
+
+    /// Und es darf auch kein Refresh-Signal geben: Ohne Änderung an den Daten gibt es
+    /// nichts nachzuladen.
+    func testSyncPostsNoNotificationForAnUnresolvableForeignLink() async throws {
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let task = TestModelContainer.createTask(in: context, title: "Test", status: .dailyFocus, backlog: backlog)
+        task.scheduledDate = Date()
+        task.externalReminderID = "id-vom-anderen-geraet"
+
+        let expectation = XCTNSNotificationExpectation(name: .dawnyDidSyncFromCalendar)
+        expectation.isInverted = true
+        await syncEngine.syncNow()
+        await fulfillment(of: [expectation], timeout: 0.5)
+    }
+
+    /// Die Gegenprobe: Auf dem verknüpfenden Gerät bleibt das bisherige Verhalten. Wer
+    /// die Erinnerung in Reminders löscht, bekommt die Aufgabe zurück ins Backlog.
+    func testSyncMovesTaskToBacklogWhenTheOwnReminderWasDeleted() async throws {
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let task = TestModelContainer.createTask(in: context, title: "Test", status: .dailyFocus, backlog: backlog)
+        task.scheduledDate = Date()
+
+        // Dieses Gerät legt die Erinnerung selbst an und kennt sie damit.
+        await syncEngine.syncTaskToCalendar(task)
+        let reminderID = try XCTUnwrap(task.externalReminderID)
+
+        // In der Erinnerungen-App gelöscht.
+        calendarService.reminders.removeValue(forKey: reminderID)
+
+        await syncEngine.syncNow()
+
+        XCTAssertEqual(task.status, .inBacklog)
+        XCTAssertNil(task.externalReminderID)
+    }
+
+    /// Zweiter Schadenspfad derselben Ursache: Beim Reset läuft `deleteReminder` für eine
+    /// fremde ID stillschweigend ins Leere, das Lösen der Verknüpfung aber nicht — und das
+    /// Lösen synct zurück und lässt die echte Erinnerung auf Gerät A verwaisen. Der
+    /// `calendarSyncEnabled`-Guard greift hier nicht, weil die Integration im
+    /// Auslieferungszustand auf jedem Gerät an ist.
+    func testRemoveKeepsTheLinkWhenTheReminderBelongsToAnotherDevice() async throws {
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let task = TestModelContainer.createTask(in: context, title: "Test", status: .dailyFocus, backlog: backlog)
+        task.scheduledDate = Date()
+        task.externalReminderID = "id-vom-anderen-geraet"
+
+        XCTAssertTrue(AppSettings.shared.calendarSyncEnabled)
+        await syncEngine.removeTaskFromCalendar(task)
+
+        XCTAssertEqual(calendarService.deleteCallCount, 0)
+        XCTAssertEqual(task.externalReminderID, "id-vom-anderen-geraet", "Die Verknüpfung gehört Gerät A")
+    }
+
+    /// Erster Lauf nach dem Update: Das Verzeichnis ist noch leer, die Verknüpfungen
+    /// stammen aber von diesem Gerät. Ein direkter Abruf entscheidet, damit das Aufräumen
+    /// nicht für Bestandsnutzer stehen bleibt.
+    func testRemoveStillWorksForAnUnregisteredButReachableReminder() async throws {
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let task = TestModelContainer.createTask(in: context, title: "Test", status: .dailyFocus, backlog: backlog)
+        task.scheduledDate = Date()
+
+        // Verknüpfung wie aus der Zeit vor dem Update: Erinnerung vorhanden, Verzeichnis leer.
+        let reminderID = try await calendarService.createReminder(title: "Test", notes: nil, dueDate: Date())
+        task.externalReminderID = reminderID
+
+        await syncEngine.removeTaskFromCalendar(task)
+
+        XCTAssertEqual(calendarService.deleteCallCount, 1)
+        XCTAssertNil(task.externalReminderID)
+    }
+
+    /// Dritter Schadenspfad: Eine fremde Verknüpfung lässt `updateReminder` scheitern.
+    /// Das ist auf einem Zweitgerät der Normalfall und darf weder ein Fehler-Banner
+    /// zeigen noch eine zweite Erinnerung für dieselbe Aufgabe anlegen.
+    func testForeignLinkNeitherShowsAnErrorNorCreatesADuplicate() async throws {
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let task = TestModelContainer.createTask(in: context, title: "Test", status: .dailyFocus, backlog: backlog)
+        task.scheduledDate = Date()
+        task.externalReminderID = "id-vom-anderen-geraet"
+
+        await syncEngine.syncTaskToCalendar(task)
+
+        XCTAssertNil(syncEngine.lastErrorMessage)
+        XCTAssertEqual(calendarService.createCallCount, 0)
+        XCTAssertEqual(task.externalReminderID, "id-vom-anderen-geraet")
+    }
+
+    /// Auch das Abräumen beim Ausschalten der Integration darf fremde Verknüpfungen
+    /// nicht lösen — sonst verwaist die Erinnerung auf dem Gerät, das sie hält.
+    func testTeardownKeepsLinksOfAnotherDevice() async throws {
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let own = TestModelContainer.createTask(in: context, title: "Eigen", status: .dailyFocus, backlog: backlog)
+        own.scheduledDate = Date()
+        await syncEngine.syncTaskToCalendar(own)
+
+        let foreign = TestModelContainer.createTask(in: context, title: "Fremd", status: .dailyFocus, backlog: backlog)
+        foreign.scheduledDate = Date()
+        foreign.externalReminderID = "id-vom-anderen-geraet"
+
+        AppSettings.shared.calendarSyncEnabled = false
+        await syncEngine.teardownAfterDisabling()
+
+        XCTAssertNil(own.externalReminderID, "Die eigene Erinnerung wird abgeräumt")
+        XCTAssertEqual(foreign.externalReminderID, "id-vom-anderen-geraet", "Die fremde bleibt unangetastet")
+    }
+
+    /// Der Ablauf aus dem Fehlerbericht, end to end und über zwei Geräte. Gerät B hat
+    /// einen eigenen Store, ein eigenes Verzeichnis und einen eigenen EventKit-Zugang,
+    /// der die Erinnerung von Gerät A nicht auflöst — genau der Fall, in dem die
+    /// Tagesplanung vorher verloren ging.
+    func testForeignReminderDoesNotWipeTodayOnEitherDevice() async throws {
+        // Gerät A: Aufgabe in Heute, Erinnerung angelegt.
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let taskOnA = TestModelContainer.createTask(in: context, title: "Steuer", status: .dailyFocus, backlog: backlog)
+        taskOnA.scheduledDate = Date()
+        await syncEngine.syncTaskToCalendar(taskOnA)
+        let reminderID = try XCTUnwrap(taskOnA.externalReminderID)
+
+        // Gerät B: importiert Aufgabe samt Verknüpfung, erreicht die Erinnerung aber nicht.
+        let calendarOnB = MockCalendarService()
+        let containerOnB = try TestModelContainer.create()
+        let contextOnB = containerOnB.mainContext
+        let engineOnB = SyncEngine(
+            calendarService: calendarOnB,
+            modelContext: contextOnB,
+            linkRegistry: makeIsolatedRegistry()
+        )
+        let backlogOnB = TestModelContainer.createBacklog(in: contextOnB)
+        let taskOnB = TestModelContainer.createTask(in: contextOnB, title: "Steuer", status: .dailyFocus, backlog: backlogOnB)
+        taskOnB.scheduledDate = Date()
+        taskOnB.externalReminderID = reminderID
+
+        await engineOnB.syncNow()
+
+        XCTAssertEqual(taskOnB.status, .dailyFocus, "Gerät B darf die Aufgabe nicht aus Heute räumen")
+        XCTAssertEqual(taskOnB.externalReminderID, reminderID, "und die Verknüpfung nicht lösen")
+
+        // Auf Gerät A ändert sich ebenfalls nichts — die Erinnerung existiert weiterhin.
+        await syncEngine.syncNow()
+        XCTAssertEqual(taskOnA.status, .dailyFocus)
+        XCTAssertEqual(calendarOnB.reminders.count, 0)
+        XCTAssertEqual(calendarService.reminders.count, 1)
     }
 }

@@ -23,6 +23,10 @@ final class SyncEngine {
     
     private let calendarService: CalendarServiceProtocol
     private let modelContext: ModelContext
+    /// Gerätelokales Wissen darüber, welche Erinnerungen dieses Gerät erreichen kann.
+    /// Entscheidet, ob ein fehlender Treffer eine Löschung beweist — siehe
+    /// `ReminderLinkRegistry`.
+    private let linkRegistry: ReminderLinkRegistry
     // Interne Sync-Mechanik, keine UI-State: `@ObservationIgnored` hält sie aus der
     // Beobachtung heraus und lässt `deinit` weiterhin auf `observerTask` zugreifen.
     @ObservationIgnored private var observerTask: _Concurrency.Task<Void, Never>?
@@ -44,9 +48,14 @@ final class SyncEngine {
 
     // MARK: - Initializer
     
-    init(calendarService: CalendarServiceProtocol, modelContext: ModelContext) {
+    init(
+        calendarService: CalendarServiceProtocol,
+        modelContext: ModelContext,
+        linkRegistry: ReminderLinkRegistry = ReminderLinkRegistry()
+    ) {
         self.calendarService = calendarService
         self.modelContext = modelContext
+        self.linkRegistry = linkRegistry
     }
     
     deinit {
@@ -107,9 +116,17 @@ final class SyncEngine {
         for task in linkedTasks {
             guard let reminderID = task.externalReminderID else { continue }
 
+            // Verknüpfungen anderer Geräte gehören nicht diesem Gerät: Sie hier zu lösen
+            // würde die echte Erinnerung auf dem verknüpfenden Gerät verwaisen lassen.
+            guard await canReachReminder(reminderID) else {
+                print("↩︎ Reminder link belongs to another device, keeping it: \(task.title)")
+                continue
+            }
+
             do {
                 try await calendarService.deleteReminder(id: reminderID)
                 task.unlinkFromCalendar()
+                linkRegistry.forget(reminderID)
                 print("✅ Removed reminder from calendar: \(task.title)")
             } catch {
                 print("❌ Failed to remove reminder from calendar: \(error)")
@@ -150,6 +167,7 @@ final class SyncEngine {
                     isCompleted: task.isCompleted,
                     dueDate: task.scheduledDate
                 )
+                linkRegistry.remember(existingID)
                 print("✅ Updated reminder in calendar: \(task.title)")
             } else {
                 // Erstelle neuen Reminder
@@ -159,10 +177,20 @@ final class SyncEngine {
                     dueDate: task.scheduledDate
                 )
                 task.linkToCalendar(reminderID: reminderID)
+                linkRegistry.remember(reminderID)
                 try modelContext.save()
                 print("✅ Created reminder in calendar: \(task.title)")
             }
         } catch {
+            // Eine Verknüpfung von einem anderen Gerät ist hier nicht auflösbar. Das ist
+            // erwartetes Verhalten und kein Fehler, den der Nutzer sehen soll — sonst
+            // steht bei jedem Zweitgerät dauerhaft ein Fehler-Banner. Erst recht darf
+            // Dawny hier keine zweite Erinnerung für dieselbe Aufgabe anlegen.
+            if isForeignLinkError(error, of: task) {
+                print("↩︎ Reminder link belongs to another device, skipping: \(task.title)")
+                return
+            }
+
             print("❌ Failed to sync task to calendar: \(error)")
             setError(from: error)
         }
@@ -183,6 +211,12 @@ final class SyncEngine {
     /// ohne Reminders-Integration kennt die Erinnerung nicht und würde beim Reset die
     /// mitgesyncte Verknüpfung lösen — und dieses Lösen zurück zum verknüpfenden Gerät
     /// syncen, dessen echte Erinnerung damit verwaist.
+    ///
+    /// Derselbe Schaden entsteht auf einem Zweitgerät, auf dem die Integration
+    /// eingeschaltet ist (der Auslieferungszustand): `deleteReminder` läuft für eine
+    /// fremde ID stillschweigend ins Leere, das Lösen der Verknüpfung aber nicht.
+    /// Deshalb fasst nur das Gerät die Verknüpfung an, das die Erinnerung selbst
+    /// erreicht — siehe `ReminderLinkRegistry`.
     func removeTaskFromCalendar(_ task: Task) async {
         guard AppSettings.shared.calendarSyncEnabled else {
             return
@@ -192,9 +226,15 @@ final class SyncEngine {
             return
         }
 
+        guard await canReachReminder(reminderID) else {
+            print("↩︎ Reminder link belongs to another device, keeping it: \(task.title)")
+            return
+        }
+
         do {
             try await calendarService.deleteReminder(id: reminderID)
             task.unlinkFromCalendar()
+            linkRegistry.forget(reminderID)
             try modelContext.save()
             print("✅ Removed reminder from calendar: \(task.title)")
         } catch {
@@ -262,11 +302,24 @@ final class SyncEngine {
 
             do {
                 guard let calendarReminder = try await calendarService.fetchReminder(id: reminderID) else {
-                    // Reminder wurde im Kalender gelöscht
+                    // Kein Treffer heißt nicht zwingend „gelöscht". Eine über iCloud
+                    // mitgereiste Verknüpfung eines anderen Geräts ist hier schlicht
+                    // nicht auflösbar, und die Aufgabe aus Heute zu räumen würde
+                    // genau diesen Irrtum auf alle Geräte tragen.
+                    guard linkRegistry.isKnownLocally(reminderID) else {
+                        print("↩︎ Reminder \(reminderID) not resolvable on this device, leaving task untouched: \(task.title)")
+                        continue
+                    }
+
+                    // Diese Erinnerung hat dieses Gerät selbst schon einmal erreicht —
+                    // fehlt sie jetzt, wurde sie tatsächlich in Reminders gelöscht.
                     await handleReminderDeleted(task: task)
+                    linkRegistry.forget(reminderID)
                     didChange = true
                     continue
                 }
+
+                linkRegistry.remember(reminderID)
 
                 // Prüfe auf Änderungen und löse Konflikte
                 if await resolveConflicts(task: task, calendarReminder: calendarReminder) {
@@ -277,6 +330,10 @@ final class SyncEngine {
                 print("❌ Failed to fetch reminder \(reminderID): \(error)")
             }
         }
+
+        // Verzeichnis auf die noch bestehenden Verknüpfungen eindampfen, damit es nicht
+        // unbegrenzt wächst.
+        linkRegistry.keepOnly(Set(fetchTasksLinkedToCalendar().compactMap { $0.externalReminderID }))
 
         // Save Context
         do {
@@ -367,6 +424,43 @@ final class SyncEngine {
         task.resetToBacklog()
     }
     
+    // MARK: - Erreichbarkeit von Verknüpfungen
+
+    /// True, wenn dieses Gerät die Erinnerung erreichen kann.
+    ///
+    /// Erst das Verzeichnis, dann ein direkter Abruf. Der Abruf deckt den ersten Lauf
+    /// nach dem Update ab, in dem das Verzeichnis noch leer ist, obwohl die
+    /// Verknüpfungen von diesem Gerät stammen.
+    private func canReachReminder(_ reminderID: String) async -> Bool {
+        if linkRegistry.isKnownLocally(reminderID) {
+            return true
+        }
+
+        do {
+            guard try await calendarService.fetchReminder(id: reminderID) != nil else {
+                return false
+            }
+        } catch {
+            print("❌ Failed to fetch reminder \(reminderID): \(error)")
+            return false
+        }
+
+        linkRegistry.remember(reminderID)
+        return true
+    }
+
+    /// True, wenn der Fehler daher rührt, dass die Verknüpfung der Aufgabe zu einer
+    /// Erinnerung zeigt, die dieses Gerät nicht kennt.
+    private func isForeignLinkError(_ error: Error, of task: Task) -> Bool {
+        guard let calendarError = error as? CalendarServiceError,
+              case .reminderNotFound = calendarError,
+              let reminderID = task.externalReminderID else {
+            return false
+        }
+
+        return !linkRegistry.isKnownLocally(reminderID)
+    }
+
     /// Holt alle Daily Focus Tasks aus dem Context
     private func fetchDailyFocusTasks() -> [Task] {
         let descriptor = FetchDescriptor<Task>()
@@ -425,6 +519,10 @@ final class SyncEngine {
                     // Verknüpfung schreibt das verknüpfende Gerät selbst um.
                     continue
                 }
+
+                // Aufgelöst heißt: Dieses Gerät erreicht die Erinnerung. Das gehört ins
+                // Verzeichnis, egal ob die ID danach umgeschrieben wird oder nicht.
+                linkRegistry.remember(stableID)
 
                 guard stableID != storedID else { continue }
 
