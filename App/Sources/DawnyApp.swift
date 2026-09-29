@@ -33,6 +33,9 @@ struct DawnyApp: App {
         // Store + UserDefaults einmalig in die App Group migrieren, BEVOR der Container gebaut wird.
         AppGroupMigrator.migrateIfNeeded()
 
+        // Vor dem Container, sonst gehen die Sync-Events des ersten Exports verloren.
+        CloudSyncHealth.shared.startObserving()
+
         // Initialize ModelContainer
         do {
             modelContainer = try IntentDataStore.makeModelContainer()

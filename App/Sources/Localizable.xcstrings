@@ -4995,6 +4995,24 @@
         }
       }
     },
+    "settings.icloud.status.quotaExceeded" : {
+      "comment" : "Settings · Status line shown when the user's iCloud storage is full and uploads fail.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud-Speicher voll. Der Sync pausiert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud storage full. Sync is paused."
+          }
+        }
+      }
+    },
     "settings.icloud.toggle" : {
       "comment" : "Settings · Label of the toggle that enables iCloud sync.",
       "extractionState" : "manual",
