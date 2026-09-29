@@ -4905,24 +4905,6 @@
         }
       }
     },
-    "settings.icloud.footer.reminders" : {
-      "comment" : "Settings · Extra footer hint under the Reminders toggle while iCloud sync is on.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tipp: Aktiviere die Apple-Erinnerungen-Integration nur auf einem Gerät."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tip: enable the Apple Reminders integration on one device only."
-          }
-        }
-      }
-    },
     "settings.icloud.footer.restart" : {
       "comment" : "Settings · Footer below the iCloud sync toggle · Plain sentences.",
       "extractionState" : "manual",

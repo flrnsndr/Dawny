@@ -443,16 +443,20 @@ in by `testFirstLaunchWithoutOwnResetDateDoesNotReset` and
 
 ### 10.2 EventKit / Apple Reminders
 
-`calendarSyncEnabled` stays **device-local** (not in §7's KVS set). Policy: the
-Reminders integration is a per-device feature; the user should enable it on one device
-only. Devices with it disabled never touch EventKit (existing guard). Consequences:
+`calendarSyncEnabled` stays **device-local** (not in §7's KVS set). Policy at the time:
+the Reminders integration is a per-device feature; the user should enable it on one device
+only. **Superseded by §10.2.2** — since the cross-device damage is fixed at the source,
+the setting may stay on everywhere and keeps its `true` default.
+Devices with it disabled never touch EventKit (existing guard). Consequences:
 
 - `Task.externalReminderID` syncs via CloudKit but refers to an EventKit identifier that
   may not resolve on another device. **Verified during implementation:**
-  `EventKitCalendarService` stores `EKCalendarItem.calendarItemIdentifier`, which is the
-  **device-local** identifier (the cross-device-stable one would be
-  `calendarItemExternalIdentifier`). A link created on device A therefore never resolves
-  on device B.
+  `EventKitCalendarService` stored `EKCalendarItem.calendarItemIdentifier`, which is the
+  **device-local** identifier. A link created on device A therefore never resolved on
+  device B. **Superseded:** the service now stores `calendarItemExternalIdentifier` and
+  `SyncEngine.migrateReminderIdentifiersIfNeeded()` lifts existing links onto it once.
+  That fixes the common case (one iCloud reminder list, both devices signed in) but not
+  the general one — see §10.2.2 for what remains unresolvable and what follows from it.
 - `deleteReminder(id:)` already treats "not found" as a silent no-op, so no hardening was
   needed there.
 - If the user enables Reminders sync on two devices anyway, duplicate reminders can
@@ -478,6 +482,73 @@ matches every other path — nothing else cleans up on disable either.
 
 Covered by `SyncEngineTests.testRemoveIsNoOpWhileCalendarSyncIsDisabled`.
 
+#### 10.2.2 A missing reminder is not proof of a deleted reminder — decided, implemented
+
+Found on 2026-08-25 on the iPhone + Simulator rig of §14.2, and it is the same identifier
+mistake as §10.2.1 on a second, still-open path — the destructive one.
+
+Device A creates a task in Today, the Reminders integration creates a reminder and stores
+its identifier in `Task.externalReminderID`. Device B imports the task including that
+identifier. On the next foreground `SyncEngine.syncFromCalendar()` runs,
+`fetchReminder(id:)` finds nothing, the code concludes "deleted in Reminders" and calls
+`handleReminderDeleted` → `unlinkFromCalendar()` + `resetToBacklog()`. The task drops out
+of Today, and that change syncs back to A. Every user with two synced devices loses their
+day plan.
+
+The guard of §10.2.1 does not catch this: it keys on `calendarSyncEnabled`, which is
+`true` by default on **every** device, so the policy of §10.2 ("enable the Reminders
+integration on one device only") never actually applies. For the same reason
+`removeTaskFromCalendar` still orphans A's reminder during B's reset — `deleteReminder`
+no-ops on the unknown identifier, `unlinkFromCalendar()` does not.
+
+Switching to `calendarItemExternalIdentifier` (done, see §10.2) narrows this but does not
+close it. A lookup still legitimately returns `nil` for an intact link when the identifier
+has not been migrated yet, when the reminder lives in a local (non-iCloud) list, on
+Exchange accounts, when Apple's own Reminders sync has not delivered it yet, and when
+EventKit permission is missing or revoked. None of those mean "deleted".
+
+**Decision: only the device that can actually reach a reminder may act on its absence.**
+`ReminderLinkRegistry` (device-local `UserDefaults`, key
+`DawnyLocallyResolvedReminderIDs`, deliberately **not** synced and **not** in §7's KVS
+set) records every reminder this device has resolved itself — on create, on update, on a
+successful fetch, and during the identifier migration. `SyncEngine` treats a missing
+reminder as a deletion only for registry entries; for everything else it leaves the task
+and its link strictly alone. The same check guards `removeTaskFromCalendar` and
+`teardownAfterDisabling` (there via a direct lookup first, so existing single-device
+installs with an empty registry keep cleaning up), and it suppresses the otherwise
+permanent error banner a foreign link produces in `syncTaskToCalendar`.
+
+Rejected alternatives: making `handleReminderDeleted` inert whenever `iCloudSyncEnabled`
+is on — that also breaks deletion detection on the one device that owns the reminder, and
+a single device with sync enabled for a future second device is the common case. Relying
+on the external identifier alone — it leaves the five `nil` causes above.
+
+**`calendarSyncEnabled` stays `true` by default** (product decision 2026-08-25, after the
+fix above). With both devices on the same iCloud account and the reminders in an iCloud
+list, device B resolves A's reminder and behaves exactly like A: it updates the same
+reminder instead of creating a second one, and both devices detect a real deletion. Where
+B *cannot* resolve the reminder, it is now passive rather than destructive, and it resumes
+normal operation the moment the lookup succeeds. So the "one device only" policy of §10.2
+is obsolete as a correctness requirement — it survives only as the reason the setting is
+not in §7's KVS set.
+
+Accepted trade-offs:
+
+- A reminder deleted in the Reminders app *before* this change shipped is never noticed,
+  because the registry has no entry for it and never gets one. The task keeps a dead link
+  and stays in Today. Non-destructive, and any later reset or manual move resolves it.
+- If a reset runs on a device exactly while it cannot see the reminder, the reminder is
+  not removed from the Reminders app. The link stays intact, so the next move to Today
+  reuses that same reminder. Untidy, not lossy.
+
+Covered by `SyncEngineTests.testSyncKeepsTaskInTodayWhenReminderBelongsToAnotherDevice`,
+`testSyncMovesTaskToBacklogWhenTheOwnReminderWasDeleted`,
+`testRemoveKeepsTheLinkWhenTheReminderBelongsToAnotherDevice`,
+`testRemoveStillWorksForAnUnregisteredButReachableReminder`,
+`testForeignLinkNeitherShowsAnErrorNorCreatesADuplicate`,
+`testTeardownKeepsLinksOfAnotherDevice`,
+`testForeignReminderDoesNotWipeTodayOnEitherDevice` and `ReminderLinkRegistryTests`.
+
 ---
 
 ## 11. UI Changes (Settings + one-time intro) + Localization
@@ -492,7 +563,6 @@ Suggested keys/values:
 | `settings.icloud.footer.restart` | Takes effect the next time Dawny launches. Close Dawny completely once and open it again. Your tasks sync through your personal iCloud account. | Wird beim nächsten Start von Dawny aktiv. Schließe Dawny dafür einmal ganz und öffne es neu. Deine Aufgaben werden über dein persönliches iCloud-Konto synchronisiert. |
 | `settings.icloud.status.available` | iCloud available | iCloud verfügbar |
 | `settings.icloud.status.noAccount` | Not signed into iCloud. Sync is paused. | Nicht bei iCloud angemeldet. Der Sync pausiert. |
-| `settings.icloud.footer.reminders` | Tip: enable the Apple Reminders integration on one device only. | Tipp: Aktiviere die Apple-Erinnerungen-Integration nur auf einem Gerät. |
 
 One-time intro ([`ICloudSyncIntroView`](../../App/Sources/Views/ICloudSyncIntroView.swift)):
 shown as a sheet on the first launch after the update (`hasSeenWelcome == true &&
@@ -505,8 +575,10 @@ the hint for the pointer at the Settings toggle. A fresh install sees the same t
 the iCloud welcome page instead (second to last — **Make it count stays the last page**),
 and `WelcomeView.finish()` applies it. Keys: `icloudintro.*`, `welcome.icloud.*`.
 
-Settings view: new section with the toggle, the account-status line (§5.5), and the two
-footers. No other UI changes. (The auto-archive review overlay needs **no** change:
+Settings view: new section with the toggle, the account-status line (§5.5), and the
+restart footer. The Reminders footer (`settings.icloud.footer.reminders`, "enable it on
+one device only") was **removed** on 2026-08-25 together with the policy it repeated, see
+§10.2.2; nothing replaces it, the Reminders section keeps only its own description. No other UI changes. (The auto-archive review overlay needs **no** change:
 `archiveReviewed` syncs, so the overlay appears on the first device opened and is
 suppressed elsewhere once synced — decision D8.)
 
@@ -524,7 +596,10 @@ suppressed elsewhere once synced — decision D8.)
    device whose own reset run archived nothing (because the other device's result synced
    in first) shows no dot. The synced overlay is the primary surface.
 5. **Widget/Siri writes sync late** (next main-app run, §9).
-6. **Duplicate Apple Reminders** if the EventKit integration is enabled on two devices.
+6. **Duplicate Apple Reminders** if the EventKit integration is enabled on two devices —
+   now only in the narrow race where both devices create a reminder before the link
+   itself syncs. A device that already sees a link never creates a second reminder, even
+   when it cannot resolve that link (§10.2.2).
 7. **Clock manipulation / timezone changes** around the reset threshold: same behavior
    as today, no additional handling.
 8. **No sync-status UI** beyond the account-status line (no progress, no "last synced").
@@ -599,6 +674,12 @@ suppressed elsewhere once synced — decision D8.)
 - **Container fallback**: CloudKit config failure falls back to plain config and clears
   the flag (inject the failure; if not injectable, cover the decision logic extracted
   into a testable function).
+- **Reminder link ownership** (§10.2.2): a task whose `externalReminderID` this device
+  cannot resolve keeps its status and its link on every `SyncEngine` path (sync, reset
+  removal, teardown) and raises no error banner; the device that created the link still
+  moves the task back to the backlog when its reminder really is gone. Give each
+  simulated device its own `ReminderLinkRegistry` over an isolated `UserDefaults` suite —
+  sharing one registry hides exactly the bug these tests exist for.
 
 ### 14.2 Manual two-device matrix (Debug builds, Development environment)
 
@@ -690,6 +771,7 @@ feature.
 | 8 | Sign out of iCloud on B | App keeps working locally; Settings shows the paused hint; sign back in → sync resumes | ❌ **Fail** — see finding below |
 | 9 | Complete a task via widget/Siri on A, then open app A | Change reaches B after A's app ran | ✅ Pass |
 | 10 | Toggle sync off on A, edit, toggle on again | Local edits upload on re-enable; no data loss | ✅ Pass |
+| 11 | Reminders integration enabled on **both** devices (the shipped default), task in Today on A, then foreground B and let its reset run (§10.2.2) | Task stays in Today on both, keeps its `externalReminderID`, A's reminder still exists in the Reminders app, and no error banner on B | ⏳ Not yet run |
 
 **Finding — Scenario 8: signing out of iCloud deletes local data.** Expected was "app
 keeps working locally, sync just pauses." Actual: `NSCloudKitMirroringDelegate` reacts
@@ -757,6 +839,9 @@ non-blocking on 2026-08-25.
 - **§10.2 hardening** turned out to be unnecessary at the EventKit layer
   (`deleteReminder` already no-ops on an unknown identifier), but surfaced the real
   problem one level up — resolved in §10.2.1 by guarding `removeTaskFromCalendar`.
+  That guard keys on `calendarSyncEnabled`, which is `true` by default on every device,
+  so it never fired where it mattered; §10.2.2 replaces the criterion with "can this
+  device reach the reminder" and covers the destructive `syncFromCalendar` path too.
 
 Each PR must keep `xcodebuild test` green (see `CLAUDE.md` for the exact commands) and
 follow the repo rules: localized strings in both locales, license headers on new Swift
