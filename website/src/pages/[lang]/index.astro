@@ -11,11 +11,16 @@ import { faqEntries, type FaqBlock } from "@/data/faq";
 import { faqBlocks as faqDe } from "@/data/faq.de";
 import { faqBlocks as faqEn } from "@/data/faq.en";
 
-import heroImg from "@/assets/screenshots/hero-heute.png";
-import backlogImg from "@/assets/screenshots/backlog.png";
-import todayImg from "@/assets/screenshots/heute.png";
-import archiveImg from "@/assets/screenshots/archiv.png";
-import widgetsImg from "@/assets/screenshots/widgets.png";
+import heroDe from "@/assets/screenshots/hero-heute.png";
+import backlogDe from "@/assets/screenshots/backlog.png";
+import todayDe from "@/assets/screenshots/heute.png";
+import archiveDe from "@/assets/screenshots/archiv.png";
+import widgetsDe from "@/assets/screenshots/widgets.png";
+import heroEn from "@/assets/screenshots/en/hero-today.png";
+import backlogEn from "@/assets/screenshots/en/backlog.png";
+import todayEn from "@/assets/screenshots/en/today.png";
+import archiveEn from "@/assets/screenshots/en/archive.png";
+import widgetsEn from "@/assets/screenshots/en/widgets.png";
 import iconLight from "@/assets/icons/dawny-icon-light.png";
 import iconDarkSrc from "@/assets/icons/dawny-icon-dark.png";
 
@@ -31,7 +36,13 @@ const faqBlocks: FaqBlock[] = lang === "de" ? faqDe : faqEn;
 const block = (id: FaqBlock["id"]) => faqBlocks.find((b) => b.id === id)!;
 const faq = faqEntries(faqBlocks);
 
-const usageImages = [backlogImg, todayImg, archiveImg];
+const shots =
+  lang === "de"
+    ? { hero: heroDe, backlog: backlogDe, today: todayDe, archive: archiveDe, widgets: widgetsDe }
+    : { hero: heroEn, backlog: backlogEn, today: todayEn, archive: archiveEn, widgets: widgetsEn };
+const heroImg = shots.hero;
+const widgetsImg = shots.widgets;
+const usageImages = [shots.backlog, shots.today, shots.archive];
 const iconDark = await getImage({ src: iconDarkSrc, width: 192, height: 192, format: "webp" });
 ---
 
