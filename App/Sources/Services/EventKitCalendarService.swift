@@ -35,7 +35,11 @@ final class EventKitCalendarService: CalendarServiceProtocol {
             throw CalendarServiceError.permissionDenied
         }
     }
-    
+
+    func hasFullAccess() -> Bool {
+        EKEventStore.authorizationStatus(for: .reminder) == .fullAccess
+    }
+
     func createReminder(title: String, notes: String?, dueDate: Date?) async throws -> String {
         guard let calendar = defaultCalendar ?? eventStore.defaultCalendarForNewReminders() else {
             throw CalendarServiceError.permissionDenied

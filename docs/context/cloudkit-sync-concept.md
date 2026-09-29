@@ -518,6 +518,25 @@ and its link strictly alone. The same check guards `removeTaskFromCalendar` and
 installs with an empty registry keep cleaning up), and it suppresses the otherwise
 permanent error banner a foreign link produces in `syncTaskToCalendar`.
 
+**The registry alone does not cover a missing permission** (found 2026-09-29). When the
+user revokes Dawny's Reminders access in the iOS settings, EventKit does not throw, it
+simply resolves nothing, including the reminders this device created itself and has in
+its registry. Before the fix below, `syncFromCalendar` read that as "deleted" for every
+registered link and moved the whole Today list to the backlog, and via CloudKit on every
+device. `removeTaskFromCalendar` and `teardownAfterDisabling` had the matching gap:
+`canReachReminder` answered "reachable" straight from the registry, `deleteReminder`
+no-oped, and the link was cleared, orphaning the reminder in the Reminders app.
+
+So every destructive reading of a missing reminder now first checks
+`CalendarServiceProtocol.hasFullAccess()` (`EKEventStore.authorizationStatus(for:
+.reminder) == .fullAccess`). Without full access `syncFromCalendar` skips the whole run,
+`canReachReminder` answers "not reachable" for every ID (so reset and teardown keep all
+links), and `migrateReminderIdentifiersIfNeeded` returns without setting its done flag,
+since it would otherwise skip every link and still mark itself finished. The registry is
+left untouched throughout, so deletion detection works again the moment access returns.
+No error banner is shown for this; the tasks simply behave as if the integration were
+paused.
+
 Rejected alternatives: making `handleReminderDeleted` inert whenever `iCloudSyncEnabled`
 is on — that also breaks deletion detection on the one device that owns the reminder, and
 a single device with sync enabled for a future second device is the common case. Relying
@@ -540,6 +559,9 @@ Accepted trade-offs:
 - If a reset runs on a device exactly while it cannot see the reminder, the reminder is
   not removed from the Reminders app. The link stays intact, so the next move to Today
   reuses that same reminder. Untidy, not lossy.
+- Turning the integration off while access is revoked leaves Dawny's reminders in the
+  Reminders app and keeps the links, because Dawny cannot remove them. Turning it back on
+  later reuses those reminders.
 
 Covered by `SyncEngineTests.testSyncKeepsTaskInTodayWhenReminderBelongsToAnotherDevice`,
 `testSyncMovesTaskToBacklogWhenTheOwnReminderWasDeleted`,
@@ -547,7 +569,13 @@ Covered by `SyncEngineTests.testSyncKeepsTaskInTodayWhenReminderBelongsToAnother
 `testRemoveStillWorksForAnUnregisteredButReachableReminder`,
 `testForeignLinkNeitherShowsAnErrorNorCreatesADuplicate`,
 `testTeardownKeepsLinksOfAnotherDevice`,
-`testForeignReminderDoesNotWipeTodayOnEitherDevice` and `ReminderLinkRegistryTests`.
+`testForeignReminderDoesNotWipeTodayOnEitherDevice` and `ReminderLinkRegistryTests`;
+the missing-permission case by `testSyncKeepsOwnLinkedTaskInTodayWhenAccessWasRevoked`,
+`testSyncSkipsFetchingWhenAccessWasRevoked`,
+`testSyncStillDetectsDeletionAfterAccessIsRestored`,
+`testRemoveKeepsOwnLinkWhenAccessWasRevoked`,
+`testTeardownKeepsOwnLinksWhenAccessWasRevoked` and
+`testMigrationRetriesAfterAccessWasMissing`.
 
 ---
 

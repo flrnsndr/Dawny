@@ -24,6 +24,11 @@ final class MockCalendarService: CalendarServiceProtocol {
 
     var shouldGrantAccess = true
     var shouldFailOperations = false
+
+    /// Simuliert den Berechtigungsstatus. `false` entspricht einem in den
+    /// iOS-Einstellungen entzogenen Zugriff: EventKit wirft dann nicht, sondern findet
+    /// schlicht nichts, deshalb liefern die Abrufe unten in dem Fall `nil`.
+    var hasAccess = true
     
     // MARK: - Tracking
     
@@ -45,7 +50,11 @@ final class MockCalendarService: CalendarServiceProtocol {
         
         return shouldGrantAccess
     }
-    
+
+    func hasFullAccess() -> Bool {
+        hasAccess
+    }
+
     func createReminder(title: String, notes: String?, dueDate: Date?) async throws -> String {
         createCallCount += 1
         
@@ -187,6 +196,8 @@ final class MockCalendarService: CalendarServiceProtocol {
 
     /// Löst eine gespeicherte ID auf: stabile ID direkt, Alt-ID über die Zuordnung.
     private func resolve(_ id: String) -> String? {
+        guard hasAccess else { return nil }
+
         if reminders[id] != nil {
             return id
         }
@@ -203,6 +214,7 @@ final class MockCalendarService: CalendarServiceProtocol {
         legacyIdentifiers.removeAll()
         shouldGrantAccess = true
         shouldFailOperations = false
+        hasAccess = true
         accessRequestCount = 0
         createCallCount = 0
         updateCallCount = 0
