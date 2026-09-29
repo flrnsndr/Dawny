@@ -47,6 +47,8 @@ enum DawnyPreview {
 private final class PreviewCalendarService: CalendarServiceProtocol {
     func requestAccess() async throws -> Bool { true }
 
+    func hasFullAccess() -> Bool { true }
+
     func createReminder(title: String, notes: String?, dueDate: Date?) async throws -> String {
         UUID().uuidString
     }

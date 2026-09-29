@@ -118,8 +118,10 @@ final class SyncEngine {
 
             // Verknüpfungen anderer Geräte gehören nicht diesem Gerät: Sie hier zu lösen
             // würde die echte Erinnerung auf dem verknüpfenden Gerät verwaisen lassen.
+            // Dasselbe gilt ohne Reminders-Zugriff für die eigenen: Sie bleiben verknüpft,
+            // bis der Zugriff wieder da ist.
             guard await canReachReminder(reminderID) else {
-                print("↩︎ Reminder link belongs to another device, keeping it: \(task.title)")
+                print("↩︎ Reminder not reachable on this device (foreign link or no access), keeping it: \(task.title)")
                 continue
             }
 
@@ -227,7 +229,7 @@ final class SyncEngine {
         }
 
         guard await canReachReminder(reminderID) else {
-            print("↩︎ Reminder link belongs to another device, keeping it: \(task.title)")
+            print("↩︎ Reminder not reachable on this device (foreign link or no access), keeping it: \(task.title)")
             return
         }
 
@@ -283,6 +285,14 @@ final class SyncEngine {
             return
         }
         
+        // Ohne Zugriff liefert EventKit für jede Erinnerung `nil`. Der Sync unten läse
+        // das als „in Reminders gelöscht" und räumte jede verknüpfte Aufgabe aus Heute,
+        // über iCloud auf allen Geräten. Also gar nicht erst synchronisieren.
+        guard calendarService.hasFullAccess() else {
+            print("↩︎ No full Reminders access, skipping sync from calendar")
+            return
+        }
+
         guard !syncInProgress else { return }
         syncInProgress = true
         defer { syncInProgress = false }
@@ -431,7 +441,15 @@ final class SyncEngine {
     /// Erst das Verzeichnis, dann ein direkter Abruf. Der Abruf deckt den ersten Lauf
     /// nach dem Update ab, in dem das Verzeichnis noch leer ist, obwohl die
     /// Verknüpfungen von diesem Gerät stammen.
+    ///
+    /// Ohne Reminders-Zugriff ist keine Erinnerung erreichbar, auch keine aus dem
+    /// Verzeichnis: `deleteReminder` liefe dann still ins Leere, das Lösen der
+    /// Verknüpfung danach aber nicht, und die echte Erinnerung bliebe verwaist zurück.
     private func canReachReminder(_ reminderID: String) async -> Bool {
+        guard calendarService.hasFullAccess() else {
+            return false
+        }
+
         if linkRegistry.isKnownLocally(reminderID) {
             return true
         }
@@ -505,6 +523,11 @@ final class SyncEngine {
     /// Verknüpfungen mehr existieren.
     func migrateReminderIdentifiersIfNeeded() async {
         guard !AppGroup.defaults.bool(forKey: Self.reminderIdentifierMigrationKey) else { return }
+
+        // Ohne Zugriff löst EventKit keine ID auf, ohne zu werfen. Die Schleife unten
+        // übersprünge dann jede Verknüpfung und setzte das Flag trotzdem, und die Migration
+        // liefe nie wieder. Also abbrechen, ohne das Flag zu setzen.
+        guard calendarService.hasFullAccess() else { return }
 
         var didRewrite = false
 

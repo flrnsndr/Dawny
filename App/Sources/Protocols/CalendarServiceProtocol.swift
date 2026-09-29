@@ -35,7 +35,14 @@ enum CalendarServiceError: Error {
 protocol CalendarServiceProtocol {
     /// Fordert Zugriff auf Reminders an
     func requestAccess() async throws -> Bool
-    
+
+    /// True, wenn Dawny vollen Zugriff auf die Erinnerungen hat.
+    ///
+    /// Ohne Zugriff liefert EventKit für jede ID schlicht keinen Treffer, statt einen
+    /// Fehler zu werfen. Ein fehlender Treffer ist dann kein Beleg dafür, dass die
+    /// Erinnerung gelöscht wurde, und der Sync muss das vor jeder solchen Deutung prüfen.
+    func hasFullAccess() -> Bool
+
     /// Erstellt einen neuen Reminder im Kalender
     func createReminder(title: String, notes: String?, dueDate: Date?) async throws -> String
     

@@ -415,8 +415,9 @@ final class SyncEngineTests: XCTestCase {
         XCTAssertEqual(task.externalReminderID, "local-only-id")
     }
 
-    /// Scheitert der Zugriff auf EventKit — etwa ohne erteilte Berechtigung —, darf das
-    /// Flag nicht gesetzt werden, sonst bleibt die Verknüpfung für immer gerätelokal.
+    /// Wirft der Abruf aus EventKit einen Fehler, darf das Flag nicht gesetzt werden,
+    /// sonst bleibt die Verknüpfung für immer gerätelokal. (Fehlende Berechtigung wirft
+    /// nicht, siehe `testMigrationRetriesAfterAccessWasMissing`.)
     func testMigrationRetriesAfterFailure() async throws {
         let backlog = TestModelContainer.createBacklog(in: context)
         let task = TestModelContainer.createTask(in: context, title: "Test", status: .dailyFocus, backlog: backlog)
@@ -432,6 +433,29 @@ final class SyncEngineTests: XCTestCase {
         XCTAssertEqual(task.externalReminderID, "local-only-id")
 
         calendarService.shouldFailOperations = false
+        await syncEngine.migrateReminderIdentifiersIfNeeded()
+
+        XCTAssertEqual(task.externalReminderID, stableID)
+    }
+
+    /// Ohne Reminders-Zugriff wirft EventKit nicht, sondern löst schlicht keine ID auf.
+    /// Das darf nicht als „alles migriert" durchgehen, sonst läuft die Migration nach
+    /// erteiltem Zugriff nie wieder.
+    func testMigrationRetriesAfterAccessWasMissing() async throws {
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let task = TestModelContainer.createTask(in: context, title: "Test", status: .dailyFocus, backlog: backlog)
+
+        let stableID = try await calendarService.createReminder(title: "Test", notes: nil, dueDate: Date())
+        calendarService.registerLegacyIdentifier("local-only-id", for: stableID)
+        task.externalReminderID = "local-only-id"
+
+        calendarService.hasAccess = false
+        await syncEngine.migrateReminderIdentifiersIfNeeded()
+
+        XCTAssertFalse(AppGroup.defaults.bool(forKey: SyncEngine.reminderIdentifierMigrationKey))
+        XCTAssertEqual(task.externalReminderID, "local-only-id")
+
+        calendarService.hasAccess = true
         await syncEngine.migrateReminderIdentifiersIfNeeded()
 
         XCTAssertEqual(task.externalReminderID, stableID)
@@ -646,5 +670,84 @@ final class SyncEngineTests: XCTestCase {
         XCTAssertEqual(taskOnA.status, .dailyFocus)
         XCTAssertEqual(calendarOnB.reminders.count, 0)
         XCTAssertEqual(calendarService.reminders.count, 1)
+    }
+
+    // MARK: - Entzogener Reminders-Zugriff
+
+    /// Legt eine Aufgabe in Heute an, deren Erinnerung dieses Gerät selbst erzeugt hat
+    /// und damit im Verzeichnis kennt. Das ist der Fall, in dem ein fehlender Treffer sonst
+    /// als Löschung gilt.
+    private func makeOwnLinkedTask(title: String = "Test") async throws -> (Task, String) {
+        let backlog = TestModelContainer.createBacklog(in: context)
+        let task = TestModelContainer.createTask(in: context, title: title, status: .dailyFocus, backlog: backlog)
+        task.scheduledDate = Date()
+        await syncEngine.syncTaskToCalendar(task)
+        return (task, try XCTUnwrap(task.externalReminderID))
+    }
+
+    /// Der gemeldete Fall: Der Nutzer entzieht Dawny in den iOS-Einstellungen den
+    /// Zugriff. EventKit findet dann keine Erinnerung mehr, auch keine eigene. Vorher
+    /// wanderte deshalb jede verknüpfte Aufgabe aus Heute ins Backlog, und zwar auf allen Geräten.
+    func testSyncKeepsOwnLinkedTaskInTodayWhenAccessWasRevoked() async throws {
+        let (task, reminderID) = try await makeOwnLinkedTask()
+
+        calendarService.hasAccess = false
+        await syncEngine.syncNow()
+
+        XCTAssertEqual(task.status, .dailyFocus, "Die Aufgabe muss in Heute bleiben")
+        XCTAssertEqual(task.externalReminderID, reminderID, "Die Verknüpfung muss bestehen bleiben")
+    }
+
+    /// Ohne Zugriff fragt der Sync EventKit gar nicht erst.
+    func testSyncSkipsFetchingWhenAccessWasRevoked() async throws {
+        _ = try await makeOwnLinkedTask()
+        let fetchesBefore = calendarService.fetchCallCount
+
+        calendarService.hasAccess = false
+        await syncEngine.syncNow()
+
+        XCTAssertEqual(calendarService.fetchCallCount, fetchesBefore)
+    }
+
+    /// Das Verzeichnis darf den Ausfall überstehen: Kommt der Zugriff zurück, erkennt
+    /// der Sync eine echte Löschung weiterhin.
+    func testSyncStillDetectsDeletionAfterAccessIsRestored() async throws {
+        let (task, reminderID) = try await makeOwnLinkedTask()
+
+        calendarService.hasAccess = false
+        await syncEngine.syncNow()
+
+        calendarService.hasAccess = true
+        calendarService.reminders.removeValue(forKey: reminderID)
+        await syncEngine.syncNow()
+
+        XCTAssertEqual(task.status, .inBacklog)
+        XCTAssertNil(task.externalReminderID)
+    }
+
+    /// Beim Reset: `deleteReminder` läuft ohne Zugriff still ins Leere. Die eigene
+    /// Verknüpfung zu lösen würde die Erinnerung in der Erinnerungen-App verwaisen lassen.
+    func testRemoveKeepsOwnLinkWhenAccessWasRevoked() async throws {
+        let (task, reminderID) = try await makeOwnLinkedTask()
+
+        calendarService.hasAccess = false
+        await syncEngine.removeTaskFromCalendar(task)
+
+        XCTAssertEqual(calendarService.deleteCallCount, 0)
+        XCTAssertEqual(task.externalReminderID, reminderID)
+        XCTAssertNotNil(calendarService.reminders[reminderID], "Die Erinnerung existiert weiterhin")
+    }
+
+    /// Dasselbe beim Ausschalten der Integration: Ohne Zugriff kann Dawny seine
+    /// Erinnerungen nicht abräumen, also bleiben die Verknüpfungen stehen.
+    func testTeardownKeepsOwnLinksWhenAccessWasRevoked() async throws {
+        let (task, reminderID) = try await makeOwnLinkedTask()
+
+        calendarService.hasAccess = false
+        AppSettings.shared.calendarSyncEnabled = false
+        await syncEngine.teardownAfterDisabling()
+
+        XCTAssertEqual(calendarService.deleteCallCount, 0)
+        XCTAssertEqual(task.externalReminderID, reminderID)
     }
 }
