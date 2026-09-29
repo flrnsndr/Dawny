@@ -268,10 +268,12 @@ struct SettingsView: View {
             )
 
             if settings.iCloudSyncEnabled, let availability = iCloudAccountAvailability {
+                // Voller Speicher betrifft nur angemeldete Accounts, ohne Account greift die Abmelde-Meldung.
+                let isHealthy = availability == .available && !CloudSyncHealth.shared.isQuotaExceeded
                 Label {
                     Text(iCloudStatusText(for: availability))
                 } icon: {
-                    Image(systemName: availability == .available ? "checkmark.icloud" : "exclamationmark.icloud")
+                    Image(systemName: isHealthy ? "checkmark.icloud" : "exclamationmark.icloud")
                 }
                 .font(.footnote)
                 .foregroundStyle(.secondary)
@@ -298,6 +300,12 @@ struct SettingsView: View {
     private func iCloudStatusText(for availability: CloudSyncStatus.Availability) -> String {
         switch availability {
         case .available:
+            if CloudSyncHealth.shared.isQuotaExceeded {
+                return String(
+                    localized: "settings.icloud.status.quotaExceeded",
+                    defaultValue: "iCloud storage full. Sync is paused."
+                )
+            }
             return String(localized: "settings.icloud.status.available", defaultValue: "iCloud available")
         case .unavailable:
             return String(
