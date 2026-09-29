@@ -77,7 +77,7 @@ _Simulator reicht nicht — besonders Siri-Intents und EventKit müssen auf echt
 
 ## Phase 4 — Archive & Upload
 
-1. In Xcode: **Product → Scheme → Edit Scheme** → sicherstellen, dass Run-Config auf **Release** steht
+1. In Xcode: Ziel oben auf **Any iOS Device (arm64)**, dann **Product → Scheme → Edit Scheme** → links **Archive** wählen und sicherstellen, dass dort die Build Configuration auf **Release** steht. Run bleibt auf Debug, das Archiv nutzt nur die Archive-Config
 2. **Product → Archive** (dauert ~1–2 Min.)
 3. Im Organizer: **Validate App** — alle Warnungen lesen und beheben
 4. **Distribute App → App Store Connect → Upload**
