@@ -6,11 +6,12 @@
 //  ScreenshotTests.swift
 //  DawnyUITests
 //
-//  Generates the three standardized App Store screenshots (Backlog, Today,
-//  Archive) for both English and German. Driven by scripts/take-screenshots.sh
-//  which runs both methods in a single xcodebuild invocation.
+//  Generates the raw App Store screenshots (Backlog, Today, Archive and the
+//  empty Today after the reset) for both English and German. Driven by
+//  scripts/take-screenshots.sh which runs both methods in a single xcodebuild
+//  invocation.
 //
-//  Output: /tmp/dawny-screenshots/<lang>/0{1,2,3}_{Backlog,Today,Archive}.png
+//  Output: /tmp/dawny-screenshots/<lang>/0{1,2,3,5}_{Backlog,Today,Archive,TodayMorning}.png
 //
 
 import XCTest
@@ -91,6 +92,17 @@ final class ScreenshotTests: XCTestCase {
         )
         Thread.sleep(forTimeInterval: 0.5)
         save(name: "03_Archive", outputDir: outputDir)
+
+        // Same seed without the Today tasks: the "morning after the reset" half
+        // of the reset motif in the store screenshots.
+        app.terminate()
+        app.launchArguments.append("--screenshots-morning")
+        app.launch()
+        waitForSeederToFinish()
+
+        navigateToToday(lang: lang)
+        Thread.sleep(forTimeInterval: 0.6)
+        save(name: "05_TodayMorning", outputDir: outputDir)
     }
 
     // MARK: - Navigation
