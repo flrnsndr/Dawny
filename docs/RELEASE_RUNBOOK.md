@@ -90,7 +90,11 @@ _Simulator reicht nicht — besonders Siri-Intents und EventKit müssen auf echt
 
 - [ ] Build erscheint unter **TestFlight** (kann 5–30 Min. dauern)
 - [ ] **"What's New"**-Text für diesen Release vorbereiten — in beiden Sprachen (en + de), max. 4000 Zeichen, Nutzersprache, kein Tech-Jargon
-- [ ] Screenshots prüfen: Haben sich UI-Flows verändert? Falls ja → neue Screenshots mit Xcode Simulator oder physischem Gerät erstellen
+- [ ] Screenshots prüfen: Haben sich UI-Flows verändert? Falls ja, neu erzeugen:
+  1. `./scripts/take-screenshots.sh` nimmt die App-Aufnahmen für en + de auf (Statusleiste steht dabei auf 9:41)
+  2. `screenshots/<lang>/04_Widgets.png` von Hand am Home-Screen aufnehmen. Der Testlauf installiert die App neu und entfernt dabei die Widgets, also vorher prüfen, ob sie noch da sind
+  3. `./scripts/render-store-screenshots.sh` baut daraus die 6 beschrifteten Bilder pro Sprache in `screenshots/store/<lang>/`. Texte stehen in `scripts/store-screenshots/captions.js`
+  4. In App Store Connect die Bilder aus `screenshots/store/<lang>/` als 6,9″-Screenshots hochladen, in der Reihenfolge 01 bis 06
 - [ ] **App Store Connect → My Apps → Dawny → [Version] → Submit for Review**
 
 ---

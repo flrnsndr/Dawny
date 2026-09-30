@@ -21,6 +21,12 @@ enum ScreenshotSeeder {
         ProcessInfo.processInfo.arguments.contains("--screenshots")
     }
 
+    /// Zustand nach dem 3-Uhr-Reset: Heute ist leer. Liefert die „Morgens“-Aufnahme
+    /// für das Reset-Motiv der Store-Screenshots.
+    static var isMorningScene: Bool {
+        ProcessInfo.processInfo.arguments.contains("--screenshots-morning")
+    }
+
     /// Synchronously prepares AppSettings before any view appears. Must be called
     /// from `DawnyApp.init()` so the Welcome cover does not present.
     static func prepareForLaunch() {
@@ -59,7 +65,9 @@ enum ScreenshotSeeder {
 
             seedBacklog(backlog: backlog, category: category, isGerman: isGerman, in: context)
             seedRecurring(backlog: backlog, recurring: recurring, isGerman: isGerman, in: context)
-            seedToday(backlog: backlog, isGerman: isGerman, in: context)
+            if !isMorningScene {
+                seedToday(backlog: backlog, isGerman: isGerman, in: context)
+            }
             seedArchive(backlog: backlog, isGerman: isGerman, in: context)
 
             try context.save()
