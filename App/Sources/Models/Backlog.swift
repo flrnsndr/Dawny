@@ -1,0 +1,112 @@
+// Dawny
+// Copyright (c) 2025-2026 Florian Schneider
+// Licensed under the MIT License — see LICENSE in the repository root.
+
+//
+//  Backlog.swift
+//  Dawny
+//
+//  SwiftData Model für Backlogs
+//
+
+import Foundation
+import SwiftData
+
+@Model
+final class Backlog {
+    // MARK: - Stored Properties
+
+    // Inline-Defaults sind CloudKit-Pflicht — siehe Hinweis in `Task`.
+
+    /// Eindeutige ID
+    var id: UUID = UUID()
+
+    /// Name des Backlogs
+    var title: String = ""
+
+    /// Sortierungs-Index (für Multi-Backlog später)
+    var orderIndex: Int = 0
+
+    /// Erstellungsdatum
+    var createdAt: Date = Date()
+
+    // MARK: - Relationships
+
+    /// Alle Tasks in diesem Backlog
+    // Optional, weil CloudKit ausnahmslos optionale Relationships verlangt.
+    // Interner Zugriff geht über `liveTasks`, extern über `tasks ?? []`.
+    @Relationship(deleteRule: .cascade, inverse: \Task.backlog)
+    var tasks: [Task]? = []
+    
+    // MARK: - Initializer
+    
+    init(
+        id: UUID = UUID(),
+        title: String,
+        orderIndex: Int = 0,
+        createdAt: Date = Date(),
+        tasks: [Task] = []
+    ) {
+        self.id = id
+        self.title = title
+        self.orderIndex = orderIndex
+        self.createdAt = createdAt
+        self.tasks = tasks
+    }
+    
+    // MARK: - Computed Properties
+    
+    /// Anzahl der Tasks im Backlog
+    var taskCount: Int {
+        liveTasks.filter { $0.status == .inBacklog }.count
+    }
+    
+    /// Tasks die im Backlog sind (nicht completed/scheduled)
+    var backlogTasks: [Task] {
+        liveTasks
+            .filter { $0.status == .inBacklog }
+            .sorted()
+    }
+    
+    /// Tasks die completed sind
+    var completedTasks: [Task] {
+        liveTasks
+            .filter { $0.status == .completed }
+            .sorted { $0.modifiedAt > $1.modifiedAt }
+    }
+
+    /// Filtert bereits als gelöscht markierte (tombstoned) Tasks aus der
+    /// Relationship. SwiftData hält solche Referenzen teils noch bis zum
+    /// nächsten Save – Zugriffe auf `status` o.ä. crashen sonst.
+    private var liveTasks: [Task] {
+        (tasks ?? []).filter { !$0.isDeleted }
+    }
+    
+    // MARK: - Methods
+    
+    /// Fügt einen neuen Task zum Backlog hinzu
+    func addTask(title: String, notes: String? = nil) -> Task {
+        let task = Task(
+            title: title,
+            notes: notes,
+            status: .inBacklog,
+            parentBacklogID: self.id
+        )
+        task.backlog = self
+        tasks = (tasks ?? []) + [task]
+        return task
+    }
+    
+    /// Entfernt einen Task aus dem Backlog
+    func removeTask(_ task: Task) {
+        tasks = (tasks ?? []).filter { $0.id != task.id }
+    }
+}
+
+// MARK: - Comparable
+
+extension Backlog: Comparable {
+    static func < (lhs: Backlog, rhs: Backlog) -> Bool {
+        lhs.orderIndex < rhs.orderIndex
+    }
+}

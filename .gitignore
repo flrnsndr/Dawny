@@ -1,0 +1,78 @@
+# macOS
+.DS_Store
+Thumbs.db
+
+# Xcode User Data
+*.xcuserstate
+xcuserdata/
+*.xcuserdatad/
+
+# Build artifacts
+build/
+dist/
+.next/
+DerivedData/
+.derivedData/
+
+# Generated App Store screenshots (run scripts/take-screenshots.sh to regenerate)
+screenshots/
+# ...but the website's own committed screenshots are not build output
+!website/src/assets/screenshots/
+!website/src/assets/screenshots/**
+
+# Cursor and Claude IDEs
+.cursor/
+.claude/
+
+# Website (Astro)
+website/node_modules/
+website/dist/
+website/.astro/
+website/.env
+website/.env.local
+website/.env.production
+
+# Astro-Cache auch im Repo-Root (falls Tools/CLI dort anlegen)
+.astro/
+
+# Abhängigkeiten
+node_modules/
+
+# Paketmanager-Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Deployment (z. B. Vercel)
+.vercel/
+
+# JetBrains
+.idea/
+
+# Lokale Umgebungsvariablen (Sicherheit!)
+.env
+.env.local
+.env.production
+.env.development.local
+.env.test.local
+
+# Zertifikate / Signing (nie committen)
+*.pem
+*.p12
+*.mobileprovision
+
+# Persönliche Betriebsdokumente
+docs/RELEASE_RUNBOOK.md
+docs/context/AI_INPUT.md
+docs/context/QA_checklist.md
+docs/context/APP_STORE_CONNECT_CHECKLIST.md
+docs/context/PRIVACY.de.md
+docs/context/PRIVACY.en.md
+docs/git cheat sheet.html
+
+# AI-Tooling-Konfiguration
+CLAUDE.md
+
+# AI Input (lokale Arbeitsmaterialien)
+docs/AI Input/

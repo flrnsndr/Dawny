@@ -1,0 +1,68 @@
+// Dawny
+// Copyright (c) 2025-2026 Florian Schneider
+// Licensed under the MIT License — see LICENSE in the repository root.
+
+//
+//  CalendarServiceProtocol.swift
+//  Dawny
+//
+//  Protocol für testbare EventKit-Interaktionen
+//
+
+import Foundation
+import EventKit
+
+/// Repräsentiert einen Reminder aus dem Kalender
+struct CalendarReminder {
+    let id: String
+    let title: String
+    let notes: String?
+    let isCompleted: Bool
+    let dueDate: Date?
+    let modificationDate: Date?
+}
+
+/// Fehlertypen für Calendar-Operationen
+enum CalendarServiceError: Error {
+    case permissionDenied
+    case reminderNotFound
+    case saveFailed(underlying: Error)
+    case fetchFailed(underlying: Error)
+}
+
+/// Protokoll zur Abstraktion von EventKit-Operationen
+/// Ermöglicht Mocking in Tests ohne echten Kalender-Zugriff
+protocol CalendarServiceProtocol {
+    /// Fordert Zugriff auf Reminders an
+    func requestAccess() async throws -> Bool
+
+    /// True, wenn Dawny vollen Zugriff auf die Erinnerungen hat.
+    ///
+    /// Ohne Zugriff liefert EventKit für jede ID schlicht keinen Treffer, statt einen
+    /// Fehler zu werfen. Ein fehlender Treffer ist dann kein Beleg dafür, dass die
+    /// Erinnerung gelöscht wurde, und der Sync muss das vor jeder solchen Deutung prüfen.
+    func hasFullAccess() -> Bool
+
+    /// Erstellt einen neuen Reminder im Kalender
+    func createReminder(title: String, notes: String?, dueDate: Date?) async throws -> String
+    
+    /// Aktualisiert einen existierenden Reminder
+    func updateReminder(id: String, title: String?, notes: String?, isCompleted: Bool?, dueDate: Date?) async throws
+    
+    /// Löscht einen Reminder aus dem Kalender
+    func deleteReminder(id: String) async throws
+    
+    /// Holt einen Reminder anhand seiner ID
+    func fetchReminder(id: String) async throws -> CalendarReminder?
+    
+    /// Holt alle Reminders für einen bestimmten Zeitraum
+    func fetchReminders(from startDate: Date, to endDate: Date) async throws -> [CalendarReminder]
+
+    /// Löst eine gespeicherte Reminder-ID in die geräteübergreifend stabile ID auf.
+    ///
+    /// Gebraucht für die einmalige Migration bestehender Verknüpfungen: Dawny hat
+    /// früher die gerätelokale `calendarItemIdentifier` gespeichert, die auf einem
+    /// Zweitgerät ins Leere zeigt. Gibt `nil` zurück, wenn die Erinnerung auf diesem
+    /// Gerät nicht (mehr) auflösbar ist.
+    func stableIdentifier(forStoredID id: String) async throws -> String?
+}

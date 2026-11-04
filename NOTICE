@@ -1,0 +1,48 @@
+Dawny
+=====
+
+Required Notice: Copyright (c) 2025-2026 Florian Schneider (info@dawnyapp.com)
+
+Source code in this repository is licensed under the MIT License. See the
+LICENSE file in the root of this repository for the full text.
+
+------------------------------------------------------------------------
+
+Trademarks
+----------
+
+"Dawny", the Dawny name, and the Dawny logo and app icon are trademarks
+of Florian Schneider. The MIT License grants copyright and patent
+licenses, but it does NOT grant any trademark license.
+
+If you fork this project, modify it, or build derivative works, you MUST:
+
+  - Rename the project so it cannot be confused with "Dawny".
+  - Use your own app icon and brand assets. Do not reuse the Dawny icon
+    or visual identity.
+  - Remove or replace references to "Dawny" in user-facing strings,
+    bundle identifiers, and marketing materials.
+
+------------------------------------------------------------------------
+
+Assets and Content
+------------------
+
+The following are NOT licensed under the MIT License and remain under
+"All Rights Reserved":
+
+  - All image assets in App/Assets.xcassets/ (app icon, accent colors,
+    image assets), including the file
+    "Dawny Icon Gemini 1024x1024 300dpi.png".
+  - The marketing copy and prose in README.md.
+  - Any screenshots, App Store metadata, and TestFlight materials.
+
+You may not redistribute these assets without separate written permission.
+
+------------------------------------------------------------------------
+
+Contact
+-------
+
+Trademark questions, security reports, or anything else legal:
+info@dawnyapp.com
